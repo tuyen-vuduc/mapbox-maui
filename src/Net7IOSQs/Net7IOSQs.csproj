@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Condition="EXISTS('MapboxNet7Qs.props')" Project="MapboxNet7Qs.props" />
+	<Import Condition="EXISTS('Net7IOSQs.props')" Project="Net7IOSQs.props" />
   <PropertyGroup>
     <TargetFramework>net7.0-ios</TargetFramework>
     <OutputType>Exe</OutputType>

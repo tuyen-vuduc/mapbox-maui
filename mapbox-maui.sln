@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapboxMauiQs", "src\MapboxMauiQs\MapboxMauiQs.csproj", "{592A4849-FA0F-411A-947F-D71BA1160333}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapboxNet7Qs", "src\MapboxNet7Qs\MapboxNet7Qs.csproj", "{D2F1B68B-EF9F-4705-994F-68D892105228}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net7IOSQs", "src\Net7IOSQs\Net7IOSQs.csproj", "{D2F1B68B-EF9F-4705-994F-68D892105228}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

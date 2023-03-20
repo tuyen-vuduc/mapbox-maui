@@ -12,10 +12,10 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 
 		<!-- Display name -->
-		<ApplicationTitle>MapboxMauiQs</ApplicationTitle>
+		<ApplicationTitle>MapboxQs</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.mapboxmauiqs</ApplicationId>
+		<ApplicationId>tech.tuyen-vuduc.mapboxmauiqs</ApplicationId>
 		<ApplicationIdGuid>cecaadf0-85bf-4ffd-9326-6c5c11457a29</ApplicationIdGuid>
 
 		<!-- Versions -->
@@ -30,6 +30,9 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
+		<CreatePackage>false</CreatePackage>
+	</PropertyGroup>
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
@@ -47,9 +50,65 @@
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+	<!-- Android -->
+	<ItemGroup Condition="$(TargetFramework.StartsWith('net7.0-android')) != true">
+		<Compile Remove="**\**\*.Android.cs" />
+		<None Include="**\**\*.Android.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
 	</ItemGroup>
 
+	<!-- Both iOS and Mac Catalyst -->
+	<ItemGroup Condition="$(TargetFramework.StartsWith('net7.0-ios')) != true AND $(TargetFramework.StartsWith('net7.0-maccatalyst')) != true">
+		<Compile Remove="**\**\*.MaciOS.cs" />
+		<None Include="**\**\*.MaciOS.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+	</ItemGroup>
+
+	<!-- iOS -->
+	<ItemGroup Condition="$(TargetFramework.StartsWith('net7.0-ios')) != true">
+		<Compile Remove="**\**\*.iOS.cs" />
+		<None Include="**\**\*.iOS.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+	</ItemGroup>
+
+	<!-- Mac Catalyst -->
+	<ItemGroup Condition="$(TargetFramework.StartsWith('net7.0-maccatalyst')) != true">
+		<Compile Remove="**\**\*.MacCatalyst.cs" />
+		<None Include="**\**\*.MacCatalyst.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+	</ItemGroup>
+
+	<!-- Windows -->
+	<ItemGroup Condition="$(TargetFramework.Contains('-windows')) != true">
+		<Compile Remove="**\*.Windows.cs" />
+		<None Include="**\*.Windows.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+		<PackageReference Include="Xamarin.Build.Download" Version="0.11.4" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0-android'">
+		<PackageReference Include="Com.Mapbox.Maps.Android" Version="10.11.1" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0-ios'">
+		<PackageReference Include="MapboxMapsObjC.iOS" Version="10.11.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<GradleRepository Include="https://api.mapbox.com/downloads/v2/releases/maven">
+			<Repository>
+		maven {
+			url 'https://api.mapbox.com/downloads/v2/releases/maven'
+			authentication {
+				basic(BasicAuthentication)
+			}
+			credentials {
+				// Do not change the username below.
+				// This should always be `mapbox` (not your username).
+				username = "mapbox"
+				// Use the secret token you stored in gradle.properties as the password
+				password = MAPBOX_DOWNLOADS_TOKEN
+			}
+		}
+			</Repository>
+		</GradleRepository>
+	</ItemGroup>
 </Project>

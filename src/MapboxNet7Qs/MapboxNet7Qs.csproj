@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<Import Condition="EXISTS('MapboxNet7Qs.props')" Project="MapboxNet7Qs.props" />
+  <PropertyGroup>
+    <TargetFramework>net7.0-ios</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>true</ImplicitUsings>
+    <SupportedOSPlatformVersion>13.0</SupportedOSPlatformVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <CreatePackage>false</CreatePackage>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <CreatePackage>false</CreatePackage>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="MapboxMapsObjC.iOS" Version="10.11.1" />
+    <PackageReference Include="Xamarin.Build.Download" Version="0.11.4" />
+  </ItemGroup>
+</Project>

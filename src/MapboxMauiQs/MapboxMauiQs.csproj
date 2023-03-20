@@ -1,5 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+	<Import Condition="EXISTS('MapboxMauiQs.props')" Project="MapboxMauiQs.props" />
+	<Import Condition="EXISTS('MapboxMauiQs.targets')" Project="MapboxMauiQs.targets" />
 	<PropertyGroup>
 		<TargetFrameworks>net7.0-android;net7.0-ios;net7.0-maccatalyst</TargetFrameworks>
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
@@ -90,25 +91,5 @@
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0-ios'">
 		<PackageReference Include="MapboxMapsObjC.iOS" Version="10.11.1" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<GradleRepository Include="https://api.mapbox.com/downloads/v2/releases/maven">
-			<Repository>
-		maven {
-			url 'https://api.mapbox.com/downloads/v2/releases/maven'
-			authentication {
-				basic(BasicAuthentication)
-			}
-			credentials {
-				// Do not change the username below.
-				// This should always be `mapbox` (not your username).
-				username = "mapbox"
-				// Use the secret token you stored in gradle.properties as the password
-				password = MAPBOX_DOWNLOADS_TOKEN
-			}
-		}
-			</Repository>
-		</GradleRepository>
 	</ItemGroup>
 </Project>

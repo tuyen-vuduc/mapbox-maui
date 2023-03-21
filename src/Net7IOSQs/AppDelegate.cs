@@ -1,4 +1,4 @@
-﻿namespace MapboxNet7Qs;
+﻿namespace Net7IOSQs;
 
 [Register ("AppDelegate")]
 public class AppDelegate : UIApplicationDelegate {
@@ -13,13 +13,7 @@ public class AppDelegate : UIApplicationDelegate {
 		Window = new UIWindow (UIScreen.MainScreen.Bounds);
 
 		// create a UIViewController with a single UILabel
-		var vc = new UIViewController ();
-		vc.View!.AddSubview (new UILabel (Window!.Frame) {
-			BackgroundColor = UIColor.SystemBackground,
-			TextAlignment = UITextAlignment.Center,
-			Text = "Hello, iOS!",
-			AutoresizingMask = UIViewAutoresizing.All,
-		});
+		var vc = new ViewController();
 		Window.RootViewController = vc;
 
 		// make the window visible

@@ -1,4 +1,4 @@
-﻿namespace MapboxNet7Qs;
+﻿namespace Net7IOSQs;
 
 [Register ("SceneDelegate")]
 public class SceneDelegate : UIResponder, IUIWindowSceneDelegate {

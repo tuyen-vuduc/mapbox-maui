@@ -1,4 +1,4 @@
-﻿using MapboxNet7Qs;
+﻿using Net7IOSQs;
 
 // This is the main entry point of the application.
 // If you want to use a different Application Delegate class from "AppDelegate"

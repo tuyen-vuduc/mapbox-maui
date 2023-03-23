@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net7IOSQs", "src\Net7IOSQs\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net7DroidQs", "src\Net7DroidQs\Net7DroidQs.csproj", "{B85F7DD7-C2FD-4BED-9D7F-5EB08D594C34}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "qs", "qs", "{9E68E487-D5EF-4B2A-9144-9503DB605268}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,5 +37,10 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{592A4849-FA0F-411A-947F-D71BA1160333} = {9E68E487-D5EF-4B2A-9144-9503DB605268}
+		{B85F7DD7-C2FD-4BED-9D7F-5EB08D594C34} = {9E68E487-D5EF-4B2A-9144-9503DB605268}
+		{D2F1B68B-EF9F-4705-994F-68D892105228} = {9E68E487-D5EF-4B2A-9144-9503DB605268}
 	EndGlobalSection
 EndGlobal

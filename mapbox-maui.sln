@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapboxMauiQs", "src\MapboxMauiQs\MapboxMauiQs.csproj", "{592A4849-FA0F-411A-947F-D71BA1160333}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapboxMauiQs", "src\qs\MapboxMauiQs\MapboxMauiQs.csproj", "{592A4849-FA0F-411A-947F-D71BA1160333}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net7IOSQs", "src\Net7IOSQs\Net7IOSQs.csproj", "{D2F1B68B-EF9F-4705-994F-68D892105228}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net7IOSQs", "src\qs\Net7IOSQs\Net7IOSQs.csproj", "{D2F1B68B-EF9F-4705-994F-68D892105228}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net7DroidQs", "src\Net7DroidQs\Net7DroidQs.csproj", "{B85F7DD7-C2FD-4BED-9D7F-5EB08D594C34}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net7DroidQs", "src\qs\Net7DroidQs\Net7DroidQs.csproj", "{B85F7DD7-C2FD-4BED-9D7F-5EB08D594C34}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "qs", "qs", "{9E68E487-D5EF-4B2A-9144-9503DB605268}"
 EndProject

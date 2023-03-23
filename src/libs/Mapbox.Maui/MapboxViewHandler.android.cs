@@ -1,4 +1,4 @@
-﻿namespace MapboxMauiQs;
+﻿namespace Mapbox.Maui;
 
 using Android.Views;
 using Android.Widget;

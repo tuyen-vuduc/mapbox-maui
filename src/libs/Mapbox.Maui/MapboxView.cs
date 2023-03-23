@@ -6,7 +6,7 @@ using System.Globalization;
 using System.Security.AccessControl;
 using Microsoft.Maui.Handlers;
 
-namespace MapboxMauiQs;
+namespace Mapbox.Maui;
 
 public class MapboxStyleTypeConverter : TypeConverter
 {

@@ -1,7 +1,8 @@
-﻿using System;
-using Microsoft.Maui.Handlers;
+﻿
+namespace Mapbox.Maui;
 
-namespace MapboxMauiQs;
+using System;
+using Microsoft.Maui.Handlers;
 using PlatformView = MapboxMaps.MapView;
 
 public partial class MapboxViewHandler

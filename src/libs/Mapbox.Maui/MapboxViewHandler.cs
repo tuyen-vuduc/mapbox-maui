@@ -8,7 +8,7 @@ using PlatformView = Com.Mapbox.Maps.MapView;
 using PlatformView = System.Object;
 #endif
 
-namespace MapboxMauiQs;
+namespace Mapbox.Maui;
 
 public partial class MapboxViewHandler : ViewHandler<IMapboxView, PlatformView>
 {

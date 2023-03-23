@@ -1,6 +1,7 @@
 ﻿<resources>
     <string name="app_name">Net7DroidQs</string>
     <string name="app_text">Hello, Android!</string>
+    <string name="mapbox_access_token">pk.eyJ1IjoidHV5ZW52IiwiYSI6ImNsMnpzNzh4NjBnNG0zZHBzYTFmYmxhOWUifQ.Az2oICdp9k0Hb5tu_M8b-g</string>
 </resources>
 
 

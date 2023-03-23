@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<Import Condition="EXISTS('Net7DroidQs.targets')" Project="Net7DroidQs.targets" />
   <PropertyGroup>
-    <TargetFramework>net6.0-android33.0</TargetFramework>
+    <TargetFramework>net7.0-android33.0</TargetFramework>
     <SupportedOSPlatformVersion>21</SupportedOSPlatformVersion>
     <OutputType>Exe</OutputType>
     <Nullable>enable</Nullable>
@@ -13,5 +13,7 @@
   <ItemGroup>
     <PackageReference Include="Com.Mapbox.Maps.Android" Version="10.11.1" />
     <PackageReference Include="Xamarin.Kotlin.StdLib.Jdk8" Version="1.8.10" />
+    <PackageReference Include="Square.OkHttp3" Version="4.10.0.1" />
+    <PackageReference Include="Xamarin.Kotlin.StdLib" Version="1.8.10" />
   </ItemGroup>
 </Project>

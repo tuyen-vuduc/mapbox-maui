@@ -1,9 +1,10 @@
-﻿using Com.Mapbox.Maps;
+﻿using AndroidX.AppCompat.App;
+using Com.Mapbox.Maps;
 
 namespace Net7DroidQs;
 
-[Activity(Label = "@string/app_name", MainLauncher = true)]
-public class MainActivity : Activity
+[Activity(Label = "@string/app_name", MainLauncher = true, Theme = "@style/Theme.AppCompat.Light.NoActionBar")]
+public class MainActivity : AppCompatActivity
 {
     MapView mapView;
 

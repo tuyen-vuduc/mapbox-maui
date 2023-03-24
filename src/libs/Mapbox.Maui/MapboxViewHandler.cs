@@ -15,25 +15,13 @@ public partial class MapboxViewHandler : ViewHandler<IMapboxView, PlatformView>
     public static IPropertyMapper<IMapboxView, MapboxViewHandler> PropertyMapper
         = new PropertyMapper<IMapboxView, MapboxViewHandler>(ViewHandler.ViewMapper)
         {
-            [nameof(MapboxView.Center)] = HandleCenterChanged,
+            [nameof(MapboxView.MapCenter)] = HandleCameraOptionsChanged,
+            [nameof(MapboxView.MapZoom)] = HandleCameraOptionsChanged,
             [nameof(MapboxView.MapboxStyle)] = HandleMapboxStyleChanged,
         };
 
     public MapboxViewHandler() : base(PropertyMapper)
     {
 
-    }
-}
-
-public static class MauiAppBuilderExtensions
-{
-    public static MauiAppBuilder UseMapbox(this MauiAppBuilder builder)
-    {
-        builder.ConfigureMauiHandlers(collection =>
-        {
-            collection.AddHandler(typeof(MapboxView), typeof(MapboxViewHandler));
-        });
-
-        return builder;
     }
 }

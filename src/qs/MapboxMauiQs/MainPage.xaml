@@ -2,10 +2,11 @@
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:mb="clr-namespace:MapboxMauiQs"
+    xmlns:mb="clr-namespace:Mapbox.Maui;assembly=Mapbox.Maui"
     x:Class="MapboxMauiQs.MainPage">
 
     <mb:MapboxView
+        x:Name="map"
         MapboxStyle="mapbox://styles/examples/cke97f49z5rlg19l310b7uu7j"
         />
 

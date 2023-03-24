@@ -6,12 +6,29 @@ using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Handlers;
 using PlatformView = Com.Mapbox.Maps.MapView;
 using MapboxMapsStyle = Com.Mapbox.Maps.Style;
+using Com.Mapbox.Maps;
 
 public partial class MapboxViewHandler
 {
-    private static void HandleCenterChanged(MapboxViewHandler handler, IMapboxView view)
+    private static void HandleCameraOptionsChanged(MapboxViewHandler handler, IMapboxView view)
     {
-        //handler.PlatformView.
+        var cameraOptionsBuilder = new CameraOptions.Builder();
+
+        if (view.MapCenter.HasValue)
+        {
+            cameraOptionsBuilder.Center(
+                Com.Mapbox.Geojson.Point.FromLngLat(
+                view.MapCenter.Value.Y,
+                view.MapCenter.Value.X
+            ));
+        }
+
+        if (view.MapZoom.HasValue)
+        {
+            cameraOptionsBuilder.Zoom(new Java.Lang.Double(view.MapZoom.Value));
+        }
+
+        handler.PlatformView.MapboxMap.SetCamera(cameraOptionsBuilder.Build());
     }
 
     private static void HandleMapboxStyleChanged(MapboxViewHandler handler, IMapboxView view)

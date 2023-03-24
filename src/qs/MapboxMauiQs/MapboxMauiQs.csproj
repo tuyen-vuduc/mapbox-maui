@@ -79,4 +79,7 @@
 	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0-ios'">
 		<PackageReference Include="MapboxMapsObjC.iOS" Version="10.11.1" />
 	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\..\libs\Mapbox.Maui\Mapbox.Maui.csproj" />
+	</ItemGroup>
 </Project>

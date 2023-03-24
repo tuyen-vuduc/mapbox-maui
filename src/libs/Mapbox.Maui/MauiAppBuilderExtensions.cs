@@ -9,11 +9,18 @@ namespace Mapbox.Maui;
 
 public static class MauiAppBuilderExtensions
 {
-    public static MauiAppBuilder UseMapbox(this MauiAppBuilder builder)
+    public static MauiAppBuilder UseMapbox(
+        this MauiAppBuilder builder,
+        string accessToken = default)
     {
+        MapboxViewHandler.ACCESS_TOKEN = accessToken;
+
         builder.ConfigureMauiHandlers(collection =>
         {
-            collection.AddHandler(typeof(MapboxView), typeof(MapboxViewHandler));
+            collection.AddHandler(
+                typeof(MapboxView),
+                typeof(MapboxViewHandler)
+            );
         });
 
         return builder;

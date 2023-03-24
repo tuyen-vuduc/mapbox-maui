@@ -10,8 +10,6 @@ namespace Mapbox.Maui;
 
 public class MapboxView : View, IMapboxView
 {
-    public static string AccessToken = string.Empty;
-
     public static readonly BindableProperty CameraOptionsProperty = BindableProperty.Create(
        nameof(CameraOptions),
        typeof(CameraOptions),

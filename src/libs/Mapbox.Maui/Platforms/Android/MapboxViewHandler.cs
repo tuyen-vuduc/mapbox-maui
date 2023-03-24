@@ -33,7 +33,21 @@ public partial class MapboxViewHandler
 
     protected override PlatformView CreatePlatformView()
     {
-        return new PlatformView(Context);
+        if (string.IsNullOrWhiteSpace(ACCESS_TOKEN))
+        {
+            return new PlatformView(Context);
+        }
+
+        var resourceOptionsManager = ResourceOptionsManager.CompanionField.GetDefault(
+                Context,
+                ACCESS_TOKEN
+            );
+        var initOptions = new MapInitOptions(
+            Context,
+            resourceOptionsManager?.ResourceOptions
+        );
+
+        return new PlatformView(Context, initOptions);
     }
 }
 

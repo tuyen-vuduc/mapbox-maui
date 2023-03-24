@@ -12,6 +12,8 @@ namespace Mapbox.Maui;
 
 public partial class MapboxViewHandler : ViewHandler<IMapboxView, PlatformView>
 {
+    internal static string ACCESS_TOKEN;
+
     public static IPropertyMapper<IMapboxView, MapboxViewHandler> PropertyMapper
         = new PropertyMapper<IMapboxView, MapboxViewHandler>(ViewHandler.ViewMapper)
         {

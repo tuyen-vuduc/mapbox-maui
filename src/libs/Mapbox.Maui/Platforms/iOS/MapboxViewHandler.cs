@@ -25,8 +25,13 @@ public partial class MapboxViewHandler
 
     protected override PlatformView CreatePlatformView()
     {
+        var accessToken = string.IsNullOrWhiteSpace(ACCESS_TOKEN)
+            ? MapInitOptionsBuilder.DefaultResourceOptions.AccessToken
+            : ACCESS_TOKEN;
+
         MapInitOptions options = MapInitOptionsBuilder
                 .Create()
+                .AccessToken(accessToken)
                 .Build();
 
         // Perform any additional setup after loading the view, typically from a nib.

@@ -18,6 +18,9 @@
 	  <CreatePackage>false</CreatePackage>
 	</PropertyGroup>
 	<!-- Android -->
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+	  <WarningLevel>4</WarningLevel>
+	</PropertyGroup>
 	<ItemGroup Condition="$(TargetFramework.StartsWith('net6.0-android')) != true">
 		<Compile Remove="**\**\*.Android.cs" />
 	</ItemGroup>
@@ -51,4 +54,13 @@
 	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0-ios'">
 		<PackageReference Include="MapboxMapsObjC.iOS" Version="10.11.1" />
 	</ItemGroup>
+	<ProjectExtensions>
+	  <MonoDevelop>
+	    <Properties>
+	      <Policies>
+	        <DotNetNamingPolicy DirectoryNamespaceAssociation="None" ResourceNamePolicy="FileFormatDefault" />
+	      </Policies>
+	    </Properties>
+	  </MonoDevelop>
+	</ProjectExtensions>
 </Project>

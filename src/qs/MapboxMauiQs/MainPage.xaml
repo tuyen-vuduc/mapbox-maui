@@ -7,7 +7,7 @@
 
     <mb:MapboxView
         x:Name="map"
-        MapboxStyle="mapbox://styles/examples/cke97f49z5rlg19l310b7uu7j"
+        MapboxStyle="MapboxStreets"
         />
 
 </ContentPage>

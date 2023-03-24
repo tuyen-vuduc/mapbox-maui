@@ -2,7 +2,7 @@
 
 public interface IMapboxView : IView
 {
-    public string AccessToken { get; set; }
+    public CameraOptions CameraOptions { get; set; }
     public MapboxStyle MapboxStyle { get; set; }
 
     public Microsoft.Maui.Graphics.Point? MapCenter { get; set; }

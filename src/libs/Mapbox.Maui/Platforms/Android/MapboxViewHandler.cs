@@ -1,22 +1,45 @@
 ﻿namespace Mapbox.Maui;
 
-using Android.Views;
 using Android.Widget;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Handlers;
-using PlatformView = Com.Mapbox.Maps.MapView;
+using PlatformView = AndroidX.Fragment.App.FragmentContainerView;
 using MapboxMapsStyle = Com.Mapbox.Maps.Style;
 using MapboxMapsCameraOptions = Com.Mapbox.Maps.CameraOptions;
 using Com.Mapbox.Maps;
 using Microsoft.Maui.Controls;
+using Com.Mapbox.Maps.Plugin.Scalebar;
+using static Google.Android.Material.Tabs.TabLayout;
+using Microsoft.Maui.Platform;
+using Android.Content;
+using AndroidX.Fragment.App;
+using System;
 
 public partial class MapboxViewHandler
 {
+    MapboxFragment mapboxFragment;
+
     private static void HandleCameraOptionsChanged(MapboxViewHandler handler, IMapboxView view)
     {
         var cameraOptions = view.CameraOptions.ToNative();
 
-        handler.PlatformView.MapboxMap.SetCamera(cameraOptions);
+        handler.GetMapView()?.MapboxMap.SetCamera(cameraOptions);
+    }
+
+    private static void HandleScaleBarVisibilityChanged(MapboxViewHandler handler, IMapboxView view)
+    {
+        var mapView = handler.GetMapView();
+        if (mapView?.MapboxMap.Style?.IsStyleLoaded != true) return;
+
+        var scaleBarPlugin = ScaleBarUtils.GetScaleBar(mapView);
+        if (view.ScaleBarVisibility == OrnamentVisibility.Hidden)
+        {
+            scaleBarPlugin.Enabled = false;
+            return;
+        }
+
+        scaleBarPlugin.Enabled = true;
+        
     }
 
     private static void HandleMapboxStyleChanged(MapboxViewHandler handler, IMapboxView view)
@@ -28,31 +51,57 @@ public partial class MapboxViewHandler
             styleUri = MapboxMapsStyle.MapboxStreets;
         }
 
-        handler.PlatformView.MapboxMap.LoadStyleUri(styleUri);
+        handler.GetMapView()?.MapboxMap.LoadStyleUri(styleUri);
     }
 
     protected override PlatformView CreatePlatformView()
     {
-        if (string.IsNullOrWhiteSpace(ACCESS_TOKEN))
+        var mainActivity = (MauiAppCompatActivity)Context.GetActivity();
+
+        var fragmentContainerView = new PlatformView(Context)
         {
-            return new PlatformView(Context);
+            Id = Android.Views.View.GenerateViewId(),
+        };
+        mapboxFragment = new MapboxFragment();
+        mapboxFragment.MapViewReady += HandleMapViewReady;
+
+        var fragmentTransaction = mainActivity.SupportFragmentManager.BeginTransaction();
+        fragmentTransaction.Replace(fragmentContainerView.Id, mapboxFragment, $"mapbox-maui-{fragmentContainerView.Id}");
+        fragmentTransaction.CommitAllowingStateLoss();
+        return fragmentContainerView;
+    }
+
+    protected override void DisconnectHandler(PlatformView platformView)
+    {
+        if (mapboxFragment != null)
+        {
+            mapboxFragment.MapViewReady -= HandleMapViewReady;
+            mapboxFragment?.Dispose();
         }
+        base.DisconnectHandler(platformView);
+    }
 
-        var resourceOptionsManager = ResourceOptionsManager.CompanionField.GetDefault(
-                Context,
-                ACCESS_TOKEN
-            );
-        var initOptions = new MapInitOptions(
-            Context,
-            resourceOptionsManager?.ResourceOptions
-        );
+    private void HandleMapViewReady(MapView view)
+    {
+        (VirtualView as MapboxView)?.InvokeMapReady();
 
-        return new PlatformView(Context, initOptions);
+        if (VirtualView.MapReadyCommand?.CanExecute(view) == true)
+        {
+            VirtualView.MapReadyCommand.Execute(view);
+        }
     }
 }
 
 static class AdditionalExtensions
 {
+    internal static MapView GetMapView(this MapboxViewHandler handler)
+    {
+        var mainActivity = (MauiAppCompatActivity)handler.Context.GetActivity();
+        var tag = $"mapbox-maui-{handler.PlatformView.Id}";
+        var fragnent = mainActivity.SupportFragmentManager.FindFragmentByTag(tag);
+        return (fragnent as MapboxFragment)?.MapView;
+    }
+
     public static string ToNative(this MapboxStyle mapboxStyle)
     {
         return mapboxStyle.BuiltInStyle switch

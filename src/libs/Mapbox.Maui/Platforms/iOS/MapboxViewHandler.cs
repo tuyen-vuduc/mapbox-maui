@@ -18,9 +18,18 @@ public partial class MapboxViewHandler
         handler.PlatformView.SetCameraTo(cameraOptions);
     }
 
+    private static void HandleScaleBarVisibilityChanged(MapboxViewHandler handler, IMapboxView view)
+    {
+        handler.PlatformView.OrnamentsOptionsScaleBarVisibility(view.ScaleBarVisibility.ToNative());
+    }
+
     private static void HandleMapboxStyleChanged(MapboxViewHandler handler, IMapboxView view)
     {
-        handler.PlatformView.SetStyle(view.MapboxStyle.ToNative());
+        var styleUri = view.MapboxStyle.ToNative();
+
+        if (string.IsNullOrWhiteSpace(styleUri)) return;
+
+        handler.PlatformView.SetStyle(styleUri);
     }
 
     protected override PlatformView CreatePlatformView()
@@ -42,10 +51,27 @@ public partial class MapboxViewHandler
 
         return mapView;
     }
+
+    protected override void ConnectHandler(PlatformView platformView)
+    {
+        base.ConnectHandler(platformView);
+
+        (VirtualView as MapboxView)?.InvokeMapReady();
+    }
 }
 
 public static class AdditionalExtensions
 {
+    public static TMBOrnamentVisibility ToNative(this OrnamentVisibility value)
+    {
+        return value switch
+        {
+            OrnamentVisibility.Adaptive => TMBOrnamentVisibility.Adaptive,
+            OrnamentVisibility.Visible => TMBOrnamentVisibility.Visible,
+            _ => TMBOrnamentVisibility.Hidden,
+        };
+    }
+
     public static string ToNative(this MapboxStyle mapboxStyle)
     {
         return mapboxStyle.BuiltInStyle switch

@@ -3,7 +3,7 @@
 #if IOS 
 using PlatformView = MapboxMaps.MapView;
 #elif __ANDROID__
-using PlatformView = Com.Mapbox.Maps.MapView;
+using PlatformView = AndroidX.Fragment.App.FragmentContainerView;
 #elif (NETSTANDARD || !PLATFORM) || (NET6_0_OR_GREATER && !IOS && !__ANDROID__)
 using PlatformView = System.Object;
 #endif
@@ -17,9 +17,9 @@ public partial class MapboxViewHandler : ViewHandler<IMapboxView, PlatformView>
     public static IPropertyMapper<IMapboxView, MapboxViewHandler> PropertyMapper
         = new PropertyMapper<IMapboxView, MapboxViewHandler>(ViewHandler.ViewMapper)
         {
-            [nameof(MapboxView.MapCenter)] = HandleCameraOptionsChanged,
-            [nameof(MapboxView.MapZoom)] = HandleCameraOptionsChanged,
+            [nameof(MapboxView.CameraOptions)] = HandleCameraOptionsChanged,
             [nameof(MapboxView.MapboxStyle)] = HandleMapboxStyleChanged,
+            [nameof(MapboxView.ScaleBarVisibility)] = HandleScaleBarVisibilityChanged,
         };
 
     public MapboxViewHandler() : base(PropertyMapper)

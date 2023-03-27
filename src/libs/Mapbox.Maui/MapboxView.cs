@@ -4,12 +4,25 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Security.AccessControl;
+using System.Windows.Input;
 using Microsoft.Maui.Handlers;
 
 namespace Mapbox.Maui;
 
 public class MapboxView : View, IMapboxView
 {
+    public static readonly BindableProperty ScaleBarVisibilityProperty = BindableProperty.Create(
+       nameof(ScaleBarVisibility),
+       typeof(OrnamentVisibility),
+       typeof(MapboxView),
+       OrnamentVisibility.Hidden
+    );
+    public OrnamentVisibility ScaleBarVisibility
+    {
+        get => (OrnamentVisibility)GetValue(ScaleBarVisibilityProperty);
+        set => SetValue(ScaleBarVisibilityProperty, value);
+    }
+
     public static readonly BindableProperty CameraOptionsProperty = BindableProperty.Create(
        nameof(CameraOptions),
        typeof(CameraOptions),
@@ -122,5 +135,23 @@ public class MapboxView : View, IMapboxView
     {
         get => (MapboxStyle)GetValue(MapboxStyleProperty);
         set => SetValue(MapboxStyleProperty, value);
+    }
+
+    public event EventHandler MapReady;
+    internal void InvokeMapReady()
+    {
+        MapReady?.Invoke(this, EventArgs.Empty);
+    }
+
+    public static readonly BindableProperty MapReadyCommandProperty = BindableProperty.Create(
+       nameof(MapReadyCommand),
+       typeof(ICommand),
+       typeof(MapboxView),
+       default(ICommand)
+    );
+    public ICommand MapReadyCommand
+    {
+        get => (ICommand)GetValue(MapReadyCommandProperty);
+        set => SetValue(MapReadyCommandProperty, value);
     }
 }

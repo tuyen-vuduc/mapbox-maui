@@ -20,7 +20,7 @@ public partial class MapboxViewHandler
 
     private static void HandleMapboxStyleChanged(MapboxViewHandler handler, IMapboxView view)
     {
-        //handler.PlatformView;
+        handler.PlatformView.SetStyle(view.MapboxStyle.ToNative());
     }
 
     protected override PlatformView CreatePlatformView()
@@ -46,6 +46,22 @@ public partial class MapboxViewHandler
 
 public static class AdditionalExtensions
 {
+    public static string ToNative(this MapboxStyle mapboxStyle)
+    {
+        return mapboxStyle.BuiltInStyle switch
+        {
+            MapboxBuiltInStyle.Dark => BuiltInStyles.Dark,
+            MapboxBuiltInStyle.Light => BuiltInStyles.Light,
+            MapboxBuiltInStyle.Outdoors => BuiltInStyles.Outdoors,
+            MapboxBuiltInStyle.MapboxStreets => BuiltInStyles.Streets,
+            MapboxBuiltInStyle.Satellite => BuiltInStyles.Satellite,
+            MapboxBuiltInStyle.SatelliteStreets => BuiltInStyles.SatelliteStreets,
+            MapboxBuiltInStyle.TrafficDay => "mapbox://styles/mapbox/traffic-day-v2",
+            MapboxBuiltInStyle.TrafficNight => "mapbox://styles/mapbox/traffic-night-v2",
+            _ => mapboxStyle.Uri,
+        };
+    }
+
     public static MBMCameraOptions ToNative(this CameraOptions cameraOptions)
     {
         var center = cameraOptions.Center.HasValue

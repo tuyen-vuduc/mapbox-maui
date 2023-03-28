@@ -7,6 +7,7 @@ public partial class AppShell : Shell
 		InitializeComponent();
 
 		Routing.RegisterRoute(nameof(BasicMapExample), typeof(BasicMapExample));
-	}
+        Routing.RegisterRoute(nameof(CustomStyleURLExample), typeof(CustomStyleURLExample));
+    }
 }
 

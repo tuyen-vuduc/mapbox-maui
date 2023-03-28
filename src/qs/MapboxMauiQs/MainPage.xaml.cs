@@ -309,17 +309,13 @@ public partial class MainPage : ContentPage
         { "Globe and Atmosphere", globeAndAtmosphere},
     };
 
-    void exampleList_SelectionChanged(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
+    void TapGestureRecognizer_Tapped(System.Object sender, Microsoft.Maui.Controls.TappedEventArgs e)
     {
-        var example = exampleList.SelectedItem as ExampleItemModel;
+        var example = (sender as VisualElement).BindingContext as ExampleItemModel;
 
         if (example == null) return;
 
-        Shell.Current.GoToAsync(example.PageRoute)
-            .ContinueWith(x =>
-            {
-
-            });
+        Shell.Current.GoToAsync(example.PageRoute);
 
         exampleList.SelectedItem = null;
     }

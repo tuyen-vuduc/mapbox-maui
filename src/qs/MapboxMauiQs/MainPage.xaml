@@ -8,7 +8,6 @@
         IsGrouped="True"
         x:Name="exampleList"
         Header="{Binding .}"
-        SelectionChanged="exampleList_SelectionChanged"
         ItemSizingStrategy="MeasureAllItems"
         SelectionMode="Single"
         >
@@ -41,6 +40,11 @@
             <DataTemplate>
                 <StackLayout
                     Padding="0,8,0,0">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Tapped="TapGestureRecognizer_Tapped"
+                            />
+                    </StackLayout.GestureRecognizers>
                     <Label
                         Padding="16,0"
                         Text="{Binding Title}"

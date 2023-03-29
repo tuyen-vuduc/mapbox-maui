@@ -296,11 +296,14 @@ Use the overlayHandler parameter to draw on top of a snapshot using Core Graphhi
 
     void TapGestureRecognizer_Tapped(System.Object sender, Microsoft.Maui.Controls.TappedEventArgs e)
     {
-        var example = (sender as VisualElement).BindingContext as ExampleItemModel;
+        var example = (sender as VisualElement).BindingContext as IExampleInfo;
 
         if (example == null) return;
 
-        Shell.Current.GoToAsync(example.PageRoute);
+        Shell.Current.GoToAsync(example.PageRoute, new Dictionary<string, object>
+        {
+            { nameof(example), example }
+        });
     }
 }
 

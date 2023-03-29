@@ -1,12 +1,16 @@
 ﻿using Mapbox.Maui;
+using iOSPage = Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific.Page;
 
 namespace MapboxMauiQs;
 
-public partial class BasicMapExample : ContentPage, IExamplePage
+public partial class BasicMapExample : ContentPage, IExamplePage, IQueryAttributable
 {
-	public BasicMapExample()
+    IExampleInfo info;
+
+    public BasicMapExample()
 	{
 		InitializeComponent();
+        iOSPage.SetUseSafeArea(this, false);
 
         map.MapReady += Map_MapReady;
 	}
@@ -20,5 +24,12 @@ public partial class BasicMapExample : ContentPage, IExamplePage
             Center = new Point(21.028511, 105.804817),
             Zoom = 12,
         };
+    }
+
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        info = query["example"] as IExampleInfo;
+
+        Title = info?.Title;
     }
 }

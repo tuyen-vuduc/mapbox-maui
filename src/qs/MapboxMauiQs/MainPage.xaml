@@ -2,66 +2,76 @@
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="Examples"
+    xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+    ios:NavigationPage.PrefersLargeTitles="true"
     x:Class="MapboxMauiQs.MainPage">
-    <CollectionView
-        IsGrouped="True"
-        x:Name="exampleList"
-        Header="{Binding .}"
-        ItemSizingStrategy="MeasureAllItems"
-        SelectionMode="Single"
-        >
-        <CollectionView.HeaderTemplate>
-            <DataTemplate>
-                <StackLayout>
-                    <Label
-                        FontSize="Large"
-                        Text="Examples" />
-                    <SearchBar />
-                </StackLayout>
-            </DataTemplate>
-        </CollectionView.HeaderTemplate>
-        <CollectionView.GroupHeaderTemplate>
-            <DataTemplate>
-                <StackLayout
-                    Padding="0,16,0,0">
-                    <Label
-                        Padding="16,0"
-                        Text="{Binding Key}"
-                        TextColor="Grey"/>
-                    <BoxView
-                        Margin="0,4,0,0"
-                        HeightRequest="1"
-                        Color="#e5e5e5" />
-                </StackLayout>
-            </DataTemplate>
-        </CollectionView.GroupHeaderTemplate>
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <StackLayout
-                    Padding="0,8,0,0">
-                    <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer
-                            Tapped="TapGestureRecognizer_Tapped"
-                            />
-                    </StackLayout.GestureRecognizers>
-                    <Label
-                        Padding="16,0"
-                        Text="{Binding Title}"
-                        FontSize="Body"
-                        TextColor="Black"/>
-                    <Label
-                        Padding="16,0"
-                        Text="{Binding Subtitle}"
-                        FontSize="Small"
-                        TextColor="Grey"/>
-                    <BoxView
-                        Margin="0,4,0,0"
-                        HeightRequest="1"
-                        Color="#e5e5e5" />
-                </StackLayout>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+    <Shell.TitleView>
+        <Grid
+            RowDefinitions="120">
+            <StackLayout>
+                <Label
+                    FontSize="Large"
+                    Text="Examples" />
+                <SearchBar />
+            </StackLayout>
+        </Grid>
+    </Shell.TitleView>
+    <ScrollView>
+        <StackLayout
+            x:Name="exampleList">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout>
+                        <StackLayout
+                            Spacing="0"
+                            Padding="0,16,0,0">
+                            <Label
+                                Padding="16,0"
+                                Text="{Binding Key}"
+                                TextColor="Grey" />
+                            <BoxView
+                                Margin="0,4,0,0"
+                                HeightRequest="1"
+                                Color="#e5e5e5" />
+                            <BoxView
+                                Margin="0,4,0,0"
+                                HeightRequest="1"
+                                Color="#e5e5e5" />
+                        </StackLayout>
+                        <StackLayout
+                            BindableLayout.ItemsSource="{Binding .}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout
+                                        Padding="0,8,0,0">
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Tapped="TapGestureRecognizer_Tapped" />
+                                        </StackLayout.GestureRecognizers>
+                                        <Label
+                                            Padding="16,0"
+                                            Text="{Binding Title}"
+                                            FontSize="Body"
+                                            TextColor="Black" />
+                                        <Grid
+                                            Padding="16,0">
+                                            <Label
+                                                Text="{Binding Subtitle}"
+                                                FontSize="Small"
+                                                TextColor="Grey" />
+                                        </Grid>
+                                        <BoxView
+                                            Margin="0,4,0,0"
+                                            HeightRequest="1"
+                                            Color="#e5e5e5" />
+                                    </StackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
+                    </StackLayout>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>
 

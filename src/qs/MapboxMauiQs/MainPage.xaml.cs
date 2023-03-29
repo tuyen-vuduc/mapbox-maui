@@ -19,14 +19,14 @@ public partial class MainPage : ContentPage
             .GroupBy(x => x.Group)
             .ToList();
 
-        exampleList.ItemsSource = items;
+        BindableLayout.SetItemsSource(exampleList, items);
     }
 
     // Examples that show how to get started with Mapbox, such as creating a basic map view or setting a style once.
     static List<ExampleItemModel> gettingStartedExamples = new List<ExampleItemModel> {
         new ExampleItemModel {Title =  "Display a map view",
                 Subtitle = @"
-                Create and display a map that uses the default Mapbox streets style. This example also shows how to update the starting camera for a map.
+Create and display a map that uses the default Mapbox streets style. This example also shows how to update the starting camera for a map.
                 ",
                 PageRoute = "BasicMapExample", },
         new ExampleItemModel {Title =  "Use a custom map style",
@@ -115,7 +115,7 @@ public partial class MainPage : ContentPage
     static List<ExampleItemModel>cameraExamples = new List<ExampleItemModel> {
             new ExampleItemModel {Title =  "Use custom camera animations",
                 Subtitle = @"
-                    Animate the map camera to a new position using camera animators. Individual camera properties such as zoom, bearing, and center coordinate can be animated independently.
+Animate the map camera to a new position using camera animators. Individual camera properties such as zoom, bearing, and center coordinate can be animated independently.
                 ",
                 PageRoute = "CameraAnimatorsExample", },
         new ExampleItemModel {Title =  "Use camera animations",
@@ -169,14 +169,9 @@ public partial class MainPage : ContentPage
     static List<ExampleItemModel>offlineExamples = new List<ExampleItemModel> {
         new ExampleItemModel {Title =  "Use OfflineManager and TileStore to download a region",
                 Subtitle = @"
-                    Shows how to use OfflineManager and TileStore to download regions
-                    for offline use.
+Shows how to use OfflineManager and TileStore to download regions for offline use.
 
-                    By default, users may download up to 750 tile packs for offline
-                    use across all regions. If the limit is hit, any loadRegion call
-                    will fail until excess regions are deleted. This limit is subject
-                    to change. Please contact Mapbox if you require a higher limit.
-                    Additional charges may apply.
+By default, users may download up to 750 tile packs for offline use across all regions. If the limit is hit, any loadRegion call will fail until excess regions are deleted. This limit is subject to change. Please contact Mapbox if you require a higher limit. Additional charges may apply.
                 ",
                 PageRoute = "OfflineManagerExample", }
     };
@@ -185,14 +180,13 @@ public partial class MainPage : ContentPage
     static List<ExampleItemModel>snapshotExamples = new List<ExampleItemModel> {
     new ExampleItemModel {Title =  "Create a static map snapshot",
             Subtitle = @"
-                    Create a static, non-interactive image of a map style with specified camera position. The resulting snapshot is provided as a `UIImage`.
-                    The map on top is interactive. The bottom one is a static snapshot.
+Create a static, non-interactive image of a map style with specified camera position. The resulting snapshot is provided as a `UIImage`.
+The map on top is interactive. The bottom one is a static snapshot.
                 ",
             PageRoute = "SnapshotterExample", },
     new ExampleItemModel {Title =  "Draw on a static snapshot with Core Graphics",
             Subtitle = @"
-                    Use the overlayHandler parameter to draw on top of a snapshot
-                    using Core Graphhics APIs.
+Use the overlayHandler parameter to draw on top of a snapshot using Core Graphhics APIs.
                 ",
             PageRoute = "SnapshotterCoreGraphicsExample", },
 
@@ -316,8 +310,6 @@ public partial class MainPage : ContentPage
         if (example == null) return;
 
         Shell.Current.GoToAsync(example.PageRoute);
-
-        exampleList.SelectedItem = null;
     }
 }
 

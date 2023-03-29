@@ -8,5 +8,5 @@ public class CustomStyleURLExampleInfo : IExampleInfo
 
     public string Subtitle => "Set and use a custom map style URL.";
 
-    public string PageRoute => typeof(CustomStyleURLExample).Name;
+    public string PageRoute => typeof(CustomStyleURLExample).FullName;
 }

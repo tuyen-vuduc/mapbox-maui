@@ -2,20 +2,11 @@
 
 public partial class MainPage : ContentPage
 {
-    public MainPage()
+    public MainPage(IEnumerable<IExampleInfo> examples)
     {
         InitializeComponent();
 
-        foreach (var group in all)
-        {
-            foreach (var item in group.Value)
-            {
-                item.Subtitle = item.Subtitle.Trim();
-                item.Group = group.Key;
-            }
-        }
-
-        var items = all.SelectMany(x => x.Value)
+        var items = examples
             .GroupBy(x => x.Group)
             .ToList();
 

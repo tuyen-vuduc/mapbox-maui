@@ -2,7 +2,7 @@
 
 namespace MapboxMauiQs;
 
-public partial class BasicMapExample : ContentPage
+public partial class BasicMapExample : ContentPage, IExamplePage
 {
 	public BasicMapExample()
 	{

@@ -2,7 +2,7 @@
 using Mapbox.Maui;
 namespace MapboxMauiQs;
 
-public class CustomStyleURLExample : ContentPage
+public class CustomStyleURLExample : ContentPage, IExamplePage
 {
     MapboxView map;
 

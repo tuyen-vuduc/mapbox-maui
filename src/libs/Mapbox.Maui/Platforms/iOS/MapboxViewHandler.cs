@@ -18,6 +18,19 @@ public partial class MapboxViewHandler
         handler.PlatformView.SetCameraTo(cameraOptions);
     }
 
+    private static void HandleDebugOptionsChanged(MapboxViewHandler handler, IMapboxView view)
+    {
+        if (view.DebugOptions == null) return;
+
+        var debugOptions = view.DebugOptions.ToNative();
+
+        handler.PlatformView.MapboxMapDebugOptions(
+            debugOptions
+                .Select(x => NSNumber.FromInt32((int)x))
+                .ToArray()
+        );
+    }
+
     private static void HandleScaleBarVisibilityChanged(MapboxViewHandler handler, IMapboxView view)
     {
         handler.PlatformView.OrnamentsOptionsScaleBarVisibility(view.ScaleBarVisibility.ToNative());
@@ -86,6 +99,27 @@ public static class AdditionalExtensions
             MapboxBuiltInStyle.TrafficNight => "mapbox://styles/mapbox/traffic-night-v2",
             _ => mapboxStyle.Uri,
         };
+    }
+
+    public static MBMMapDebugOptions ToNative(this DebugOption option)
+    {
+        return option switch
+        {
+            DebugOption.TileBorders => MBMMapDebugOptions.TileBorders,
+            DebugOption.ParseStatus => MBMMapDebugOptions.ParseStatus,
+            DebugOption.Timestamps => MBMMapDebugOptions.Timestamps,
+            DebugOption.Collision => MBMMapDebugOptions.Collision,
+            DebugOption.StencilClip => MBMMapDebugOptions.StencilClip,
+            DebugOption.DepthBuffer => MBMMapDebugOptions.DepthBuffer,
+            _ => MBMMapDebugOptions.ModelBounds,
+        };
+    }
+
+    public static IList<MBMMapDebugOptions> ToNative(this IEnumerable<DebugOption> options)
+    {
+        return options
+            .Select(x => x.ToNative())
+            .ToList();
     }
 
     public static MBMCameraOptions ToNative(this CameraOptions cameraOptions)

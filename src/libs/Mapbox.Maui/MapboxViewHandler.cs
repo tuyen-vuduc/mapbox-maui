@@ -20,6 +20,7 @@ public partial class MapboxViewHandler : ViewHandler<IMapboxView, PlatformView>
             [nameof(MapboxView.CameraOptions)] = HandleCameraOptionsChanged,
             [nameof(MapboxView.MapboxStyle)] = HandleMapboxStyleChanged,
             [nameof(MapboxView.ScaleBarVisibility)] = HandleScaleBarVisibilityChanged,
+            [nameof(MapboxView.DebugOptions)] = HandleDebugOptionsChanged,
         };
 
     public MapboxViewHandler() : base(PropertyMapper)

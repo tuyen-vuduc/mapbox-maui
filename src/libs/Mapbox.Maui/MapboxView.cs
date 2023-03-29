@@ -11,6 +11,17 @@ namespace Mapbox.Maui;
 
 public class MapboxView : View, IMapboxView
 {
+    public static readonly BindableProperty DebugOptionsProperty = BindableProperty.Create(
+       nameof(DebugOptions),
+       typeof(DebugOption[]),
+       typeof(MapboxView)
+    );
+    public DebugOption[] DebugOptions
+    {
+        get => (DebugOption[])GetValue(DebugOptionsProperty);
+        set => SetValue(DebugOptionsProperty, value);
+    }
+
     public static readonly BindableProperty ScaleBarVisibilityProperty = BindableProperty.Create(
        nameof(ScaleBarVisibility),
        typeof(OrnamentVisibility),

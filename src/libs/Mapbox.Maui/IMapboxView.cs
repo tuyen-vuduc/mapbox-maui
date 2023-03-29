@@ -2,7 +2,7 @@
 
 namespace Mapbox.Maui;
 
-public interface IMapboxView : IView
+public partial interface IMapboxView : IView
 {
     CameraOptions CameraOptions { get; set; }
     MapboxStyle MapboxStyle { get; set; }
@@ -11,6 +11,10 @@ public interface IMapboxView : IView
     float? MapZoom { get; set; }
     OrnamentVisibility ScaleBarVisibility { get; set; }
 
+    DebugOption[] DebugOptions { get; set; }
+}
+
+partial interface IMapboxView { 
     event EventHandler MapReady;
     ICommand MapReadyCommand { get; set; }
 }

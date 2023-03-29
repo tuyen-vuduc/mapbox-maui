@@ -26,6 +26,20 @@ public partial class MapboxViewHandler
         handler.GetMapView()?.MapboxMap.SetCamera(cameraOptions);
     }
 
+    private static void HandleDebugOptionsChanged(MapboxViewHandler handler, IMapboxView view)
+    {
+        if (view.DebugOptions == null) return;
+
+        var mapView = handler.GetMapView();
+        if (mapView == null) return;
+
+        var debugOptions = mapView.MapboxMap.Debug;
+        handler.GetMapView().MapboxMap.SetDebug(debugOptions, false);
+
+        debugOptions = view.DebugOptions.ToNative();
+        handler.GetMapView().MapboxMap.SetDebug(debugOptions, true);
+    }
+
     private static void HandleScaleBarVisibilityChanged(MapboxViewHandler handler, IMapboxView view)
     {
         var mapView = handler.GetMapView();
@@ -100,6 +114,27 @@ static class AdditionalExtensions
         var tag = $"mapbox-maui-{handler.PlatformView.Id}";
         var fragnent = mainActivity.SupportFragmentManager.FindFragmentByTag(tag);
         return (fragnent as MapboxFragment)?.MapView;
+    }
+
+    public static MapDebugOptions ToNative(this DebugOption option)
+    {
+        return option switch
+        {
+            DebugOption.TileBorders => MapDebugOptions.TileBorders,
+            DebugOption.ParseStatus => MapDebugOptions.ParseStatus,
+            DebugOption.Timestamps => MapDebugOptions.Timestamps,
+            DebugOption.Collision => MapDebugOptions.Collision,
+            DebugOption.StencilClip => MapDebugOptions.StencilClip,
+            DebugOption.DepthBuffer => MapDebugOptions.DepthBuffer,
+            _ => MapDebugOptions.ModelBounds,
+        };
+    }
+
+    public static IList<MapDebugOptions> ToNative(this IEnumerable<DebugOption> options)
+    {
+        return options
+            .Select(x => x.ToNative())
+            .ToList();
     }
 
     public static string ToNative(this MapboxStyle mapboxStyle)

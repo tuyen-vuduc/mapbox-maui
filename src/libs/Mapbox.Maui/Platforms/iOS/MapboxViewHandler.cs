@@ -8,23 +8,31 @@ using MapboxCoreMaps;
 using MapboxMaps;
 using MapboxMapsObjC;
 using Microsoft.Maui.Handlers;
-using PlatformView = MapboxMaps.MapView;
+using PlatformView = MapViewContainer;
 
 public partial class MapboxViewHandler
 {
     private static void HandleCameraOptionsChanged(MapboxViewHandler handler, IMapboxView view)
     {
+        var mapView = handler.PlatformView.MapView;
+        if (mapView == null) return;
+
         var cameraOptions = view.CameraOptions.ToNative();
-        handler.PlatformView.SetCameraTo(cameraOptions);
+        if (cameraOptions == null) return;
+
+        mapView.SetCameraTo(cameraOptions);
     }
 
     private static void HandleDebugOptionsChanged(MapboxViewHandler handler, IMapboxView view)
     {
         if (view.DebugOptions == null) return;
 
+        var mapView = handler.PlatformView.MapView;
+        if (mapView == null) return;
+
         var debugOptions = view.DebugOptions.ToNative();
 
-        handler.PlatformView.MapboxMapDebugOptions(
+        mapView.MapboxMapDebugOptions(
             debugOptions
                 .Select(x => NSNumber.FromInt32((int)x))
                 .ToArray()
@@ -33,16 +41,21 @@ public partial class MapboxViewHandler
 
     private static void HandleScaleBarVisibilityChanged(MapboxViewHandler handler, IMapboxView view)
     {
-        handler.PlatformView.OrnamentsOptionsScaleBarVisibility(view.ScaleBarVisibility.ToNative());
+        var mapView = handler.PlatformView.MapView;
+        if (mapView == null) return;
+
+        mapView.OrnamentsOptionsScaleBarVisibility(view.ScaleBarVisibility.ToNative());
     }
 
     private static void HandleMapboxStyleChanged(MapboxViewHandler handler, IMapboxView view)
     {
-        var styleUri = view.MapboxStyle.ToNative();
+        var mapView = handler.PlatformView.MapView;
+        if (mapView == null) return;
 
+        var styleUri = view.MapboxStyle.ToNative();
         if (string.IsNullOrWhiteSpace(styleUri)) return;
 
-        handler.PlatformView.SetStyle(styleUri);
+        mapView.SetStyle(styleUri);
     }
 
     protected override PlatformView CreatePlatformView()
@@ -51,18 +64,7 @@ public partial class MapboxViewHandler
             ? MapInitOptionsBuilder.DefaultResourceOptions.AccessToken
             : ACCESS_TOKEN;
 
-        MapInitOptions options = MapInitOptionsBuilder
-                .Create()
-                .AccessToken(accessToken)
-                .Build();
-
-        // Perform any additional setup after loading the view, typically from a nib.
-        var mapView = MapViewFactory.CreateWithFrame(
-            CoreGraphics.CGRect.Empty,
-            options
-        );
-
-        return mapView;
+        return new PlatformView(accessToken);
     }
 
     protected override void ConnectHandler(PlatformView platformView)
@@ -149,6 +151,12 @@ public static class AdditionalExtensions
         var pitch = cameraOptions.Pitch.HasValue
             ? NSNumber.FromFloat(cameraOptions.Pitch.Value)
             : null;
+
+        if (center == null &&
+            padding == null &&
+            anchor == null &&
+            zoom == null &&
+            pitch == null) return null;
 
         return new MBMCameraOptions(
             center,

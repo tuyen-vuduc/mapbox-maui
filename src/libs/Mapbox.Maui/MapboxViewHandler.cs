@@ -1,7 +1,7 @@
 ﻿using Microsoft.Maui.Handlers;
 
 #if IOS 
-using PlatformView = MapboxMaps.MapView;
+using PlatformView = Mapbox.Maui.MapViewContainer;
 #elif __ANDROID__
 using PlatformView = AndroidX.Fragment.App.FragmentContainerView;
 #elif (NETSTANDARD || !PLATFORM) || (NET6_0_OR_GREATER && !IOS && !__ANDROID__)

@@ -2,20 +2,8 @@
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
-    ios:NavigationPage.PrefersLargeTitles="true"
+    Title="Examples"
     x:Class="MapboxMauiQs.MainPage">
-    <Shell.TitleView>
-        <Grid
-            RowDefinitions="120">
-            <StackLayout>
-                <Label
-                    FontSize="Large"
-                    Text="Examples" />
-                <SearchBar />
-            </StackLayout>
-        </Grid>
-    </Shell.TitleView>
     <ScrollView>
         <StackLayout
             x:Name="exampleList">

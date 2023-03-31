@@ -78,7 +78,16 @@
 		<PackageReference Include="Square.OkHttp3" Version="4.10.0.1" />
 		<PackageReference Include="Xamarin.Kotlin.StdLib" Version="1.8.10" />
 	</ItemGroup>
-
+<!-- 
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|iPhone'">
+		<RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
+	</PropertyGroup> -->
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net7.0-ios'">
+		<PublishTrimmed>true</PublishTrimmed>
+	</PropertyGroup>
+	<Target Name="DisplayMessages" BeforeTargets="PrepareForILLink">
+		<Message Text="Project File Name = $(Configuration)|$(TargetFramework)|$(Platform)" />
+	</Target>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0-ios'">
 		<PackageReference Include="MapboxMapsObjC.iOS" Version="10.11.1" />
 	</ItemGroup>

@@ -17,7 +17,7 @@ public class MapViewContainer : UIView
                 .Build();
 
         var mapView = MapViewFactory.CreateWithFrame(
-            CoreGraphics.CGRect.FromLTRB(0,0,120, 210),
+            CoreGraphics.CGRect.FromLTRB(0, 0, 320, 675),
             null
         );
         mapView.AutoresizingMask = UIKit.UIViewAutoresizing.FlexibleWidth | UIKit.UIViewAutoresizing.FlexibleHeight;

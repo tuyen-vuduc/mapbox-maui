@@ -19,6 +19,10 @@ public partial class MapboxViewHandler
 {
     MapboxFragment mapboxFragment;
 
+    private static void HandleRasterDemSourceBuilderChanged(MapboxViewHandler handler, IMapboxView view)
+    {
+    }
+
     private static void HandleCameraOptionsChanged(MapboxViewHandler handler, IMapboxView view)
     {
         var cameraOptions = view.CameraOptions.ToNative();
@@ -90,7 +94,8 @@ public partial class MapboxViewHandler
         if (mapboxFragment != null)
         {
             mapboxFragment.MapViewReady -= HandleMapViewReady;
-            mapboxFragment?.Dispose();
+            mapboxFragment.Dispose();
+            mapboxFragment = null;
         }
         base.DisconnectHandler(platformView);
     }

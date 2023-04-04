@@ -5,12 +5,24 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Security.AccessControl;
 using System.Windows.Input;
+using Mapbox.Maui.Styles;
 using Microsoft.Maui.Handlers;
 
 namespace Mapbox.Maui;
 
 public class MapboxView : View, IMapboxView
 {
+    public static readonly BindableProperty RasterDemSourceBuilderProperty = BindableProperty.Create(
+       nameof(RasterDemSourceBuilder),
+       typeof(RasterDemSourceBuilder),
+       typeof(MapboxView)
+    );
+    public RasterDemSourceBuilder RasterDemSourceBuilder
+    {
+        get => (RasterDemSourceBuilder)GetValue(DebugOptionsProperty);
+        set => SetValue(DebugOptionsProperty, value);
+    }
+
     public static readonly BindableProperty DebugOptionsProperty = BindableProperty.Create(
        nameof(DebugOptions),
        typeof(DebugOption[]),

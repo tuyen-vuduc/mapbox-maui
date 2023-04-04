@@ -12,6 +12,10 @@ using PlatformView = MapViewContainer;
 
 public partial class MapboxViewHandler
 {
+    private static void HandleRasterDemSourceBuilderChanged(MapboxViewHandler handler, IMapboxView view)
+    {
+    }
+
     private static void HandleCameraOptionsChanged(MapboxViewHandler handler, IMapboxView view)
     {
         var mapView = handler.PlatformView.MapView;

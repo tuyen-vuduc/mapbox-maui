@@ -21,6 +21,7 @@ public partial class MapboxViewHandler : ViewHandler<IMapboxView, PlatformView>
             [nameof(MapboxView.MapboxStyle)] = HandleMapboxStyleChanged,
             [nameof(MapboxView.ScaleBarVisibility)] = HandleScaleBarVisibilityChanged,
             [nameof(MapboxView.DebugOptions)] = HandleDebugOptionsChanged,
+            [nameof(MapboxView.RasterDemSourceBuilder)] = HandleRasterDemSourceBuilderChanged,
         };
 
     public MapboxViewHandler() : base(PropertyMapper)

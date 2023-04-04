@@ -54,6 +54,12 @@
 	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0-ios'">
 		<PackageReference Include="MapboxMapsObjC.iOS" Version="10.11.1" />
 	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="Models\Styles\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Models\Styles\" />
+	</ItemGroup>
 	<ProjectExtensions>
 	  <MonoDevelop>
 	    <Properties>

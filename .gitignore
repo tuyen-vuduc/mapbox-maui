@@ -405,3 +405,5 @@ ASALocalRun/
 .localhistory/
 
 tools/
+
+*.dev.cs

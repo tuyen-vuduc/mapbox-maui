@@ -3,10 +3,8 @@ using Mapbox.Maui;
 
 namespace MapboxMauiQs;
 
-public static class MauiProgram
+public static partial class MauiProgram
 {
-	private const string ACCESS_TOKEN = "pk.eyJ1IjoidHV5ZW52IiwiYSI6ImNsMnpzNzh4NjBnNG0zZHBzYTFmYmxhOWUifQ.Az2oICdp9k0Hb5tu_M8b-g";
-
     public static MauiApp CreateMauiApp()
 	{
 		var builder = MauiApp.CreateBuilder();

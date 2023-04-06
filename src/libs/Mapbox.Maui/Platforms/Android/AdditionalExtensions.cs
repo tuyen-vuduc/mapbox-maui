@@ -11,6 +11,17 @@ static class AdditionalExtensions
 {
     internal static PlatformValue Wrap(this object xvalue)
     {
+        var platformValue = xvalue switch
+        {
+            bool value => new PlatformValue(value),
+            long value => new PlatformValue(value),
+            double value => new PlatformValue(value),
+            string value => new PlatformValue(value),
+            _ => null
+        };
+
+        if (platformValue != null) return platformValue;
+
         if (xvalue is IEnumerable objects)
         {
             var list = new List<PlatformValue>();
@@ -21,26 +32,16 @@ static class AdditionalExtensions
             return new PlatformValue(list);
         }
 
-        return xvalue switch
-        {
-            bool value => new PlatformValue(value),
-            long value => new PlatformValue(value),
-            double value => new PlatformValue(value),
-            string value => new PlatformValue(value),
-            _ => throw new NotSupportedException($"Invalue property type: {xvalue?.GetType()} | {xvalue}")
-        };
+        throw new NotSupportedException($"Invalue property type: {xvalue?.GetType()} | {xvalue}");
     }
 
-
-    internal static PlatformValue ToPlatformValue(this RasterDemSource xbuilder)
+    internal static PlatformValue ToPlatformValue(this MapboxSource source)
     {
-        var properties = new Dictionary<string, PlatformValue>()
+        var properties = new Dictionary<string, PlatformValue>();
+
+        foreach (var property in source.Properties)
         {
-            { "type", xbuilder.Type.Wrap() },
-        };
-        foreach (var property in xbuilder.Properties)
-        {
-            var xvalue = property.Value.Value.Wrap();
+            var xvalue = property.Value.Wrap();
             properties[property.Key] = xvalue;
         }
 

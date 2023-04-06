@@ -18,17 +18,20 @@ public partial class MapboxViewHandler
 {
     MapboxFragment mapboxFragment;
 
-    private static void HandleRasterDemSourceBuilderChanged(MapboxViewHandler handler, IMapboxView view)
+    private static void HandleSourcesChanged(MapboxViewHandler handler, IMapboxView view)
     {
-        if (view.RasterDemSourceBuilder == null) return;
-
         var mapView = handler.GetMapView();
         if (mapView == null) return;
 
-        mapView.MapboxMap.Style.AddStyleSource(
-            view.RasterDemSourceBuilder.Id,
-            view.RasterDemSourceBuilder.ToPlatformValue()
-        );
+        if (view.Sources == null) return;
+
+        foreach (var source in view.Sources)
+        {
+            mapView.MapboxMap.Style.AddStyleSource(
+                source.Id,
+                source.ToPlatformValue()
+            );
+        }
     }
 
     private static void HandleCameraOptionsChanged(MapboxViewHandler handler, IMapboxView view)
@@ -90,6 +93,7 @@ public partial class MapboxViewHandler
         };
         mapboxFragment = new MapboxFragment();
         mapboxFragment.MapViewReady += HandleMapViewReady;
+        mapboxFragment.StyleLoaded += HandleStyleLoaded;
 
         var fragmentTransaction = mainActivity.SupportFragmentManager.BeginTransaction();
         fragmentTransaction.Replace(fragmentContainerView.Id, mapboxFragment, $"mapbox-maui-{fragmentContainerView.Id}");
@@ -111,11 +115,11 @@ public partial class MapboxViewHandler
     private void HandleMapViewReady(MapView view)
     {
         (VirtualView as MapboxView)?.InvokeMapReady();
+    }
 
-        if (VirtualView.MapReadyCommand?.CanExecute(view) == true)
-        {
-            VirtualView.MapReadyCommand.Execute(view);
-        }
+    private void HandleStyleLoaded(MapView view)
+    {
+        (VirtualView as MapboxView)?.InvokeStyleLoaded();
     }
 }
 

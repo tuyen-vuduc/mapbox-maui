@@ -6,10 +6,13 @@ using AndroidX.Fragment.App;
 using Android.OS;
 using System;
 using Android.Runtime;
+using Com.Mapbox.Maps.Plugin.Delegates.Listeners;
+using Com.Mapbox.Maps.Extension.Observable.Eventdata;
 
-public class MapboxFragment : Fragment
+public partial class MapboxFragment : Fragment
 {
     public event Action<MapView> MapViewReady;
+    public event Action<MapView> StyleLoaded;
 
     public MapView MapView { get; private set; }
 
@@ -54,6 +57,7 @@ public class MapboxFragment : Fragment
         base.OnViewCreated(view, savedInstanceState);
 
         MapViewReady?.Invoke(MapView);
+        MapView.MapboxMap.AddOnStyleLoadedListener(this);
     }
 
     public override void OnStart()
@@ -91,3 +95,11 @@ public class MapboxFragment : Fragment
     }
 }
 
+
+partial class MapboxFragment : IOnStyleLoadedListener
+{
+    public void OnStyleLoaded(StyleLoadedEventData eventData)
+    {
+        StyleLoaded?.Invoke(this.MapView);
+    }
+}

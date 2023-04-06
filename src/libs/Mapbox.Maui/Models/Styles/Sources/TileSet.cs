@@ -1,23 +1,83 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Mapbox.Maui.Styles;
 
-public class TileSetBuilder
+public class TileSet
 {
-    public IDictionary<string, object> Parameters { get; init; }
-    public TileSetBuilder(
+    public TileSet(
         string tilejson,
         List<string> tiles
         )
     {
-        Parameters = new Dictionary<string, object>()
+        properties = new Dictionary<string, object>()
         {
-            { nameof(tilejson), tilejson },
-            { nameof(tiles), tiles },
+            { TileSetKey.tilejson, tilejson },
+            { TileSetKey.tiles, tiles },
         };
     }
 
+    private static class TileSetKey
+    {
+        public const string tilejson = nameof(tilejson);
+        public const string tiles = nameof(tiles);
+        public const string name = nameof(name);
+        public const string center = nameof(center);
+        public const string bounds = nameof(bounds);
+        public const string maxzoom = nameof(maxzoom);
+        public const string data = nameof(data);
+        public const string minzoom = nameof(minzoom);
+        public const string grids = nameof(grids);
+        public const string scheme = nameof(scheme);
+        public const string legend = nameof(legend);
+        public const string template = nameof(template);
+        public const string attribution = nameof(attribution);
+        public const string version = nameof(version);
+        public const string description = nameof(description);
+    }
+
+    private readonly Dictionary<string, object> properties;
+
+    public TileSet SetProperty<T>(string name, T value)
+    {
+        // Not allow to use empty string as a name
+        if (string.IsNullOrWhiteSpace(name)) return this;
+
+        name = name.Trim();
+
+        // Not allow to change tilejson and/or tiles
+        if (string.Equals(name, TileSetKey.tilejson, StringComparison.OrdinalIgnoreCase)) return this;
+        if (string.Equals(name, TileSetKey.tiles, StringComparison.OrdinalIgnoreCase)) return this;
+
+        if (value == null)
+        {
+            properties.Remove(name);
+        }
+        else
+        {
+            properties[name] = value;
+        }
+
+        return this;
+    }
+
+    public T GetProperty<T>(string name, T defaultValue)
+    {
+        // Not allow to use empty string as a name
+        if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Invalid property name");
+
+        name = name.Trim();
+
+        if (properties.TryGetValue(name, out var value) && value is T result)
+        {
+            return result;
+        }
+
+        return defaultValue;
+    }
+
+    public ReadOnlyDictionary<string, object> Properties => new ReadOnlyDictionary<string, object>(properties);
 
     /**
      * A name describing the tileset. The name can
@@ -27,10 +87,10 @@ public class TileSetBuilder
      *
      * @param value the name to be set
      */
-    TileSetBuilder Name(string value)
+    public string Name
     {
-        Parameters["name"] = value;
-        return this;
+        get => GetProperty<string>(TileSetKey.name, default);
+        set => SetProperty<string>(TileSetKey.name, value);
     }
 
     /**
@@ -42,10 +102,10 @@ public class TileSetBuilder
      *
      * @param value the description to set
      */
-    TileSetBuilder Description(string value)
+    public string Description
     {
-        Parameters["description"] = value;
-        return this;
+        get => GetProperty<string>(TileSetKey.description, default);
+        set => SetProperty<string>(TileSetKey.description, value);
     }
 
     /**
@@ -59,9 +119,10 @@ public class TileSetBuilder
      *
      *  @param value the version to set
      */
-    TileSetBuilder Version(string value = "1.0.0")
+    public string Version
     {
-        Parameters["version"] = value; return this;
+        get => GetProperty<string>(TileSetKey.version, default);
+        set => SetProperty<string>(TileSetKey.version, value);
     }
 
     /**
@@ -73,9 +134,10 @@ public class TileSetBuilder
      *
      * @param value the attribution to set
      */
-    TileSetBuilder Attribution(String value)
+    public string Attribution
     {
-        Parameters["attribution"] = value; return this;
+        get => GetProperty<string>(TileSetKey.attribution, default);
+        set => SetProperty<string>(TileSetKey.attribution, value);
     }
 
     /**
@@ -87,9 +149,10 @@ public class TileSetBuilder
      *
      * @param value the template to set
      */
-    TileSetBuilder Template(String value)
+    public string Template
     {
-        Parameters["template"] = value; return this;
+        get => GetProperty<string>(TileSetKey.template, default);
+        set => SetProperty<string>(TileSetKey.template, value);
     }
 
     /**
@@ -101,9 +164,10 @@ public class TileSetBuilder
      *
      * @param value the legend to set
      */
-    TileSetBuilder Legend(String value)
+    public string Legend
     {
-        Parameters["legend"] = value; return this;
+        get => GetProperty<string>(TileSetKey.legend, default);
+        set => SetProperty<string>(TileSetKey.legend, value);
     }
 
     /**
@@ -114,9 +178,10 @@ public class TileSetBuilder
      *
      * @param value the scheme to set
      */
-    TileSetBuilder Scheme(MapboxScheme value)
+    public MapboxScheme Scheme
     {
-        Parameters["scheme"] = value; return this;
+        get => GetProperty<MapboxScheme>(TileSetKey.scheme, default);
+        set => SetProperty<MapboxScheme>(TileSetKey.scheme, value);
     }
 
     /**
@@ -133,9 +198,10 @@ public class TileSetBuilder
      *
      * @param value the grids to set
      */
-    TileSetBuilder Grids(List<String> value)
+    public List<String> Grids
     {
-        Parameters["grids"] = value; return this;
+        get => GetProperty<List<String>>(TileSetKey.grids, default);
+        set => SetProperty<List<String>>(TileSetKey.grids, value);
     }
 
     /**
@@ -152,9 +218,10 @@ public class TileSetBuilder
      *
      * @param value the data array to set
      */
-    TileSetBuilder Data(List<String> value)
+    public List<String> Data
     {
-        Parameters["data"] = value; return this;
+        get => GetProperty<List<String>>(TileSetKey.data, default);
+        set => SetProperty<List<String>>(TileSetKey.data, value);
     }
 
     /**
@@ -162,9 +229,10 @@ public class TileSetBuilder
      *
      * @param value the minZoom level to set
      */
-    TileSetBuilder minZoom(int value = 0)
+    public int MinZoom
     {
-        Parameters["minzoom"] = value; return this;
+        get => GetProperty<int>(TileSetKey.minzoom, default);
+        set => SetProperty<int>(TileSetKey.minzoom, value);
     }
 
     /**
@@ -172,9 +240,10 @@ public class TileSetBuilder
      *
      * @param value the maxZoom level to set
      */
-    TileSetBuilder maxZoom(int value = 30)
+    public int MaxZoom
     {
-        Parameters["maxzoom"] = value; return this;
+        get => GetProperty<int>(TileSetKey.maxzoom, default);
+        set => SetProperty<int>(TileSetKey.maxzoom, value);
     }
 
     /**
@@ -185,17 +254,10 @@ public class TileSetBuilder
      *
      * @param value the Double list to set
      */
-    TileSetBuilder bounds(List<double> value = default)
+    public int Bounds
     {
-        if (value == null)
-        {
-            value = new List<double>
-            {
-                -180.0, -90.0, 180.0, 90.0
-            };
-        }
-
-        Parameters["bounds"] = value; return this;
+        get => GetProperty<int>(TileSetKey.bounds, default);
+        set => SetProperty<int>(TileSetKey.bounds, value);
     }
 
     /**
@@ -209,31 +271,9 @@ public class TileSetBuilder
      *
      * @param value the Double array to set
      */
-    TileSetBuilder Center(List<double> value)
+    public List<double> Center
     {
-        Parameters["center"] = value; return this;
+        get => GetProperty<List<double>>(TileSetKey.center, default);
+        set => SetProperty<List<double>>(TileSetKey.center, value);
     }
 }
-
-public class RasterDemBuilder : TileSetBuilder
-{
-    public RasterDemBuilder(
-        string tilejson,
-        List<string> tiles)
-        : base(tilejson, tiles)
-    {
-
-    }
-
-    /**
-     * Default: "mapbox". The encoding formula for a raster-dem tileset.
-     * Supported values are "mapbox" and "terrarium".
-     *
-     * @param value the String to set
-     */
-    RasterDemBuilder Encoding(MapboxEncoding value)
-    {
-        Parameters["encoding"] = value; return this;
-    }
-}
-

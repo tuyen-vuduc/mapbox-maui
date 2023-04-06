@@ -28,7 +28,7 @@
 	</array>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/appicon.appiconset</string>
-	<key>MBXAccessToken</key>
+	<key>MBXAccessToken.x</key>
 	<string>YOUR_MAPBOX_ACCESS_TOKEN</string>
 </dict>
 </plist>

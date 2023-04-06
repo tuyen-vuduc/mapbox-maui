@@ -32,15 +32,15 @@ public static class AdditionalExtensions
     }
 
     internal static NSDictionary<NSString, NSObject> ToPlatformValue(
-        this Mapbox.Maui.Styles.RasterDemSource xbuilder
+        this Mapbox.Maui.Styles.MapboxSource source
     )
     {
         var properties = new NSDictionary<NSString, NSObject>();
-        properties["type"] = xbuilder.Type.Wrap();
+        properties["type"] = source.Type.Wrap();
 
-        foreach (var property in xbuilder.Properties)
+        foreach (var property in source.Properties)
         {
-            var xvalue = property.Value.Value.Wrap();
+            var xvalue = property.Value.Wrap();
             properties[property.Key] = xvalue;
         }
 

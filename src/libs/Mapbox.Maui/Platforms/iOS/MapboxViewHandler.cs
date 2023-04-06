@@ -10,17 +10,20 @@ using PlatformView = MapViewContainer;
 
 public partial class MapboxViewHandler
 {
-    private static void HandleRasterDemSourceBuilderChanged(MapboxViewHandler handler, IMapboxView view)
+    private static void HandleSourcesChanged(MapboxViewHandler handler, IMapboxView view)
     {
         var mapView = handler.PlatformView.MapView;
         if (mapView == null) return;
 
-        var rasterDemSourceBuilder = view.RasterDemSourceBuilder;
-        if (rasterDemSourceBuilder == null) return;
+        var sources = view.Sources;
+        if (sources == null) return;
 
-        var platformValue = rasterDemSourceBuilder.ToPlatformValue();
+        foreach (var source in sources)
+        {
+            var platformValue = source.ToPlatformValue();
 
-        mapView.AddSource(rasterDemSourceBuilder.Id, platformValue);
+            mapView.AddSource(source.Id, platformValue, null);
+        }
     }
 
     private static void HandleCameraOptionsChanged(MapboxViewHandler handler, IMapboxView view)
@@ -83,5 +86,13 @@ public partial class MapboxViewHandler
         base.ConnectHandler(platformView);
 
         (VirtualView as MapboxView)?.InvokeMapReady();
+
+        var mapView = platformView.MapView;
+        if (mapView == null) return;
+
+        mapView.OnStyleLoaded(style =>
+        {
+            (VirtualView as MapboxView)?.InvokeStyleLoaded();
+        });
     }
 }

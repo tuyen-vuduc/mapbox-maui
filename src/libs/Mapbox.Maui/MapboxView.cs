@@ -10,17 +10,17 @@ using Microsoft.Maui.Handlers;
 
 namespace Mapbox.Maui;
 
-public class MapboxView : View, IMapboxView
+public partial class MapboxView : View, IMapboxView
 {
-    public static readonly BindableProperty RasterDemSourceBuilderProperty = BindableProperty.Create(
-       nameof(RasterDemSourceBuilder),
-       typeof(RasterDemSource),
+    public static readonly BindableProperty SourcesProperty = BindableProperty.Create(
+       nameof(Sources),
+       typeof(IEnumerable<MapboxSource>),
        typeof(MapboxView)
     );
-    public RasterDemSource RasterDemSourceBuilder
+    public IEnumerable<MapboxSource> Sources
     {
-        get => (RasterDemSource)GetValue(DebugOptionsProperty);
-        set => SetValue(DebugOptionsProperty, value);
+        get => (IEnumerable<MapboxSource>)GetValue(SourcesProperty);
+        set => SetValue(SourcesProperty, value);
     }
 
     public static readonly BindableProperty DebugOptionsProperty = BindableProperty.Create(
@@ -158,23 +158,5 @@ public class MapboxView : View, IMapboxView
     {
         get => (MapboxStyle)GetValue(MapboxStyleProperty);
         set => SetValue(MapboxStyleProperty, value);
-    }
-
-    public event EventHandler MapReady;
-    internal void InvokeMapReady()
-    {
-        MapReady?.Invoke(this, EventArgs.Empty);
-    }
-
-    public static readonly BindableProperty MapReadyCommandProperty = BindableProperty.Create(
-       nameof(MapReadyCommand),
-       typeof(ICommand),
-       typeof(MapboxView),
-       default(ICommand)
-    );
-    public ICommand MapReadyCommand
-    {
-        get => (ICommand)GetValue(MapReadyCommandProperty);
-        set => SetValue(MapReadyCommandProperty, value);
     }
 }

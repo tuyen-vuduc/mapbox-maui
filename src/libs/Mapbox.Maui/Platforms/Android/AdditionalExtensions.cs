@@ -37,6 +37,8 @@ static class AdditionalExtensions
 
     internal static PlatformValue ToPlatformValue(this MapboxSource source)
     {
+        // TODO Add volatile properties
+
         var properties = new Dictionary<string, PlatformValue>();
 
         foreach (var property in source.Properties)

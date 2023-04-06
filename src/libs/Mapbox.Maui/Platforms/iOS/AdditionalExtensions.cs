@@ -11,6 +11,17 @@ public static class AdditionalExtensions
 {
     internal static NSObject Wrap(this object xvalue)
     {
+        var result = xvalue switch
+        {
+            bool value => NSNumber.FromBoolean(value),
+            long value => NSNumber.FromLong((nint)value),
+            double value => NSNumber.FromDouble(value),
+            string value => new NSString(value),
+            _ => (NSObject)null
+        };
+
+        if (result != null) return result;
+
         if (xvalue is IEnumerable objects)
         {
             var list = new List<NSObject>();
@@ -21,30 +32,25 @@ public static class AdditionalExtensions
             return NSArray.FromNSObjects(list.ToArray());
         }
 
-        return xvalue switch
-        {
-            bool value => NSNumber.FromBoolean(value),
-            long value => NSNumber.FromLong((nint)value),
-            double value => NSNumber.FromDouble(value),
-            string value => new NSString(value),
-            _ => throw new NotSupportedException($"Invalue property type: {xvalue?.GetType()} | {xvalue}")
-        };
+        throw new NotSupportedException($"Invalue property type: {xvalue?.GetType()} | {xvalue}");
     }
 
     internal static NSDictionary<NSString, NSObject> ToPlatformValue(
         this Mapbox.Maui.Styles.MapboxSource source
     )
     {
-        var properties = new NSDictionary<NSString, NSObject>();
-        properties["type"] = source.Type.Wrap();
-
+        // TODO Add volatile properties
+        var properties = new NSMutableDictionary<NSString, NSObject>();
         foreach (var property in source.Properties)
         {
             var xvalue = property.Value.Wrap();
             properties[property.Key] = xvalue;
         }
 
-        return properties;
+        return new NSDictionary<NSString, NSObject>(
+            properties.Keys,
+            properties.Values
+        );
     }
 
     public static TMBOrnamentVisibility ToNative(this OrnamentVisibility value)

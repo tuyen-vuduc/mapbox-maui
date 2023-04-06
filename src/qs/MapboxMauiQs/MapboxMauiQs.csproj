@@ -78,6 +78,11 @@
 		<PackageReference Include="Square.OkHttp3" Version="4.10.0.1" />
 		<PackageReference Include="Xamarin.Kotlin.StdLib" Version="1.8.10" />
 	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0-android'">
+		<PackageReference Include="MapboxMapsObjC.iOS" Version="10.11.1" />
+		<PackageReference Include="MapboxMobileEvents.iOS" Version="1.0.10" />
+		<PackageReference Include="MapboxMaps.iOS" Version="10.11.1" />
+	</ItemGroup>
 <!-- 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|iPhone'">
 		<RuntimeIdentifier>ios-arm64</RuntimeIdentifier>

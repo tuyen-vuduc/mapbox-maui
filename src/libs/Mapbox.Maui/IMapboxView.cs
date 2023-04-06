@@ -14,7 +14,7 @@ public partial interface IMapboxView : IView
 
     DebugOption[] DebugOptions { get; set; }
 
-    public RasterDemSourceBuilder RasterDemSourceBuilder { get; set; }
+    public RasterDemSource RasterDemSourceBuilder { get; set; }
 }
 
 partial interface IMapboxView { 

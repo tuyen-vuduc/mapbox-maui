@@ -1,50 +1,172 @@
 ﻿namespace Mapbox.Maui.Styles;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
-
-public abstract class BaseSourceBuilder
+public class MapboxSource
 {
-    public string Id { get; init; }
-
-    protected BaseSourceBuilder(string id)
+    public MapboxSource(string id)
     {
-        Id = id;
+        properties = new Dictionary<string, object>()
+        {
+            { "id", id },
+        };
+        volatileProperties = new Dictionary<string, object>();
     }
+
+    public MapboxSource(string id, string type)
+    {
+        properties = new Dictionary<string, object>()
+        {
+            { MapboxSourceKey.id, id },
+            { MapboxSourceKey.type, type },
+        };
+        volatileProperties = new Dictionary<string, object>();
+    }
+
+    private readonly Dictionary<string, object> properties;
+    private readonly Dictionary<string, object> volatileProperties;
+
+    private static class MapboxSourceKey
+    {
+        public const string id = nameof(id);
+        public const string type = nameof(type);
+    }
+
+    public string Id => properties[MapboxSourceKey.id] as string;
+
+    public string Type => properties.TryGetValue(MapboxSourceKey.type, out var value) &&
+        value is string stringValue
+        ? stringValue : (string)null;
+
+    public MapboxSource SetProperty<T>(string name, T value)
+    {
+        // Not allow to use empty string as a name
+        if (string.IsNullOrWhiteSpace(name)) return this;
+
+        name = name.Trim();
+
+        // Not allow to change id and/or type
+        if (string.Equals(name, MapboxSourceKey.id, StringComparison.OrdinalIgnoreCase)) return this;
+        if (string.Equals(name, MapboxSourceKey.type, StringComparison.OrdinalIgnoreCase)) return this;
+
+        if (value == null)
+        {
+            properties.Remove(name);
+        }
+        else
+        {
+            properties[name] = value;
+        }
+
+        return this;
+    }
+
+    public MapboxSource SetVolatileProperty<T>(string name, T value)
+    {
+        // Not allow to use empty string as a name
+        if (string.IsNullOrWhiteSpace(name)) return this;
+
+        name = name.Trim();
+
+        // Not allow to change id and/or type
+        if (string.Equals(name, MapboxSourceKey.id, StringComparison.OrdinalIgnoreCase)) return this;
+        if (string.Equals(name, MapboxSourceKey.type, StringComparison.OrdinalIgnoreCase)) return this;
+
+        if (value == null)
+        {
+            volatileProperties.Remove(name);
+        }
+        else
+        {
+            volatileProperties[name] = value;
+        }
+
+        return this;
+    }
+
+    public T GetProperty<T>(string name, T defaultValue)
+    {
+        // Not allow to use empty string as a name
+        if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Invalid property name");
+
+        name = name.Trim();
+
+        if (properties.TryGetValue(name, out var value) && value is T result)
+        {
+            return result;
+        }
+
+        return defaultValue;
+    }
+
+    public T GetVolatileProperty<T>(string name, T defaultValue)
+    {
+        // Not allow to use empty string as a name
+        if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Invalid property name");
+
+        name = name.Trim();
+
+        if (volatileProperties.TryGetValue(name, out var value) && value is T result)
+        {
+            return result;
+        }
+
+        return defaultValue;
+    }
+
+    public ReadOnlyDictionary<string, object> Properties => new ReadOnlyDictionary<string, object>(properties);
+    // Properties that only settable after the source is added to the style.
+    public ReadOnlyDictionary<string, object> VolatileProperties => new ReadOnlyDictionary<string, object>(volatileProperties);
 }
 
-public class RasterDemSourceBuilder : BaseSourceBuilder
+public class RasterDemSource : MapboxSource
 {
-    public RasterDemSourceBuilder(string id)
-        : base(id)
+    public RasterDemSource(string id)
+        : base(id, "raster-dem")
     {
-        Properties = new Dictionary<string, PropertyValue<object>>();
-        VolatileProperties = new Dictionary<string, PropertyValue<object>>();
     }
 
-    public IDictionary<string, PropertyValue<object>> Properties { get; private set; }
-    // Properties that only settable after the source is added to the style.
-    public IDictionary<string, PropertyValue<object>> VolatileProperties { get; private set; }
-
-    /**
-     * A URL to a TileJSON resource. Supported protocols are `http:`, `https:`, and `mapbox://<Tileset ID>`.
-     */
-    RasterDemSourceBuilder Url(string value)
+    private static class RasterDemSourceKey
     {
-        var propertyValue = new PropertyValue<object>("url", value);
-        Properties[propertyValue.Name] = propertyValue;
+        public const string url = nameof(url);
+        public const string tiles = nameof(tiles);
+        public const string bounds = nameof(bounds);
+        public const string minzoom = nameof(minzoom);
+        public const string maxzoom = nameof(maxzoom);
+        public const string tileSize = nameof(tileSize);
+        public const string attribution = nameof(attribution);
+        public const string encoding = nameof(encoding);
+        public const string @volatile = nameof(@volatile);
+        public const string prefetchZoomDelta = "prefetch-zoom-delta";
+        public const string minimumTileUpdateInterval = "minimum-tile-update-interval";
+        public const string maxOverscaleFactorForParentTiles = "max-overscale-factor-for-parent-tiles";
+        public const string tileRequestsDelay = "tile-requests-delay";
+        public const string tileNetworkRequestsDelay = "tile-network-requests-delay";
+    }
 
+    /// <summary>
+    /// A URL to a TileJSON resource. Supported protocols are `http:`, `https:`, and `mapbox://<Tileset ID>`.
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public string Url
+    {
+        get => GetProperty<string>(RasterDemSourceKey.url, default);
+        set => SetProperty<string>(RasterDemSourceKey.url, value);
+    }
+    RasterDemSource Url(string value)
+    {
+        AddProperty("url", value);
         return this;
     }
 
     /**
      * An array of one or more tile source URLs, as in the TileJSON spec.
      */
-    RasterDemSourceBuilder Tiles(List<string> value)
+    RasterDemSource Tiles(List<string> value)
     {
-        var propertyValue = new PropertyValue<object>("tiles", value);
-        Properties[propertyValue.Name] = propertyValue;
-
+        AddProperty("tiles", value);
         return this;
     }
 
@@ -53,7 +175,7 @@ public class RasterDemSourceBuilder : BaseSourceBuilder
      * bounding box in the following order: `[sw.lng, sw.lat, ne.lng, ne.lat]`. When this property is included in
      * a source, no tiles outside of the given bounds are requested by Mapbox GL.
      */
-    RasterDemSourceBuilder Bounds(List<double> value = default)
+    RasterDemSource Bounds(List<double> value = default)
     {
         if (value == null)
         {
@@ -66,20 +188,16 @@ public class RasterDemSourceBuilder : BaseSourceBuilder
             };
         }
 
-        var propertyValue = new PropertyValue<object>("bounds", value);
-        Properties[propertyValue.Name] = propertyValue;
-
+        AddProperty("bounds", value);
         return this;
     }
 
     /**
      * Minimum zoom level for which tiles are available, as in the TileJSON spec.
      */
-    RasterDemSourceBuilder MinZoom(long value = 0)
+    RasterDemSource MinZoom(long value = 0)
     {
-        var propertyValue = new PropertyValue<object>("minzoom", value);
-        Properties[propertyValue.Name] = propertyValue;
-
+        AddProperty("minzoom", value);
         return this;
     }
 
@@ -87,55 +205,45 @@ public class RasterDemSourceBuilder : BaseSourceBuilder
      * Maximum zoom level for which tiles are available, as in the TileJSON spec. Data from tiles
      * at the maxzoom are used when displaying the map at higher zoom levels.
      */
-    RasterDemSourceBuilder MaxZoom(long value = 22L)
+    RasterDemSource MaxZoom(long value = 22L)
     {
-        var propertyValue = new PropertyValue<object>("maxzoom", value);
-        Properties[propertyValue.Name] = propertyValue;
-
+        AddProperty("maxzoom", value);
         return this;
     }
 
     /**
      * The minimum visual size to display tiles for this layer. Only configurable for raster layers.
      */
-    RasterDemSourceBuilder TileSize(long value = 512L)
+    RasterDemSource TileSize(long value = 512L)
     {
-        var propertyValue = new PropertyValue<object>("tileSize", value);
-        Properties[propertyValue.Name] = propertyValue;
-
+        AddProperty("tileSize", value);
         return this;
     }
 
     /**
      * Contains an attribution to be displayed when the map is shown to a user.
      */
-    RasterDemSourceBuilder Attribution(string value)
+    RasterDemSource Attribution(string value)
     {
-        var propertyValue = new PropertyValue<object>("attribution", value);
-        Properties[propertyValue.Name] = propertyValue;
-
+        AddProperty("attribution", value);
         return this;
     }
 
     /**
      * The encoding used by this source. Mapbox Terrain RGB is used by default
      */
-    RasterDemSourceBuilder Encoding(MapboxEncoding value)
+    RasterDemSource Encoding(MapboxEncoding value)
     {
-        var propertyValue = new PropertyValue<object>("encoding", value);
-        Properties[propertyValue.Name] = propertyValue;
-
+        AddProperty("encoding", value);
         return this;
     }
 
     /**
      * A setting to determine whether a source's tiles are cached locally.
      */
-    RasterDemSourceBuilder Volatile(bool value)
+    RasterDemSource Volatile(bool value)
     {
-        var propertyValue = new PropertyValue<object>("volatile", value);
-        Properties[propertyValue.Name] = propertyValue;
-
+        AddProperty("volatile", value);
         return this;
     }
 
@@ -146,11 +254,9 @@ public class RasterDemSourceBuilder : BaseSourceBuilder
      * lower resolution as quick as possible. It will get clamped at the tile source minimum zoom.
      * The default delta is 4.
      */
-    RasterDemSourceBuilder PrefetchZoomDelta(long value = 4L)
+    RasterDemSource PrefetchZoomDelta(long value = 4L)
     {
-        var propertyValue = new PropertyValue<object>("prefetch-zoom-delta", value);
-        VolatileProperties[propertyValue.Name] = propertyValue;
-
+        AddVolatileProperty("prefetch-zoom-delta", value);
         return this;
     }
 
@@ -159,11 +265,9 @@ public class RasterDemSourceBuilder : BaseSourceBuilder
      * If the given source supports loading tiles from a server, sets the minimum tile update interval.
      * Update network requests that are more frequent than the minimum tile update interval are suppressed.
      */
-    RasterDemSourceBuilder MinimumTileUpdateInterval(double value = 0.0)
+    RasterDemSource MinimumTileUpdateInterval(double value = 0.0)
     {
-        var propertyValue = new PropertyValue<object>("minimum-tile-update-interval", value);
-        VolatileProperties[propertyValue.Name] = propertyValue;
-
+        AddVolatileProperty("minimum-tile-update-interval", value);
         return this;
     }
 
@@ -173,11 +277,9 @@ public class RasterDemSourceBuilder : BaseSourceBuilder
      * instead. This might introduce unwanted rendering side-effects, especially for raster tiles that are overscaled multiple times.
      * This property sets the maximum limit for how much a parent tile can be overscaled.
      */
-    RasterDemSourceBuilder MaxOverscaleFactorForParentTiles(long value)
+    RasterDemSource MaxOverscaleFactorForParentTiles(long value)
     {
-        var propertyValue = new PropertyValue<object>("max-overscale-factor-for-parent-tiles", value);
-        VolatileProperties[propertyValue.Name] = propertyValue;
-
+        AddVolatileProperty("max-overscale-factor-for-parent-tiles", value);
         return this;
     }
 
@@ -186,11 +288,9 @@ public class RasterDemSourceBuilder : BaseSourceBuilder
      * action only during an ongoing animation or gestures. It helps to avoid loading, parsing and rendering
      * of the transient tiles and thus to improve the rendering performance, especially on low-end devices.
      */
-    RasterDemSourceBuilder TileRequestsDelay(double value = 0.0)
+    RasterDemSource TileRequestsDelay(double value = 0.0)
     {
-        var propertyValue = new PropertyValue<object>("tile-requests-delay", value);
-        VolatileProperties[propertyValue.Name] = propertyValue;
-
+        AddVolatileProperty("tile-requests-delay", value);
         return this;
     }
 
@@ -200,11 +300,9 @@ public class RasterDemSourceBuilder : BaseSourceBuilder
      * tiles from the network and thus to avoid redundant network requests. Note that tile-network-requests-delay value is
      * superseded with tile-requests-delay property value, if both are provided.
      */
-    RasterDemSourceBuilder TileNetworkRequestsDelay(double value = 0.0)
+    RasterDemSource TileNetworkRequestsDelay(double value = 0.0)
     {
-        var propertyValue = new PropertyValue<object>("tile-network-requests-delay", value);
-        VolatileProperties[propertyValue.Name] = propertyValue;
-
+        AddVolatileProperty("tile-network-requests-delay", value);
         return this;
     }
 
@@ -213,7 +311,7 @@ public class RasterDemSourceBuilder : BaseSourceBuilder
      *
      * @param tileSet
      */
-    RasterDemSourceBuilder TileSet(TileSetBuilder value)
+    RasterDemSource TileSet(TileSetBuilder value)
     {
         var propertyValue = new PropertyValue<object>(nameof(TileSetBuilder), value);
         Properties[propertyValue.Name] = propertyValue;

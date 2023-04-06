@@ -14,12 +14,12 @@ public class MapboxView : View, IMapboxView
 {
     public static readonly BindableProperty RasterDemSourceBuilderProperty = BindableProperty.Create(
        nameof(RasterDemSourceBuilder),
-       typeof(RasterDemSourceBuilder),
+       typeof(RasterDemSource),
        typeof(MapboxView)
     );
-    public RasterDemSourceBuilder RasterDemSourceBuilder
+    public RasterDemSource RasterDemSourceBuilder
     {
-        get => (RasterDemSourceBuilder)GetValue(DebugOptionsProperty);
+        get => (RasterDemSource)GetValue(DebugOptionsProperty);
         set => SetValue(DebugOptionsProperty, value);
     }
 

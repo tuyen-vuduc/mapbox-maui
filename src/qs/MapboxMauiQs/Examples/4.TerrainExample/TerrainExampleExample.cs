@@ -34,6 +34,17 @@ public class TerrainExampleExample : ContentPage, IExamplePage, IQueryAttributab
         var terrain = new Terrain(sourceId);
         terrain.SetExaggeration(1.5);
         map.Terrain = terrain;
+
+        var skyLayer = new SkyLayer("sky-layer")
+        {
+            SkyType = new PropertyValue(SkyType.atmosphere),
+            SkyAtmosphereSun = new PropertyValue(new[] { 0.0, 0.0 }),
+            SkyAtmosphereSunIntensity = new PropertyValue(15.0),
+        };
+        map.Layers = new List<MapboxLayer>
+        {
+            skyLayer,
+        };
     }
 
     private void Map_MapReady(object sender, EventArgs e)

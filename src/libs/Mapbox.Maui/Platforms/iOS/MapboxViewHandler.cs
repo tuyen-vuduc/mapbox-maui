@@ -10,6 +10,25 @@ using PlatformView = MapViewContainer;
 
 public partial class MapboxViewHandler
 {
+    private static void HandleLayersChanged(MapboxViewHandler handler, IMapboxView view)
+    {
+        var mapView = handler.PlatformView.MapView;
+        if (mapView == null) return;
+
+        var layers = view.Layers;
+        if (layers == null) return;
+
+        foreach (var layer in layers)
+        {
+            mapView.AddLayerWithProperties(
+                layer.ToPlatformValue(),
+                layer.LayerPosition.ToPlatformValue(),
+                layer.LayerPosition.Parameter?.Wrap(),
+                null
+            );
+        }
+    }
+
     private static void HandleTerrainChanged(MapboxViewHandler handler, IMapboxView view)
     {
         var mapView = handler.PlatformView.MapView;

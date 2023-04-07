@@ -23,6 +23,7 @@ public partial class MapboxViewHandler : ViewHandler<IMapboxView, PlatformView>
             [nameof(MapboxView.DebugOptions)] = HandleDebugOptionsChanged,
             [nameof(MapboxView.Sources)] = HandleSourcesChanged,
             [nameof(MapboxView.Terrain)] = HandleTerrainChanged,
+            [nameof(MapboxView.Layers)] = HandleLayersChanged,
         };
 
     public MapboxViewHandler() : base(PropertyMapper)

@@ -59,11 +59,13 @@
 	  <None Remove="Models\Styles\" />
 	  <None Remove="Models\Styles\Sources\" />
 	  <None Remove="Models\Expressions\" />
+	  <None Remove="Models\Styles\Layers\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Models\Styles\" />
 	  <Folder Include="Models\Styles\Sources\" />
 	  <Folder Include="Models\Expressions\" />
+	  <Folder Include="Models\Styles\Layers\" />
 	</ItemGroup>
 	<ProjectExtensions>
 	  <MonoDevelop>

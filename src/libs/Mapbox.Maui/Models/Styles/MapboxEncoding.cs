@@ -1,6 +1,6 @@
 ﻿namespace Mapbox.Maui.Styles;
 
-public struct MapboxEncoding
+public struct MapboxEncoding : IStringEnum
 {
     public string Value { get; }
 

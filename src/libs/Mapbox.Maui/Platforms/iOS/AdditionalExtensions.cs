@@ -4,7 +4,9 @@ namespace Mapbox.Maui;
 using System.Collections;
 using CoreLocation;
 using Foundation;
+using JavaScriptCore;
 using Mapbox.Maui.Expressions;
+using Mapbox.Maui.Styles;
 using MapboxCoreMaps;
 using MapboxMapsObjC;
 
@@ -19,8 +21,7 @@ public static class AdditionalExtensions
         switch (xvalue.Exaggeration)
         {
             case DslExpression expression:
-                // TODO Convert expression
-                //result.Exaggeration = expression.ToPlatformValue();
+                result.Exaggeration = expression.ToPlatformValue();
                 break;
             case double doubleValue:
                 result.Exaggeration = TMBValue.Constant(doubleValue.Wrap());
@@ -28,6 +29,32 @@ public static class AdditionalExtensions
         }
 
         return result;
+    }
+
+    internal static TMBLayerPosition ToPlatformValue(
+        this Styles.LayerPosition xvalue
+    )
+    {
+        return xvalue.Enum switch
+        {
+            Styles.LayerPositionEnum.Above => TMBLayerPosition.Above,
+            Styles.LayerPositionEnum.At => TMBLayerPosition.At,
+            Styles.LayerPositionEnum.Below => TMBLayerPosition.Below,
+            _ => TMBLayerPosition.Unowned,
+        };
+    }
+
+    internal static TMBValue ToPlatformValue(
+        this DslExpression xvalue
+    )
+    {
+        // TODO Convert to native expression
+        return null;
+    }
+
+    internal static TMBStyleTransition ToPlatformValue(this StyleTransition xvalue)
+    {
+        return new TMBStyleTransition(xvalue.Duration, xvalue.Delay);
     }
 
     internal static NSObject Wrap(this object xvalue)
@@ -38,10 +65,24 @@ public static class AdditionalExtensions
             long value => NSNumber.FromLong((nint)value),
             double value => NSNumber.FromDouble(value),
             string value => new NSString(value),
+            IStringEnum value => new NSString(value.Value),
+            PropertyValue value => value.Expression != null
+                    ? value.Expression.ToPlatformValue()
+                    : value.Constant.Wrap(),
             _ => (NSObject)null
         };
 
         if (result != null) return result;
+
+        if (xvalue is IDictionary<string, object> dict)
+        {
+            var list = new NSMutableDictionary<NSString, NSObject>();
+            foreach (var item in dict)
+            {
+                list[item.Key] = item.Value.Wrap();
+            }
+            return list;
+        }
 
         if (xvalue is IEnumerable objects)
         {
@@ -54,6 +95,23 @@ public static class AdditionalExtensions
         }
 
         throw new NotSupportedException($"Invalue property type: {xvalue?.GetType()} | {xvalue}");
+    }
+
+    internal static NSDictionary<NSString, NSObject> ToPlatformValue(
+        this Mapbox.Maui.Styles.MapboxLayer xvalue
+    )
+    {
+        var properties = new NSMutableDictionary<NSString, NSObject>();
+        foreach (var property in xvalue.Properties)
+        {
+            var propertyValue = property.Value.Wrap();
+            properties[property.Key] = propertyValue;
+        }
+
+        return new NSDictionary<NSString, NSObject>(
+            properties.Keys,
+            properties.Values
+        );
     }
 
     internal static NSDictionary<NSString, NSObject> ToPlatformValue(

@@ -9,9 +9,43 @@ using Com.Mapbox.Maps;
 using Microsoft.Maui.Platform;
 using Mapbox.Maui.Styles;
 using System.Collections;
+using Mapbox.Maui.Expressions;
+using Com.Mapbox.Maps.Extension.Style.Expressions.Generated;
+using System.Collections.Immutable;
 
 static class AdditionalExtensions
 {
+    internal static PlatformValue ToPlatformValue(this MapboxLayer xvalue)
+    {
+        var properties = new Dictionary<string, PlatformValue>();
+
+        foreach (var property in xvalue.Properties)
+        {
+            var propertyValue = property.Value.Wrap();
+            properties[property.Key] = propertyValue;
+        }
+
+        var result = new PlatformValue(properties);
+        return result;
+    }
+
+    internal static Com.Mapbox.Maps.LayerPosition ToPlatformValue(this Styles.LayerPosition xvalue)
+    {
+        return xvalue.Enum switch
+        {
+            Styles.LayerPositionEnum.Above => new Com.Mapbox.Maps.LayerPosition(
+                xvalue.Parameter as string, null, null
+            ),
+            Styles.LayerPositionEnum.At => new Com.Mapbox.Maps.LayerPosition(
+                null, null, new Java.Lang.Integer((int)xvalue.Parameter)
+            ),
+            Styles.LayerPositionEnum.Below => new Com.Mapbox.Maps.LayerPosition(
+                null, xvalue.Parameter as string, null
+            ),
+            _ => null,
+        };
+    }
+
     internal static PlatformValue Wrap(this object xvalue)
     {
         var platformValue = xvalue switch
@@ -20,10 +54,24 @@ static class AdditionalExtensions
             long value => new PlatformValue(value),
             double value => new PlatformValue(value),
             string value => new PlatformValue(value),
+            IStringEnum value => new PlatformValue(value.Value),
+            PropertyValue value => value.Expression != null
+                    ? value.Expression.ToPlatformValue()
+                    : value.Constant.Wrap(),
             _ => null
         };
 
         if (platformValue != null) return platformValue;
+
+        if (xvalue is IDictionary<string, object> dict)
+        {
+            var list = new Dictionary<string, PlatformValue>();
+            foreach (var item in dict)
+            {
+                list[item.Key] = item.Value.Wrap();
+            }
+            return new PlatformValue(list);
+        }
 
         if (xvalue is IEnumerable objects)
         {
@@ -38,6 +86,14 @@ static class AdditionalExtensions
         throw new NotSupportedException($"Invalue property type: {xvalue?.GetType()} | {xvalue}");
     }
 
+    internal static Expression ToPlatformValue(
+        this DslExpression xvalue
+    )
+    {
+        // TODO Convert to native expression
+        return null;
+    }
+
     internal static MapboxTerrain ToPlatformValue(this Terrain terrain)
     {
         var result = new MapboxTerrain(terrain.SourceId);
@@ -45,8 +101,7 @@ static class AdditionalExtensions
         switch (terrain.Exaggeration)
         {
             case Expressions.DslExpression expression:
-                // TODO Convert expression
-                //result.Exaggeration(expression.ToPlatformValue());
+                result.Exaggeration(expression.ToPlatformValue());
                 break;
             case double doubleValue:
                 result.Exaggeration(doubleValue);
@@ -57,7 +112,7 @@ static class AdditionalExtensions
         {
             result.ExaggerationTransition(terrain.ExaggerationTransition.ToPlatformValue());
         }
-       
+
         return result;
     }
 

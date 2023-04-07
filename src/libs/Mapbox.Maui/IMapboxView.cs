@@ -17,9 +17,14 @@ public partial interface IMapboxView : IView
     IEnumerable<MapboxSource> Sources { get; set; }
 
     Terrain Terrain { get; set; }
+
+    IEnumerable<MapboxLayer> Layers { get; set; }
 }
 
 partial interface IMapboxView { 
     event EventHandler MapReady;
     ICommand MapReadyCommand { get; set; }
+
+    event EventHandler StyleLoaded;
+    ICommand StyleLoadedCommand { get; set; }
 }

@@ -19,6 +19,22 @@ public partial class MapboxViewHandler
 {
     MapboxFragment mapboxFragment;
 
+    private static void HandleLayersChanged(MapboxViewHandler handler, IMapboxView view)
+    {
+        var mapView = handler.GetMapView();
+        if (mapView == null) return;
+
+        if (view.Sources == null) return;
+
+        foreach (var layer in view.Layers)
+        {
+            mapView.MapboxMap.Style.AddStyleLayer(
+                layer.ToPlatformValue(),
+                layer.LayerPosition.ToPlatformValue()
+            );
+        }
+    }
+
     private static void HandleTerrainChanged(MapboxViewHandler handler, IMapboxView view)
     {
         var mapView = handler.GetMapView();

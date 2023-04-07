@@ -137,7 +137,7 @@ b/ iOS's `info.plist`
 | 47 | [RasterTileSourceExample](./mapboxqs/RasterTileSourceExample.m) |  |
 | 48 | [ResizableImageExample](./mapboxqs/ResizableImageExample.m) |  |
 | 49 | [RestrictCoordinateBoundsExample](./mapboxqs/RestrictCoordinateBoundsExample.m) |  |
-| 50 | [SceneKitExample](./mapboxqs/SceneKitExample.m) |  |
+| 50 | [SceneKitExample](./mapboxqs/SceneKitExample.m) | N/A |
 | 51 | [ShowHideLayerExample](./mapboxqs/ShowHideLayerExample.m) |  |
 | 52 | [SkyLayerExample](./mapboxqs/SkyLayerExample.m) |  |
 | 53 | [SnapshotterCoreGraphicsExample](./mapboxqs/SnapshotterCoreGraphicsExample.m) |  |

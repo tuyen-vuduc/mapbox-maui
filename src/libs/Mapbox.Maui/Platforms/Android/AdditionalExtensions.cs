@@ -172,18 +172,7 @@ static class AdditionalExtensions
 
     public static string ToNative(this MapboxStyle mapboxStyle)
     {
-        return mapboxStyle.BuiltInStyle switch
-        {
-            MapboxBuiltInStyle.Dark => MapboxMapsStyle.Dark,
-            MapboxBuiltInStyle.Light => MapboxMapsStyle.Light,
-            MapboxBuiltInStyle.Outdoors => MapboxMapsStyle.Outdoors,
-            MapboxBuiltInStyle.MapboxStreets => MapboxMapsStyle.MapboxStreets,
-            MapboxBuiltInStyle.Satellite => MapboxMapsStyle.Satellite,
-            MapboxBuiltInStyle.SatelliteStreets => MapboxMapsStyle.SatelliteStreets,
-            MapboxBuiltInStyle.TrafficDay => MapboxMapsStyle.TrafficDay,
-            MapboxBuiltInStyle.TrafficNight => MapboxMapsStyle.TrafficNight,
-            _ => mapboxStyle.Uri,
-        };
+        return mapboxStyle.Value;
     }
 
     public static MapboxMapsCameraOptions ToNative(this CameraOptions cameraOptions)

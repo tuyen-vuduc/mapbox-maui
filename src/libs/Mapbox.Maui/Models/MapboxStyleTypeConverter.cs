@@ -8,7 +8,7 @@ public class MapboxStyleTypeConverter : TypeConverter
 {
     public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
     {
-        return sourceType == typeof(string) || sourceType == typeof(MapboxBuiltInStyle);
+        return sourceType == typeof(string);
     }
 
     public override bool CanConvertTo(ITypeDescriptorContext context, [NotNullWhen(true)] Type destinationType)
@@ -23,19 +23,11 @@ public class MapboxStyleTypeConverter : TypeConverter
 
     public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
     {
-        if (value is MapboxBuiltInStyle builtInStyle) return (MapboxStyle)builtInStyle;
-
         if (value is string builtStyleOrUri)
         {
-            if(Enum.TryParse<MapboxBuiltInStyle>(builtStyleOrUri, out var builtInStyle1)
-                && builtInStyle1 != MapboxBuiltInStyle.None)
-            {
-                return (MapboxStyle)builtInStyle1;
-            }
-
             return (MapboxStyle)builtStyleOrUri;
         }
 
-        return (MapboxStyle)MapboxBuiltInStyle.None;
+        return null;
     }
 }

@@ -3,39 +3,71 @@
 namespace Mapbox.Maui;
 
 [TypeConverter(typeof(MapboxStyleTypeConverter))]
-public struct MapboxStyle
+public struct MapboxStyle : IStringEnum
 {
-    public string Uri { get; private set; }
-    public MapboxBuiltInStyle BuiltInStyle { get; private set; }
+    public string Value { get; private set; }
 
-    public MapboxStyle(string uri)
+    public MapboxStyle(string value)
     {
-        Uri = uri;
-        BuiltInStyle = MapboxBuiltInStyle.None;
+        Value = value;
     }
 
-    public MapboxStyle(MapboxBuiltInStyle builtInStyle)
-    {
-        BuiltInStyle = builtInStyle;
-        Uri = null;
-    }
+    public static implicit operator string(MapboxStyle mapboxStyle) => mapboxStyle.Value;
 
-    public static implicit operator string(MapboxStyle mapboxStyle) => mapboxStyle.BuiltInStyle != MapboxBuiltInStyle.None
-        && !string.IsNullOrWhiteSpace(mapboxStyle.Uri)
-        ? mapboxStyle.Uri
-        : mapboxStyle.BuiltInStyle.ToString();
+    public static explicit operator MapboxStyle(string uri) => new MapboxStyle(uri);
 
-    public static explicit operator MapboxBuiltInStyle(MapboxStyle mapboxStyle) => mapboxStyle.BuiltInStyle;
+    public override string ToString() => $"Uri: {Value}";
 
-    public static explicit operator MapboxStyle(MapboxBuiltInStyle builtInStyle) => new MapboxStyle
-    {
-        BuiltInStyle = builtInStyle,
-    };
+    /**
+     * Mapbox Streets: A complete base map, perfect for incorporating your own data. Using this
+     * constant means your map style will always use the latest version and may change as we
+     * improve the style.
+     */
+    public static readonly MapboxStyle MAPBOX_STREETS = (MapboxStyle)"mapbox://styles/mapbox/streets-v11";
 
-    public static explicit operator MapboxStyle(string uri) => new MapboxStyle
-    {
-        Uri = uri,
-    };
+    /**
+     * Outdoors: A general-purpose style tailored to outdoor activities. Using this constant means
+     * your map style will always use the latest version and may change as we improve the style.
+     */
+    public static readonly MapboxStyle OUTDOORS = (MapboxStyle)"mapbox://styles/mapbox/outdoors-v11";
 
-    public override string ToString() => $"BuiltinStyle: {BuiltInStyle}, Uri: {Uri}";
+    /**
+     * Light: Subtle light backdrop for data visualizations. Using this constant means your map
+     * style will always use the latest version and may change as we improve the style.
+     */
+    public static readonly MapboxStyle LIGHT = (MapboxStyle)"mapbox://styles/mapbox/light-v10";
+
+    /**
+     * Dark: Subtle dark backdrop for data visualizations. Using this constant means your map style
+     * will always use the latest version and may change as we improve the style.
+     */
+    public static readonly MapboxStyle DARK = (MapboxStyle)"mapbox://styles/mapbox/dark-v10";
+
+    /**
+     * Satellite: A beautiful global satellite and aerial imagery layer. Using this constant means
+     * your map style will always use the latest version and may change as we improve the style.
+     */
+    public static readonly MapboxStyle SATELLITE = (MapboxStyle)"mapbox://styles/mapbox/satellite-v9";
+
+    /**
+     * Satellite Streets: Global satellite and aerial imagery with unobtrusive labels. Using this
+     * constant means your map style will always use the latest version and may change as we
+     * improve the style.
+     */
+    public static readonly MapboxStyle SATELLITE_STREETS = (MapboxStyle)"mapbox://styles/mapbox/satellite-streets-v11";
+
+    /**
+     * Traffic Day: Color-coded roads based on live traffic congestion data. Traffic data is currently
+     * available in [these select countries](https://www.mapbox.com/help/how-directions-work/#traffic-data).
+     * Using this constant means your map style will always use the latest version and may change as we improve the style.
+     */
+    public static readonly MapboxStyle TRAFFIC_DAY = (MapboxStyle)"mapbox://styles/mapbox/traffic-day-v2";
+
+    /**
+     * Traffic Night: Color-coded roads based on live traffic congestion data, designed to maximize
+     * legibility in low-light situations. Traffic data is currently available in
+     * [these select countries](https://www.mapbox.com/help/how-directions-work/#traffic-data).
+     * Using this constant means your map style will always use the latest version and may change as we improve the style.
+     */
+    public static readonly MapboxStyle TRAFFIC_NIGHT = (MapboxStyle)"mapbox://styles/mapbox/traffic-night-v2";
 }

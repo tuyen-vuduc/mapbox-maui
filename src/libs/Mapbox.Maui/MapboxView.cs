@@ -12,6 +12,17 @@ namespace Mapbox.Maui;
 
 public partial class MapboxView : View, IMapboxView
 {
+    public static readonly BindableProperty TerrainProperty = BindableProperty.Create(
+       nameof(Terrain),
+       typeof(Terrain),
+       typeof(MapboxView)
+    );
+    public Terrain Terrain
+    {
+        get => (Terrain)GetValue(TerrainProperty);
+        set => SetValue(TerrainProperty, value);
+    }
+
     public static readonly BindableProperty SourcesProperty = BindableProperty.Create(
        nameof(Sources),
        typeof(IEnumerable<MapboxSource>),

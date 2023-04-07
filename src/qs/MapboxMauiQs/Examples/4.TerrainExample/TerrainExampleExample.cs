@@ -30,6 +30,10 @@ public class TerrainExampleExample : ContentPage, IExamplePage, IQueryAttributab
         map.Sources = new List<MapboxSource> {
             rasterDemSource,
         };
+
+        var terrain = new Terrain(sourceId);
+        terrain.SetExaggeration(1.5);
+        map.Terrain = terrain;
     }
 
     private void Map_MapReady(object sender, EventArgs e)

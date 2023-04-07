@@ -2,6 +2,9 @@
 using MapboxMapsStyle = Com.Mapbox.Maps.Style;
 using MapboxMapsCameraOptions = Com.Mapbox.Maps.CameraOptions;
 using PlatformValue = Com.Mapbox.Bindgen.Value;
+using MapboxTerrain = Com.Mapbox.Maps.Extension.Style.Terrain.Generated.Terrain;
+using StyleTransitionBuilder = Com.Mapbox.Maps.Extension.Style.Types.StyleTransition.Builder;
+using PlatformStyleTransition = Com.Mapbox.Maps.Extension.Style.Types.StyleTransition;
 using Com.Mapbox.Maps;
 using Microsoft.Maui.Platform;
 using Mapbox.Maui.Styles;
@@ -33,6 +36,38 @@ static class AdditionalExtensions
         }
 
         throw new NotSupportedException($"Invalue property type: {xvalue?.GetType()} | {xvalue}");
+    }
+
+    internal static MapboxTerrain ToPlatformValue(this Terrain terrain)
+    {
+        var result = new MapboxTerrain(terrain.SourceId);
+
+        switch (terrain.Exaggeration)
+        {
+            case Expressions.DslExpression expression:
+                // TODO Convert expression
+                //result.Exaggeration(expression.ToPlatformValue());
+                break;
+            case double doubleValue:
+                result.Exaggeration(doubleValue);
+                break;
+        }
+
+        if (terrain.ExaggerationTransition != null)
+        {
+            result.ExaggerationTransition(terrain.ExaggerationTransition.ToPlatformValue());
+        }
+       
+        return result;
+    }
+
+    internal static PlatformStyleTransition ToPlatformValue(this StyleTransition xvalue)
+    {
+        var styleTransitionBuilder = new StyleTransitionBuilder();
+        styleTransitionBuilder.InvokeDelay(xvalue.Delay);
+        styleTransitionBuilder.InvokeDuration(xvalue.Duration);
+
+        return styleTransitionBuilder.Build();
     }
 
     internal static PlatformValue ToPlatformValue(this MapboxSource source)

@@ -4,6 +4,7 @@ using Android.Widget;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Handlers;
 using PlatformView = AndroidX.Fragment.App.FragmentContainerView;
+using PlatformValue = Com.Mapbox.Bindgen.Value;
 using MapboxMapsStyle = Com.Mapbox.Maps.Style;
 using Com.Mapbox.Maps;
 using Microsoft.Maui.Controls;
@@ -17,6 +18,17 @@ using System;
 public partial class MapboxViewHandler
 {
     MapboxFragment mapboxFragment;
+
+    private static void HandleTerrainChanged(MapboxViewHandler handler, IMapboxView view)
+    {
+        var mapView = handler.GetMapView();
+        if (mapView == null) return;
+
+        if (view.Terrain == null) return;
+
+        var platformValue = view.Terrain.ToPlatformValue();
+        platformValue.BindTo(mapView.MapboxMap.Style);
+    }
 
     private static void HandleSourcesChanged(MapboxViewHandler handler, IMapboxView view)
     {

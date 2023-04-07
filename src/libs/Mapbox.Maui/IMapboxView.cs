@@ -15,6 +15,8 @@ public partial interface IMapboxView : IView
     DebugOption[] DebugOptions { get; set; }
 
     IEnumerable<MapboxSource> Sources { get; set; }
+
+    Terrain Terrain { get; set; }
 }
 
 partial interface IMapboxView { 

@@ -3,16 +3,16 @@
 public record class StyleTransition
 {
     /// Time allotted for transitions to complete in seconds.
-    public double Duration { get; init; }
+    public long Duration { get; init; }
 
     /// Length of time before a transition begins in seconds.
-    public double Delay { get; init; }
+    public long Delay { get; init; }
 
     public StyleTransition()
 	{
     }
 
-    public StyleTransition(double duration, double delay)
+    public StyleTransition(long duration, long delay)
     {
         Duration = duration;
         Delay = delay;

@@ -4,11 +4,32 @@ namespace Mapbox.Maui;
 using System.Collections;
 using CoreLocation;
 using Foundation;
+using Mapbox.Maui.Expressions;
 using MapboxCoreMaps;
 using MapboxMapsObjC;
 
 public static class AdditionalExtensions
 {
+    internal static TMBTerrain ToPlatformValue(
+        this Mapbox.Maui.Styles.Terrain xvalue
+    )
+    {
+        var result = new TMBTerrain(xvalue.SourceId);
+
+        switch (xvalue.Exaggeration)
+        {
+            case DslExpression expression:
+                // TODO Convert expression
+                //result.Exaggeration = expression.ToPlatformValue();
+                break;
+            case double doubleValue:
+                result.Exaggeration = TMBValue.Constant(doubleValue.Wrap());
+                break;
+        }
+
+        return result;
+    }
+
     internal static NSObject Wrap(this object xvalue)
     {
         var result = xvalue switch

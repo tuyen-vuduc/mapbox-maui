@@ -86,14 +86,6 @@ static class AdditionalExtensions
         throw new NotSupportedException($"Invalue property type: {xvalue?.GetType()} | {xvalue}");
     }
 
-    internal static Expression ToPlatformValue(
-        this DslExpression xvalue
-    )
-    {
-        // TODO Convert to native expression
-        return null;
-    }
-
     internal static MapboxTerrain ToPlatformValue(this Terrain terrain)
     {
         var result = new MapboxTerrain(terrain.SourceId);

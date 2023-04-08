@@ -6,6 +6,7 @@ public class SkyLayer : MapboxLayer
         : base(id)
     {
         Type = LayerType.sky;
+        Visibility = new PropertyValue(Mapbox.Maui.Visibility.visible);
     }
 
     public static class SkyLayerKey

@@ -20,8 +20,9 @@ public partial class MapboxViewHandler
 
         foreach (var layer in layers)
         {
+            var properties = layer.ToPlatformValue();
             mapView.AddLayerWithProperties(
-                layer.ToPlatformValue(),
+                properties,
                 layer.LayerPosition.ToPlatformValue(),
                 layer.LayerPosition.Parameter?.Wrap(),
                 null

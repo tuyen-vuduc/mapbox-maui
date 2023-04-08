@@ -18,5 +18,7 @@ public record class PropertyValue
             Constant = value;
         }
     }
+
+    //public static implicit operator PropertyValue(DslExpression expression) => new PropertyValue(expression);
 }
 

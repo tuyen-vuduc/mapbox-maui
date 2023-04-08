@@ -21,7 +21,7 @@ public static class AdditionalExtensions
         switch (xvalue.Exaggeration)
         {
             case DslExpression expression:
-                result.Exaggeration = expression.ToPlatformValue();
+                result.Exaggeration = TMBValue.Expression(expression.ToPlatformValue());
                 break;
             case double doubleValue:
                 result.Exaggeration = TMBValue.Constant(doubleValue.Wrap());
@@ -44,14 +44,6 @@ public static class AdditionalExtensions
         };
     }
 
-    internal static TMBValue ToPlatformValue(
-        this DslExpression xvalue
-    )
-    {
-        // TODO Convert to native expression
-        return null;
-    }
-
     internal static TMBStyleTransition ToPlatformValue(this StyleTransition xvalue)
     {
         return new TMBStyleTransition(xvalue.Duration, xvalue.Delay);
@@ -62,7 +54,9 @@ public static class AdditionalExtensions
         var result = xvalue switch
         {
             bool value => NSNumber.FromBoolean(value),
+            int value => NSNumber.FromLong((nint)value),
             long value => NSNumber.FromLong((nint)value),
+            float value => NSNumber.FromDouble(value),
             double value => NSNumber.FromDouble(value),
             string value => new NSString(value),
             IStringEnum value => new NSString(value.Value),

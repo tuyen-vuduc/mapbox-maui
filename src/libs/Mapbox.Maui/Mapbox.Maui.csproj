@@ -20,6 +20,10 @@
 	<!-- Android -->
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 	  <WarningLevel>4</WarningLevel>
+	  <LangVersion>latestmajor</LangVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+	  <LangVersion>latestmajor</LangVersion>
 	</PropertyGroup>
 	<ItemGroup Condition="$(TargetFramework.StartsWith('net6.0-android')) != true">
 		<Compile Remove="**\**\*.Android.cs" />

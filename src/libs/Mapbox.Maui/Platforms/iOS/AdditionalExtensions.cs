@@ -61,12 +61,26 @@ public static class AdditionalExtensions
             string value => new NSString(value),
             IStringEnum value => new NSString(value.Value),
             PropertyValue value => value.Expression != null
-                    ? value.Expression.ToPlatformValue()
+                    ? NSArray.FromNSObjects(value.Expression
+                        .ToObjects()
+                        .Select(x => x.Wrap())
+                        .ToArray()
+                    )
                     : value.Constant.Wrap(),
             _ => (NSObject)null
         };
 
         if (result != null) return result;
+
+        if (xvalue is DslExpression expression)
+        {
+            return NSArray.FromNSObjects(
+                expression
+                    .ToObjects()
+                    .Select(x => x.Wrap())
+                    .ToArray()
+                );
+        }
 
         if (xvalue is IDictionary<string, object> dict)
         {

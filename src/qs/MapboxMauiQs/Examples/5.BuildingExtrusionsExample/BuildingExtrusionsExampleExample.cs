@@ -26,7 +26,10 @@ public class BuildingExtrusionsExampleExample : ContentPage, IExamplePage, IQuer
             Source = "composite",
             MinZoom = 15,
             SourceLayer = "building",
-            FillExtrusionColor = new PropertyValue(Colors.LightGray.ToArgbHex(true)),
+            FillExtrusionColor = new PropertyValue(
+                //"rgba(170.0, 170.0, 170.0, 1.0)"
+                Colors.LightGray.ToRgbaString()
+            ),
             FillExtrusionOpacity = new PropertyValue(0.6),
             FillExtrusionAmbientOcclusionIntensity = new PropertyValue(0.3),
             FillExtrusionAmbientOcclusionRadius = new PropertyValue(3.0),
@@ -60,18 +63,21 @@ public class BuildingExtrusionsExampleExample : ContentPage, IExamplePage, IQuer
         {
             layer,
         };
-    }
 
-    private void Map_MapReady(object sender, EventArgs e)
-    {
-        var center = new Point(40.7135,  -74.0066);
-        var cameraOptions = new CameraOptions {
+        var center = new Point(40.7135, -74.0066);
+        var cameraOptions = new CameraOptions
+        {
             Center = center,
             Zoom = 15.5f,
             Bearing = -17.6f,
             Pitch = 45,
         };
         map.CameraOptions = cameraOptions;
+    }
+
+    private void Map_MapReady(object sender, EventArgs e)
+    {
+        map.MapboxStyle = MapboxStyle.LIGHT;
     }
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)

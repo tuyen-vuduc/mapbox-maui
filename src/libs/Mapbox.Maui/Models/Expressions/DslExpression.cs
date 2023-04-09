@@ -15,6 +15,29 @@ public class DslExpression : List<object>
         Operator = @operator;
     }
 
+    public object[] ToObjects()
+    {
+        var result = new List<object>()
+        {
+            Operator,
+        };
+
+        foreach (var argument in this)
+        {
+            switch(argument)
+            {
+                case DslExpression expression:
+                    result.Add(expression.ToObjects());
+                    break;
+                default:
+                    result.Add(argument);
+                    break;
+            }
+        }
+
+        return result.ToArray();
+    }
+
     /// For two inputs, returns the result of subtracting the second input from the first. For a single input, returns the result of subtracting it from 0.
     public static DslExpression subtract(params object[] arguments) => new DslExpression(DslOperator.subtract, arguments);
 

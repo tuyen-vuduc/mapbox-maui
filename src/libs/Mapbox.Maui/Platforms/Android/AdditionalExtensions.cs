@@ -56,12 +56,26 @@ static class AdditionalExtensions
             string value => new PlatformValue(value),
             IStringEnum value => new PlatformValue(value.Value),
             PropertyValue value => value.Expression != null
-                    ? value.Expression.ToPlatformValue()
+                    ? new PlatformValue(value
+                            .Expression
+                                .ToObjects()
+                                .Select(x => x.Wrap())
+                                .ToList()
+                            )
                     : value.Constant.Wrap(),
             _ => null
         };
 
         if (platformValue != null) return platformValue;
+
+        if (xvalue is DslExpression expression)
+        {
+            return new PlatformValue(expression
+                            .ToObjects()
+                            .Select(x => x.Wrap())
+                            .ToList()
+                        );
+        }
 
         if (xvalue is IDictionary<string, object> dict)
         {

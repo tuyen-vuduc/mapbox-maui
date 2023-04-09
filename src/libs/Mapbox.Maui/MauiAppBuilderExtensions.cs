@@ -5,6 +5,8 @@ using PlatformView = MapboxMaps.MapView;
 using PlatformView = System.Object;
 #endif
 
+using System.Globalization;
+
 namespace Mapbox.Maui;
 
 public static class MauiAppBuilderExtensions
@@ -24,5 +26,22 @@ public static class MauiAppBuilderExtensions
         });
 
         return builder;
+    }
+}
+
+public static class ColorExtensions
+{
+    public static string ToRgbaString(this Color value)
+    {
+        return $"rgba({
+            (value.Red * 255).ToString(CultureInfo.InvariantCulture)
+        }, {
+            (value.Green * 255).ToString(CultureInfo.InvariantCulture)
+        }, {
+            (value.Blue * 255).ToString(CultureInfo.InvariantCulture)
+        }, {
+            value.Alpha.ToString(CultureInfo.InvariantCulture)
+        })";
+
     }
 }

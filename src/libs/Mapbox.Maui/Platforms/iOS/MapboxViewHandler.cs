@@ -21,6 +21,10 @@ public partial class MapboxViewHandler
         foreach (var layer in layers)
         {
             var properties = layer.ToPlatformValue();
+
+            var data = NSJsonSerialization.Serialize(properties, NSJsonWritingOptions.PrettyPrinted, out var error);
+            var json = NSString.FromData(data, NSStringEncoding.UTF8).ToString();
+
             mapView.AddLayerWithProperties(
                 properties,
                 layer.LayerPosition.ToPlatformValue(),

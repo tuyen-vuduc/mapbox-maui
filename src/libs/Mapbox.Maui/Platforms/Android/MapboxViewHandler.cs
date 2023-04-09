@@ -24,7 +24,7 @@ public partial class MapboxViewHandler
         var mapView = handler.GetMapView();
         if (mapView == null) return;
 
-        if (view.Sources == null) return;
+        if (view.Layers == null) return;
 
         foreach (var layer in view.Layers)
         {

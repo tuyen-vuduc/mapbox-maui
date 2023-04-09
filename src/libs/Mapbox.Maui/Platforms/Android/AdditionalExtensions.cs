@@ -51,7 +51,14 @@ static class AdditionalExtensions
         var platformValue = xvalue switch
         {
             bool value => new PlatformValue(value),
+            byte value => new PlatformValue(value),
+            short value => new PlatformValue(value),
+            int value => new PlatformValue(value),
             long value => new PlatformValue(value),
+            ushort value => new PlatformValue(value),
+            uint value => new PlatformValue(value),
+            ulong value => new PlatformValue(value),
+            float value => new PlatformValue(value),
             double value => new PlatformValue(value),
             string value => new PlatformValue(value),
             IStringEnum value => new PlatformValue(value.Value),

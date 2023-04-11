@@ -4,18 +4,15 @@ using System.Collections.ObjectModel;
 
 namespace Mapbox.Maui.Styles;
 
-public class TileSet
+public class TileSet : BaseKVContainer
 {
     public TileSet(
         string tilejson,
         List<string> tiles
-        )
+        ) : base()
     {
-        properties = new Dictionary<string, object>()
-        {
-            { TileSetKey.tilejson, tilejson },
-            { TileSetKey.tiles, tiles },
-        };
+        base.SetProperty<string>(TileSetKey.tilejson, tilejson);
+        base.SetProperty<List<string>>(TileSetKey.tiles, tiles);
     }
 
     private static class TileSetKey
@@ -39,7 +36,7 @@ public class TileSet
 
     private readonly Dictionary<string, object> properties;
 
-    public TileSet SetProperty<T>(string name, T value)
+    protected override BaseKVContainer SetProperty<T>(string name, T value, string group = null)
     {
         // Not allow to use empty string as a name
         if (string.IsNullOrWhiteSpace(name)) return this;
@@ -50,34 +47,8 @@ public class TileSet
         if (string.Equals(name, TileSetKey.tilejson, StringComparison.OrdinalIgnoreCase)) return this;
         if (string.Equals(name, TileSetKey.tiles, StringComparison.OrdinalIgnoreCase)) return this;
 
-        if (value == null)
-        {
-            properties.Remove(name);
-        }
-        else
-        {
-            properties[name] = value;
-        }
-
-        return this;
+        return base.SetProperty(name, value, group);
     }
-
-    public T GetProperty<T>(string name, T defaultValue)
-    {
-        // Not allow to use empty string as a name
-        if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Invalid property name");
-
-        name = name.Trim();
-
-        if (properties.TryGetValue(name, out var value) && value is T result)
-        {
-            return result;
-        }
-
-        return defaultValue;
-    }
-
-    public ReadOnlyDictionary<string, object> Properties => new ReadOnlyDictionary<string, object>(properties);
 
     /**
      * A name describing the tileset. The name can

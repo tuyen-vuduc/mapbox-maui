@@ -11,9 +11,9 @@ public class MapboxLayer : BaseKVContainer
         string id
         ) : base()
     {
-        SetProperty<string>(MapboxLayerKey.id, id);
-        SetProperty<Dictionary<string, object>>(MapboxLayerKey.layout, new Dictionary<string, object>());
-        SetProperty<Dictionary<string, object>>(MapboxLayerKey.paint, new Dictionary<string, object>());
+        base.SetProperty<string>(MapboxLayerKey.id, id);
+        base.SetProperty<Dictionary<string, object>>(MapboxLayerKey.layout, new Dictionary<string, object>());
+        base.SetProperty<Dictionary<string, object>>(MapboxLayerKey.paint, new Dictionary<string, object>());
     }
 
     public static class MapboxLayerKey
@@ -39,7 +39,7 @@ public class MapboxLayer : BaseKVContainer
 
         name = name.Trim();
 
-        // Not allow to change tilejson and/or tiles
+        // Not allow to change id, layout or paint
         if (string.Equals(name, MapboxLayerKey.id, StringComparison.OrdinalIgnoreCase)) return this;
         if (string.Equals(name, MapboxLayerKey.layout, StringComparison.OrdinalIgnoreCase)) return this;
         if (string.Equals(name, MapboxLayerKey.paint, StringComparison.OrdinalIgnoreCase)) return this;

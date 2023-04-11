@@ -26,18 +26,17 @@ public class BuildingExtrusionsExampleExample : ContentPage, IExamplePage, IQuer
             Source = "composite",
             MinZoom = 15,
             SourceLayer = "building",
-            FillExtrusionColor = new PropertyValue(
-                //"rgba(170.0, 170.0, 170.0, 1.0)"
-                Colors.LightGray.ToRgbaString()
+            FillExtrusionColor = new PropertyValue<Color>(
+                Colors.LightGray
             ),
-            FillExtrusionOpacity = new PropertyValue(0.6),
-            FillExtrusionAmbientOcclusionIntensity = new PropertyValue(0.3),
-            FillExtrusionAmbientOcclusionRadius = new PropertyValue(3.0),
+            FillExtrusionOpacity = new PropertyValue<double>(0.6),
+            FillExtrusionAmbientOcclusionIntensity = new PropertyValue<double>(0.3),
+            FillExtrusionAmbientOcclusionRadius = new PropertyValue<double>(3.0),
             Filter = DslExpression.eq(
                 DslExpression.get("extrude"),
                 "true"
             ),
-            FillExtrusionHeight = new PropertyValue(
+            FillExtrusionHeight = new PropertyValue<double>(
                 DslExpression.interpolate(
                     DslExpression.linear(),
                     DslExpression.zoom(),
@@ -47,7 +46,7 @@ public class BuildingExtrusionsExampleExample : ContentPage, IExamplePage, IQuer
                     DslExpression.get("height")
                 )
             ),
-            FillExtrusionBase = new PropertyValue(
+            FillExtrusionBase = new PropertyValue<double>(
                 DslExpression.interpolate(
                     DslExpression.linear(),
                     DslExpression.zoom(),

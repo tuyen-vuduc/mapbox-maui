@@ -6,7 +6,7 @@ public class SkyLayer : MapboxLayer
         : base(id)
     {
         Type = LayerType.sky;
-        Visibility = new PropertyValue(Mapbox.Maui.Visibility.visible);
+        Visibility = new PropertyValue<Visibility>(Mapbox.Maui.Visibility.visible);
     }
 
     public static class SkyLayerKey
@@ -24,14 +24,14 @@ public class SkyLayer : MapboxLayer
     }
 
     /// A color used to tweak the main atmospheric scattering coefficients. Using white applies the default coefficients giving the natural blue color to the atmosphere. This color affects how heavily the corresponding wavelength is represented during scattering. The alpha channel describes the density of the atmosphere, with 1 maximum density and 0 no density.
-    public PropertyValue SkyAtmosphereColor
+    public PropertyValue<Color> SkyAtmosphereColor
     {
-        get => GetProperty<PropertyValue>(
+        get => GetProperty<PropertyValue<Color>>(
             SkyLayerKey.skyAtmosphereColor,
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue>(
+        set => SetProperty<PropertyValue<Color>>(
             SkyLayerKey.skyAtmosphereColor,
             value,
             MapboxLayerKey.paint
@@ -39,14 +39,14 @@ public class SkyLayer : MapboxLayer
     }
 
     /// A color applied to the atmosphere sun halo. The alpha channel describes how strongly the sun halo is represented in an atmosphere sky layer.
-    public PropertyValue SkyAtmosphereHaloColor
+    public PropertyValue<Color> SkyAtmosphereHaloColor
     {
-        get => GetProperty<PropertyValue>(
+        get => GetProperty<PropertyValue<Color>>(
             SkyLayerKey.skyAtmosphereHaloColor,
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue>(
+        set => SetProperty<PropertyValue<Color>>(
             SkyLayerKey.skyAtmosphereHaloColor,
             value,
             MapboxLayerKey.paint
@@ -54,14 +54,14 @@ public class SkyLayer : MapboxLayer
     }
 
     /// Position of the sun center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the sun relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the sun, where 0 degree is directly above, at zenith, and 90 degree at the horizon. When this property is ommitted, the sun center is directly inherited from the light position.
-    public PropertyValue SkyAtmosphereSun
+    public PropertyValue<double[]> SkyAtmosphereSun
     {
-        get => GetProperty<PropertyValue>(
+        get => GetProperty<PropertyValue<double[]>>(
             SkyLayerKey.skyAtmosphereSun,
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue>(
+        set => SetProperty<PropertyValue<double[]>>(
             SkyLayerKey.skyAtmosphereSun,
             value,
             MapboxLayerKey.paint
@@ -69,14 +69,14 @@ public class SkyLayer : MapboxLayer
     }
 
     /// Intensity of the sun as a light source in the atmosphere (on a scale from 0 to a 100). Setting higher values will brighten up the sky.
-    public PropertyValue SkyAtmosphereSunIntensity
+    public PropertyValue<double> SkyAtmosphereSunIntensity
     {
-        get => GetProperty<PropertyValue>(
+        get => GetProperty<PropertyValue<double>>(
             SkyLayerKey.skyAtmosphereSunIntensity,
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue>(
+        set => SetProperty<PropertyValue<double>>(
             SkyLayerKey.skyAtmosphereSunIntensity,
             value,
             MapboxLayerKey.paint
@@ -84,14 +84,14 @@ public class SkyLayer : MapboxLayer
     }
 
     /// Defines a radial color gradient with which to color the sky. The color values can be interpolated with an expression using `sky-radial-progress`. The range [0, 1] for the interpolant covers a radial distance (in degrees) of [0, `sky-gradient-radius`] centered at the position specified by `sky-gradient-center`.
-    public PropertyValue SkyGradient
+    public PropertyValue<Color> SkyGradient
     {
-        get => GetProperty<PropertyValue>(
+        get => GetProperty<PropertyValue<Color>>(
             SkyLayerKey.skyGradient,
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue>(
+        set => SetProperty<PropertyValue<Color>>(
             SkyLayerKey.skyGradient,
             value,
             MapboxLayerKey.paint
@@ -99,14 +99,14 @@ public class SkyLayer : MapboxLayer
     }
 
     /// Position of the gradient center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the gradient center relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the gradient center, where 0 degree is directly above, at zenith, and 90 degree at the horizon.
-    public PropertyValue SkyGradientCenter
+    public PropertyValue<double[]> SkyGradientCenter
     {
-        get => GetProperty<PropertyValue>(
+        get => GetProperty<PropertyValue<double[]>>(
             SkyLayerKey.skyGradientCenter,
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue>(
+        set => SetProperty<PropertyValue<double[]>>(
             SkyLayerKey.skyGradientCenter,
             value,
             MapboxLayerKey.paint
@@ -114,14 +114,14 @@ public class SkyLayer : MapboxLayer
     }
 
     /// The angular distance (measured in degrees) from `sky-gradient-center` up to which the gradient extends. A value of 180 causes the gradient to wrap around to the opposite direction from `sky-gradient-center`.
-    public PropertyValue SkyGradientRadius
+    public PropertyValue<double> SkyGradientRadius
     {
-        get => GetProperty<PropertyValue>(
+        get => GetProperty<PropertyValue<double>>(
             SkyLayerKey.skyGradientRadius,
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue>(
+        set => SetProperty<PropertyValue<double>>(
             SkyLayerKey.skyGradientRadius,
             value,
             MapboxLayerKey.paint
@@ -129,14 +129,14 @@ public class SkyLayer : MapboxLayer
     }
 
     /// The opacity of the entire sky layer.
-    public PropertyValue SkyOpacity
+    public PropertyValue<double> SkyOpacity
     {
-        get => GetProperty<PropertyValue>(
+        get => GetProperty<PropertyValue<double>>(
             SkyLayerKey.skyOpacity,
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue>(
+        set => SetProperty<PropertyValue<double>>(
             SkyLayerKey.skyOpacity,
             value,
             MapboxLayerKey.paint
@@ -159,14 +159,14 @@ public class SkyLayer : MapboxLayer
     }
 
     /// The type of the sky
-    public PropertyValue SkyType
+    public PropertyValue<SkyType> SkyType
     {
-        get => GetProperty<PropertyValue>(
+        get => GetProperty<PropertyValue<SkyType>>(
             SkyLayerKey.skyType,
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue>(
+        set => SetProperty<PropertyValue<SkyType>>(
             SkyLayerKey.skyType,
             value,
             MapboxLayerKey.paint

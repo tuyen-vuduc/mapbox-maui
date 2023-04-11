@@ -18,7 +18,7 @@ public static class AdditionalExtensions
     {
         var result = new TMBTerrain(xvalue.SourceId);
 
-        switch (xvalue.Exaggeration)
+        switch (xvalue.Exaggeration.Value)
         {
             case DslExpression expression:
                 result.Exaggeration = TMBValue.Expression(expression.ToPlatformValue());
@@ -59,14 +59,15 @@ public static class AdditionalExtensions
             float value => NSNumber.FromDouble(value),
             double value => NSNumber.FromDouble(value),
             string value => new NSString(value),
+            Color value => new NSString(value.ToRgbaString()),
             IStringEnum value => new NSString(value.Value),
-            PropertyValue value => value.Expression != null
-                    ? NSArray.FromNSObjects(value.Expression
+            IPropertyValue value => value.Value is DslExpression expression1
+                    ? NSArray.FromNSObjects(expression1
                         .ToObjects()
                         .Select(x => x.Wrap())
                         .ToArray()
                     )
-                    : value.Constant.Wrap(),
+                    : value.Value.Wrap(),
             _ => (NSObject)null
         };
 

@@ -5,18 +5,15 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Mapbox.Maui.Expressions;
 
-public class MapboxLayer
+public class MapboxLayer : BaseKVContainer
 {
     public MapboxLayer(
         string id
-        )
+        ) : base()
     {
-        properties = new Dictionary<string, object>()
-        {
-            { MapboxLayerKey.id, id },
-            { MapboxLayerKey.layout, new Dictionary<string, object>() },
-            { MapboxLayerKey.paint, new Dictionary<string, object>() },
-        };
+        SetProperty<string>(MapboxLayerKey.id, id);
+        SetProperty<Dictionary<string, object>>(MapboxLayerKey.layout, new Dictionary<string, object>());
+        SetProperty<Dictionary<string, object>>(MapboxLayerKey.paint, new Dictionary<string, object>());
     }
 
     public static class MapboxLayerKey
@@ -35,7 +32,7 @@ public class MapboxLayer
 
     private readonly Dictionary<string, object> properties;
 
-    public MapboxLayer SetProperty<T>(string name, T value, string group = null)
+    protected override MapboxLayer SetProperty<T>(string name, T value, string group = null)
     {
         // Not allow to use empty string as a name
         if (string.IsNullOrWhiteSpace(name)) return this;
@@ -46,60 +43,12 @@ public class MapboxLayer
         if (string.Equals(name, MapboxLayerKey.id, StringComparison.OrdinalIgnoreCase)) return this;
         if (string.Equals(name, MapboxLayerKey.layout, StringComparison.OrdinalIgnoreCase)) return this;
         if (string.Equals(name, MapboxLayerKey.paint, StringComparison.OrdinalIgnoreCase)) return this;
+              
 
-        void SetOrRemoveProperty(Dictionary<string, object> container, string key, T value)
-        {
-            if (value == null)
-            {
-                container.Remove(name);
-            }
-            else
-            {
-                container[name] = value;
-            }
-        }
-
-        if (group == null ||
-            !properties.TryGetValue(group, out var groupValue) ||
-            groupValue is not Dictionary<string, object> groupProperties)
-        {
-            SetOrRemoveProperty(properties, name, value);
-        }
-        else
-        {
-            SetOrRemoveProperty(groupProperties, name, value);
-        }
-
-        return this;
-    }
-
-    public T GetProperty<T>(string name, T defaultValue, string group = null)
-    {
-        // Not allow to use empty string as a name
-        if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Invalid property name");
-
-        name = name.Trim();
-
-        if (group == null ||
-            !properties.TryGetValue(group, out var groupValue) ||
-            groupValue is not Dictionary<string, object> groupProperties)
-        {
-            if (properties.TryGetValue(name, out var value) && value is T result)
-            {
-                return result;
-            }
-        }
-        else if (groupProperties.TryGetValue(name, out var value) && value is T result)
-        {
-            return result;
-        }
-
-        return defaultValue;
+        return base.SetProperty(name, value, group) as MapboxLayer;
     }
 
     public LayerPosition LayerPosition { get; set; }
-
-    public ReadOnlyDictionary<string, object> Properties => new ReadOnlyDictionary<string, object>(properties);
 
     public ReadOnlyDictionary<string, object> LayoutProperties
     {
@@ -156,14 +105,14 @@ public class MapboxLayer
         set => SetProperty<double?>(MapboxLayerKey.maxZoom, value);
     }
 
-    public PropertyValue Visibility
+    public PropertyValue<Mapbox.Maui.Visibility> Visibility
     {
-        get => GetProperty<PropertyValue>(
+        get => GetProperty<PropertyValue<Mapbox.Maui.Visibility>>(
             MapboxLayerKey.visibility,
-            new PropertyValue(Mapbox.Maui.Visibility.visible),
+            new PropertyValue<Mapbox.Maui.Visibility>(Mapbox.Maui.Visibility.visible),
             MapboxLayerKey.layout
         );
-        set => SetProperty<PropertyValue>(
+        set => SetProperty<PropertyValue<Mapbox.Maui.Visibility>>(
             MapboxLayerKey.visibility,
             value,
             MapboxLayerKey.layout

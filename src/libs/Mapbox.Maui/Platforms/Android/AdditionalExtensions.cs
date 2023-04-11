@@ -61,15 +61,15 @@ static class AdditionalExtensions
             float value => new PlatformValue(value),
             double value => new PlatformValue(value),
             string value => new PlatformValue(value),
+            Color value => new PlatformValue(value.ToRgbaString()),
             IStringEnum value => new PlatformValue(value.Value),
-            PropertyValue value => value.Expression != null
-                    ? new PlatformValue(value
-                            .Expression
+            IPropertyValue value => value.Value is DslExpression expression1
+                    ? new PlatformValue(expression1
                                 .ToObjects()
                                 .Select(x => x.Wrap())
                                 .ToList()
                             )
-                    : value.Constant.Wrap(),
+                    : value.Value.Wrap(),
             _ => null
         };
 
@@ -111,14 +111,16 @@ static class AdditionalExtensions
     {
         var result = new MapboxTerrain(terrain.SourceId);
 
-        switch (terrain.Exaggeration)
+        if (terrain.Exaggeration != null)
         {
-            case Expressions.DslExpression expression:
-                result.Exaggeration(expression.ToPlatformValue());
-                break;
-            case double doubleValue:
-                result.Exaggeration(doubleValue);
-                break;
+            if (terrain.Exaggeration.Expression != null)
+            {
+                result.Exaggeration(terrain.Exaggeration.Expression.ToPlatformValue());
+            }
+            else
+            {
+                result.Exaggeration(terrain.Exaggeration.Constant);
+            }
         }
 
         if (terrain.ExaggerationTransition != null)

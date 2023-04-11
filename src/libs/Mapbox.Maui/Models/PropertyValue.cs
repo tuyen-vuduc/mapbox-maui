@@ -2,23 +2,33 @@
 
 namespace Mapbox.Maui;
 
-public record class PropertyValue
+public interface IPropertyValue
 {
-    public object Constant { get; }
+    public object Value { get; }
+}
+
+public record class PropertyValue<T> : IPropertyValue
+{
+    public T Constant { get; }
     public DslExpression Expression { get; }
 
-    public PropertyValue(object value)
+    public object Value => Expression ?? (object)Constant;
+
+    public PropertyValue(T value)
     {
         if (value is DslExpression expression)
         {
-            Expression = expression;
+            throw new ArgumentException("Argument must not be a DslExpression", nameof(value));
         }
-        else
-        {
-            Constant = value;
-        }
+
+        Constant = value;
+        Expression = null;
     }
 
-    //public static implicit operator PropertyValue(DslExpression expression) => new PropertyValue(expression);
+    public PropertyValue(DslExpression expression)
+    {
+        Expression = expression;
+        Constant = default;
+    }
 }
 

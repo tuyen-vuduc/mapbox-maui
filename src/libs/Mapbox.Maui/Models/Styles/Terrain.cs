@@ -10,10 +10,7 @@ public class Terrain
 	}
 
 	public string SourceId { get; }
-	public object Exaggeration { get; private set; }
+	public PropertyValue<double> Exaggeration { get; set; }
     public StyleTransition ExaggerationTransition { get; set; }
-
-    public void SetExaggeration(double value) => Exaggeration = value;
-    public void SetExaggeration(DslExpression value) => Exaggeration = value;
 }
 

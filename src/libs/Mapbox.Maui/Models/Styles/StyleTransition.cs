@@ -25,7 +25,7 @@ public class StyleTransition : BaseKVContainer
         set => SetProperty<long>(StyleTransitionKey.delay, value);
     }
 
-    private class StyleTransitionKey
+    private static class StyleTransitionKey
     {
         public const string duration = "duration";
         public const string delay = "delay";

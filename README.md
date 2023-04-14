@@ -97,7 +97,7 @@ b/ iOS's `info.plist`
 | 7 | [AnimatedMarkerExample](./mapboxqs/AnimatedMarkerExample.m) |  |
 | 8 | [BasicLocationPulsingExample](./mapboxqs/BasicLocationPulsingExample.m) |  |
 | 9 | [BasicMapExample](./mapboxqs/BasicMapExample.m) | OK |
-| 10 | [BuildingExtrusionsExample](./mapboxqs/BuildingExtrusionsExample.m) |  |
+| 10 | [BuildingExtrusionsExample](./mapboxqs/BuildingExtrusionsExample.m) | OK |
 | 11 | [CameraAnimationExample](./mapboxqs/CameraAnimationExample.m) |  |
 | 12 | [CameraAnimatorsExample](./mapboxqs/CameraAnimatorsExample.m) |  |
 | 13 | [CircleAnnotationExample](./mapboxqs/CircleAnnotationExample.m) |  |

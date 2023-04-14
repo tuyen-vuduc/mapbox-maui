@@ -4,12 +4,12 @@ using Mapbox.Maui.Styles;
 using iOSPage = Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific.Page;
 namespace MapboxMauiQs;
 
-public class TerrainExampleExample : ContentPage, IExamplePage, IQueryAttributable
+public class TerrainExample : ContentPage, IExamplePage, IQueryAttributable
 {
     MapboxView map;
     IExampleInfo info;
 
-    public TerrainExampleExample()
+    public TerrainExample()
     {
         iOSPage.SetUseSafeArea(this, false);
         Content = map = new MapboxView();

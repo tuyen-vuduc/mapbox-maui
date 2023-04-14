@@ -1,31 +1,27 @@
-using System;
 using Mapbox.Maui;
 using Mapbox.Maui.Expressions;
 using Mapbox.Maui.Styles;
 using iOSPage = Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific.Page;
 namespace MapboxMauiQs;
 
-public class BuildingExtrusionsExampleExample : ContentPage, IExamplePage, IQueryAttributable
+public class BuildingExtrusionsExample : ContentPage, IExamplePage, IQueryAttributable
 {
     MapboxView map;
     IExampleInfo info;
     Light light;
 
-    ImageButton positionButton;
-    ImageButton colorButton;
-
     static readonly double[] firstPosition = new[] { 1.5, 90, 80 };
     static readonly double[] secondPosition = new[] { 1.15, 210, 30 };
 
 
-    public BuildingExtrusionsExampleExample()
+    public BuildingExtrusionsExample()
     {
         iOSPage.SetUseSafeArea(this, false);
 
         var content = new Grid
         {
             (map = new MapboxView()),
-            (positionButton = new ImageButton()
+            new ImageButton()
             {
                 Source = "flashlight",
                 WidthRequest = 48,
@@ -36,8 +32,8 @@ public class BuildingExtrusionsExampleExample : ContentPage, IExamplePage, IQuer
                 HorizontalOptions = LayoutOptions.End,
                 Margin = new Thickness(16,96),
                 Padding = new Thickness(8),
-            }),
-            (colorButton = new ImageButton()
+            },
+            new ImageButton()
             {
                 Source = "paintbrush",
                 WidthRequest = 48,
@@ -48,7 +44,7 @@ public class BuildingExtrusionsExampleExample : ContentPage, IExamplePage, IQuer
                 HorizontalOptions = LayoutOptions.End,
                 Margin = new Thickness(16,96+48+16),
                 Padding = new Thickness(8),
-            })
+            }
         };
 
         Content = content;

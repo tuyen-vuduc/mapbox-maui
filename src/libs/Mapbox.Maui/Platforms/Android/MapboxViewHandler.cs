@@ -18,13 +18,9 @@ public partial class MapboxViewHandler
 
         if (view.Light == null) return;
 
-        //foreach (var layer in view.Layers)
-        //{
-        //    mapView.MapboxMap.Style.AddStyleLayer(
-        //        layer.ToPlatformValue(),
-        //        layer.LayerPosition.ToPlatformValue()
-        //    );
-        //}
+        mapView.MapboxMap.Style.SetStyleLight(
+            view.Light.ToPlatformValue(true)
+        );
     }
 
     private static void HandleLayersChanged(MapboxViewHandler handler, IMapboxView view)
@@ -37,7 +33,7 @@ public partial class MapboxViewHandler
         foreach (var layer in view.Layers)
         {
             mapView.MapboxMap.Style.AddStyleLayer(
-                layer.ToPlatformValue(),
+                layer.ToPlatformValue(true),
                 layer.LayerPosition.ToPlatformValue()
             );
         }
@@ -66,6 +62,13 @@ public partial class MapboxViewHandler
             mapView.MapboxMap.Style.AddStyleSource(
                 source.Id,
                 source.ToPlatformValue()
+            );
+
+            if (!source.VolatileProperties.Any()) continue;
+
+            mapView.MapboxMap.Style.SetStyleSourceProperties(
+                source.Id,
+                source.GetVolatileProperties()
             );
         }
     }

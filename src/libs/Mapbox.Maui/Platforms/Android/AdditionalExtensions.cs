@@ -12,13 +12,13 @@ using Mapbox.Maui.Expressions;
 
 static class AdditionalExtensions
 {
-    internal static PlatformValue ToPlatformValue(this MapboxLayer xvalue)
+    internal static PlatformValue ToPlatformValue(this BaseKVContainer xvalue, bool rgba = false)
     {
         var properties = new Dictionary<string, PlatformValue>();
 
         foreach (var property in xvalue.Properties)
         {
-            var propertyValue = property.Value.Wrap();
+            var propertyValue = property.Value.Wrap(rgba);
             properties[property.Key] = propertyValue;
         }
 
@@ -43,7 +43,7 @@ static class AdditionalExtensions
         };
     }
 
-    internal static PlatformValue Wrap(this object xvalue)
+    internal static PlatformValue Wrap(this object xvalue, bool rgba = false)
     {
         var platformValue = xvalue switch
         {
@@ -58,15 +58,17 @@ static class AdditionalExtensions
             float value => new PlatformValue(value),
             double value => new PlatformValue(value),
             string value => new PlatformValue(value),
-            Color value => new PlatformValue(value.ToInt()),
+            Color value => rgba
+                ? new PlatformValue(value.ToRgbaString())
+                : new PlatformValue(value.ToInt()),
             IStringEnum value => new PlatformValue(value.Value),
             IPropertyValue value => value.Value is DslExpression expression1
                     ? new PlatformValue(expression1
                                 .ToObjects()
-                                .Select(x => x.Wrap())
+                                .Select(x => x.Wrap(rgba))
                                 .ToList()
                             )
-                    : value.Value.Wrap(),
+                    : value.Value.Wrap(rgba),
             _ => null
         };
 
@@ -76,7 +78,7 @@ static class AdditionalExtensions
         {
             return new PlatformValue(expression
                             .ToObjects()
-                            .Select(x => x.Wrap())
+                            .Select(x => x.Wrap(rgba))
                             .ToList()
                         );
         }
@@ -86,7 +88,7 @@ static class AdditionalExtensions
             var list = new Dictionary<string, PlatformValue>();
             foreach (var item in dict)
             {
-                list[item.Key] = item.Value.Wrap();
+                list[item.Key] = item.Value.Wrap(rgba);
             }
             return new PlatformValue(list);
         }
@@ -96,7 +98,7 @@ static class AdditionalExtensions
             var list = new List<PlatformValue>();
             foreach (var item in objects)
             {
-                list.Add(item.Wrap());
+                list.Add(item.Wrap(rgba));
             }
             return new PlatformValue(list);
         }
@@ -137,13 +139,11 @@ static class AdditionalExtensions
         return styleTransitionBuilder.Build();
     }
 
-    internal static PlatformValue ToPlatformValue(this MapboxSource source)
+    internal static PlatformValue GetVolatileProperties(this MapboxSource source)
     {
-        // TODO Add volatile properties
-
         var properties = new Dictionary<string, PlatformValue>();
 
-        foreach (var property in source.Properties)
+        foreach (var property in source.VolatileProperties)
         {
             var xvalue = property.Value.Wrap();
             properties[property.Key] = xvalue;

@@ -3,7 +3,6 @@ namespace Mapbox.Maui;
 
 using System.Collections;
 using Com.Mapbox.Maps.Extension.Style.Expressions.Generated;
-using Java.Lang;
 using Mapbox.Maui.Expressions;
 
 public static class ExpressionExtensions
@@ -41,7 +40,7 @@ public static class ExpressionExtensions
                     break;
                 case IEnumerable value:
                     var items = value.Cast<object>()
-                            .Select(x => x.Wrap())
+                            .Select(x => x.Wrap(true))
                             .Cast<Java.Lang.Object>()
                             .ToList();
                     expressionBuilder.Literal(items);

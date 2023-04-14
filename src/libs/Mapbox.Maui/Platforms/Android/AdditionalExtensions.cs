@@ -1,5 +1,4 @@
 ﻿namespace Mapbox.Maui;
-using MapboxMapsStyle = Com.Mapbox.Maps.Style;
 using MapboxMapsCameraOptions = Com.Mapbox.Maps.CameraOptions;
 using PlatformValue = Com.Mapbox.Bindgen.Value;
 using MapboxTerrain = Com.Mapbox.Maps.Extension.Style.Terrain.Generated.Terrain;
@@ -10,8 +9,6 @@ using Microsoft.Maui.Platform;
 using Mapbox.Maui.Styles;
 using System.Collections;
 using Mapbox.Maui.Expressions;
-using Com.Mapbox.Maps.Extension.Style.Expressions.Generated;
-using System.Collections.Immutable;
 
 static class AdditionalExtensions
 {
@@ -33,13 +30,13 @@ static class AdditionalExtensions
     {
         return xvalue.Enum switch
         {
-            Styles.LayerPositionEnum.Above => new Com.Mapbox.Maps.LayerPosition(
+            LayerPositionEnum.Above => new Com.Mapbox.Maps.LayerPosition(
                 xvalue.Parameter as string, null, null
             ),
-            Styles.LayerPositionEnum.At => new Com.Mapbox.Maps.LayerPosition(
+            LayerPositionEnum.At => new Com.Mapbox.Maps.LayerPosition(
                 null, null, new Java.Lang.Integer((int)xvalue.Parameter)
             ),
-            Styles.LayerPositionEnum.Below => new Com.Mapbox.Maps.LayerPosition(
+            LayerPositionEnum.Below => new Com.Mapbox.Maps.LayerPosition(
                 null, xvalue.Parameter as string, null
             ),
             _ => null,
@@ -61,7 +58,7 @@ static class AdditionalExtensions
             float value => new PlatformValue(value),
             double value => new PlatformValue(value),
             string value => new PlatformValue(value),
-            Color value => new PlatformValue(value.ToRgbaString()),
+            Color value => new PlatformValue(value.ToInt()),
             IStringEnum value => new PlatformValue(value.Value),
             IPropertyValue value => value.Value is DslExpression expression1
                     ? new PlatformValue(expression1

@@ -1,19 +1,11 @@
 ﻿namespace Mapbox.Maui;
 
-using Android.Widget;
-using Microsoft.Maui.Graphics;
-using Microsoft.Maui.Handlers;
 using PlatformView = AndroidX.Fragment.App.FragmentContainerView;
-using PlatformValue = Com.Mapbox.Bindgen.Value;
 using MapboxMapsStyle = Com.Mapbox.Maps.Style;
 using Com.Mapbox.Maps;
-using Microsoft.Maui.Controls;
 using Com.Mapbox.Maps.Plugin.Scalebar;
-using static Google.Android.Material.Tabs.TabLayout;
 using Microsoft.Maui.Platform;
 using Android.Content;
-using AndroidX.Fragment.App;
-using System;
 
 public partial class MapboxViewHandler
 {

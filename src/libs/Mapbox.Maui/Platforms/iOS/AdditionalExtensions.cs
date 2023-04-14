@@ -12,7 +12,7 @@ using MapboxMapsObjC;
 public static class AdditionalExtensions
 {
     internal static TMBTerrain ToPlatformValue(
-        this Mapbox.Maui.Styles.Terrain xvalue
+        this Terrain xvalue
     )
     {
         var result = new TMBTerrain(xvalue.SourceId);
@@ -31,14 +31,14 @@ public static class AdditionalExtensions
     }
 
     internal static TMBLayerPosition ToPlatformValue(
-        this Styles.LayerPosition xvalue
+        this LayerPosition xvalue
     )
     {
         return xvalue.Enum switch
         {
-            Styles.LayerPositionEnum.Above => TMBLayerPosition.Above,
-            Styles.LayerPositionEnum.At => TMBLayerPosition.At,
-            Styles.LayerPositionEnum.Below => TMBLayerPosition.Below,
+            LayerPositionEnum.Above => TMBLayerPosition.Above,
+            LayerPositionEnum.At => TMBLayerPosition.At,
+            LayerPositionEnum.Below => TMBLayerPosition.Below,
             _ => TMBLayerPosition.Unowned,
         };
     }
@@ -106,7 +106,7 @@ public static class AdditionalExtensions
     }
 
     internal static NSDictionary<NSString, NSObject> ToPlatformValue(
-        this Mapbox.Maui.Styles.MapboxLayer xvalue
+        this MapboxLayer xvalue
     )
     {
         var properties = new NSMutableDictionary<NSString, NSObject>();
@@ -123,7 +123,7 @@ public static class AdditionalExtensions
     }
 
     internal static NSDictionary<NSString, NSObject> ToPlatformValue(
-        this Mapbox.Maui.Styles.MapboxSource source
+        this MapboxSource source
     )
     {
         // TODO Add volatile properties

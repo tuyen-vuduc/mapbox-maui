@@ -34,6 +34,17 @@ public partial class MapboxView : View, IMapboxView
         set => SetValue(TerrainProperty, value);
     }
 
+    public static readonly BindableProperty LightProperty = BindableProperty.Create(
+       nameof(Light),
+       typeof(Light),
+       typeof(MapboxView)
+    );
+    public Light Light
+    {
+        get => (Light)GetValue(LightProperty);
+        set => SetValue(LightProperty, value);
+    }
+
     public static readonly BindableProperty SourcesProperty = BindableProperty.Create(
        nameof(Sources),
        typeof(IEnumerable<MapboxSource>),

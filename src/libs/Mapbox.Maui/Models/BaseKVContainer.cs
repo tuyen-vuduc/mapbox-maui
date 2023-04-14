@@ -1,15 +1,18 @@
 ﻿using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 
 namespace Mapbox.Maui;
 
-public abstract class BaseKVContainer
+public abstract class BaseKVContainer : INotifyCollectionChanged
 {
     protected BaseKVContainer()
     {
         properties = new Dictionary<string, object>();
     }
 
-    public ReadOnlyDictionary<string, object> Properties => new ReadOnlyDictionary<string, object>(properties);
+    public event NotifyCollectionChangedEventHandler CollectionChanged;
+
+    public ReadOnlyDictionary<string, object> Properties => new(properties);
 
     private readonly Dictionary<string, object> properties;
 
@@ -24,11 +27,34 @@ public abstract class BaseKVContainer
         {
             if (value == null)
             {
+                if (!container.ContainsKey(key)) return;
+
+                CollectionChanged?.Invoke(
+                    this,
+                    new NotifyCollectionChangedEventArgs(
+                        NotifyCollectionChangedAction.Remove,
+                        container.Single(x => x.Key == key)
+                    )
+                );
+
                 container.Remove(name);
             }
             else
             {
+                var action = container.ContainsKey(key)
+                    ? NotifyCollectionChangedAction.Replace
+                    : NotifyCollectionChangedAction.Add;
+
                 container[name] = value;
+
+                CollectionChanged?.Invoke(
+                    this,
+                    new NotifyCollectionChangedEventArgs(
+                        action,
+                        container.Single(x => x.Key == key)
+                    )
+                );
+
             }
         }
 

@@ -102,10 +102,16 @@
 	<ItemGroup>
 	  <None Remove="Models\" />
 	  <None Remove="Examples\" />
+	  <None Remove="Resources\Images\flashlight-svgrepo-com.svg" />
+	  <None Remove="Resources\Images\paint-brush-svgrepo-com.svg" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Models\" />
 	  <Folder Include="Examples\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <BundleResource Include="Resources\Images\flashlight.svg" />
+	  <BundleResource Include="Resources\Images\paintbrush.svg" />
 	</ItemGroup>
 	<ProjectExtensions>
 	  <MonoDevelop>

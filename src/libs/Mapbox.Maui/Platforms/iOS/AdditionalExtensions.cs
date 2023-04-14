@@ -4,7 +4,6 @@ namespace Mapbox.Maui;
 using System.Collections;
 using CoreLocation;
 using Foundation;
-using JavaScriptCore;
 using Mapbox.Maui.Expressions;
 using Mapbox.Maui.Styles;
 using MapboxCoreMaps;
@@ -90,7 +89,7 @@ public static class AdditionalExtensions
             {
                 list[item.Key] = item.Value.Wrap();
             }
-            return list;
+            return new NSDictionary<NSString, NSObject>(list.Keys, list.Values);
         }
 
         if (xvalue is IEnumerable objects)

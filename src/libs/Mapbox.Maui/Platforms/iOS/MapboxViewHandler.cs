@@ -1,15 +1,27 @@
 ﻿
 namespace Mapbox.Maui;
 
-using System;
 using Foundation;
-using MapboxMaps;
 using MapboxMapsObjC;
-using Microsoft.Maui.Handlers;
 using PlatformView = MapViewContainer;
 
 public partial class MapboxViewHandler
 {
+    private static void HandleLightChanged(MapboxViewHandler handler, IMapboxView view)
+    {
+        var mapView = handler.PlatformView.MapView;
+        if (mapView == null) return;
+
+        var light = view.Light;
+        if (light == null) return;
+
+        var platformProperties = light.Properties.Wrap() as NSDictionary<NSString, NSObject>;
+        mapView.SetLightWithProperties(platformProperties, (error) =>
+        {
+            System.Diagnostics.Debug.WriteLine(error.UserInfo);
+        });
+    }
+
     private static void HandleLayersChanged(MapboxViewHandler handler, IMapboxView view)
     {
         var mapView = handler.PlatformView.MapView;
@@ -29,7 +41,10 @@ public partial class MapboxViewHandler
                 properties,
                 layer.LayerPosition.ToPlatformValue(),
                 layer.LayerPosition.Parameter?.Wrap(),
-                null
+                (error) =>
+                {
+                    System.Diagnostics.Debug.WriteLine(error.UserInfo);
+                }
             );
         }
     }

@@ -9,15 +9,80 @@ public class BuildingExtrusionsExampleExample : ContentPage, IExamplePage, IQuer
 {
     MapboxView map;
     IExampleInfo info;
+    Light light;
+
+    ImageButton positionButton;
+    ImageButton colorButton;
+
+    static readonly double[] firstPosition = new[] { 1.5, 90, 80 };
+    static readonly double[] secondPosition = new[] { 1.15, 210, 30 };
+
 
     public BuildingExtrusionsExampleExample()
-	{
+    {
         iOSPage.SetUseSafeArea(this, false);
-		Content = map = new MapboxView();
+
+        var content = new Grid
+        {
+            (map = new MapboxView()),
+            (positionButton = new ImageButton()
+            {
+                Source = "flashlight",
+                WidthRequest = 48,
+                HeightRequest = 48,
+                BackgroundColor = Colors.CadetBlue,
+                Command = new Command(ChangeLight),
+                VerticalOptions = LayoutOptions.End,
+                HorizontalOptions = LayoutOptions.End,
+                Margin = new Thickness(16,96),
+                Padding = new Thickness(8),
+            }),
+            (colorButton = new ImageButton()
+            {
+                Source = "paintbrush",
+                WidthRequest = 48,
+                HeightRequest = 48,
+                BackgroundColor = Colors.CadetBlue,
+                Command = new Command(ChangeColor),
+                VerticalOptions = LayoutOptions.End,
+                HorizontalOptions = LayoutOptions.End,
+                Margin = new Thickness(16,96+48+16),
+                Padding = new Thickness(8),
+            })
+        };
+
+        Content = content;
+        light = new Light();
 
         map.MapReady += Map_MapReady;
         map.StyleLoaded += Map_StyleLoaded;
-	}
+    }
+
+    private void ChangeColor(object obj)
+    {
+        light.Color = light.Color == Colors.Red
+            ? Colors.Blue
+            : Colors.Red;
+
+        map.Light = new Light
+        {
+            Color = light.Color,
+            Position = light.Position,
+        };
+    }
+
+    private void ChangeLight(object obj)
+    {
+        light.Position = light.Position == firstPosition
+            ? secondPosition
+            : firstPosition;
+
+        map.Light = new Light
+        {
+            Color = light.Color,
+            Position = light.Position,
+        };
+    }
 
     private void Map_StyleLoaded(object sender, EventArgs e)
     {

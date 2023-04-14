@@ -18,6 +18,8 @@ public partial interface IMapboxView : IView
 
     Terrain Terrain { get; set; }
 
+    Light Light { get; set; }
+
     IEnumerable<MapboxLayer> Layers { get; set; }
 }
 

@@ -1,8 +1,8 @@
 namespace MapboxMauiQs;
-class SkyLayerExampleExampleInfo : IExampleInfo
+class SkyLayerExampleInfo : IExampleInfo
 {
     public string Group => "3D and Fill Extrusions";
     public string Title => "Add a sky layer";
     public string Subtitle => "Add a customizable sky layer to simulate natural lighting with a Terrain layer.";
-    public string PageRoute => typeof(SkyLayerExampleExample).FullName;
+    public string PageRoute => typeof(SkyLayerExample).FullName;
 }

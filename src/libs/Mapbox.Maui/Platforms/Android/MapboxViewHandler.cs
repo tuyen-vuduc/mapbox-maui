@@ -32,8 +32,17 @@ public partial class MapboxViewHandler
 
         foreach (var layer in view.Layers)
         {
+            var value = layer.ToPlatformValue(true);
+
+            if (mapView.MapboxMap.Style.StyleLayerExists(layer.Id))
+            {
+                mapView.MapboxMap.Style.SetStyleLayerProperties(layer.Id, value);
+
+                continue;
+            }
+
             mapView.MapboxMap.Style.AddStyleLayer(
-                layer.ToPlatformValue(true),
+                value,
                 layer.LayerPosition.ToPlatformValue()
             );
         }

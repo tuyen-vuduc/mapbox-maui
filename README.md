@@ -139,7 +139,7 @@ b/ iOS's `info.plist`
 | 49 | [RestrictCoordinateBoundsExample](./mapboxqs/RestrictCoordinateBoundsExample.m) |  |
 | 50 | [SceneKitExample](./mapboxqs/SceneKitExample.m) | N/A |
 | 51 | [ShowHideLayerExample](./mapboxqs/ShowHideLayerExample.m) |  |
-| 52 | [SkyLayerExample](./mapboxqs/SkyLayerExample.m) |  |
+| 52 | [SkyLayerExample](./mapboxqs/SkyLayerExample.m) | OK |
 | 53 | [SnapshotterCoreGraphicsExample](./mapboxqs/SnapshotterCoreGraphicsExample.m) |  |
 | 54 | [SnapshotterExample](./mapboxqs/SnapshotterExample.m) |  |
 | 55 | [SpinningGlobeExample](./mapboxqs/SpinningGlobeExample.m) |  |

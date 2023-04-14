@@ -34,8 +34,19 @@ public partial class MapboxViewHandler
         {
             var properties = layer.ToPlatformValue();
 
-            var data = NSJsonSerialization.Serialize(properties, NSJsonWritingOptions.PrettyPrinted, out var error);
-            var json = NSString.FromData(data, NSStringEncoding.UTF8).ToString();
+            if (mapView.LayerExistsWithId(layer.Id, null))
+            {
+                mapView.UpdateLayerPropertiesFor(
+                    layer.Id,
+                    properties,
+                    (error) =>
+                    {
+                        System.Diagnostics.Debug.WriteLine(error.UserInfo);
+                    }
+                );
+
+                continue;
+            }
 
             mapView.AddLayerWithProperties(
                 properties,

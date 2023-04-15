@@ -6,6 +6,7 @@ using Com.Mapbox.Maps;
 using Com.Mapbox.Maps.Plugin.Scalebar;
 using Microsoft.Maui.Platform;
 using Android.Content;
+using System;
 
 public partial class MapboxViewHandler
 {
@@ -142,6 +143,7 @@ public partial class MapboxViewHandler
         mapboxFragment = new MapboxFragment();
         mapboxFragment.MapViewReady += HandleMapViewReady;
         mapboxFragment.StyleLoaded += HandleStyleLoaded;
+        mapboxFragment.MapLoaded += HandleMapLoaded;
 
         var fragmentTransaction = mainActivity.SupportFragmentManager.BeginTransaction();
         fragmentTransaction.Replace(fragmentContainerView.Id, mapboxFragment, $"mapbox-maui-{fragmentContainerView.Id}");
@@ -154,6 +156,8 @@ public partial class MapboxViewHandler
         if (mapboxFragment != null)
         {
             mapboxFragment.MapViewReady -= HandleMapViewReady;
+            mapboxFragment.StyleLoaded -= HandleStyleLoaded;
+            mapboxFragment.MapLoaded -= HandleMapLoaded;
             mapboxFragment.Dispose();
             mapboxFragment = null;
         }
@@ -161,13 +165,12 @@ public partial class MapboxViewHandler
     }
 
     private void HandleMapViewReady(MapView view)
-    {
-        (VirtualView as MapboxView)?.InvokeMapReady();
-    }
+        => (VirtualView as MapboxView)?.InvokeMapReady();
+
+    private void HandleMapLoaded(MapView view)
+        => (VirtualView as MapboxView)?.InvokeMapLoaded();
 
     private void HandleStyleLoaded(MapView view)
-    {
-        (VirtualView as MapboxView)?.InvokeStyleLoaded();
-    }
+        => (VirtualView as MapboxView)?.InvokeStyleLoaded();
 }
 

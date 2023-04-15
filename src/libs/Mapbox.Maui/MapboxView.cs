@@ -1,13 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
-using System.Security.AccessControl;
-using System.Windows.Input;
-using Mapbox.Maui.Styles;
-using Microsoft.Maui.Handlers;
-
+﻿using Mapbox.Maui.Styles;
 namespace Mapbox.Maui;
 
 public partial class MapboxView : View, IMapboxView
@@ -93,11 +84,11 @@ public partial class MapboxView : View, IMapboxView
 
     public static readonly BindableProperty MapCenterProperty = BindableProperty.Create(
        nameof(MapCenter),
-       typeof(Microsoft.Maui.Graphics.Point?),
+       typeof(Point?),
        typeof(MapboxView),
-       default(Microsoft.Maui.Graphics.Point?)
+       default(Point?)
     );
-    public Microsoft.Maui.Graphics.Point? MapCenter
+    public Point? MapCenter
     {
         get => CameraOptions.Center;
         set => CameraOptions = CameraOptions with

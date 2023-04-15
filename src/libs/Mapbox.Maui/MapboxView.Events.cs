@@ -1,6 +1,6 @@
-﻿using System.Windows.Input;
+﻿namespace Mapbox.Maui;
 
-namespace Mapbox.Maui;
+using System.Windows.Input;
 
 partial class MapboxView
 {
@@ -48,6 +48,29 @@ partial class MapboxView
     {
         get => (ICommand)GetValue(StyleLoadedCommandProperty);
         set => SetValue(StyleLoadedCommandProperty, value);
+    }
+
+    public event EventHandler MapLoaded;
+    internal void InvokeMapLoaded()
+    {
+        MapLoaded?.Invoke(this, EventArgs.Empty);
+
+        if (MapLoadedCommand?.CanExecute(null) == true)
+        {
+            MapLoadedCommand.Execute(null);
+        }
+    }
+
+    public static readonly BindableProperty MapLoadedCommandProperty = BindableProperty.Create(
+       nameof(MapLoadedCommand),
+       typeof(ICommand),
+       typeof(MapboxView),
+       default(ICommand)
+    );
+    public ICommand MapLoadedCommand
+    {
+        get => (ICommand)GetValue(MapLoadedCommandProperty);
+        set => SetValue(MapLoadedCommandProperty, value);
     }
 }
 

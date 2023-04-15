@@ -13,6 +13,7 @@ public partial class MapboxFragment : Fragment
 {
     public event Action<MapView> MapViewReady;
     public event Action<MapView> StyleLoaded;
+    public event Action<MapView> MapLoaded;
 
     public MapView MapView { get; private set; }
 
@@ -33,7 +34,7 @@ public partial class MapboxFragment : Fragment
 
     }
 
-    public override Android.Views.View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         if (string.IsNullOrWhiteSpace(MapboxViewHandler.ACCESS_TOKEN))
         {
@@ -52,7 +53,7 @@ public partial class MapboxFragment : Fragment
         return MapView = new MapView(Context, initOptions);
     }
 
-    public override void OnViewCreated(Android.Views.View view, Bundle savedInstanceState)
+    public override void OnViewCreated(View view, Bundle savedInstanceState)
     {
         base.OnViewCreated(view, savedInstanceState);
 
@@ -96,10 +97,17 @@ public partial class MapboxFragment : Fragment
 }
 
 
-partial class MapboxFragment : IOnStyleLoadedListener
+partial class MapboxFragment
+    : IOnStyleLoadedListener
+    , IOnMapLoadedListener
 {
+    public void OnMapLoaded(MapLoadedEventData eventData)
+    {
+        MapLoaded?.Invoke(MapView);
+    }
+
     public void OnStyleLoaded(StyleLoadedEventData eventData)
     {
-        StyleLoaded?.Invoke(this.MapView);
+        StyleLoaded?.Invoke(MapView);
     }
 }

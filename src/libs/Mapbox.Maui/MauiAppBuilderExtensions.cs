@@ -1,4 +1,6 @@
-﻿#if IOS 
+﻿namespace Mapbox.Maui;
+
+#if IOS 
 using PlatformView = MapboxMaps.MapView;
 #elif __ANDROID__
 #elif (NETSTANDARD || !PLATFORM) || (NET6_0_OR_GREATER && !IOS && !__ANDROID__)
@@ -6,8 +8,6 @@ using PlatformView = System.Object;
 #endif
 
 using System.Globalization;
-
-namespace Mapbox.Maui;
 
 public static class MauiAppBuilderExtensions
 {

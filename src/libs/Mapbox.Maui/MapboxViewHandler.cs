@@ -1,4 +1,6 @@
-﻿using Microsoft.Maui.Handlers;
+﻿namespace Mapbox.Maui;
+
+using Microsoft.Maui.Handlers;
 
 #if IOS 
 using PlatformView = Mapbox.Maui.MapViewContainer;
@@ -7,8 +9,6 @@ using PlatformView = AndroidX.Fragment.App.FragmentContainerView;
 #elif (NETSTANDARD || !PLATFORM) || (NET6_0_OR_GREATER && !IOS && !__ANDROID__)
 using PlatformView = System.Object;
 #endif
-
-namespace Mapbox.Maui;
 
 public partial class MapboxViewHandler : ViewHandler<IMapboxView, PlatformView>
 {

@@ -153,9 +153,13 @@ public partial class MapboxViewHandler
         var mapView = platformView.MapView;
         if (mapView == null) return;
 
-        mapView.OnStyleLoaded(style =>
+        mapView.OnStyleLoaded(_ =>
         {
             (VirtualView as MapboxView)?.InvokeStyleLoaded();
+        });
+        mapView.OnMapLoaded(_ =>
+        {
+            (VirtualView as MapboxView)?.InvokeMapLoaded();
         });
     }
 }

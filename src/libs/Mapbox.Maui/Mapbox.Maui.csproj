@@ -57,7 +57,7 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0-ios'">
-		<PackageReference Include="MapboxMapsObjC.iOS" Version="10.11.1" />
+		<PackageReference Include="MapboxMapsObjC.iOS" Version="10.11.1-alpha1" />
 		<PackageReference Include="MapboxMobileEvents.iOS" Version="1.0.10" />
 	</ItemGroup>
 	<ItemGroup>

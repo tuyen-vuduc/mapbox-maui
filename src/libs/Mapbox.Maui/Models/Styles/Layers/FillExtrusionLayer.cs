@@ -5,7 +5,7 @@ public class FillExtrusionLayer : MapboxLayer
 	public FillExtrusionLayer(string id) : base(id)
 	{
 		Type = LayerType.fillExtrusion;
-        Visibility = new PropertyValue<Mapbox.Maui.Visibility>(Mapbox.Maui.Visibility.visible);
+        Visibility = new PropertyValue<Visibility>(Maui.Visibility.visible);
 	}
 
     public static class FillExtrusionLayerKey
@@ -37,7 +37,7 @@ public class FillExtrusionLayer : MapboxLayer
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue<double>>(
+        set => SetProperty(
             FillExtrusionLayerKey.fillExtrusionAmbientOcclusionIntensity,
             value,
             MapboxLayerKey.paint
@@ -52,7 +52,7 @@ public class FillExtrusionLayer : MapboxLayer
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue<StyleTransition>>(
+        set => SetProperty(
             FillExtrusionLayerKey.fillExtrusionAmbientOcclusionIntensityTransition,
             value,
             MapboxLayerKey.paint
@@ -67,7 +67,7 @@ public class FillExtrusionLayer : MapboxLayer
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue<double>>(
+        set => SetProperty(
             FillExtrusionLayerKey.fillExtrusionAmbientOcclusionRadius,
             value,
             MapboxLayerKey.paint
@@ -82,7 +82,7 @@ public class FillExtrusionLayer : MapboxLayer
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue<StyleTransition>>(
+        set => SetProperty(
             FillExtrusionLayerKey.fillExtrusionAmbientOcclusionRadiusTransition,
             value,
             MapboxLayerKey.paint
@@ -97,7 +97,7 @@ public class FillExtrusionLayer : MapboxLayer
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue<double>>(
+        set => SetProperty(
             FillExtrusionLayerKey.fillExtrusionBase,
             value,
             MapboxLayerKey.paint
@@ -112,7 +112,7 @@ public class FillExtrusionLayer : MapboxLayer
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue<StyleTransition>>(
+        set => SetProperty(
             FillExtrusionLayerKey.fillExtrusionBaseTransition,
             value,
             MapboxLayerKey.paint
@@ -127,7 +127,7 @@ public class FillExtrusionLayer : MapboxLayer
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue<Color>>(
+        set => SetProperty(
             FillExtrusionLayerKey.fillExtrusionColor,
             value,
             MapboxLayerKey.paint
@@ -142,7 +142,7 @@ public class FillExtrusionLayer : MapboxLayer
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue<StyleTransition>>(
+        set => SetProperty(
             FillExtrusionLayerKey.fillExtrusionColorTransition,
             value,
             MapboxLayerKey.paint
@@ -157,7 +157,7 @@ public class FillExtrusionLayer : MapboxLayer
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue<double>>(
+        set => SetProperty(
             FillExtrusionLayerKey.fillExtrusionHeight,
             value,
             MapboxLayerKey.paint
@@ -172,7 +172,7 @@ public class FillExtrusionLayer : MapboxLayer
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue<StyleTransition>>(
+        set => SetProperty(
             FillExtrusionLayerKey.fillExtrusionHeightTransition,
             value,
             MapboxLayerKey.paint
@@ -187,7 +187,7 @@ public class FillExtrusionLayer : MapboxLayer
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue<double>>(
+        set => SetProperty(
             FillExtrusionLayerKey.fillExtrusionOpacity,
             value,
             MapboxLayerKey.paint
@@ -202,7 +202,7 @@ public class FillExtrusionLayer : MapboxLayer
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue<StyleTransition>>(
+        set => SetProperty(
             FillExtrusionLayerKey.fillExtrusionOpacityTransition,
             value,
             MapboxLayerKey.paint
@@ -217,7 +217,7 @@ public class FillExtrusionLayer : MapboxLayer
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue<string>>(
+        set => SetProperty(
             FillExtrusionLayerKey.fillExtrusionPattern,
             value,
             MapboxLayerKey.paint
@@ -232,7 +232,7 @@ public class FillExtrusionLayer : MapboxLayer
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue<double[]>>(
+        set => SetProperty(
             FillExtrusionLayerKey.fillExtrusionTranslate,
             value,
             MapboxLayerKey.paint
@@ -247,7 +247,7 @@ public class FillExtrusionLayer : MapboxLayer
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue<StyleTransition>>(
+        set => SetProperty(
             FillExtrusionLayerKey.fillExtrusionTranslateTransition,
             value,
             MapboxLayerKey.paint
@@ -262,7 +262,7 @@ public class FillExtrusionLayer : MapboxLayer
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue<FillExtrusionTranslateAnchor>>(
+        set => SetProperty(
             FillExtrusionLayerKey.fillExtrusionTranslateAnchor,
             value,
             MapboxLayerKey.paint
@@ -277,7 +277,7 @@ public class FillExtrusionLayer : MapboxLayer
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue<bool>>(
+        set => SetProperty(
             FillExtrusionLayerKey.fillExtrusionVerticalGradient,
             value,
             MapboxLayerKey.paint

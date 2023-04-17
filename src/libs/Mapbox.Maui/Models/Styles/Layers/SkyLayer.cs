@@ -31,7 +31,7 @@ public class SkyLayer : MapboxLayer
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue<Color>>(
+        set => SetProperty(
             SkyLayerKey.skyAtmosphereColor,
             value,
             MapboxLayerKey.paint
@@ -46,7 +46,7 @@ public class SkyLayer : MapboxLayer
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue<Color>>(
+        set => SetProperty(
             SkyLayerKey.skyAtmosphereHaloColor,
             value,
             MapboxLayerKey.paint
@@ -61,7 +61,7 @@ public class SkyLayer : MapboxLayer
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue<double[]>>(
+        set => SetProperty(
             SkyLayerKey.skyAtmosphereSun,
             value,
             MapboxLayerKey.paint
@@ -76,7 +76,7 @@ public class SkyLayer : MapboxLayer
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue<double>>(
+        set => SetProperty(
             SkyLayerKey.skyAtmosphereSunIntensity,
             value,
             MapboxLayerKey.paint
@@ -91,7 +91,7 @@ public class SkyLayer : MapboxLayer
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue<Color>>(
+        set => SetProperty(
             SkyLayerKey.skyGradient,
             value,
             MapboxLayerKey.paint
@@ -106,7 +106,7 @@ public class SkyLayer : MapboxLayer
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue<double[]>>(
+        set => SetProperty(
             SkyLayerKey.skyGradientCenter,
             value,
             MapboxLayerKey.paint
@@ -121,7 +121,7 @@ public class SkyLayer : MapboxLayer
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue<double>>(
+        set => SetProperty(
             SkyLayerKey.skyGradientRadius,
             value,
             MapboxLayerKey.paint
@@ -136,7 +136,7 @@ public class SkyLayer : MapboxLayer
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue<double>>(
+        set => SetProperty(
             SkyLayerKey.skyOpacity,
             value,
             MapboxLayerKey.paint
@@ -151,7 +151,7 @@ public class SkyLayer : MapboxLayer
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<StyleTransition>(
+        set => SetProperty(
             SkyLayerKey.skyOpacityTransition,
             value,
             MapboxLayerKey.paint
@@ -166,7 +166,7 @@ public class SkyLayer : MapboxLayer
             default,
             MapboxLayerKey.paint
         );
-        set => SetProperty<PropertyValue<SkyType>>(
+        set => SetProperty(
             SkyLayerKey.skyType,
             value,
             MapboxLayerKey.paint

@@ -8,7 +8,7 @@ public class MapboxSource : BaseKVContainer
     public MapboxSource(string id)
         : base()
     {
-        base.SetProperty<string>(MapboxSourceKey.id, id);
+        base.SetProperty(MapboxSourceKey.id, id);
 
         volatileProperties = new Dictionary<string, object>();
     }
@@ -16,7 +16,7 @@ public class MapboxSource : BaseKVContainer
     public MapboxSource(string id, string type)
         : this(id)
     {
-        base.SetProperty<string>(MapboxSourceKey.type, type);
+        base.SetProperty(MapboxSourceKey.type, type);
     }
 
     private readonly Dictionary<string, object> volatileProperties;

@@ -1,8 +1,21 @@
-﻿using Mapbox.Maui.Styles;
-namespace Mapbox.Maui;
+﻿namespace Mapbox.Maui;
+
+using Mapbox.Maui.Annotations;
+using Mapbox.Maui.Styles;
 
 public partial class MapboxView : View, IMapboxView
 {
+    public static readonly BindableProperty AnnotationsProperty = BindableProperty.Create(
+       nameof(Annotations),
+       typeof(IEnumerable<IAnnotation>),
+       typeof(MapboxView)
+    );
+    public IEnumerable<IAnnotation> Annotations
+    {
+        get => (IEnumerable<IAnnotation>)GetValue(AnnotationsProperty);
+        set => SetValue(AnnotationsProperty, value);
+    }
+
     public static readonly BindableProperty LayersProperty = BindableProperty.Create(
        nameof(Layers),
        typeof(IEnumerable<MapboxLayer>),

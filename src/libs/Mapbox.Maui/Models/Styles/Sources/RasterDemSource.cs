@@ -32,63 +32,63 @@ public class RasterDemSource : MapboxSource
     public string Url
     {
         get => GetProperty<string>(RasterDemSourceKey.url, default);
-        set => SetProperty<string>(RasterDemSourceKey.url, value);
+        set => SetProperty(RasterDemSourceKey.url, value);
     }
 
     /// An array of one or more tile source URLs, as in the TileJSON spec.
     public List<string> Tiles
     {
         get => GetProperty<List<string>>(RasterDemSourceKey.tiles, default);
-        set => SetProperty<List<string>>(RasterDemSourceKey.tiles, value);
+        set => SetProperty(RasterDemSourceKey.tiles, value);
     }
 
     /// An array containing the longitude and latitude of the southwest and northeast corners of the source's bounding box in the following order: `[sw.lng, sw.lat, ne.lng, ne.lat]`. When this property is included in a source, no tiles outside of the given bounds are requested by Mapbox GL.
     public List<double> Bounds
     {
         get => GetProperty<List<double>>(RasterDemSourceKey.bounds, default);
-        set => SetProperty<List<double>>(RasterDemSourceKey.bounds, value);
+        set => SetProperty(RasterDemSourceKey.bounds, value);
     }
 
     /// Minimum zoom level for which tiles are available, as in the TileJSON spec.
     public double MinZoom
     {
         get => GetProperty<double>(RasterDemSourceKey.minzoom, default);
-        set => SetProperty<double>(RasterDemSourceKey.minzoom, value);
+        set => SetProperty(RasterDemSourceKey.minzoom, value);
     }
 
     /// Maximum zoom level for which tiles are available, as in the TileJSON spec. Data from tiles at the maxzoom are used when displaying the map at higher zoom levels.
     public double MaxZoom
     {
         get => GetProperty<double>(RasterDemSourceKey.maxzoom, default);
-        set => SetProperty<double>(RasterDemSourceKey.maxzoom, value);
+        set => SetProperty(RasterDemSourceKey.maxzoom, value);
     }
 
     /// The minimum visual size to display tiles for this layer. Only configurable for raster layers.
     public double TileSize
     {
         get => GetProperty<double>(RasterDemSourceKey.tileSize, default);
-        set => SetProperty<double>(RasterDemSourceKey.tileSize, value);
+        set => SetProperty(RasterDemSourceKey.tileSize, value);
     }
 
     /// Contains an attribution to be displayed when the map is shown to a user.
     public string Attribution
     {
         get => GetProperty<string>(RasterDemSourceKey.attribution, default);
-        set => SetProperty<string>(RasterDemSourceKey.attribution, value);
+        set => SetProperty(RasterDemSourceKey.attribution, value);
     }
 
     /// The encoding used by this source. Mapbox Terrain RGB is used by default
     public MapboxEncoding Encoding
     {
         get => GetProperty<MapboxEncoding>(RasterDemSourceKey.encoding, default);
-        set => SetProperty<MapboxEncoding>(RasterDemSourceKey.encoding, value);
+        set => SetProperty(RasterDemSourceKey.encoding, value);
     }
 
     /// A setting to determine whether a source's tiles are cached locally.
     public bool Volatile
     {
         get => GetProperty<bool>(RasterDemSourceKey.@volatile, default);
-        set => SetProperty<bool>(RasterDemSourceKey.@volatile, value);
+        set => SetProperty(RasterDemSourceKey.@volatile, value);
     }
 
     /// When loading a map, if PrefetchZoomDelta is set to any number greater than 0, the map will first request a tile at zoom level lower than zoom - delta, but so that the zoom level is multiple of delta, in an attempt to display a full map at lower resolution as quick as possible. It will get clamped at the tile source minimum zoom. The default delta is 4.

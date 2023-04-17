@@ -11,9 +11,9 @@ public class MapboxLayer : BaseKVContainer
         string id
         ) : base()
     {
-        base.SetProperty<string>(MapboxLayerKey.id, id);
-        base.SetProperty<Dictionary<string, object>>(MapboxLayerKey.layout, new Dictionary<string, object>());
-        base.SetProperty<Dictionary<string, object>>(MapboxLayerKey.paint, new Dictionary<string, object>());
+        base.SetProperty(MapboxLayerKey.id, id);
+        base.SetProperty(MapboxLayerKey.layout, new Dictionary<string, object>());
+        base.SetProperty(MapboxLayerKey.paint, new Dictionary<string, object>());
     }
 
     public static class MapboxLayerKey
@@ -29,8 +29,6 @@ public class MapboxLayer : BaseKVContainer
         public const string paint = "paint";
         public const string visibility = "visibility";
     }
-
-    private readonly Dictionary<string, object> properties;
 
     protected override MapboxLayer SetProperty<T>(string name, T value, string group = null)
     {
@@ -72,47 +70,47 @@ public class MapboxLayer : BaseKVContainer
     public LayerType Type
     {
         get => GetProperty<LayerType>(MapboxLayerKey.type, default);
-        protected set => SetProperty<LayerType>(MapboxLayerKey.type, value);
+        protected set => SetProperty(MapboxLayerKey.type, value);
     }
 
     public DslExpression Filter
     {
         get => GetProperty<DslExpression>(MapboxLayerKey.filter, default);
-        set => SetProperty<DslExpression>(MapboxLayerKey.filter, value);
+        set => SetProperty(MapboxLayerKey.filter, value);
     }
 
     public string Source
     {
         get => GetProperty<string>(MapboxLayerKey.source, default);
-        set => SetProperty<string>(MapboxLayerKey.source, value);
+        set => SetProperty(MapboxLayerKey.source, value);
     }
 
     public string SourceLayer
     {
         get => GetProperty<string>(MapboxLayerKey.sourceLayer, default);
-        set => SetProperty<string>(MapboxLayerKey.sourceLayer, value);
+        set => SetProperty(MapboxLayerKey.sourceLayer, value);
     }
 
     public double? MinZoom
     {
         get => GetProperty<double?>(MapboxLayerKey.minZoom, default);
-        set => SetProperty<double?>(MapboxLayerKey.minZoom, value);
+        set => SetProperty(MapboxLayerKey.minZoom, value);
     }
 
     public double? MaxZoom
     {
         get => GetProperty<double?>(MapboxLayerKey.maxZoom, default);
-        set => SetProperty<double?>(MapboxLayerKey.maxZoom, value);
+        set => SetProperty(MapboxLayerKey.maxZoom, value);
     }
 
-    public PropertyValue<Mapbox.Maui.Visibility> Visibility
+    public PropertyValue<Visibility> Visibility
     {
-        get => GetProperty<PropertyValue<Mapbox.Maui.Visibility>>(
+        get => GetProperty(
             MapboxLayerKey.visibility,
-            new PropertyValue<Mapbox.Maui.Visibility>(Mapbox.Maui.Visibility.visible),
+            new PropertyValue<Visibility>(Maui.Visibility.visible),
             MapboxLayerKey.layout
         );
-        set => SetProperty<PropertyValue<Mapbox.Maui.Visibility>>(
+        set => SetProperty(
             MapboxLayerKey.visibility,
             value,
             MapboxLayerKey.layout

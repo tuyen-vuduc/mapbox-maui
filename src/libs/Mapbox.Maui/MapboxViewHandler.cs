@@ -25,6 +25,7 @@ public partial class MapboxViewHandler : ViewHandler<IMapboxView, PlatformView>
             [nameof(MapboxView.Terrain)] = HandleTerrainChanged,
             [nameof(MapboxView.Layers)] = HandleLayersChanged,
             [nameof(MapboxView.Light)] = HandleLightChanged,
+            [nameof(MapboxView.Annotations)] = HandleAnnotationsChanged,
         };
 
     public MapboxViewHandler() : base(PropertyMapper)

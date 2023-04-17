@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-
-namespace Mapbox.Maui.Styles;
+﻿namespace Mapbox.Maui.Styles;
 
 public class TileSet : BaseKVContainer
 {
@@ -11,8 +7,8 @@ public class TileSet : BaseKVContainer
         List<string> tiles
         ) : base()
     {
-        base.SetProperty<string>(TileSetKey.tilejson, tilejson);
-        base.SetProperty<List<string>>(TileSetKey.tiles, tiles);
+        base.SetProperty(TileSetKey.tilejson, tilejson);
+        base.SetProperty(TileSetKey.tiles, tiles);
     }
 
     private static class TileSetKey
@@ -33,8 +29,6 @@ public class TileSet : BaseKVContainer
         public const string version = nameof(version);
         public const string description = nameof(description);
     }
-
-    private readonly Dictionary<string, object> properties;
 
     protected override BaseKVContainer SetProperty<T>(string name, T value, string group = null)
     {
@@ -61,7 +55,7 @@ public class TileSet : BaseKVContainer
     public string Name
     {
         get => GetProperty<string>(TileSetKey.name, default);
-        set => SetProperty<string>(TileSetKey.name, value);
+        set => SetProperty(TileSetKey.name, value);
     }
 
     /**
@@ -76,7 +70,7 @@ public class TileSet : BaseKVContainer
     public string Description
     {
         get => GetProperty<string>(TileSetKey.description, default);
-        set => SetProperty<string>(TileSetKey.description, value);
+        set => SetProperty(TileSetKey.description, value);
     }
 
     /**
@@ -93,7 +87,7 @@ public class TileSet : BaseKVContainer
     public string Version
     {
         get => GetProperty<string>(TileSetKey.version, default);
-        set => SetProperty<string>(TileSetKey.version, value);
+        set => SetProperty(TileSetKey.version, value);
     }
 
     /**
@@ -108,7 +102,7 @@ public class TileSet : BaseKVContainer
     public string Attribution
     {
         get => GetProperty<string>(TileSetKey.attribution, default);
-        set => SetProperty<string>(TileSetKey.attribution, value);
+        set => SetProperty(TileSetKey.attribution, value);
     }
 
     /**
@@ -123,7 +117,7 @@ public class TileSet : BaseKVContainer
     public string Template
     {
         get => GetProperty<string>(TileSetKey.template, default);
-        set => SetProperty<string>(TileSetKey.template, value);
+        set => SetProperty(TileSetKey.template, value);
     }
 
     /**
@@ -138,7 +132,7 @@ public class TileSet : BaseKVContainer
     public string Legend
     {
         get => GetProperty<string>(TileSetKey.legend, default);
-        set => SetProperty<string>(TileSetKey.legend, value);
+        set => SetProperty(TileSetKey.legend, value);
     }
 
     /**
@@ -152,7 +146,7 @@ public class TileSet : BaseKVContainer
     public MapboxScheme Scheme
     {
         get => GetProperty<MapboxScheme>(TileSetKey.scheme, default);
-        set => SetProperty<MapboxScheme>(TileSetKey.scheme, value);
+        set => SetProperty(TileSetKey.scheme, value);
     }
 
     /**
@@ -172,7 +166,7 @@ public class TileSet : BaseKVContainer
     public List<String> Grids
     {
         get => GetProperty<List<String>>(TileSetKey.grids, default);
-        set => SetProperty<List<String>>(TileSetKey.grids, value);
+        set => SetProperty(TileSetKey.grids, value);
     }
 
     /**
@@ -192,7 +186,7 @@ public class TileSet : BaseKVContainer
     public List<String> Data
     {
         get => GetProperty<List<String>>(TileSetKey.data, default);
-        set => SetProperty<List<String>>(TileSetKey.data, value);
+        set => SetProperty(TileSetKey.data, value);
     }
 
     /**
@@ -203,7 +197,7 @@ public class TileSet : BaseKVContainer
     public int MinZoom
     {
         get => GetProperty<int>(TileSetKey.minzoom, default);
-        set => SetProperty<int>(TileSetKey.minzoom, value);
+        set => SetProperty(TileSetKey.minzoom, value);
     }
 
     /**
@@ -214,7 +208,7 @@ public class TileSet : BaseKVContainer
     public int MaxZoom
     {
         get => GetProperty<int>(TileSetKey.maxzoom, default);
-        set => SetProperty<int>(TileSetKey.maxzoom, value);
+        set => SetProperty(TileSetKey.maxzoom, value);
     }
 
     /**
@@ -228,7 +222,7 @@ public class TileSet : BaseKVContainer
     public int Bounds
     {
         get => GetProperty<int>(TileSetKey.bounds, default);
-        set => SetProperty<int>(TileSetKey.bounds, value);
+        set => SetProperty(TileSetKey.bounds, value);
     }
 
     /**
@@ -245,6 +239,6 @@ public class TileSet : BaseKVContainer
     public List<double> Center
     {
         get => GetProperty<List<double>>(TileSetKey.center, default);
-        set => SetProperty<List<double>>(TileSetKey.center, value);
+        set => SetProperty(TileSetKey.center, value);
     }
 }

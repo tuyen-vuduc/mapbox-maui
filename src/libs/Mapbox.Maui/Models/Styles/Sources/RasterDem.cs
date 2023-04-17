@@ -24,7 +24,7 @@ public class RasterDem : TileSet
     public MapboxEncoding Encoding
     {
         get => GetProperty<MapboxEncoding>(RasterDemKey.encoding, default);
-        set => SetProperty<MapboxEncoding>(RasterDemKey.encoding, value);
+        set => SetProperty(RasterDemKey.encoding, value);
     }
 }
 

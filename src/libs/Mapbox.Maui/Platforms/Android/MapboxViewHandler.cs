@@ -6,11 +6,19 @@ using Com.Mapbox.Maps;
 using Com.Mapbox.Maps.Plugin.Scalebar;
 using Microsoft.Maui.Platform;
 using Android.Content;
-using System;
 
 public partial class MapboxViewHandler
 {
     MapboxFragment mapboxFragment;
+
+    private static void HandleAnnotationsChanged(MapboxViewHandler handler, IMapboxView view)
+    {
+        var mapView = handler.GetMapView();
+        if (mapView == null) return;
+
+        if (view.Annotations == null) return;
+
+    }
 
     private static void HandleLightChanged(MapboxViewHandler handler, IMapboxView view)
     {

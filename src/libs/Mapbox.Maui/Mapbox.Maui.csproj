@@ -57,7 +57,7 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0-ios'">
-		<PackageReference Include="MapboxMapsObjC.iOS" Version="10.11.1-alpha1" />
+		<PackageReference Include="MapboxMapsObjC.iOS" Version="10.11.1-alpha2" />
 		<PackageReference Include="MapboxMobileEvents.iOS" Version="1.0.10" />
 	</ItemGroup>
 	<ItemGroup>
@@ -66,6 +66,8 @@
 	  <None Remove="Models\Expressions\" />
 	  <None Remove="Models\Styles\Layers\" />
 	  <None Remove="Models\Annotations\" />
+	  <None Remove="Platforms\iOS\Annotations\" />
+	  <None Remove="Platforms\Android\Annotations\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Models\Styles\" />
@@ -73,6 +75,8 @@
 	  <Folder Include="Models\Expressions\" />
 	  <Folder Include="Models\Styles\Layers\" />
 	  <Folder Include="Models\Annotations\" />
+	  <Folder Include="Platforms\iOS\Annotations\" />
+	  <Folder Include="Platforms\Android\Annotations\" />
 	</ItemGroup>
 	<ProjectExtensions>
 	  <MonoDevelop>

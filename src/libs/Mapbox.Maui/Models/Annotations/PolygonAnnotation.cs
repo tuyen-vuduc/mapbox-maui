@@ -10,9 +10,9 @@ public class PolygonAnnotation : Annotation<Polygon>
     }
 
     /// Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
-    public double FillSortKey
+    public double? FillSortKey
     {
-        get => GetProperty<double>("fill-sort-key", default);
+        get => GetProperty<double?>("fill-sort-key", default);
         set => SetProperty("fill-sort-key", value);
     }
 
@@ -24,7 +24,7 @@ public class PolygonAnnotation : Annotation<Polygon>
     }
 
     /// The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
-    public double FillOpacity
+    public double? FillOpacity
     {
         get => GetProperty<double>("fill-opacity", default);
         set => SetProperty("fill-opacity", value);

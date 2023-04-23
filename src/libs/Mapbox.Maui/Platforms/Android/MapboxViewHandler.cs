@@ -11,15 +11,6 @@ public partial class MapboxViewHandler
 {
     MapboxFragment mapboxFragment;
 
-    private static void HandleAnnotationsChanged(MapboxViewHandler handler, IMapboxView view)
-    {
-        var mapView = handler.GetMapView();
-        if (mapView == null) return;
-
-        if (view.Annotations == null) return;
-
-    }
-
     private static void HandleLightChanged(MapboxViewHandler handler, IMapboxView view)
     {
         var mapView = handler.GetMapView();

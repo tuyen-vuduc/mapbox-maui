@@ -60,10 +60,10 @@ public class PolygonAnnotationExample : ContentPage, IExamplePage, IQueryAttribu
             FillOpacity = 0.8,
         };
 
-        map.Annotations = new[]
-        {
-            polygonAnnotation,
-        };
+        //map.Annotations = new[]
+        //{
+        //    polygonAnnotation,
+        //};
     }
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)

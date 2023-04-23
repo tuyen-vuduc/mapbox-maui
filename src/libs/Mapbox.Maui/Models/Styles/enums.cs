@@ -1,6 +1,7 @@
 ﻿namespace Mapbox.Maui;
 
-public interface IStringEnum {
+public interface IStringEnum
+{
     string Value { get; }
 }
 
@@ -18,7 +19,9 @@ public struct Visibility : IStringEnum
         return Value;
     }
 
+
     public static implicit operator string(Visibility value) => value.Value;
+    public static implicit operator Visibility(string value) => new Visibility(value);
 
     /// The layer is shown.
     public static readonly Visibility visible = new Visibility("visible");
@@ -44,7 +47,9 @@ public struct LineCap : IStringEnum
         return Value;
     }
 
+
     public static implicit operator string(LineCap value) => value.Value;
+    public static implicit operator LineCap(string value) => new LineCap(value);
 
     /// A cap with a squared-off end which is drawn to the exact endpoint of the line.
     public static readonly LineCap butt = new LineCap("butt");
@@ -74,7 +79,9 @@ public struct LineJoin : IStringEnum
         return Value;
     }
 
+
     public static implicit operator string(LineJoin value) => value.Value;
+    public static implicit operator LineJoin(string value) => new LineJoin(value);
 
     /// A join with a squared-off end which is drawn beyond the endpoint of the line at a distance of one-half of the line's width.
     public static readonly LineJoin bevel = new LineJoin("bevel");
@@ -104,7 +111,9 @@ public struct IconAnchor : IStringEnum
         return Value;
     }
 
+
     public static implicit operator string(IconAnchor value) => value.Value;
+    public static implicit operator IconAnchor(string value) => new IconAnchor(value);
 
     /// The center of the icon is placed closest to the anchor.
     public static readonly IconAnchor center = new IconAnchor("center");
@@ -152,7 +161,9 @@ public struct IconPitchAlignment : IStringEnum
         return Value;
     }
 
+
     public static implicit operator string(IconPitchAlignment value) => value.Value;
+    public static implicit operator IconPitchAlignment(string value) => new IconPitchAlignment(value);
 
     /// The icon is aligned to the plane of the map.
     public static readonly IconPitchAlignment map = new IconPitchAlignment("map");
@@ -182,7 +193,9 @@ public struct IconRotationAlignment : IStringEnum
         return Value;
     }
 
+
     public static implicit operator string(IconRotationAlignment value) => value.Value;
+    public static implicit operator IconRotationAlignment(string value) => new IconRotationAlignment(value);
 
     /// When {@link SYMBOL_PLACEMENT} is set to {@link Property#SYMBOL_PLACEMENT_POINT}, aligns icons east-west. When {@link SYMBOL_PLACEMENT} is set to {@link Property#SYMBOL_PLACEMENT_LINE} or {@link Property#SYMBOL_PLACEMENT_LINE_CENTER}, aligns icon x-axes with the line.
     public static readonly IconRotationAlignment map = new IconRotationAlignment("map");
@@ -212,7 +225,9 @@ public struct IconTextFit : IStringEnum
         return Value;
     }
 
+
     public static implicit operator string(IconTextFit value) => value.Value;
+    public static implicit operator IconTextFit(string value) => new IconTextFit(value);
 
     /// The icon is displayed at its intrinsic aspect ratio.
     public static readonly IconTextFit none = new IconTextFit("none");
@@ -245,7 +260,9 @@ public struct SymbolPlacement : IStringEnum
         return Value;
     }
 
+
     public static implicit operator string(SymbolPlacement value) => value.Value;
+    public static implicit operator SymbolPlacement(string value) => new SymbolPlacement(value);
 
     /// The label is placed at the point where the geometry is located.
     public static readonly SymbolPlacement point = new SymbolPlacement("point");
@@ -275,7 +292,9 @@ public struct SymbolZOrder : IStringEnum
         return Value;
     }
 
+
     public static implicit operator string(SymbolZOrder value) => value.Value;
+    public static implicit operator SymbolZOrder(string value) => new SymbolZOrder(value);
 
     /// Sorts symbols by symbol sort key if set. Otherwise, sorts symbols by their y-position relative to the viewport if {@link ICON_ALLOW_OVERLAP} or {@link TEXT_ALLOW_OVERLAP} is set to {@link TRUE} or {@link ICON_IGNORE_PLACEMENT} or {@link TEXT_IGNORE_PLACEMENT} is {@link FALSE}.
     public static readonly SymbolZOrder auto = new SymbolZOrder("auto");
@@ -305,7 +324,9 @@ public struct TextAnchor : IStringEnum
         return Value;
     }
 
+
     public static implicit operator string(TextAnchor value) => value.Value;
+    public static implicit operator TextAnchor(string value) => new TextAnchor(value);
 
     /// The center of the text is placed closest to the anchor.
     public static readonly TextAnchor center = new TextAnchor("center");
@@ -353,7 +374,9 @@ public struct TextJustify : IStringEnum
         return Value;
     }
 
+
     public static implicit operator string(TextJustify value) => value.Value;
+    public static implicit operator TextJustify(string value) => new TextJustify(value);
 
     /// The text is aligned towards the anchor position.
     public static readonly TextJustify auto = new TextJustify("auto");
@@ -386,7 +409,9 @@ public struct TextPitchAlignment : IStringEnum
         return Value;
     }
 
+
     public static implicit operator string(TextPitchAlignment value) => value.Value;
+    public static implicit operator TextPitchAlignment(string value) => new TextPitchAlignment(value);
 
     /// The text is aligned to the plane of the map.
     public static readonly TextPitchAlignment map = new TextPitchAlignment("map");
@@ -416,7 +441,9 @@ public struct TextRotationAlignment : IStringEnum
         return Value;
     }
 
+
     public static implicit operator string(TextRotationAlignment value) => value.Value;
+    public static implicit operator TextRotationAlignment(string value) => new TextRotationAlignment(value);
 
     /// When {@link SYMBOL_PLACEMENT} is set to {@link Property#SYMBOL_PLACEMENT_POINT}, aligns text east-west. When {@link SYMBOL_PLACEMENT} is set to {@link Property#SYMBOL_PLACEMENT_LINE} or {@link Property#SYMBOL_PLACEMENT_LINE_CENTER}, aligns text x-axes with the line.
     public static readonly TextRotationAlignment map = new TextRotationAlignment("map");
@@ -446,7 +473,9 @@ public struct TextTransform : IStringEnum
         return Value;
     }
 
+
     public static implicit operator string(TextTransform value) => value.Value;
+    public static implicit operator TextTransform(string value) => new TextTransform(value);
 
     /// The text is not altered.
     public static readonly TextTransform none = new TextTransform("none");
@@ -476,7 +505,9 @@ public struct FillTranslateAnchor : IStringEnum
         return Value;
     }
 
+
     public static implicit operator string(FillTranslateAnchor value) => value.Value;
+    public static implicit operator FillTranslateAnchor(string value) => new FillTranslateAnchor(value);
 
     /// The fill is translated relative to the map.
     public static readonly FillTranslateAnchor map = new FillTranslateAnchor("map");
@@ -503,7 +534,9 @@ public struct LineTranslateAnchor : IStringEnum
         return Value;
     }
 
+
     public static implicit operator string(LineTranslateAnchor value) => value.Value;
+    public static implicit operator LineTranslateAnchor(string value) => new LineTranslateAnchor(value);
 
     /// The line is translated relative to the map.
     public static readonly LineTranslateAnchor map = new LineTranslateAnchor("map");
@@ -530,7 +563,9 @@ public struct IconTranslateAnchor : IStringEnum
         return Value;
     }
 
+
     public static implicit operator string(IconTranslateAnchor value) => value.Value;
+    public static implicit operator IconTranslateAnchor(string value) => new IconTranslateAnchor(value);
 
     /// Icons are translated relative to the map.
     public static readonly IconTranslateAnchor map = new IconTranslateAnchor("map");
@@ -557,7 +592,9 @@ public struct TextTranslateAnchor : IStringEnum
         return Value;
     }
 
+
     public static implicit operator string(TextTranslateAnchor value) => value.Value;
+    public static implicit operator TextTranslateAnchor(string value) => new TextTranslateAnchor(value);
 
     /// The text is translated relative to the map.
     public static readonly TextTranslateAnchor map = new TextTranslateAnchor("map");
@@ -584,7 +621,9 @@ public struct CirclePitchAlignment : IStringEnum
         return Value;
     }
 
+
     public static implicit operator string(CirclePitchAlignment value) => value.Value;
+    public static implicit operator CirclePitchAlignment(string value) => new CirclePitchAlignment(value);
 
     /// The circle is aligned to the plane of the map.
     public static readonly CirclePitchAlignment map = new CirclePitchAlignment("map");
@@ -611,7 +650,9 @@ public struct CirclePitchScale : IStringEnum
         return Value;
     }
 
+
     public static implicit operator string(CirclePitchScale value) => value.Value;
+    public static implicit operator CirclePitchScale(string value) => new CirclePitchScale(value);
 
     /// Circles are scaled according to their apparent distance to the camera.
     public static readonly CirclePitchScale map = new CirclePitchScale("map");
@@ -638,7 +679,9 @@ public struct CircleTranslateAnchor : IStringEnum
         return Value;
     }
 
+
     public static implicit operator string(CircleTranslateAnchor value) => value.Value;
+    public static implicit operator CircleTranslateAnchor(string value) => new CircleTranslateAnchor(value);
 
     /// The circle is translated relative to the map.
     public static readonly CircleTranslateAnchor map = new CircleTranslateAnchor("map");
@@ -665,7 +708,9 @@ public struct FillExtrusionTranslateAnchor : IStringEnum
         return Value;
     }
 
+
     public static implicit operator string(FillExtrusionTranslateAnchor value) => value.Value;
+    public static implicit operator FillExtrusionTranslateAnchor(string value) => new FillExtrusionTranslateAnchor(value);
 
     /// The fill extrusion is translated relative to the map.
     public static readonly FillExtrusionTranslateAnchor map = new FillExtrusionTranslateAnchor("map");
@@ -692,7 +737,9 @@ public struct RasterResampling : IStringEnum
         return Value;
     }
 
+
     public static implicit operator string(RasterResampling value) => value.Value;
+    public static implicit operator RasterResampling(string value) => new RasterResampling(value);
 
     /// (Bi)linear filtering interpolates pixel values using the weighted average of the four closest original source pixels creating a smooth but blurry look when overscaled
     public static readonly RasterResampling linear = new RasterResampling("linear");
@@ -719,7 +766,9 @@ public struct HillshadeIlluminationAnchor : IStringEnum
         return Value;
     }
 
+
     public static implicit operator string(HillshadeIlluminationAnchor value) => value.Value;
+    public static implicit operator HillshadeIlluminationAnchor(string value) => new HillshadeIlluminationAnchor(value);
 
     /// The hillshade illumination is relative to the north direction.
     public static readonly HillshadeIlluminationAnchor map = new HillshadeIlluminationAnchor("map");
@@ -732,7 +781,7 @@ public struct HillshadeIlluminationAnchor : IStringEnum
 // MARK: SKY_TYPE
 
 /// The type of the sky
-public struct SkyType : IStringEnum 
+public struct SkyType : IStringEnum
 {
     public string Value { get; }
 
@@ -746,7 +795,9 @@ public struct SkyType : IStringEnum
         return Value;
     }
 
+
     public static implicit operator string(SkyType value) => value.Value;
+    public static implicit operator SkyType(string value) => new SkyType(value);
 
     /// Renders the sky with a gradient that can be configured with {@link SKY_GRADIENT_RADIUS} and {@link SKY_GRADIENT}.
     public static readonly SkyType gradient = new SkyType("gradient");
@@ -773,7 +824,9 @@ public struct Anchor : IStringEnum
         return Value;
     }
 
+
     public static implicit operator string(Anchor value) => value.Value;
+    public static implicit operator Anchor(string value) => new Anchor(value);
 
     /// The position of the light source is aligned to the rotation of the map.
     public static readonly Anchor map = new Anchor("map");
@@ -800,7 +853,9 @@ public struct StyleProjectionName : IStringEnum
         return Value;
     }
 
+
     public static implicit operator string(StyleProjectionName value) => value.Value;
+    public static implicit operator StyleProjectionName(string value) => new StyleProjectionName(value);
 
     /// The Mercator projection is the default projection.
     public static readonly StyleProjectionName mercator = new StyleProjectionName("mercator");
@@ -827,7 +882,9 @@ public struct TextWritingMode : IStringEnum
         return Value;
     }
 
+
     public static implicit operator string(TextWritingMode value) => value.Value;
+    public static implicit operator TextWritingMode(string value) => new TextWritingMode(value);
 
     /// If a text's language supports horizontal writing mode, symbols would be laid out horizontally.
     public static readonly TextWritingMode horizontal = new TextWritingMode("horizontal");

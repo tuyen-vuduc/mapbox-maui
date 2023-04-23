@@ -1,6 +1,7 @@
 ﻿namespace Mapbox.Maui;
 using MapboxMapsCameraOptions = Com.Mapbox.Maps.CameraOptions;
 using PlatformValue = Com.Mapbox.Bindgen.Value;
+using PlatformPolygonAnnotationOptions = Com.Mapbox.Maps.Plugin.Annotation.Generated.PolygonAnnotationOptions;
 using MapboxTerrain = Com.Mapbox.Maps.Extension.Style.Terrain.Generated.Terrain;
 using StyleTransitionBuilder = Com.Mapbox.Maps.Extension.Style.Types.StyleTransition.Builder;
 using PlatformStyleTransition = Com.Mapbox.Maps.Extension.Style.Types.StyleTransition;
@@ -23,6 +24,36 @@ static class AdditionalExtensions
         }
 
         var result = new PlatformValue(properties);
+        return result;
+    }
+
+    internal static PlatformPolygonAnnotationOptions ToPlatformValue(this Annotations.PolygonAnnotation annotation)
+    {
+        var points = annotation
+            .GeometryValue
+            .Coordinates
+            .Select(
+                x => x.Coordinates.Select(
+                    y => Com.Mapbox.Geojson.Point.FromLngLat(y.Longitude, y.Latitude)
+                ).ToList() as IList<Com.Mapbox.Geojson.Point>
+            )
+            .ToList();
+        var result = new PlatformPolygonAnnotationOptions
+        {
+            FillColor = annotation.FillColor?.ToRgbaString(),
+            FillOpacity = annotation.FillOpacity.HasValue
+            ? new Java.Lang.Double(annotation.FillOpacity.Value)
+            : null,
+
+            FillOutlineColor = annotation.FillOutlineColor?.ToRgbaString(),
+            FillPattern = annotation.FillPattern,
+            FillSortKey = annotation.FillSortKey.HasValue
+            ? new Java.Lang.Double(annotation.FillSortKey.Value)
+            : null
+        }
+        .WithDraggable(annotation.IsDraggable)
+        .WithPoints(points);
+
         return result;
     }
 

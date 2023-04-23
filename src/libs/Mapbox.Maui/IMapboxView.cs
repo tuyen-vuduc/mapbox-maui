@@ -22,9 +22,6 @@ public partial interface IMapboxView : IView
     Light Light { get; set; }
 
     IEnumerable<MapboxLayer> Layers { get; set; }
-
-    IEnumerable<IAnnotation> Annotations { get; set; }
-
 }
 
 partial interface IMapboxView { 

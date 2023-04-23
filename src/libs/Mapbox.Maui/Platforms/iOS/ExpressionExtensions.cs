@@ -1,4 +1,5 @@
-﻿using Mapbox.Maui.Expressions;
+﻿using Foundation;
+using Mapbox.Maui.Expressions;
 using MapboxMapsObjC;
 
 namespace Mapbox.Maui;
@@ -11,7 +12,7 @@ public static class ExpressionExtensions
     {
         var expression = TMBExpression.CreateWithOperator(
             xvalue.Operator.ToPlatformValue(),
-            xvalue.Select(x => x.Wrap()).ToArray()
+            NSArray.FromNSObjects(xvalue.Select(x => x.Wrap()).ToArray())
         );
 
         return expression;
@@ -28,7 +29,7 @@ public static class ExpressionExtensions
         { "-", TMBOperator.Subtract },
 
         /// Logical negation. Returns `true` if the input is `false`, and `false` if the input is `true`.
-        { "!", TMBOperator.Not },
+        { "!", TMBOperator.Not_ },
 
         /// Returns `true` if the input values are not equal, `false` otherwise. The comparison is strictly typed: values of different runtime types are always considered unequal. Cases where the types are known to be different at parse time are considered invalid and will produce a parse error. Accepts an optional `collator` argument to control locale-dependent string comparisons.
         { "!=", TMBOperator.Neq },

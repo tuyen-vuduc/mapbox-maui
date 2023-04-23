@@ -4,13 +4,45 @@ namespace Mapbox.Maui;
 using System.Collections;
 using CoreLocation;
 using Foundation;
+using Mapbox.Maui.Annotations;
 using Mapbox.Maui.Expressions;
 using Mapbox.Maui.Styles;
 using MapboxCoreMaps;
 using MapboxMapsObjC;
+using Microsoft.Maui.Controls.Compatibility.Platform.iOS;
+using Microsoft.Maui.Platform;
 
 public static class AdditionalExtensions
 {
+    internal static TMBPolygonAnnotation ToPlatformValue(
+        this PolygonAnnotation xvalue
+    )
+    {
+        var polygon = TMBPolygon.FromCoordinates(
+            NSArray.FromObjects(xvalue
+                .GeometryValue
+                .Coordinates
+                .Select(
+                    x => x.Coordinates
+                        .Select(x => new[] { x.Latitude, x.Longitude })
+                        .ToArray()
+                ).ToArray()
+            )
+        );
+        var result = TMBPolygonAnnotation.Polygon(
+            polygon
+        );
+        result.FillColor = xvalue.FillColor?.ToPlatform();
+        result.FillOpacity = xvalue.FillOpacity.HasValue
+            ? NSNumber.FromDouble(xvalue.FillOpacity.Value)
+            : null;
+        result.FillOutlineColor = xvalue.FillOutlineColor?.ToPlatform();
+        result.FillPattern = xvalue.FillPattern;
+        result.FillSortKey = xvalue.FillSortKey;
+
+        return result;
+    }
+
     internal static TMBTerrain ToPlatformValue(
         this Terrain xvalue
     )

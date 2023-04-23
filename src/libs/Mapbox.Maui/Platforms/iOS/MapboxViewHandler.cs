@@ -1,7 +1,6 @@
 ﻿
 namespace Mapbox.Maui;
 
-using System;
 using Foundation;
 using GeoJSON.Net.Geometry;
 using Mapbox.Maui.Annotations;
@@ -10,30 +9,6 @@ using PlatformView = MapViewContainer;
 
 public partial class MapboxViewHandler
 {
-    private static void HandleAnnotationsChanged(MapboxViewHandler handler, IMapboxView view)
-    {
-        var mapView = handler.PlatformView.MapView;
-        if (mapView == null) return;
-
-        var annotations = view.Annotations;
-        if (annotations == null) return;
-
-        foreach (var annotation in annotations)
-        {
-            switch (annotation.Geometry)
-            {
-                case Polygon value:
-                    AddPolygonAnnotation(annotation, value);
-                    break;
-            }
-        }
-    }
-
-    private static void AddPolygonAnnotation(IAnnotation annotation, Polygon value)
-    {
-
-    }
-
     private static void HandleLightChanged(MapboxViewHandler handler, IMapboxView view)
     {
         var mapView = handler.PlatformView.MapView;

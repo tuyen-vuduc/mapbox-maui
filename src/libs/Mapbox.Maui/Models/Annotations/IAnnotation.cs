@@ -5,7 +5,7 @@ using GeoJSON.Net.Geometry;
 public interface IAnnotation
 {
     /// The unique identifier of the annotation.
-    public string Id { get; }
+    public string Id { get; set; }
 
     /// The geometry that is backing this annotation.
     public IGeometryObject Geometry { get; }
@@ -18,7 +18,7 @@ public abstract class Annotation<T>
     : BaseKVContainer
     , IAnnotation where T : IGeometryObject
 {
-    public string Id { get; }
+    public string Id { get; set; }
 
     public IGeometryObject Geometry { get; }
 

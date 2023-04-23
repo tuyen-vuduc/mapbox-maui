@@ -1,11 +1,11 @@
 ﻿namespace Mapbox.Maui;
 
-public interface IStringEnum
+public interface INamedString
 {
     string Value { get; }
 }
 
-public struct Visibility : IStringEnum
+public struct Visibility : INamedString
 {
     public string Value { get; }
 
@@ -33,7 +33,7 @@ public struct Visibility : IStringEnum
 // MARK: LINE_CAP
 
 /// The display of line endings.
-public struct LineCap : IStringEnum
+public struct LineCap : INamedString
 {
     public string Value { get; }
 
@@ -65,7 +65,7 @@ public struct LineCap : IStringEnum
 // MARK: LINE_JOIN
 
 /// The display of lines when joining.
-public struct LineJoin : IStringEnum
+public struct LineJoin : INamedString
 {
     public string Value { get; }
 
@@ -97,7 +97,7 @@ public struct LineJoin : IStringEnum
 // MARK: ICON_ANCHOR
 
 /// Part of the icon placed closest to the anchor.
-public struct IconAnchor : IStringEnum
+public struct IconAnchor : INamedString
 {
     public string Value { get; }
 
@@ -147,7 +147,7 @@ public struct IconAnchor : IStringEnum
 // MARK: ICON_PITCH_ALIGNMENT
 
 /// Orientation of icon when map is pitched.
-public struct IconPitchAlignment : IStringEnum
+public struct IconPitchAlignment : INamedString
 {
     public string Value { get; }
 
@@ -179,7 +179,7 @@ public struct IconPitchAlignment : IStringEnum
 // MARK: ICON_ROTATION_ALIGNMENT
 
 /// In combination with `symbol-placement`, determines the rotation behavior of icons.
-public struct IconRotationAlignment : IStringEnum
+public struct IconRotationAlignment : INamedString
 {
     public string Value { get; }
 
@@ -211,7 +211,7 @@ public struct IconRotationAlignment : IStringEnum
 // MARK: ICON_TEXT_FIT
 
 /// Scales the icon to fit around the associated text.
-public struct IconTextFit : IStringEnum
+public struct IconTextFit : INamedString
 {
     public string Value { get; }
 
@@ -246,7 +246,7 @@ public struct IconTextFit : IStringEnum
 // MARK: SYMBOL_PLACEMENT
 
 /// Label placement relative to its geometry.
-public struct SymbolPlacement : IStringEnum
+public struct SymbolPlacement : INamedString
 {
     public string Value { get; }
 
@@ -278,7 +278,7 @@ public struct SymbolPlacement : IStringEnum
 // MARK: SYMBOL_Z_ORDER
 
 /// Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use `symbol-sort-key`.
-public struct SymbolZOrder : IStringEnum
+public struct SymbolZOrder : INamedString
 {
     public string Value { get; }
 
@@ -310,7 +310,7 @@ public struct SymbolZOrder : IStringEnum
 // MARK: TEXT_ANCHOR
 
 /// Part of the text placed closest to the anchor.
-public struct TextAnchor : IStringEnum
+public struct TextAnchor : INamedString
 {
     public string Value { get; }
 
@@ -360,7 +360,7 @@ public struct TextAnchor : IStringEnum
 // MARK: TEXT_JUSTIFY
 
 /// Text justification options.
-public struct TextJustify : IStringEnum
+public struct TextJustify : INamedString
 {
     public string Value { get; }
 
@@ -395,7 +395,7 @@ public struct TextJustify : IStringEnum
 // MARK: TEXT_PITCH_ALIGNMENT
 
 /// Orientation of text when map is pitched.
-public struct TextPitchAlignment : IStringEnum
+public struct TextPitchAlignment : INamedString
 {
     public string Value { get; }
 
@@ -427,7 +427,7 @@ public struct TextPitchAlignment : IStringEnum
 // MARK: TEXT_ROTATION_ALIGNMENT
 
 /// In combination with `symbol-placement`, determines the rotation behavior of the individual glyphs forming the text.
-public struct TextRotationAlignment : IStringEnum
+public struct TextRotationAlignment : INamedString
 {
     public string Value { get; }
 
@@ -459,7 +459,7 @@ public struct TextRotationAlignment : IStringEnum
 // MARK: TEXT_TRANSFORM
 
 /// Specifies how to capitalize text, similar to the CSS `text-transform` property.
-public struct TextTransform : IStringEnum
+public struct TextTransform : INamedString
 {
     public string Value { get; }
 
@@ -491,7 +491,7 @@ public struct TextTransform : IStringEnum
 // MARK: FILL_TRANSLATE_ANCHOR
 
 /// Controls the frame of reference for `fill-translate`.
-public struct FillTranslateAnchor : IStringEnum
+public struct FillTranslateAnchor : INamedString
 {
     public string Value { get; }
 
@@ -520,7 +520,7 @@ public struct FillTranslateAnchor : IStringEnum
 // MARK: LINE_TRANSLATE_ANCHOR
 
 /// Controls the frame of reference for `line-translate`.
-public struct LineTranslateAnchor : IStringEnum
+public struct LineTranslateAnchor : INamedString
 {
     public string Value { get; }
 
@@ -549,7 +549,7 @@ public struct LineTranslateAnchor : IStringEnum
 // MARK: ICON_TRANSLATE_ANCHOR
 
 /// Controls the frame of reference for `icon-translate`.
-public struct IconTranslateAnchor : IStringEnum
+public struct IconTranslateAnchor : INamedString
 {
     public string Value { get; }
 
@@ -578,7 +578,7 @@ public struct IconTranslateAnchor : IStringEnum
 // MARK: TEXT_TRANSLATE_ANCHOR
 
 /// Controls the frame of reference for `text-translate`.
-public struct TextTranslateAnchor : IStringEnum
+public struct TextTranslateAnchor : INamedString
 {
     public string Value { get; }
 
@@ -607,7 +607,7 @@ public struct TextTranslateAnchor : IStringEnum
 // MARK: CIRCLE_PITCH_ALIGNMENT
 
 /// Orientation of circle when map is pitched.
-public struct CirclePitchAlignment : IStringEnum
+public struct CirclePitchAlignment : INamedString
 {
     public string Value { get; }
 
@@ -636,7 +636,7 @@ public struct CirclePitchAlignment : IStringEnum
 // MARK: CIRCLE_PITCH_SCALE
 
 /// Controls the scaling behavior of the circle when the map is pitched.
-public struct CirclePitchScale : IStringEnum
+public struct CirclePitchScale : INamedString
 {
     public string Value { get; }
 
@@ -665,7 +665,7 @@ public struct CirclePitchScale : IStringEnum
 // MARK: CIRCLE_TRANSLATE_ANCHOR
 
 /// Controls the frame of reference for `circle-translate`.
-public struct CircleTranslateAnchor : IStringEnum
+public struct CircleTranslateAnchor : INamedString
 {
     public string Value { get; }
 
@@ -694,7 +694,7 @@ public struct CircleTranslateAnchor : IStringEnum
 // MARK: FILL_EXTRUSION_TRANSLATE_ANCHOR
 
 /// Controls the frame of reference for `fill-extrusion-translate`.
-public struct FillExtrusionTranslateAnchor : IStringEnum
+public struct FillExtrusionTranslateAnchor : INamedString
 {
     public string Value { get; }
 
@@ -723,7 +723,7 @@ public struct FillExtrusionTranslateAnchor : IStringEnum
 // MARK: RASTER_RESAMPLING
 
 /// The resampling/interpolation method to use for overscaling, also known as texture magnification filter
-public struct RasterResampling : IStringEnum
+public struct RasterResampling : INamedString
 {
     public string Value { get; }
 
@@ -752,7 +752,7 @@ public struct RasterResampling : IStringEnum
 // MARK: HILLSHADE_ILLUMINATION_ANCHOR
 
 /// Direction of light source when map is rotated.
-public struct HillshadeIlluminationAnchor : IStringEnum
+public struct HillshadeIlluminationAnchor : INamedString
 {
     public string Value { get; }
 
@@ -781,7 +781,7 @@ public struct HillshadeIlluminationAnchor : IStringEnum
 // MARK: SKY_TYPE
 
 /// The type of the sky
-public struct SkyType : IStringEnum
+public struct SkyType : INamedString
 {
     public string Value { get; }
 
@@ -810,7 +810,7 @@ public struct SkyType : IStringEnum
 // MARK: ANCHOR
 
 /// Whether extruded geometries are lit relative to the map or viewport.
-public struct Anchor : IStringEnum
+public struct Anchor : INamedString
 {
     public string Value { get; }
 
@@ -839,7 +839,7 @@ public struct Anchor : IStringEnum
 // MARK: NAME
 
 /// The name of the projection to be used for rendering the map.
-public struct StyleProjectionName : IStringEnum
+public struct StyleProjectionName : INamedString
 {
     public string Value { get; }
 
@@ -868,7 +868,7 @@ public struct StyleProjectionName : IStringEnum
 // MARK: TEXT_WRITING_MODE
 
 /// The property allows control over a symbol's orientation. Note that the property values act as a hint, so that a symbol whose language doesn’t support the provided orientation will be laid out in its natural orientation. Example: English point symbol will be rendered horizontally even if array value contains single 'vertical' enum value. For symbol with point placement, the order of elements in an array define priority order for the placement of an orientation variant. For symbol with line placement, the default text writing mode is either ['horizontal', 'vertical'] or ['vertical', 'horizontal'], the order doesn't affect the placement.
-public struct TextWritingMode : IStringEnum
+public struct TextWritingMode : INamedString
 {
     public string Value { get; }
 

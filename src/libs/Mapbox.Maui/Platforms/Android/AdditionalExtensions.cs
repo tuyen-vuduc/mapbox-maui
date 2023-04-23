@@ -94,7 +94,7 @@ static class AdditionalExtensions
             Color value => rgba
                 ? new PlatformValue(value.ToRgbaString())
                 : new PlatformValue(value.ToInt()),
-            IStringEnum value => new PlatformValue(value.Value),
+            INamedString value => new PlatformValue(value.Value),
             IPropertyValue value => value.Value is DslExpression expression1
                     ? new PlatformValue(expression1
                                 .ToObjects()

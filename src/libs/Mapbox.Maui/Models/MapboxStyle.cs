@@ -3,7 +3,7 @@
 namespace Mapbox.Maui;
 
 [TypeConverter(typeof(MapboxStyleTypeConverter))]
-public struct MapboxStyle : IStringEnum
+public struct MapboxStyle : INamedString
 {
     public string Value { get; private set; }
 

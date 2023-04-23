@@ -1,6 +1,6 @@
 ﻿namespace Mapbox.Maui;
 
-public struct MapboxScheme : IStringEnum
+public struct MapboxScheme : INamedString
 {
     public string Value { get; }
 

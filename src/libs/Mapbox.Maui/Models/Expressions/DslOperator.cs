@@ -1,6 +1,6 @@
 ﻿namespace Mapbox.Maui.Expressions;
 
-public struct DslOperator : IStringEnum
+public struct DslOperator : INamedString
 {
     public string Value { get; }
 

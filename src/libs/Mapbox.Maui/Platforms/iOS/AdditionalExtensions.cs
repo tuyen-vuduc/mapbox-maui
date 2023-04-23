@@ -98,7 +98,7 @@ public static class AdditionalExtensions
             double value => NSNumber.FromDouble(value),
             string value => new NSString(value),
             Color value => new NSString(value.ToRgbaString()),
-            IStringEnum value => new NSString(value.Value),
+            INamedString value => new NSString(value.Value),
             IPropertyValue value => value.Value is DslExpression expression1
                     ? NSArray.FromNSObjects(expression1
                         .ToObjects()

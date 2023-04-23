@@ -1,6 +1,6 @@
 ﻿namespace Mapbox.Maui.Styles;
 
-public struct LayerType : IStringEnum
+public struct LayerType : INamedString
 {
     public string Value { get; }
 

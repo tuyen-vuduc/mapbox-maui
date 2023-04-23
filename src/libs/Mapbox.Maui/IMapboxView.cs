@@ -22,6 +22,8 @@ public partial interface IMapboxView : IView
     Light Light { get; set; }
 
     IEnumerable<MapboxLayer> Layers { get; set; }
+
+    IAnnotationController AnnotationController { get; }
 }
 
 partial interface IMapboxView { 
@@ -33,4 +35,12 @@ partial interface IMapboxView {
 
     event EventHandler MapLoaded;
     ICommand MapLoadedCommand { get; set; }
+}
+
+public interface IAnnotationController
+{
+    public IPolygonAnnotationManager CreatePolygonAnnotationManager(string id, LayerPosition layerPosition);
+    //public IAnnotationManager<Annotations.PolygonAnnotation> CircleAnnotationManager(string id);
+    //public IAnnotationManager<Annotations.PolygonAnnotation> PointAnnotationManager(string id);
+    //public IAnnotationManager<Annotations.PolygonAnnotation> PolylineAnnotationManager(string id);
 }

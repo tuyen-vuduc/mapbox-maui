@@ -196,4 +196,6 @@ public partial class MapboxView : View, IMapboxView
         get => (MapboxStyle)GetValue(MapboxStyleProperty);
         set => SetValue(MapboxStyleProperty, value);
     }
+
+    public IAnnotationController AnnotationController { get; internal set; }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Mapbox.Maui.Annotations;
 
-public interface IPolygonAnnotationManager : IAnnotationManager
+public interface IPolygonAnnotationManager : IAnnotationManager<PolygonAnnotation>
 {
     /// Whether or not the fill should be antialiased.
     bool? FillAntialias { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace Mapbox.Maui.Annotations;
 
-public interface IAnnotationManager
+public interface IAnnotationManager<TAnnotation> where TAnnotation : IAnnotation
 {
     event EventHandler<AnnotationsSelectedEventArgs> AnnotationsSelected;
 
@@ -12,7 +12,7 @@ public interface IAnnotationManager
     /// The id of the layer that this manager is responsible for.
     string LayerId { get; }
 
-    void AddAnnotations<T>(params T[] annotations) where T : IAnnotation;
+    void AddAnnotations(params TAnnotation[] annotations);
 
     void RemoveAnnotations(params string[] annotationIDs);
 

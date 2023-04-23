@@ -7,7 +7,7 @@ using Mapbox.Maui.Annotations;
 using MapboxMapsObjC;
 using PlatformView = MapViewContainer;
 
-public partial class MapboxViewHandler
+public partial class MapboxViewHandler : IAnnotationController
 {
     private static void HandleLightChanged(MapboxViewHandler handler, IMapboxView view)
     {
@@ -150,7 +150,11 @@ public partial class MapboxViewHandler
     {
         base.ConnectHandler(platformView);
 
-        (VirtualView as MapboxView)?.InvokeMapReady();
+        if (VirtualView is MapboxView mapboxView)
+        {
+            mapboxView.InvokeMapReady();
+            mapboxView.AnnotationController = this;
+        }
 
         var mapView = platformView.MapView;
         if (mapView == null) return;
@@ -163,5 +167,24 @@ public partial class MapboxViewHandler
         {
             (VirtualView as MapboxView)?.InvokeMapLoaded();
         });
+
+
+    }
+
+    public IPolygonAnnotationManager CreatePolygonAnnotationManager(
+        string id,
+        Styles.LayerPosition layerPosition
+        )
+    {
+        var mapView = PlatformView?.MapView;
+
+        if (mapView == null) return null;
+
+        var nativeManager = mapView.PolygonAnnotationManagerWithId(
+            id,
+            layerPosition.ToPlatformValue(),
+            layerPosition.Parameter?.Wrap());
+
+        return new PolygonAnnotationManager(id, nativeManager);
     }
 }

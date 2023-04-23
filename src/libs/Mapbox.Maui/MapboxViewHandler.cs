@@ -29,6 +29,6 @@ public partial class MapboxViewHandler : ViewHandler<IMapboxView, PlatformView>
 
     public MapboxViewHandler() : base(PropertyMapper)
     {
-
+        
     }
 }

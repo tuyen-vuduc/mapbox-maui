@@ -5,12 +5,14 @@ using System.Linq;
 using Foundation;
 using MapboxMapsObjC;
 
-public partial class PolygonAnnotationManager : AnnotationManager<TMBPolygonAnnotationManager>, IPolygonAnnotationManager
+public partial class PolygonAnnotationManager
+    : AnnotationManager<TMBPolygonAnnotationManager, PolygonAnnotation>
+    , IPolygonAnnotationManager
 {
     private readonly TMBPolygonAnnotationManager nativeManager;
 
     public PolygonAnnotationManager(
-        Guid id,
+        string id,
         TMBPolygonAnnotationManager nativeManager
     )
     : base(id, nativeManager)
@@ -41,11 +43,8 @@ public partial class PolygonAnnotationManager : AnnotationManager<TMBPolygonAnno
             : new TMBFillTranslateAnchor(value);
     }
 
-    public override void AddAnnotations<T>(params T[] annotations)
+    public override void AddAnnotations(params PolygonAnnotation[] xitems)
     {
-        if (typeof(T) != typeof(PolygonAnnotation)) return;
-
-        var xitems = annotations.Cast<PolygonAnnotation>().ToList();
         var items = xitems
             .Select(x => x.ToPlatformValue())
             .ToList();

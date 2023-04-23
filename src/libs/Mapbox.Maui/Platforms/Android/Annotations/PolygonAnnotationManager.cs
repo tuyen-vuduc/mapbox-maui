@@ -2,12 +2,14 @@
 
 using PlatformPolygonAnnotationManager = Com.Mapbox.Maps.Plugin.Annotation.Generated.PolygonAnnotationManager;
 
-partial class PolygonAnnotationManager : AnnotationManager<PlatformPolygonAnnotationManager>, IPolygonAnnotationManager
+partial class PolygonAnnotationManager
+    : AnnotationManager<PlatformPolygonAnnotationManager, PolygonAnnotation>
+    , IPolygonAnnotationManager
 {
     private readonly PlatformPolygonAnnotationManager nativeManager;
 
     public PolygonAnnotationManager(
-        Guid id,
+        string id,
         PlatformPolygonAnnotationManager nativeManager)
         : base(id, nativeManager)
     {
@@ -40,12 +42,8 @@ partial class PolygonAnnotationManager : AnnotationManager<PlatformPolygonAnnota
             : null;
     }
 
-    public override void AddAnnotations<T>(params T[] annotations)
+    public override void AddAnnotations(params PolygonAnnotation[] xitems)
     {
-        if (typeof(T) != typeof(PolygonAnnotation)) return;
-
-        var xitems = annotations.Cast<PolygonAnnotation>()
-            .ToList();
         var items = xitems
             .Select(x => x.ToPlatformValue())
             .ToList();

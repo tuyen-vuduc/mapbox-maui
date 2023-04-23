@@ -33,11 +33,13 @@ static class AdditionalExtensions
             .GeometryValue
             .Coordinates
             .Select(
-                x => x.Coordinates.Select(
+                x => new Android.Runtime.JavaList<Com.Mapbox.Geojson.Point>(
+                    x.Coordinates.Select(
                     y => Com.Mapbox.Geojson.Point.FromLngLat(y.Longitude, y.Latitude)
-                ).ToList() as IList<Com.Mapbox.Geojson.Point>
+                )) as IList<Com.Mapbox.Geojson.Point>
             )
             .ToList();
+
         var result = new PlatformPolygonAnnotationOptions
         {
             FillColor = annotation.FillColor?.ToRgbaString(),

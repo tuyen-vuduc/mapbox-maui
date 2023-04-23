@@ -3,14 +3,16 @@
 using Foundation;
 using MapboxMapsObjC;
 
-public abstract partial class AnnotationManager<ITMBAnnotationManager>
+public abstract partial class AnnotationManager<TAnnotationManager, TAnnotation>
     : NSObject
-    , IAnnotationManager
+    , IAnnotationManager<TAnnotation>
     , ITMBAnnotationInteractionDelegate
+    where TAnnotationManager : ITMBAnnotationManager
+    where TAnnotation : IAnnotation
 {
-    private readonly Guid id;
+    private readonly string id;
 
-    protected AnnotationManager(Guid id, ITMBAnnotationManager nativeManager)
+    protected AnnotationManager(string id, ITMBAnnotationManager nativeManager)
     {
         this.id = id;
         NativeManager = nativeManager;
@@ -18,13 +20,13 @@ public abstract partial class AnnotationManager<ITMBAnnotationManager>
 
     public ITMBAnnotationManager NativeManager { get; init; }
 
-    public string Id => id.ToString();
-    public string SourceId => id.ToString();
-    public string LayerId => id.ToString();
+    public string Id => id;
+    public string SourceId => id;
+    public string LayerId => id;
 
     public event EventHandler<AnnotationsSelectedEventArgs> AnnotationsSelected;
 
-    public void DidDetectTappedAnnotations(MapboxMapsObjC.ITMBAnnotationManager manager, NSArray annotations)
+    public void DidDetectTappedAnnotations(ITMBAnnotationManager manager, NSArray annotations)
     {
         if (AnnotationsSelected == null) return;
 
@@ -39,7 +41,7 @@ public abstract partial class AnnotationManager<ITMBAnnotationManager>
         );
     }
 
-    public abstract void AddAnnotations<T>(params T[] annotations) where T : IAnnotation;
+    public abstract void AddAnnotations(params TAnnotation[] annotations);
     public abstract void RemoveAllAnnotations();
     public abstract void RemoveAnnotations(params string[] annotationIDs);
 }

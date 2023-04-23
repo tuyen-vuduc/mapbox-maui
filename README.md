@@ -133,7 +133,7 @@ b/ iOS's `info.plist`
 | 43 | [PitchAndDistanceExample](./mapboxqs/PitchAndDistanceExample.m) |  |
 | 44 | [PointAnnotationClusteringExample](./mapboxqs/PointAnnotationClusteringExample.m) |  |
 | 45 | [PointClusteringExample](./mapboxqs/PointClusteringExample.m) |  |
-| 46 | [PolygonAnnotationExample](./mapboxqs/PolygonAnnotationExample.m) |  |
+| 46 | [PolygonAnnotationExample](./mapboxqs/PolygonAnnotationExample.m) | OK |
 | 47 | [RasterTileSourceExample](./mapboxqs/RasterTileSourceExample.m) |  |
 | 48 | [ResizableImageExample](./mapboxqs/ResizableImageExample.m) |  |
 | 49 | [RestrictCoordinateBoundsExample](./mapboxqs/RestrictCoordinateBoundsExample.m) |  |

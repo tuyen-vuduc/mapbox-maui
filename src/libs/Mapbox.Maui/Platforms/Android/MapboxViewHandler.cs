@@ -1,13 +1,16 @@
 ﻿namespace Mapbox.Maui;
 
 using PlatformView = AndroidX.Fragment.App.FragmentContainerView;
+using PlatformPolygonAnnotationManager = Com.Mapbox.Maps.Plugin.Annotation.Generated.PolygonAnnotationManager;
 using MapboxMapsStyle = Com.Mapbox.Maps.Style;
 using Com.Mapbox.Maps;
 using Com.Mapbox.Maps.Plugin.Scalebar;
 using Microsoft.Maui.Platform;
 using Android.Content;
+using Mapbox.Maui.Annotations;
+using Com.Mapbox.Maps.Plugin.Annotation;
 
-public partial class MapboxViewHandler
+public partial class MapboxViewHandler : IAnnotationController
 {
     MapboxFragment mapboxFragment;
 
@@ -150,6 +153,16 @@ public partial class MapboxViewHandler
         return fragmentContainerView;
     }
 
+    protected override void ConnectHandler(PlatformView platformView)
+    {
+        base.ConnectHandler(platformView);
+
+        if (VirtualView is MapboxView mapboxView)
+        {
+            mapboxView.AnnotationController = this;
+        }
+    }
+
     protected override void DisconnectHandler(PlatformView platformView)
     {
         if (mapboxFragment != null)
@@ -171,5 +184,23 @@ public partial class MapboxViewHandler
 
     private void HandleStyleLoaded(MapView view)
         => (VirtualView as MapboxView)?.InvokeStyleLoaded();
+
+    public IPolygonAnnotationManager CreatePolygonAnnotationManager(
+        string id,
+        Styles.LayerPosition layerPosition)
+    {
+        var mapView = mapboxFragment?.MapView;
+
+        if (mapView == null) return null;
+
+        var nativeManager = AnnotationPluginImplKt
+            .GetAnnotations(mapView)
+            .CreateAnnotationManager(
+                AnnotationType.PolygonAnnotation,
+                new AnnotationConfig(null, id, id, null)
+            ) as PlatformPolygonAnnotationManager;
+
+        return new PolygonAnnotationManager(id, nativeManager);
+    }
 }
 

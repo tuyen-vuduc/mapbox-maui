@@ -18,16 +18,23 @@ public static class AdditionalExtensions
         this PolygonAnnotation xvalue
     )
     {
-        var polygon = TMBPolygon.FromCoordinates(
-            NSArray.FromObjects(xvalue
+        var coordinates = NSArray.FromNSObjects(xvalue
                 .GeometryValue
                 .Coordinates
                 .Select(
-                    x => x.Coordinates
-                        .Select(x => new[] { x.Latitude, x.Longitude })
+                    x => NSArray.FromObjects(
+                        x.Coordinates
+                        .Select(
+                            y => NSValue.FromMKCoordinate(
+                                new CLLocationCoordinate2D(y.Latitude, y.Longitude)
+                            )
+                        )
                         .ToArray()
+                    )
                 ).ToArray()
-            )
+            );
+        var polygon = TMBPolygon.FromCoordinates(
+            coordinates
         );
         var result = TMBPolygonAnnotation.Polygon(
             polygon

@@ -68,6 +68,9 @@
 	  <None Remove="Models\Annotations\" />
 	  <None Remove="Platforms\iOS\Annotations\" />
 	  <None Remove="Platforms\Android\Annotations\" />
+	  <None Remove="Models\Offline\" />
+	  <None Remove="Platforms\iOS\Offline\" />
+	  <None Remove="Platforms\Android\Offline\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Models\Styles\" />
@@ -77,6 +80,9 @@
 	  <Folder Include="Models\Annotations\" />
 	  <Folder Include="Platforms\iOS\Annotations\" />
 	  <Folder Include="Platforms\Android\Annotations\" />
+	  <Folder Include="Models\Offline\" />
+	  <Folder Include="Platforms\iOS\Offline\" />
+	  <Folder Include="Platforms\Android\Offline\" />
 	</ItemGroup>
 	<ProjectExtensions>
 	  <MonoDevelop>

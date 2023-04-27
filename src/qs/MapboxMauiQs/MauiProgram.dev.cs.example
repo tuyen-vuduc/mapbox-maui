@@ -2,5 +2,5 @@ namespace MapboxMauiQs;
 
 partial class MauiProgram 
 {
-	private const string ACCESS_TOKEN = "YOUR_MAPBOX_ACCESS_TOKEN";
+	internal const string ACCESS_TOKEN = "YOUR_MAPBOX_ACCESS_TOKEN";
 }

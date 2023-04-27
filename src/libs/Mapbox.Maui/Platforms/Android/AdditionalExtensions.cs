@@ -126,6 +126,16 @@ static class AdditionalExtensions
             return new PlatformValue(list);
         }
 
+        if (xvalue is IReadOnlyDictionary<string, object> rodict)
+        {
+            var list = new Dictionary<string, PlatformValue>();
+            foreach (var item in rodict)
+            {
+                list[item.Key] = item.Value.Wrap(rgba);
+            }
+            return new PlatformValue(list);
+        }
+
         if (xvalue is IEnumerable objects)
         {
             var list = new List<PlatformValue>();

@@ -1,6 +1,6 @@
-﻿using Mapbox.Maui.Expressions;
+﻿using MapboxMaui.Expressions;
 
-namespace Mapbox.Maui.Styles;
+namespace MapboxMaui.Styles;
 
 public class Terrain
 {

@@ -1,4 +1,4 @@
-﻿namespace Mapbox.Maui;
+﻿namespace MapboxMaui;
 
 using PlatformView = AndroidX.Fragment.App.FragmentContainerView;
 using PlatformPolygonAnnotationManager = Com.Mapbox.Maps.Plugin.Annotation.Generated.PolygonAnnotationManager;
@@ -7,7 +7,7 @@ using Com.Mapbox.Maps;
 using Com.Mapbox.Maps.Plugin.Scalebar;
 using Microsoft.Maui.Platform;
 using Android.Content;
-using Mapbox.Maui.Annotations;
+using MapboxMaui.Annotations;
 using Com.Mapbox.Maps.Plugin.Annotation;
 
 public partial class MapboxViewHandler : IAnnotationController

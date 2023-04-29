@@ -1,9 +1,9 @@
 ﻿
-namespace Mapbox.Maui;
+namespace MapboxMaui;
 
 using System.Collections;
 using Com.Mapbox.Maps.Extension.Style.Expressions.Generated;
-using Mapbox.Maui.Expressions;
+using MapboxMaui.Expressions;
 
 public static class ExpressionExtensions
 {

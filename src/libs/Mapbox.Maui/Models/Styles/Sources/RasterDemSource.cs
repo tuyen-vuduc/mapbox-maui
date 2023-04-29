@@ -1,4 +1,4 @@
-﻿namespace Mapbox.Maui.Styles;
+﻿namespace MapboxMaui.Styles;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

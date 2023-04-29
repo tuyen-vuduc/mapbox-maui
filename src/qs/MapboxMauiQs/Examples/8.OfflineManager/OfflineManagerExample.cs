@@ -1,6 +1,5 @@
-using System;
-using Mapbox.Maui;
-using Mapbox.Maui.Offline;
+using MapboxMaui;
+using MapboxMaui.Offline;
 using iOSPage = Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific.Page;
 namespace MapboxMauiQs;
 
@@ -36,6 +35,8 @@ public class OfflineManagerExample : ContentPage, IExamplePage, IQueryAttributab
             MauiProgram.ACCESS_TOKEN,
             cameraOptions);
 
+        offlineManager.IsMapboxStackConnected = true;
+
         offlineManager.DownloadStyle(
             MapboxStyle.OUTDOORS.Value,
             new StylePackLoadOptions
@@ -48,11 +49,61 @@ public class OfflineManagerExample : ContentPage, IExamplePage, IQueryAttributab
             },
             (progress) =>
             {
-                System.Diagnostics.Debug.WriteLine($"PROGRESS {progress.CompletedResourceCount}/{progress.RequiredResourceCount}");
+                System.Diagnostics.Debug.WriteLine($"PROGRESS:DownloadStyle {
+                    progress.CompletedResourceCount}/{
+                    progress.RequiredResourceCount}");
             },
             (stylePack, exception) =>
             {
-                System.Diagnostics.Debug.WriteLine($"DONE {stylePack.CompletedResourceCount}/{stylePack.RequiredResourceCount}");
+                if (exception != null)
+                {
+                    System.Diagnostics.Debug.WriteLine($"ERR:DownloadStyle {exception.Message}");
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine($"DONE:DownloadStyle {
+                    stylePack.CompletedResourceCount}/{
+                    stylePack.RequiredResourceCount}");
+            });
+
+        var tilesetDescriptorOptions = new TilesetDescriptorOptions(
+            MapboxStyle.OUTDOORS.Value,
+            MinZoom: 0,
+            MaxZoom: 16
+            );
+
+        var tileRegionLoadOptions = new TileRegionLoadOptions(
+            Geometry: new GeoJSON.Net.Geometry.Point(
+                    new GeoJSON.Net.Geometry.Position(tokyoCoord.X, tokyoCoord.Y)
+                ),
+            TilesetDescriptors: new [] { tilesetDescriptorOptions },
+            AcceptsExpired: true,
+            NetworkRestriction: NetworkRestriction.None,
+            Metadata: new Dictionary<string, object>
+            {
+                { @"tag", @"my-outdoors-tile-region" }
+            });
+
+        offlineManager.DownloadTile(
+            tileRegionId,
+            tileRegionLoadOptions,
+            progress =>
+            {
+                System.Diagnostics.Debug.WriteLine($"PROGRESS:DownloadTile {
+                    progress.CompletedResourceCount}/{
+                    progress.RequiredResourceCount}");
+            },
+            (tileRegion, exception) =>
+            {
+                if (exception != null)
+                {
+                    System.Diagnostics.Debug.WriteLine($"ERR:DownloadTile {exception.Message}");
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine($"DONE:DownloadTile {
+                    tileRegion.CompletedResourceCount}/{
+                    tileRegion.RequiredResourceCount}");
             });
     }
 

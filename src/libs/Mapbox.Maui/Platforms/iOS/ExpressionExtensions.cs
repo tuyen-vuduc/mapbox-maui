@@ -1,8 +1,8 @@
 ﻿using Foundation;
-using Mapbox.Maui.Expressions;
+using MapboxMaui.Expressions;
 using MapboxMapsObjC;
 
-namespace Mapbox.Maui;
+namespace MapboxMaui;
 
 public static class ExpressionExtensions
 {

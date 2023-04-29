@@ -1,9 +1,9 @@
-﻿namespace Mapbox.Maui;
+﻿namespace MapboxMaui;
 
 using Microsoft.Maui.Handlers;
 
 #if IOS 
-using PlatformView = Mapbox.Maui.MapViewContainer;
+using PlatformView = MapboxMaui.MapViewContainer;
 #elif __ANDROID__
 using PlatformView = AndroidX.Fragment.App.FragmentContainerView;
 #elif (NETSTANDARD || !PLATFORM) || (NET6_0_OR_GREATER && !IOS && !__ANDROID__)

@@ -1,4 +1,4 @@
-﻿namespace Mapbox.Maui.Annotations;
+﻿namespace MapboxMaui.Annotations;
 
 public interface IAnnotationManager<TAnnotation> where TAnnotation : IAnnotation
 {

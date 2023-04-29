@@ -1,4 +1,4 @@
-﻿using Mapbox.Maui;
+﻿using MapboxMaui;
 using iOSPage = Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific.Page;
 
 namespace MapboxMauiQs;
@@ -17,7 +17,7 @@ public partial class BasicMapExample : ContentPage, IExamplePage, IQueryAttribut
 
     private void Map_MapReady(object sender, EventArgs e)
     {
-        map.ScaleBarVisibility = Mapbox.Maui.OrnamentVisibility.Visible;
+        map.ScaleBarVisibility = MapboxMaui.OrnamentVisibility.Visible;
         map.MapboxStyle = MapboxStyle.MAPBOX_STREETS;
         map.CameraOptions = new CameraOptions
         {

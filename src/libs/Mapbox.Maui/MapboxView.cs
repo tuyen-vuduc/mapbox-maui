@@ -1,7 +1,7 @@
-﻿namespace Mapbox.Maui;
+﻿namespace MapboxMaui;
 
-using Mapbox.Maui.Annotations;
-using Mapbox.Maui.Styles;
+using MapboxMaui.Annotations;
+using MapboxMaui.Styles;
 
 public partial class MapboxView : View, IMapboxView
 {

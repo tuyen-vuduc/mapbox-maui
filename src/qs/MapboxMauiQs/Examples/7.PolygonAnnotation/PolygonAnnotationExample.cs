@@ -2,9 +2,9 @@ namespace MapboxMauiQs;
 
 using System;
 using GeoJSON.Net.Geometry;
-using Mapbox.Maui;
-using Mapbox.Maui.Annotations;
-using Mapbox.Maui.Styles;
+using MapboxMaui;
+using MapboxMaui.Annotations;
+using MapboxMaui.Styles;
 using iOSPage = Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific.Page;
 
 public class PolygonAnnotationExample : ContentPage, IExamplePage, IQueryAttributable

@@ -1,8 +1,8 @@
-﻿namespace Mapbox.Maui;
+﻿namespace MapboxMaui;
 
 using System.Windows.Input;
-using Mapbox.Maui.Annotations;
-using Mapbox.Maui.Styles;
+using MapboxMaui.Annotations;
+using MapboxMaui.Styles;
 
 public partial interface IMapboxView : IView
 {

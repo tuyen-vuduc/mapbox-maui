@@ -1,6 +1,6 @@
-using Mapbox.Maui;
-using Mapbox.Maui.Expressions;
-using Mapbox.Maui.Styles;
+using MapboxMaui;
+using MapboxMaui.Expressions;
+using MapboxMaui.Styles;
 using iOSPage = Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific.Page;
 namespace MapboxMauiQs;
 

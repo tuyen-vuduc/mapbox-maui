@@ -1,11 +1,11 @@
-﻿namespace Mapbox.Maui.Styles;
+﻿namespace MapboxMaui.Styles;
 
 public class FillExtrusionLayer : MapboxLayer
 {
 	public FillExtrusionLayer(string id) : base(id)
 	{
 		Type = LayerType.fillExtrusion;
-        Visibility = new PropertyValue<Visibility>(Maui.Visibility.visible);
+        Visibility = new PropertyValue<Visibility>(MapboxMaui.Visibility.visible);
 	}
 
     public static class FillExtrusionLayerKey

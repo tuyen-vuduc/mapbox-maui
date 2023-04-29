@@ -2,7 +2,7 @@
 using MapboxMapsObjC;
 using UIKit;
 
-namespace Mapbox.Maui;
+namespace MapboxMaui;
 
 public class MapViewContainer : UIView
 {

@@ -1,5 +1,5 @@
 using System;
-using Mapbox.Maui;
+using MapboxMaui;
 using iOSPage = Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific.Page;
 namespace MapboxMauiQs;
 

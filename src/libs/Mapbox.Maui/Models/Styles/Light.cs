@@ -1,4 +1,4 @@
-﻿namespace Mapbox.Maui.Styles;
+﻿namespace MapboxMaui.Styles;
 
 public class Light : BaseKVContainer
 {

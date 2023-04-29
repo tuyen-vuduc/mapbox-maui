@@ -1,18 +1,25 @@
-﻿namespace Mapbox.Maui.Offline;
+﻿namespace MapboxMaui.Offline;
 
 using Com.Mapbox.Bindgen;
 using Com.Mapbox.Common;
 using Com.Mapbox.Maps;
 using Java.Text;
 
-public partial class OfflineManager
+public partial class OfflineManager: Java.Lang.Object
 {
     IOfflineManagerInterface nativeManager;
+    TileStore tileStore;
 
     partial void InitializePlatformManager()
     {
+        tileStore = TileStore.Create();
+        tileStore.SetOption(
+            TileStoreOptions.MAPBOX_ACCESS_TOKEN,
+            Value.ValueOf(accessToken));
+
         var resourceOptions = new ResourceOptions.Builder()
             .AccessToken(accessToken)
+            .TileStore(tileStore)
             .Build();
 
         nativeManager = new Com.Mapbox.Maps.OfflineManager(
@@ -34,42 +41,73 @@ public partial class OfflineManager
     {
         nativeManager.LoadStylePack(
             styleUri,
-            new Com.Mapbox.Maps.StylePackLoadOptions.Builder()
-                .GlyphsRasterizationMode(options.Mode.HasValue
-                    ? GetGlyphsRasterizationMode(options.Mode.Value)
-                    : null
-                )
-                .Metadata(options.Metadata.Wrap())
-                .AcceptExpired(options.AcceptsExpired)
-            .Build()
-            , new StylePackLoadProgressCallback(progressHandler)
-            , new StylePackCallBack(completionHandler)
+            options.ToNative(),
+            new StylePackLoadProgressCallback(progressHandler),
+            new StylePackCallback(completionHandler)
             );
     }
 
-    private Com.Mapbox.Maps.GlyphsRasterizationMode GetGlyphsRasterizationMode(GlyphsRasterizationMode mode)
+    public void DownloadTile(
+        string tileId,
+        TileRegionLoadOptions xoptions,
+        Action<TileRegionLoadProgress> progressHandler,
+        Action<TileRegion, Exception> completionHandler
+    )
     {
-        return mode switch
-        {
-            GlyphsRasterizationMode.NoGlyphsRasterizedLocally => Com.Mapbox.Maps.GlyphsRasterizationMode.NoGlyphsRasterizedLocally,
-            GlyphsRasterizationMode.IdeographsRasterizedLocally => Com.Mapbox.Maps.GlyphsRasterizationMode.IdeographsRasterizedLocally,
-            GlyphsRasterizationMode.AllGlyphsRasterizedLocally => Com.Mapbox.Maps.GlyphsRasterizationMode.AllGlyphsRasterizedLocally,
-            _ => null,
-        };
+        var tilesetDescriptors = xoptions.TilesetDescriptors
+            .Select(
+                x => nativeManager.CreateTilesetDescriptor(x.ToNative()))
+            .ToList();
+
+        var options = new Com.Mapbox.Common.TileRegionLoadOptions.Builder()
+            .ExtraOptions(xoptions.ExtraOptions?.Wrap())
+            .AcceptExpired(xoptions.AcceptsExpired)
+            .AverageBytesPerSecond(xoptions.AvarageBytesPerSecond.HasValue
+                ? new Java.Lang.Integer(xoptions.AvarageBytesPerSecond.Value)
+                : null)
+            .Descriptors(tilesetDescriptors)
+            .Geometry(xoptions.Geometry?.ToNative())
+            .Metadata(xoptions.Metadata?.Wrap())
+            .NetworkRestriction(xoptions.NetworkRestriction.ToNative())
+            .StartLocation(xoptions.StartLocation?.ToNative())
+            .Build();
+
+        tileStore?.LoadTileRegion(
+            tileId,
+            options,
+            new TileRegionLoadProgressCallback(progressHandler),
+            new TileRegionCallback(completionHandler)
+            );
     }
 
-    class StylePackLoadProgressCallback : Java.Lang.Object, IStylePackLoadProgressCallback
+    protected override void Dispose(bool disposing)
     {
-        private Action<StylePackLoadProgress> progressHandler;
+        base.Dispose(disposing);
 
-        public StylePackLoadProgressCallback(Action<StylePackLoadProgress> progressHandler)
+        if (disposing)
         {
-            this.progressHandler = progressHandler;
+            nativeManager?.Dispose();
+            nativeManager = null;
+
+            tileStore?.Dispose();
+            tileStore = null;
+        }
+    }
+
+    class TileRegionLoadProgressCallback : Java.Lang.Object, ITileRegionLoadProgressCallback
+    {
+        private WeakReference<Action<TileRegionLoadProgress>> progressHandlerRef;
+
+        public TileRegionLoadProgressCallback(Action<TileRegionLoadProgress> progressHandler)
+        {
+            progressHandlerRef = new WeakReference<Action<TileRegionLoadProgress>>(progressHandler);
         }
 
-        public void Run(Com.Mapbox.Maps.StylePackLoadProgress progress)
+        public void Run(Com.Mapbox.Common.TileRegionLoadProgress progress)
         {
-            progressHandler?.Invoke(new StylePackLoadProgress
+            if (true != progressHandlerRef?.TryGetTarget(out var target)) return;
+
+            target?.Invoke(new TileRegionLoadProgress
             {
                 CompletedResourceCount = (ulong)progress.CompletedResourceCount,
                 CompletedResourceSize = (ulong)progress.CompletedResourceSize,
@@ -79,19 +117,110 @@ public partial class OfflineManager
                 RequiredResourceCount = (ulong)progress.RequiredResourceCount,
             });
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (disposing)
+            {
+                progressHandlerRef = null;
+            }
+        }
     }
 
-    class StylePackCallBack : Java.Lang.Object, IStylePackCallback
+    class TileRegionCallback : Java.Lang.Object, ITileRegionCallback
     {
-        private Action<StylePack, Exception> completionHandler;
+        private WeakReference<Action<TileRegion, Exception>> completionHandlerRef;
 
-        public StylePackCallBack(Action<StylePack, Exception> completionHandler)
+        public TileRegionCallback(Action<TileRegion, Exception> completionHandler)
         {
-            this.completionHandler = completionHandler;
+            this.completionHandlerRef = new WeakReference<Action<TileRegion, Exception>>(completionHandler);
         }
 
         public void Run(Expected expected)
         {
+            if (true != this.completionHandlerRef?.TryGetTarget(out var completionHandler)) return;
+
+            var xstylePack = expected.IsValue
+                && expected.Value is Com.Mapbox.Common.TileRegion tileRegion
+                ? new TileRegion
+                {
+                    CompletedResourceCount = (ulong)tileRegion.CompletedResourceCount,
+                    CompletedResourceSize = (ulong)tileRegion.CompletedResourceSize,
+                    Expires = tileRegion.Expires != null
+                        ? DateTime.Parse(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").Format(tileRegion.Expires))
+                        : null,
+                    RequiredResourceCount = (ulong)tileRegion.RequiredResourceCount,
+                    Id = tileRegion.Id,
+                }
+                : null;
+            var xerror = expected.IsError
+                ? new StylePackCallBackException((StylePackError)expected.Error)
+                : null;
+
+            completionHandler?.Invoke(xstylePack, xerror);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (disposing)
+            {
+                completionHandlerRef = null;
+            }
+        }
+    }
+
+    class StylePackLoadProgressCallback : Java.Lang.Object, IStylePackLoadProgressCallback
+    {
+        private WeakReference<Action<StylePackLoadProgress>> progressHandlerRef;
+
+        public StylePackLoadProgressCallback(Action<StylePackLoadProgress> progressHandler)
+        {
+            progressHandlerRef = new WeakReference<Action<StylePackLoadProgress>>(progressHandler);
+        }
+
+        public void Run(Com.Mapbox.Maps.StylePackLoadProgress progress)
+        {
+            if (true != progressHandlerRef?.TryGetTarget(out var target)) return;
+
+            target?.Invoke(new StylePackLoadProgress
+            {
+                CompletedResourceCount = (ulong)progress.CompletedResourceCount,
+                CompletedResourceSize = (ulong)progress.CompletedResourceSize,
+                ErroredResourceCount = (ulong)progress.ErroredResourceCount,
+                LoadedResourceCount = (ulong)progress.LoadedResourceCount,
+                LoadedResourceSize = (ulong)progress.LoadedResourceSize,
+                RequiredResourceCount = (ulong)progress.RequiredResourceCount,
+            });
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (disposing)
+            {
+                progressHandlerRef = null;
+            }
+        }
+    }
+
+    class StylePackCallback : Java.Lang.Object, IStylePackCallback
+    {
+        private WeakReference<Action<StylePack, Exception>> completionHandlerRef;
+
+        public StylePackCallback(Action<StylePack, Exception> completionHandler)
+        {
+            completionHandlerRef = new WeakReference<Action<StylePack, Exception>>(completionHandler);
+        }
+
+        public void Run(Expected expected)
+        {
+            if (true != this.completionHandlerRef?.TryGetTarget(out var completionHandler)) return;
+
             var xstylePack = expected.IsValue
                 && expected.Value is Com.Mapbox.Maps.StylePack stylePack
                 ? new StylePack
@@ -111,6 +240,16 @@ public partial class OfflineManager
                 : null;
 
             completionHandler?.Invoke(xstylePack, xerror);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (disposing)
+            {
+                completionHandlerRef = null;
+            }
         }
 
         private GlyphsRasterizationMode? GetGlyphsRasterizationMode(Com.Mapbox.Maps.GlyphsRasterizationMode mode)

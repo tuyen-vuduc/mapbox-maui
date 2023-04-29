@@ -1,4 +1,4 @@
-﻿namespace Mapbox.Maui.Annotations;
+﻿namespace MapboxMaui.Annotations;
 
 using Foundation;
 using MapboxMapsObjC;

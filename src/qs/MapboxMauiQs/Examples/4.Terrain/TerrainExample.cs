@@ -1,6 +1,5 @@
-using System;
-using Mapbox.Maui;
-using Mapbox.Maui.Styles;
+using MapboxMaui;
+using MapboxMaui.Styles;
 using iOSPage = Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific.Page;
 namespace MapboxMauiQs;
 
@@ -21,7 +20,7 @@ public class TerrainExample : ContentPage, IExamplePage, IQueryAttributable
     private void Map_StyleLoaded(object sender, EventArgs e)
     {
         var sourceId = @"mapbox-dem";
-        var rasterDemSource = new Mapbox.Maui.Styles.RasterDemSource(sourceId)
+        var rasterDemSource = new RasterDemSource(sourceId)
         {
             Url = @"mapbox://mapbox.mapbox-terrain-dem-v1",
             TileSize = 514.0,

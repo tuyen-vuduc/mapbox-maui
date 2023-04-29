@@ -1,4 +1,4 @@
-﻿namespace Mapbox.Maui.Annotations;
+﻿namespace MapboxMaui.Annotations;
 
 using IPlatformAnnotationManager = Com.Mapbox.Maps.Plugin.Annotation.IAnnotationManager;
 

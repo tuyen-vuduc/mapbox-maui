@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Mapbox.Maui.Offline;
+namespace MapboxMaui.Offline;
 
 public record StylePackLoadOptions
 {

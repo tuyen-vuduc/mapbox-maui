@@ -1,6 +1,6 @@
-﻿using Mapbox.Maui.Expressions;
+﻿using MapboxMaui.Expressions;
 
-namespace Mapbox.Maui;
+namespace MapboxMaui;
 
 public interface IPropertyValue
 {

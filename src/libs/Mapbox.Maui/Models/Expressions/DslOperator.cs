@@ -1,4 +1,4 @@
-﻿namespace Mapbox.Maui.Expressions;
+﻿namespace MapboxMaui.Expressions;
 
 public struct DslOperator : INamedString
 {

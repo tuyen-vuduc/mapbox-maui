@@ -1,4 +1,4 @@
-﻿namespace Mapbox.Maui.Styles;
+﻿namespace MapboxMaui.Styles;
 
 public class SkyLayer : MapboxLayer
 {
@@ -6,7 +6,7 @@ public class SkyLayer : MapboxLayer
         : base(id)
     {
         Type = LayerType.sky;
-        Visibility = new PropertyValue<Visibility>(Mapbox.Maui.Visibility.visible);
+        Visibility = new PropertyValue<Visibility>(MapboxMaui.Visibility.visible);
     }
 
     public static class SkyLayerKey

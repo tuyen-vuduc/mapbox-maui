@@ -1,9 +1,9 @@
 ﻿
-namespace Mapbox.Maui;
+namespace MapboxMaui;
 
 using Foundation;
 using GeoJSON.Net.Geometry;
-using Mapbox.Maui.Annotations;
+using MapboxMaui.Annotations;
 using MapboxMapsObjC;
 using PlatformView = MapViewContainer;
 

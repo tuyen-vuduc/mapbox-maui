@@ -1,4 +1,4 @@
-﻿namespace Mapbox.Maui;
+﻿namespace MapboxMaui;
 
 using Android.Views;
 using Com.Mapbox.Maps;

@@ -1,18 +1,126 @@
-﻿namespace Mapbox.Maui;
+﻿namespace MapboxMaui;
 using MapboxMapsCameraOptions = Com.Mapbox.Maps.CameraOptions;
 using PlatformValue = Com.Mapbox.Bindgen.Value;
 using PlatformPolygonAnnotationOptions = Com.Mapbox.Maps.Plugin.Annotation.Generated.PolygonAnnotationOptions;
 using MapboxTerrain = Com.Mapbox.Maps.Extension.Style.Terrain.Generated.Terrain;
 using StyleTransitionBuilder = Com.Mapbox.Maps.Extension.Style.Types.StyleTransition.Builder;
 using PlatformStyleTransition = Com.Mapbox.Maps.Extension.Style.Types.StyleTransition;
+using XTilesetDescriptorOptions = Offline.TilesetDescriptorOptions;
 using Com.Mapbox.Maps;
 using Microsoft.Maui.Platform;
-using Mapbox.Maui.Styles;
+using MapboxMaui.Styles;
 using System.Collections;
-using Mapbox.Maui.Expressions;
+using MapboxMaui.Expressions;
 
 static class AdditionalExtensions
 {
+    internal static Com.Mapbox.Geojson.Point ToGeoPoint(this GeoJSON.Net.Geometry.IPosition xvalue)
+    {
+        return Com.Mapbox.Geojson.Point.FromLngLat(
+                xvalue.Longitude,
+                xvalue.Latitude);
+    }
+
+    internal static Com.Mapbox.Geojson.IGeometry ToNative(this GeoJSON.Net.Geometry.IGeometryObject xvalue)
+    {
+        return xvalue switch
+        {
+            GeoJSON.Net.Geometry.Point point => Com.Mapbox.Geojson.Point.FromLngLat(
+                point.Coordinates.Longitude,
+                point.Coordinates.Latitude),
+
+            GeoJSON.Net.Geometry.LineString line => Com.Mapbox.Geojson.LineString.FromLngLats(
+                Com.Mapbox.Geojson.MultiPoint.FromLngLats(
+                    line.Coordinates.Select(ToGeoPoint).ToList()
+                    )
+                ),
+
+            GeoJSON.Net.Geometry.Polygon polygon => Com.Mapbox.Geojson.Polygon.FromLngLats(
+                polygon.Coordinates
+                    .Select(
+                        x => x.Coordinates.Select(ToGeoPoint).ToList()
+                            as IList<Com.Mapbox.Geojson.Point>)
+                    .ToList()
+                ),
+
+             GeoJSON.Net.Geometry.MultiPoint multiPoint => Com.Mapbox.Geojson.MultiPoint.FromLngLats(
+                    multiPoint.Coordinates
+                        .Select(x => x.Coordinates.ToGeoPoint())
+                        .ToList()
+                    ),
+
+            GeoJSON.Net.Geometry.MultiLineString multiLineString => Com.Mapbox.Geojson.Polygon.FromLngLats(
+                multiLineString.Coordinates
+                    .Select(
+                        x => x.Coordinates.Select(ToGeoPoint).ToList()
+                            as IList<Com.Mapbox.Geojson.Point>)
+                    .ToList()
+                ),
+
+            GeoJSON.Net.Geometry.MultiPolygon multiPolygon => Com.Mapbox.Geojson.Polygon.FromLngLats(
+                multiPolygon.Coordinates
+                    .Select(
+                        x => x.Coordinates
+                                .Select(
+                                    y => y.Coordinates.Select(ToGeoPoint))
+                                .ToList()
+                            as IList<Com.Mapbox.Geojson.Point>)
+                    .ToList()
+                ),
+            _ => null,
+        };
+    }
+
+    internal static Com.Mapbox.Geojson.Point ToNative(this Point xvalue)
+    {
+        return Com.Mapbox.Geojson.Point.FromLngLat(xvalue.Y, xvalue.X);
+    }
+
+    internal static Com.Mapbox.Common.NetworkRestriction ToNative(this Offline.NetworkRestriction xvalue)
+    {
+        return xvalue switch
+        {
+            Offline.NetworkRestriction.None => Com.Mapbox.Common.NetworkRestriction.None,
+            Offline.NetworkRestriction.DisallowExpensive => Com.Mapbox.Common.NetworkRestriction.DisallowExpensive,
+            Offline.NetworkRestriction.DisallowAll => Com.Mapbox.Common.NetworkRestriction.DisallowAll,
+            _ => null,
+        };
+    }
+
+    internal static TilesetDescriptorOptions ToNative(this XTilesetDescriptorOptions xoptions)
+    {
+        return new TilesetDescriptorOptions.Builder()
+            .MinZoom(xoptions.MinZoom)
+            .MaxZoom(xoptions.MaxZoom)
+            .StyleURI(xoptions.StyleUri)
+            .PixelRatio(xoptions.PixelRatio)
+            .StylePackOptions(xoptions.StylePackLoadOptions?.ToNative())
+            .Build();
+    }
+
+    internal static StylePackLoadOptions ToNative(this Offline.StylePackLoadOptions xoptions)
+    {
+        return new StylePackLoadOptions.Builder()
+                .GlyphsRasterizationMode(xoptions.Mode.HasValue
+                    ? GetGlyphsRasterizationMode(xoptions.Mode.Value)
+                    : null
+                )
+                .Metadata(xoptions.Metadata.Wrap())
+                .AcceptExpired(xoptions.AcceptsExpired)
+            .Build();
+    }
+
+    private static GlyphsRasterizationMode GetGlyphsRasterizationMode(Offline.GlyphsRasterizationMode mode)
+    {
+        return mode switch
+        {
+            Offline.GlyphsRasterizationMode.NoGlyphsRasterizedLocally => GlyphsRasterizationMode.NoGlyphsRasterizedLocally,
+            Offline.GlyphsRasterizationMode.IdeographsRasterizedLocally => GlyphsRasterizationMode.IdeographsRasterizedLocally,
+            Offline.GlyphsRasterizationMode.AllGlyphsRasterizedLocally => GlyphsRasterizationMode.AllGlyphsRasterizedLocally,
+            _ => null,
+        };
+    }
+
     internal static PlatformValue ToPlatformValue(this BaseKVContainer xvalue, bool rgba = false)
     {
         var properties = new Dictionary<string, PlatformValue>();

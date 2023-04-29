@@ -1,4 +1,4 @@
-﻿using Mapbox.Maui;
+﻿using MapboxMaui;
 
 namespace MapboxMauiQs;
 

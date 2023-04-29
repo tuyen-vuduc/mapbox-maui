@@ -1,4 +1,4 @@
-﻿namespace Mapbox.Maui.Offline;
+﻿namespace MapboxMaui.Offline;
 
 public enum GlyphsRasterizationMode
 {

@@ -2,7 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
-namespace Mapbox.Maui;
+namespace MapboxMaui;
 
 public class MapboxStyleTypeConverter : TypeConverter
 {

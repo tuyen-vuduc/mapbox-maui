@@ -1,9 +1,9 @@
-﻿namespace Mapbox.Maui.Styles;
+﻿namespace MapboxMaui.Styles;
 
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Mapbox.Maui.Expressions;
+using MapboxMaui.Expressions;
 
 public class MapboxLayer : BaseKVContainer
 {
@@ -107,7 +107,7 @@ public class MapboxLayer : BaseKVContainer
     {
         get => GetProperty(
             MapboxLayerKey.visibility,
-            new PropertyValue<Visibility>(Maui.Visibility.visible),
+            new PropertyValue<Visibility>(MapboxMaui.Visibility.visible),
             MapboxLayerKey.layout
         );
         set => SetProperty(

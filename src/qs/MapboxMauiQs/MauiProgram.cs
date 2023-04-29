@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using Mapbox.Maui;
+using MapboxMaui;
 
 namespace MapboxMauiQs;
 

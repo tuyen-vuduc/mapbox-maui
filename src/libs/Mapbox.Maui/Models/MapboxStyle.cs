@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Mapbox.Maui;
+namespace MapboxMaui;
 
 [TypeConverter(typeof(MapboxStyleTypeConverter))]
 public struct MapboxStyle : INamedString

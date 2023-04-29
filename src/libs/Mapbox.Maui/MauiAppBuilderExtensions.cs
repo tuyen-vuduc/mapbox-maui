@@ -1,4 +1,4 @@
-﻿namespace Mapbox.Maui;
+﻿namespace MapboxMaui;
 
 #if IOS 
 using PlatformView = MapboxMaps.MapView;

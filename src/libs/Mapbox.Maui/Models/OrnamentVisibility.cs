@@ -1,4 +1,4 @@
-﻿namespace Mapbox.Maui;
+﻿namespace MapboxMaui;
 
 public enum OrnamentVisibility
 {

@@ -1,6 +1,7 @@
 ﻿namespace Mapbox.Maui.Offline;
 
 using Com.Mapbox.Bindgen;
+using Com.Mapbox.Common;
 using Com.Mapbox.Maps;
 using Java.Text;
 
@@ -17,6 +18,12 @@ public partial class OfflineManager
         nativeManager = new Com.Mapbox.Maps.OfflineManager(
             resourceOptions
         );
+    }
+
+    public bool IsMapboxStackConnected
+    {
+        get => OfflineSwitch.Instance.MapboxStackConnected;
+        set => OfflineSwitch.Instance.MapboxStackConnected = value;
     }
 
     public void DownloadStyle(

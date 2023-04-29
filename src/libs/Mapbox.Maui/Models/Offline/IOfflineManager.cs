@@ -2,6 +2,8 @@
 
 public interface IOfflineManager
 {
+    bool IsMapboxStackConnected { get; set; }
+
     void DownloadStyle(
         string styleUri,
         StylePackLoadOptions options,

@@ -1,4 +1,5 @@
 ﻿using Foundation;
+using MapboxCommon;
 using MapboxCoreMaps;
 using MapboxMapsObjC;
 
@@ -19,6 +20,12 @@ partial class OfflineManager : IOfflineManager
         nativeManager = new PlatformOfflineManager(
             options.ResourceOptions()
         );
+    }
+
+    public bool IsMapboxStackConnected
+    {
+        get => MBXOfflineSwitch.Instance.IsMapboxStackConnected;
+        set => MBXOfflineSwitch.Instance.SetMapboxStackConnectedForConnected(value);
     }
 
     public void DownloadStyle(

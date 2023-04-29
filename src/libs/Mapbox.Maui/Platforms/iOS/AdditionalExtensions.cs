@@ -116,42 +116,6 @@ public static class AdditionalExtensions
         );
     }
 
-    internal static TMBPolygonAnnotation ToPlatformValue(
-        this PolygonAnnotation xvalue
-    )
-    {
-        var coordinates = NSArray.FromNSObjects(xvalue
-                .GeometryValue
-                .Coordinates
-                .Select(
-                    x => NSArray.FromObjects(
-                        x.Coordinates
-                        .Select(
-                            y => NSValue.FromMKCoordinate(
-                                new CLLocationCoordinate2D(y.Latitude, y.Longitude)
-                            )
-                        )
-                        .ToArray()
-                    )
-                ).ToArray()
-            );
-        var polygon = TMBPolygon.FromCoordinates(
-            coordinates
-        );
-        var result = TMBPolygonAnnotation.Polygon(
-            polygon
-        );
-        result.FillColor = xvalue.FillColor?.ToPlatform();
-        result.FillOpacity = xvalue.FillOpacity.HasValue
-            ? NSNumber.FromDouble(xvalue.FillOpacity.Value)
-            : null;
-        result.FillOutlineColor = xvalue.FillOutlineColor?.ToPlatform();
-        result.FillPattern = xvalue.FillPattern;
-        result.FillSortKey = xvalue.FillSortKey;
-
-        return result;
-    }
-
     internal static TMBTerrain ToPlatformValue(
         this Terrain xvalue
     )

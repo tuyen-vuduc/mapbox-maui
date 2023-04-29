@@ -40,7 +40,7 @@ partial interface IMapboxView {
 public interface IAnnotationController
 {
     public IPolygonAnnotationManager CreatePolygonAnnotationManager(string id, LayerPosition layerPosition);
-    //public IAnnotationManager<Annotations.PolygonAnnotation> CircleAnnotationManager(string id);
-    //public IAnnotationManager<Annotations.PolygonAnnotation> PointAnnotationManager(string id);
-    //public IAnnotationManager<Annotations.PolygonAnnotation> PolylineAnnotationManager(string id);
+    public ICircleAnnotationManager CreateCircleAnnotationManager(string id, LayerPosition layerPosition);
+    //public IPointAnnotationManager CreatePointAnnotationManager(string id, LayerPosition layerPosition);
+    //public IPolylineAnnotationManager CreatePolylineAnnotationManager(string, LayerPosition layerPosition);
 }

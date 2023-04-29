@@ -100,7 +100,7 @@ b/ iOS's `info.plist`
 | 10 | [BuildingExtrusionsExample](./mapboxqs/BuildingExtrusionsExample.m) | OK |
 | 11 | [CameraAnimationExample](./mapboxqs/CameraAnimationExample.m) |  |
 | 12 | [CameraAnimatorsExample](./mapboxqs/CameraAnimatorsExample.m) |  |
-| 13 | [CircleAnnotationExample](./mapboxqs/CircleAnnotationExample.m) |  |
+| 13 | [CircleAnnotationExample](./mapboxqs/CircleAnnotationExample.m) | x |
 | 14 | [ColorExpressionExample](./mapboxqs/ColorExpressionExample.m) |  |
 | 15 | [Custom2DPuckExample](./mapboxqs/Custom2DPuckExample.m) |  |
 | 16 | [Custom3DPuckExample](./mapboxqs/Custom3DPuckExample.m) |  |
@@ -128,7 +128,7 @@ b/ iOS's `info.plist`
 | 38 | [LocalizationExample](./mapboxqs/LocalizationExample.m) |  |
 | 39 | [MultipleGeometriesExample](./mapboxqs/MultipleGeometriesExample.m) |  |
 | 40 | [NavigationSimulatorExample](./mapboxqs/NavigationSimulatorExample.m) |  |
-| 41 | [OfflineManagerExample](./mapboxqs/OfflineManagerExample.m) |  |
+| 41 | [OfflineManagerExample](./mapboxqs/OfflineManagerExample.m) | x |
 | 42 | [OfflineRegionManagerExample](./mapboxqs/OfflineRegionManagerExample.m) |  |
 | 43 | [PitchAndDistanceExample](./mapboxqs/PitchAndDistanceExample.m) |  |
 | 44 | [PointAnnotationClusteringExample](./mapboxqs/PointAnnotationClusteringExample.m) |  |

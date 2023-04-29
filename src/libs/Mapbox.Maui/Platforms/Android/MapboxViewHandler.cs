@@ -2,6 +2,7 @@
 
 using PlatformView = AndroidX.Fragment.App.FragmentContainerView;
 using PlatformPolygonAnnotationManager = Com.Mapbox.Maps.Plugin.Annotation.Generated.PolygonAnnotationManager;
+using PlatformCircleAnnotationManager = Com.Mapbox.Maps.Plugin.Annotation.Generated.CircleAnnotationManager;
 using MapboxMapsStyle = Com.Mapbox.Maps.Style;
 using Com.Mapbox.Maps;
 using Com.Mapbox.Maps.Plugin.Scalebar;
@@ -201,6 +202,24 @@ public partial class MapboxViewHandler : IAnnotationController
             ) as PlatformPolygonAnnotationManager;
 
         return new PolygonAnnotationManager(id, nativeManager);
+    }
+
+    public ICircleAnnotationManager CreateCircleAnnotationManager(
+        string id,
+        Styles.LayerPosition layerPosition)
+    {
+        var mapView = mapboxFragment?.MapView;
+
+        if (mapView == null) return null;
+
+        var nativeManager = AnnotationPluginImplKt
+            .GetAnnotations(mapView)
+            .CreateAnnotationManager(
+                AnnotationType.CircleAnnotation,
+                new AnnotationConfig(null, id, id, null)
+            ) as PlatformCircleAnnotationManager;
+
+        return new CircleAnnotationManager(id, nativeManager);
     }
 }
 

@@ -404,6 +404,6 @@ ASALocalRun/
 # Local History for Visual Studio
 .localhistory/
 
-tools/
+tools/Addins
 
 *.dev.cs

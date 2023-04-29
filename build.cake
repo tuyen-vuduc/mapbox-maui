@@ -39,7 +39,7 @@ class {name}ExampleInfo : IExampleInfo
 
     Information($"\n>> Generate >> {name}ExamplePage.cs");
     FileWriteText($"{exampleFolderPath}/{name}Example.cs", $@"{"using"} System;
-{"using"} Mapbox.Maui;
+{"using"} MapboxMaui;
 {"using"} iOSPage = Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific.Page;
 namespace MapboxMauiQs;
 

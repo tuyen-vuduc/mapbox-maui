@@ -187,4 +187,21 @@ public partial class MapboxViewHandler : IAnnotationController
 
         return new PolygonAnnotationManager(id, nativeManager);
     }
+
+    public ICircleAnnotationManager CreateCircleAnnotationManager(
+        string id,
+        Styles.LayerPosition layerPosition
+        )
+    {
+        var mapView = PlatformView?.MapView;
+
+        if (mapView == null) return null;
+
+        var nativeManager = mapView.CircleAnnotationManagerWithId(
+            id,
+            layerPosition.ToPlatformValue(),
+            layerPosition.Parameter?.Wrap());
+
+        return new CircleAnnotationManager(id, nativeManager);
+    }
 }

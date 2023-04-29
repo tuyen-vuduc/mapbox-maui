@@ -21,7 +21,49 @@ const swift2CsTypeMapping = {
     'StyleColor': 'Color'
 };
 
-annnotationManager_swiftProperties2JavaProperties();
+generateLayerProperties();
+
+function generateLayerProperties() {
+    var transformed = lines.map(item => {
+        if (/^\s+public/.test(item)) {
+            
+        var matches = /(\w+): Value<(\[?\w+\]?)>/.exec(item);
+        
+        if (!matches) {
+            matches = /(\w+): (\[?\w+\]?)/.exec(item);
+        }
+
+        var propName = matches[1];
+        var csname = propName.substring(0,1).toUpperCase() + propName.substring(1);
+        
+        let propType = matches[2];
+        let array = /\[/.test(propType) ? '[]' : '';
+        propType = propType.replace(/\[|\]|\?/img, '')
+
+        if (swift2CsTypeMapping[propType]) {
+            propType = swift2CsTypeMapping[propType];
+        }
+        let cstype = `${propType}${array}`;
+
+    return `public PropertyValue<${cstype}> ${csname}
+    {
+        get => GetProperty<PropertyValue<${cstype}>>(
+            SymbolLayerKey.${propName},
+            default,
+            MapboxLayerKey.paint
+        );
+        set => SetProperty(
+            SymbolLayerKey.${propName},
+            value,
+            MapboxLayerKey.paint
+        );
+    }`;
+        }
+        return item;
+    });
+    
+    fs.writeFileSync('output.txt', transformed.join('\n'));
+}
 
 function annnotationManager_swiftProperties2JavaProperties() {
     var transformed = prefixedTypes

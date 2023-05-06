@@ -40,8 +40,17 @@ public partial class MapboxViewHandler : IAnnotationController
 
                 if (image == null) continue;
 
+                mapView.AddImageWithId(
+                    ximage.Id,
+                    image,
+                    false,
+                    UIEdgeInsets.Zero,
+                    (error) =>
+                    {
+                        if (error == null) return;
 
-                //mapView.AddImage();
+                        System.Diagnostics.Debug.WriteLine(error.UserInfo);
+                    });
             }
         }
     }
@@ -58,16 +67,24 @@ public partial class MapboxViewHandler : IAnnotationController
         {
             var properties = layer.ToPlatformValue();
 
-            if (mapView.LayerExistsWithId(layer.Id, null))
+            if (mapView.LayerExistsWithId(
+                    layer.Id,
+                    (error) =>
+                    {
+                        if (error == null) return;
+
+                        System.Diagnostics.Debug.WriteLine(error.UserInfo);
+                    }))
             {
                 mapView.UpdateLayerPropertiesFor(
                     layer.Id,
                     properties,
                     (error) =>
                     {
+                        if (error == null) return;
+
                         System.Diagnostics.Debug.WriteLine(error.UserInfo);
-                    }
-                );
+                    });
 
                 continue;
             }
@@ -78,6 +95,8 @@ public partial class MapboxViewHandler : IAnnotationController
                 layer.LayerPosition.Parameter?.Wrap(),
                 (error) =>
                 {
+                    if (error == null) return;
+
                     System.Diagnostics.Debug.WriteLine(error.UserInfo);
                 }
             );

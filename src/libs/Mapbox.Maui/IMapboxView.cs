@@ -17,11 +17,13 @@ public partial interface IMapboxView : IView
 
     IEnumerable<MapboxSource> Sources { get; set; }
 
+    IEnumerable<MapboxLayer> Layers { get; set; }
+
+    IEnumerable<ResolvedImage> Images { get; set; }
+
     Terrain Terrain { get; set; }
 
     Light Light { get; set; }
-
-    IEnumerable<MapboxLayer> Layers { get; set; }
 
     IAnnotationController AnnotationController { get; }
 }

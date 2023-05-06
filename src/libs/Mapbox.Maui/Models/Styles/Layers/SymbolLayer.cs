@@ -56,9 +56,9 @@ public class SymbolLayer : MapboxLayer
     }
 
     /// Name of image in sprite to use for drawing an image background.
-    public PropertyValue<ImageSource> IconImage
+    public PropertyValue<ResolvedImage> IconImage
     {
-        get => GetProperty<PropertyValue<ImageSource>>(
+        get => GetProperty<PropertyValue<ResolvedImage>>(
             SymbolLayerLayoutKey.iconImage,
             default,
             MapboxLayerKey.layout

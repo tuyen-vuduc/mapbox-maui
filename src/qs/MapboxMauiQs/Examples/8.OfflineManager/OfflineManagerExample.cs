@@ -73,8 +73,8 @@ public class OfflineManagerExample : ContentPage, IExamplePage, IQueryAttributab
             );
 
         var tileRegionLoadOptions = new TileRegionLoadOptions(
-            Geometry: new GeoJSON.Net.Geometry.Point(
-                    new GeoJSON.Net.Geometry.Position(tokyoCoord.X, tokyoCoord.Y)
+            Geometry: new GeoJSON.Text.Geometry.Point(
+                    new GeoJSON.Text.Geometry.Position(tokyoCoord.X, tokyoCoord.Y)
                 ),
             TilesetDescriptors: new [] { tilesetDescriptorOptions },
             AcceptsExpired: true,

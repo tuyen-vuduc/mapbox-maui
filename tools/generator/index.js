@@ -21,7 +21,49 @@ const swift2CsTypeMapping = {
     'StyleColor': 'Color'
 };
 
-generateLayerProperties();
+generateSourceProperties('GeoJSONSourceKey');
+
+function generateSourceProperties(keyClassName) {
+    var transformed = lines.map(item => {
+        if (/^\s+public/.test(item)) {
+            
+            var matches = /(\w+): Value<(\[?\w+\]?\??)>/.exec(item);
+            
+            if (!matches) {
+                matches = /(\w+): (\[?\w+\]?\??)/.exec(item);
+            }
+
+            var propName = matches[1];
+            var csname = propName.substring(0,1).toUpperCase() + propName.substring(1);
+            
+            let propType = matches[2];
+            console.log(propType);
+            let nullable = /\?/.test(propType) ? '?' : '';
+            let array = /\[/.test(propType) ? '[]' : '';
+            propType = propType.replace(/\[|\]|\?/img, '')
+
+            if (swift2CsTypeMapping[propType]) {
+                propType = swift2CsTypeMapping[propType];
+            }
+            let cstype = `${propType}${nullable}${array}`;
+
+            return `public ${cstype} ${csname}
+            {
+                get => GetProperty<${cstype}>(
+                    ${keyClassName}.${propName},
+                    default
+                );
+                set => SetProperty(
+                    ${keyClassName}.${propName},
+                    value
+                );
+            }`;
+        }
+        return item;
+    });
+    
+    fs.writeFileSync('output.txt', transformed.join('\n'));
+}
 
 function generateLayerProperties() {
     var transformed = lines.map(item => {

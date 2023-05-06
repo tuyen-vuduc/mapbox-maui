@@ -10,6 +10,7 @@ using Microsoft.Maui.Platform;
 using Android.Content;
 using MapboxMaui.Annotations;
 using Com.Mapbox.Maps.Plugin.Annotation;
+using Android.Graphics;
 
 public partial class MapboxViewHandler : IAnnotationController
 {
@@ -49,6 +50,32 @@ public partial class MapboxViewHandler : IAnnotationController
                 value,
                 layer.LayerPosition.ToPlatformValue()
             );
+        }
+    }
+
+    private static void HandleImagesChanged(MapboxViewHandler handler, IMapboxView view)
+    {
+        var mapView = handler.GetMapView();
+        if (mapView == null) return;
+
+        if (view.Images == null) return;
+
+        foreach (var ximage in view.Images)
+        {
+            if (!string.IsNullOrWhiteSpace(ximage.Name))
+            {
+                var resourceId = mapView.Resources.GetDrawableId(AppInfo.PackageName, ximage.Name);
+
+                if (resourceId == 0) continue;
+
+                var bitmap = BitmapFactory.DecodeResource(mapView.Resources, resourceId);
+
+                mapView.MapboxMap.Style.AddImage(
+                    ximage.Id,
+                    bitmap);
+            }
+
+            // TODO handle other image types
         }
     }
 

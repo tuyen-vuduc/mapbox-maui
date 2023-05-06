@@ -1,6 +1,6 @@
 ﻿namespace MapboxMaui.Annotations;
 
-using GeoJSON.Net.Geometry;
+using GeoJSON.Text.Geometry;
 
 public class PolygonAnnotation : Annotation<Polygon>
 {

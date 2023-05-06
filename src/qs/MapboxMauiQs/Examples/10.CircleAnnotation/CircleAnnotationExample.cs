@@ -34,8 +34,8 @@ public class CircleAnnotationExample : ContentPage, IExamplePage, IQueryAttribut
                 random.Next(0, 255));
 
             var circleAnnotation = new CircleAnnotation(
-                new GeoJSON.Net.Geometry.Point(
-                    new GeoJSON.Net.Geometry.Position(center.X, center.Y)
+                new GeoJSON.Text.Geometry.Point(
+                    new GeoJSON.Text.Geometry.Position(center.X, center.Y)
                 )
             )
             {

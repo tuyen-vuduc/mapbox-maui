@@ -5,8 +5,7 @@ using System.Collections;
 using CoreGraphics;
 using CoreLocation;
 using Foundation;
-using GeoJSON.Net.Geometry;
-using MapboxMaui.Annotations;
+using GeoJSON.Text.Geometry;
 using MapboxMaui.Expressions;
 using MapboxMaui.Offline;
 using MapboxMaui.Styles;
@@ -14,7 +13,6 @@ using MapboxCommon;
 using MapboxCoreMaps;
 using MapboxMapsObjC;
 using Microsoft.Maui.Controls.Compatibility.Platform.iOS;
-using Microsoft.Maui.Platform;
 
 public static class AdditionalExtensions
 {
@@ -165,6 +163,7 @@ public static class AdditionalExtensions
             string value => new NSString(value),
             Color value => new NSString(value.ToRgbaString()),
             INamedString value => new NSString(value.Value),
+            IGeometryObject value => new NSString(System.Text.Json.JsonSerializer.Serialize(value)),
             IPropertyValue value => value.Value is DslExpression expression1
                     ? NSArray.FromNSObjects(expression1
                         .ToObjects()
@@ -185,6 +184,18 @@ public static class AdditionalExtensions
                     .Select(x => x.Wrap())
                     .ToArray()
                 );
+        }
+
+        if (xvalue is PromoteId promoteId)
+        {
+            return string.IsNullOrWhiteSpace(promoteId.StringValue)
+                ? promoteId.KeyValues.Wrap()
+                : promoteId.StringValue.Wrap();
+        }
+
+        if (xvalue is ResolvedImage resolvedImage)
+        {
+            return resolvedImage.Id.Wrap();
         }
 
         if (xvalue is IDictionary<string, object> dict)

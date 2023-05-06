@@ -13,28 +13,28 @@ using MapboxMaui.Expressions;
 
 static class AdditionalExtensions
 {
-    internal static Com.Mapbox.Geojson.Point ToGeoPoint(this GeoJSON.Net.Geometry.IPosition xvalue)
+    internal static Com.Mapbox.Geojson.Point ToGeoPoint(this GeoJSON.Text.Geometry.IPosition xvalue)
     {
         return Com.Mapbox.Geojson.Point.FromLngLat(
                 xvalue.Longitude,
                 xvalue.Latitude);
     }
 
-    internal static Com.Mapbox.Geojson.IGeometry ToNative(this GeoJSON.Net.Geometry.IGeometryObject xvalue)
+    internal static Com.Mapbox.Geojson.IGeometry ToNative(this GeoJSON.Text.Geometry.IGeometryObject xvalue)
     {
         return xvalue switch
         {
-            GeoJSON.Net.Geometry.Point point => Com.Mapbox.Geojson.Point.FromLngLat(
+            GeoJSON.Text.Geometry.Point point => Com.Mapbox.Geojson.Point.FromLngLat(
                 point.Coordinates.Longitude,
                 point.Coordinates.Latitude),
 
-            GeoJSON.Net.Geometry.LineString line => Com.Mapbox.Geojson.LineString.FromLngLats(
+            GeoJSON.Text.Geometry.LineString line => Com.Mapbox.Geojson.LineString.FromLngLats(
                 Com.Mapbox.Geojson.MultiPoint.FromLngLats(
                     line.Coordinates.Select(ToGeoPoint).ToList()
                     )
                 ),
 
-            GeoJSON.Net.Geometry.Polygon polygon => Com.Mapbox.Geojson.Polygon.FromLngLats(
+            GeoJSON.Text.Geometry.Polygon polygon => Com.Mapbox.Geojson.Polygon.FromLngLats(
                 polygon.Coordinates
                     .Select(
                         x => x.Coordinates.Select(ToGeoPoint).ToList()
@@ -42,13 +42,13 @@ static class AdditionalExtensions
                     .ToList()
                 ),
 
-             GeoJSON.Net.Geometry.MultiPoint multiPoint => Com.Mapbox.Geojson.MultiPoint.FromLngLats(
+             GeoJSON.Text.Geometry.MultiPoint multiPoint => Com.Mapbox.Geojson.MultiPoint.FromLngLats(
                     multiPoint.Coordinates
                         .Select(x => x.Coordinates.ToGeoPoint())
                         .ToList()
                     ),
 
-            GeoJSON.Net.Geometry.MultiLineString multiLineString => Com.Mapbox.Geojson.Polygon.FromLngLats(
+            GeoJSON.Text.Geometry.MultiLineString multiLineString => Com.Mapbox.Geojson.Polygon.FromLngLats(
                 multiLineString.Coordinates
                     .Select(
                         x => x.Coordinates.Select(ToGeoPoint).ToList()
@@ -56,7 +56,7 @@ static class AdditionalExtensions
                     .ToList()
                 ),
 
-            GeoJSON.Net.Geometry.MultiPolygon multiPolygon => Com.Mapbox.Geojson.Polygon.FromLngLats(
+            GeoJSON.Text.Geometry.MultiPolygon multiPolygon => Com.Mapbox.Geojson.Polygon.FromLngLats(
                 multiPolygon.Coordinates
                     .Select(
                         x => x.Coordinates
@@ -189,6 +189,24 @@ static class AdditionalExtensions
                             .Select(x => x.Wrap(rgba))
                             .ToList()
                         );
+        }
+
+        if (xvalue is GeoJSON.Text.Geometry.IGeometryObject geometryObj)
+        {
+            var json = System.Text.Json.JsonSerializer.Serialize(geometryObj);
+            return new PlatformValue(json);
+        }
+
+        if (xvalue is PromoteId promoteId)
+        {
+            return string.IsNullOrWhiteSpace(promoteId.StringValue)
+                ? promoteId.KeyValues.Wrap()
+                : promoteId.StringValue.Wrap();
+        }
+
+        if (xvalue is ResolvedImage resolvedImage)
+        {
+            return resolvedImage.Id.Wrap();
         }
 
         if (xvalue is IDictionary<string, object> dict)

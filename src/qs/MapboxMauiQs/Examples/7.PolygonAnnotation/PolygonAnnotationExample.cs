@@ -1,7 +1,7 @@
 namespace MapboxMauiQs;
 
 using System;
-using GeoJSON.Net.Geometry;
+using GeoJSON.Text.Geometry;
 using MapboxMaui;
 using MapboxMaui.Annotations;
 using MapboxMaui.Styles;

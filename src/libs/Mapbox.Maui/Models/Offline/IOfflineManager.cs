@@ -1,4 +1,4 @@
-﻿using GeoJSON.Net.Geometry;
+﻿using GeoJSON.Text.Geometry;
 using Point = Microsoft.Maui.Graphics.Point;
 
 namespace MapboxMaui.Offline;

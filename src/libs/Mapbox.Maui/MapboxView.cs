@@ -16,6 +16,17 @@ public partial class MapboxView : View, IMapboxView
         set => SetValue(AnnotationsProperty, value);
     }
 
+    public static readonly BindableProperty SourcesProperty = BindableProperty.Create(
+       nameof(Sources),
+       typeof(IEnumerable<MapboxSource>),
+       typeof(MapboxView)
+    );
+    public IEnumerable<MapboxSource> Sources
+    {
+        get => (IEnumerable<MapboxSource>)GetValue(SourcesProperty);
+        set => SetValue(SourcesProperty, value);
+    }
+
     public static readonly BindableProperty LayersProperty = BindableProperty.Create(
        nameof(Layers),
        typeof(IEnumerable<MapboxLayer>),
@@ -25,6 +36,17 @@ public partial class MapboxView : View, IMapboxView
     {
         get => (IEnumerable<MapboxLayer>)GetValue(LayersProperty);
         set => SetValue(LayersProperty, value);
+    }
+
+    public static readonly BindableProperty ImagesProperty = BindableProperty.Create(
+       nameof(Images),
+       typeof(IEnumerable<ResolvedImage>),
+       typeof(MapboxView)
+    );
+    public IEnumerable<ResolvedImage> Images
+    {
+        get => (IEnumerable<ResolvedImage>)GetValue(ImagesProperty);
+        set => SetValue(ImagesProperty, value);
     }
 
     public static readonly BindableProperty TerrainProperty = BindableProperty.Create(
@@ -47,17 +69,6 @@ public partial class MapboxView : View, IMapboxView
     {
         get => (Light)GetValue(LightProperty);
         set => SetValue(LightProperty, value);
-    }
-
-    public static readonly BindableProperty SourcesProperty = BindableProperty.Create(
-       nameof(Sources),
-       typeof(IEnumerable<MapboxSource>),
-       typeof(MapboxView)
-    );
-    public IEnumerable<MapboxSource> Sources
-    {
-        get => (IEnumerable<MapboxSource>)GetValue(SourcesProperty);
-        set => SetValue(SourcesProperty, value);
     }
 
     public static readonly BindableProperty DebugOptionsProperty = BindableProperty.Create(

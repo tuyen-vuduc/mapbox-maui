@@ -20,27 +20,28 @@ public class AddOneMarkerSymbolExample : ContentPage, IExamplePage, IQueryAttrib
 
     private void Map_StyleLoaded(object sender, EventArgs e)
     {
-//        const string imageId = @"BLUE_ICON_ID";
-//        const string imageName = @"blue_marker_view";
-//        const string sourceId = @"SOURCE_ID";
-//        var coordinates = new Point(55.665957, 12.550343);
+        const string imageId = @"BLUE_ICON_ID";
+        const string imageName = @"blue_marker_view";
+        const string sourceId = @"SOURCE_ID";
+        var image = new ResolvedImage(imageId, imageName);
 
+        map.Images = new[] { image };
 
+        var source = new GeoJSONSource(sourceId)
+        {
+            Data = new GeoJSON.Text.Geometry.Point(
+                new GeoJSON.Text.Geometry.Position(55.665957, 12.550343))
+        };
 
-//        TMBPoint* point = [TMBPoint withCoordinates: coordinates];
-//        [mapView addSourceWithId:sourceId
-    
-//                        geometry:[TMBGeometry fromData:point]
-//    onError: nil];
+        map.Sources = new[] { source };
 
-//        [mapView addLayerWithBuilder:^id _Nonnull{
-//            return [self createSymbolLayerBuilder: sourceId
-    
-//                                             icon: imageId];
-//        }
-//    layerPosition: TMBLayerPositionUnowned
-//layerPositionParam:nil
-//          onError:nil];
+        var layer = new SymbolLayer(@"LAYER_ID")
+        {
+            Source = sourceId,
+            IconImage = new PropertyValue<ResolvedImage>(image)
+        };
+
+        map.Layers = new[] { layer };
     }
 
     private void Map_MapReady(object sender, EventArgs e)

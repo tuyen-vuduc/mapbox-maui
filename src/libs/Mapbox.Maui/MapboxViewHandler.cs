@@ -22,8 +22,9 @@ public partial class MapboxViewHandler : ViewHandler<IMapboxView, PlatformView>
             [nameof(MapboxView.ScaleBarVisibility)] = HandleScaleBarVisibilityChanged,
             [nameof(MapboxView.DebugOptions)] = HandleDebugOptionsChanged,
             [nameof(MapboxView.Sources)] = HandleSourcesChanged,
-            [nameof(MapboxView.Terrain)] = HandleTerrainChanged,
             [nameof(MapboxView.Layers)] = HandleLayersChanged,
+            [nameof(MapboxView.Images)] = HandleImagesChanged,
+            [nameof(MapboxView.Terrain)] = HandleTerrainChanged,
             [nameof(MapboxView.Light)] = HandleLightChanged
         };
 

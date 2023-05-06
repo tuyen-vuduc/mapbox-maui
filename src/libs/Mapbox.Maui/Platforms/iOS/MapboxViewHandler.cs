@@ -2,10 +2,10 @@
 namespace MapboxMaui;
 
 using Foundation;
-using GeoJSON.Net.Geometry;
 using MapboxMaui.Annotations;
 using MapboxMapsObjC;
 using PlatformView = MapViewContainer;
+using UIKit;
 
 public partial class MapboxViewHandler : IAnnotationController
 {
@@ -22,6 +22,28 @@ public partial class MapboxViewHandler : IAnnotationController
         {
             System.Diagnostics.Debug.WriteLine(error.UserInfo);
         });
+    }
+
+    private static void HandleImagesChanged(MapboxViewHandler handler, IMapboxView view)
+    {
+        var mapView = handler.PlatformView.MapView;
+        if (mapView == null) return;
+
+        var images = view.Images;
+        if (images == null) return;
+
+        foreach (var ximage in images)
+        {
+            if (!string.IsNullOrWhiteSpace(ximage.Name))
+            {
+                var image = UIImage.FromBundle(ximage.Name);
+
+                if (image == null) continue;
+
+
+                //mapView.AddImage();
+            }
+        }
     }
 
     private static void HandleLayersChanged(MapboxViewHandler handler, IMapboxView view)
@@ -167,8 +189,6 @@ public partial class MapboxViewHandler : IAnnotationController
         {
             (VirtualView as MapboxView)?.InvokeMapLoaded();
         });
-
-
     }
 
     public IPolygonAnnotationManager CreatePolygonAnnotationManager(

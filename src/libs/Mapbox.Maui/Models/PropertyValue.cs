@@ -16,7 +16,7 @@ public record class PropertyValue<T> : IPropertyValue
 
     public PropertyValue(T value)
     {
-        if (value is DslExpression expression)
+        if (value is DslExpression)
         {
             throw new ArgumentException("Argument must not be a DslExpression", nameof(value));
         }
@@ -30,5 +30,8 @@ public record class PropertyValue<T> : IPropertyValue
         Expression = expression;
         Constant = default;
     }
+
+    public static implicit operator PropertyValue<T>(T value) => new(value);
+    public static explicit operator PropertyValue<T>(DslExpression value) => new(value);
 }
 

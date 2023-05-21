@@ -6,6 +6,8 @@ public record ResolvedImage
 
     public string Name { get; }
     public byte[] Bytes { get; }
+    public bool Sdf { get; init; }
+    public bool IsTemplate { get; init; }
 
     public ResolvedImage(string id, string name)
     {

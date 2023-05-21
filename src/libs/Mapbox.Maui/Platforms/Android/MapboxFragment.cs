@@ -59,6 +59,7 @@ public partial class MapboxFragment : Fragment
 
         MapViewReady?.Invoke(MapView);
         MapView.MapboxMap.AddOnStyleLoadedListener(this);
+        MapView.MapboxMap.AddOnMapLoadedListener(this);
     }
 
     public override void OnStart()
@@ -91,6 +92,8 @@ public partial class MapboxFragment : Fragment
 
         if (disposing)
         {
+            MapView.MapboxMap.RemoveOnStyleLoadedListener(this);
+            MapView.MapboxMap.RemoveOnMapLoadedListener(this);
             MapView?.Dispose();
         }
     }

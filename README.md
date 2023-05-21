@@ -145,7 +145,7 @@ b/ iOS's `info.plist`
 | 55 | [SpinningGlobeExample](./mapboxqs/SpinningGlobeExample.m) |  |
 | 56 | [StoryboardMapViewExample](./mapboxqs/StoryboardMapViewExample.m) | N/A |
 | 57 | [SwitchStylesExample](./mapboxqs/SwitchStylesExample.m) |  |
-| 58 | [SymbolClusteringExample](./mapboxqs/SymbolClusteringExample.m) |  |
+| 58 | [SymbolClusteringExample](./mapboxqs/SymbolClusteringExample.m) | OK |
 | 59 | [TerrainExample](./mapboxqs/TerrainExample.m) | OK |
 | 60 | [TrackingModeExample](./mapboxqs/TrackingModeExample.m) |  |
 | 61 | [ViewAnnotationAnimationExample](./mapboxqs/ViewAnnotationAnimationExample.m) |  |
@@ -154,6 +154,12 @@ b/ iOS's `info.plist`
 | 64 | [ViewAnnotationWithPointAnnotationExample](./mapboxqs/ViewAnnotationWithPointAnnotationExample.m) |  |
 | 65 | [ViewportExample](./mapboxqs/ViewportExample.m) |  |
 | 66 | [VoiceOverAccessibilityExample](./mapboxqs/VoiceOverAccessibilityExample.m) |  |
+
+NOTE: A handy command to generate a new example
+
+```
+dotnet cake -- --name SymbolClustering --index 58 --group Annotations --title "Add Cluster Symbol Annotations" --subtitle "Show fire hydrants in Washington DC area in a cluster using a symbol layer."
+````
 
 # LICENSE
 This library is release under The BSD 3-Clause License. You are freely to use and make changes. 

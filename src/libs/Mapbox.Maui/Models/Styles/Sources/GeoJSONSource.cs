@@ -1,4 +1,4 @@
-﻿using GeoJSON.Text.Geometry;
+﻿using GeoJSON.Text;
 
 namespace MapboxMaui.Styles;
 
@@ -7,19 +7,14 @@ public class GeoJSONSource : MapboxSource
     public GeoJSONSource(string id)
         : base(id, "geojson")
     {
+        SetProperty(GeoJSONSourceKey.data, "");
     }
 
     /// A URL to a GeoJSON file, or inline GeoJSON.
-    public IGeometryObject Data
+    public IGeoJSONObject Data
     {
-        get => GetProperty<IGeometryObject>(
-            GeoJSONSourceKey.data,
-            default
-        );
-        set => SetProperty(
-            GeoJSONSourceKey.data,
-            value
-        );
+        get;
+        set;
     }
 
     /// Maximum zoom level at which to create vector tiles (higher means greater detail at high zoom levels).
@@ -123,9 +118,9 @@ public class GeoJSONSource : MapboxSource
     ///
     /// For more advanced use cases, in place of `operator`, you can use a custom reduce expression that references a special `["accumulated"]` value, e.g.:
     /// `{"sum": [["+", ["accumulated"], ["get", "sum"]], ["get", "scalerank"]]}`
-    public string[] ClusterProperties
+    public IDictionary<string, object> ClusterProperties
     {
-        get => GetProperty<string[]>(
+        get => GetProperty<IDictionary<string, object>>(
             GeoJSONSourceKey.clusterProperties,
             default
         );

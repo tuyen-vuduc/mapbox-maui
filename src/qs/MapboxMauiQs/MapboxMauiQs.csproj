@@ -79,7 +79,7 @@
 		<PackageReference Include="Xamarin.Kotlin.StdLib" Version="1.8.10" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0-ios'">
-		<PackageReference Include="MapboxMapsObjC.iOS" Version="10.11.1-alpha3" />
+		<PackageReference Include="MapboxMapsObjC.iOS" Version="10.11.1-alpha4" />
 		<PackageReference Include="MapboxMobileEvents.iOS" Version="1.0.10" />
 		<PackageReference Include="MapboxMaps.iOS" Version="10.11.1" />
 	</ItemGroup>

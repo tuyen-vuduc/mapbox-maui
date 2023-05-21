@@ -21,7 +21,7 @@ const swift2CsTypeMapping = {
     'StyleColor': 'Color'
 };
 
-generateSourceProperties('GeoJSONSourceKey');
+generateLayerProperties('CircleLayerKey');
 
 function generateSourceProperties(keyClassName) {
     var transformed = lines.map(item => {
@@ -65,7 +65,7 @@ function generateSourceProperties(keyClassName) {
     fs.writeFileSync('output.txt', transformed.join('\n'));
 }
 
-function generateLayerProperties() {
+function generateLayerProperties(keyClassName) {
     var transformed = lines.map(item => {
         if (/^\s+public/.test(item)) {
             
@@ -90,12 +90,12 @@ function generateLayerProperties() {
     return `public PropertyValue<${cstype}> ${csname}
     {
         get => GetProperty<PropertyValue<${cstype}>>(
-            SymbolLayerKey.${propName},
+            ${keyClassName}.${propName},
             default,
             MapboxLayerKey.paint
         );
         set => SetProperty(
-            SymbolLayerKey.${propName},
+            ${keyClassName}.${propName},
             value,
             MapboxLayerKey.paint
         );

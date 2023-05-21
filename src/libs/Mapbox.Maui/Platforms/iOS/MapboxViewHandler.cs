@@ -20,7 +20,9 @@ public partial class MapboxViewHandler : IAnnotationController
         var platformProperties = light.Properties.Wrap() as NSDictionary<NSString, NSObject>;
         mapView.SetLightWithProperties(platformProperties, (error) =>
         {
-            System.Diagnostics.Debug.WriteLine(error.UserInfo);
+            if (error == null) return;
+
+            System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
         });
     }
 
@@ -40,18 +42,25 @@ public partial class MapboxViewHandler : IAnnotationController
 
                 if (image == null) continue;
 
+                if (ximage.IsTemplate)
+                {
+                    image = image.ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate);
+                }
+
                 mapView.AddImageWithId(
                     ximage.Id,
                     image,
-                    false,
+                    ximage.Sdf,
                     UIEdgeInsets.Zero,
                     (error) =>
                     {
                         if (error == null) return;
 
-                        System.Diagnostics.Debug.WriteLine(error.UserInfo);
+                        System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
                     });
             }
+
+            // TODO handle other image types
         }
     }
 
@@ -73,7 +82,7 @@ public partial class MapboxViewHandler : IAnnotationController
                     {
                         if (error == null) return;
 
-                        System.Diagnostics.Debug.WriteLine(error.UserInfo);
+                        System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
                     }))
             {
                 mapView.UpdateLayerPropertiesFor(
@@ -83,7 +92,7 @@ public partial class MapboxViewHandler : IAnnotationController
                     {
                         if (error == null) return;
 
-                        System.Diagnostics.Debug.WriteLine(error.UserInfo);
+                        System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
                     });
 
                 continue;
@@ -97,7 +106,7 @@ public partial class MapboxViewHandler : IAnnotationController
                 {
                     if (error == null) return;
 
-                    System.Diagnostics.Debug.WriteLine(error.UserInfo);
+                    System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
                 }
             );
         }
@@ -128,7 +137,26 @@ public partial class MapboxViewHandler : IAnnotationController
         {
             var platformValue = source.ToPlatformValue();
 
-            mapView.AddSource(source.Id, platformValue, null);
+            if (source is Styles.GeoJSONSource geojsonSource
+                && geojsonSource.Data is Styles.RawGeoJSONObject raw)
+            {
+                mapView.AddGeoJSONSourceWithId(
+                    source.Id, platformValue, raw.Data,
+                    (error) => {
+                        if (error == null) return;
+
+                        System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
+                    });
+                continue;
+            }
+
+            mapView.AddSource(
+                source.Id, platformValue,
+                (error) => {
+                    if (error == null) return;
+
+                    System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
+                });
         }
     }
 

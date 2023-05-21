@@ -11,6 +11,7 @@ using Android.Content;
 using MapboxMaui.Annotations;
 using Com.Mapbox.Maps.Plugin.Annotation;
 using Android.Graphics;
+using Com.Mapbox.Geojson;
 
 public partial class MapboxViewHandler : IAnnotationController
 {
@@ -72,7 +73,8 @@ public partial class MapboxViewHandler : IAnnotationController
 
                 mapView.MapboxMap.Style.AddImage(
                     ximage.Id,
-                    bitmap);
+                    bitmap,
+                    ximage.Sdf);
             }
 
             // TODO handle other image types
@@ -99,17 +101,39 @@ public partial class MapboxViewHandler : IAnnotationController
 
         foreach (var source in view.Sources)
         {
-            mapView.MapboxMap.Style.AddStyleSource(
+            var addStyleSourceResult = mapView.MapboxMap.Style.AddStyleSource(
                 source.Id,
                 source.ToPlatformValue()
             );
 
+            if (addStyleSourceResult.IsError)
+            {
+                System.Diagnostics.Debug.WriteLine(addStyleSourceResult.Error);
+            }
+
+            if (source is Styles.GeoJSONSource geojsonSource
+                && geojsonSource.Data is Styles.RawGeoJSONObject raw)
+            {
+                var data = GeoJSONSourceData.ValueOf(raw.Data);
+                var setStyleGeoJSONSourceDataResult = mapView.MapboxMap.Style.SetStyleGeoJSONSourceData(source.Id, data);
+
+                if (setStyleGeoJSONSourceDataResult.IsError)
+                {
+                    System.Diagnostics.Debug.WriteLine(addStyleSourceResult.Error);
+                }
+            }
+
             if (!source.VolatileProperties.Any()) continue;
 
-            mapView.MapboxMap.Style.SetStyleSourceProperties(
+            var setStyleSourcePropertiesResult = mapView.MapboxMap.Style.SetStyleSourceProperties(
                 source.Id,
                 source.GetVolatileProperties()
             );
+
+            if (setStyleSourcePropertiesResult.IsError)
+            {
+                System.Diagnostics.Debug.WriteLine(setStyleSourcePropertiesResult.Error);
+            }
         }
     }
 
@@ -147,7 +171,7 @@ public partial class MapboxViewHandler : IAnnotationController
         }
 
         scaleBarPlugin.Enabled = true;
-        
+
     }
 
     private static void HandleMapboxStyleChanged(MapboxViewHandler handler, IMapboxView view)

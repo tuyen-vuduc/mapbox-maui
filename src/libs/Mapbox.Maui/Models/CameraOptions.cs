@@ -1,5 +1,4 @@
-﻿using System;
-namespace MapboxMaui;
+﻿namespace MapboxMaui;
 
 public record struct CameraOptions
 {

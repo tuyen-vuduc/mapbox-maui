@@ -76,9 +76,9 @@ public class SymbolClusteringExample : ContentPage, IExamplePage, IQueryAttribut
 
         map.Sources = new[] { source };
 
-        var clusteredLayer = SymbolClusteringExample.CreateClusteredLayer(sourceID);
-        var unclusteredLayer = SymbolClusteringExample.CreateUnclusteredLayer(sourceID, image);
-        var clusterCountLayer = SymbolClusteringExample.CreateNumberLayer(sourceID);
+        var clusteredLayer = CreateClusteredLayer(sourceID);
+        var unclusteredLayer = CreateUnclusteredLayer(sourceID, image);
+        var clusterCountLayer = CreateNumberLayer(sourceID);
         unclusteredLayer.LayerPosition = LayerPosition.Below(clusteredLayer.Id);
 
         map.Layers = new MapboxLayer[] { clusteredLayer, unclusteredLayer, clusterCountLayer, };

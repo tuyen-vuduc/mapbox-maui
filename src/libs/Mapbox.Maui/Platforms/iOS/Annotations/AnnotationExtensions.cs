@@ -7,6 +7,45 @@ using Microsoft.Maui.Platform;
 
 public static class AnnotationExtensions
 {
+    internal static TMBPointAnnotation ToPlatformValue(
+        this PointAnnotation xvalue)
+    {
+        var result = TMBPointAnnotation.FromCoordinate(
+            new CLLocationCoordinate2D(
+                xvalue.GeometryValue.Coordinates.Latitude,
+                xvalue.GeometryValue.Coordinates.Longitude));
+
+        result.IconAnchor = xvalue.IconAnchor?.ToPlatform();
+        result.IconImage = xvalue.IconImage;
+        result.IconOffset = xvalue.IconOffset?.ToPlatform();
+        result.IconRotate = xvalue.IconRotate;
+        result.IconSize = xvalue.IconSize;
+        result.SymbolSortKey = xvalue.SymbolSortKey;
+        result.TextAnchor = xvalue.TextAnchor?.ToPlatform();
+        result.TextField = xvalue.TextField;
+        result.TextJustify = xvalue.TextJustify?.ToPlatform();
+        result.TextLetterSpacing = xvalue.TextLetterSpacing;
+        result.TextLineHeight = xvalue.TextLineHeight;
+        result.TextMaxWidth = xvalue.TextMaxWidth;
+        result.TextOffset = xvalue.TextOffset?.ToPlatform();
+        result.TextRadialOffset = xvalue.TextRadialOffset;
+        result.TextRotate = xvalue.TextRotate;
+        result.TextSize = xvalue.TextSize;
+        result.TextTransform = xvalue.TextTransform?.ToPlatform();
+        result.IconColor = xvalue.IconColor?.ToPlatform();
+        result.IconHaloBlur = xvalue.IconHaloBlur;
+        result.IconHaloColor = xvalue.IconHaloColor?.ToPlatform();
+        result.IconHaloWidth = xvalue.IconHaloWidth;
+        result.IconOpacity = xvalue.IconOpacity;
+        result.TextColor = xvalue.TextColor?.ToPlatform();
+        result.TextHaloBlur = xvalue.TextHaloBlur;
+        result.TextHaloColor = xvalue.TextHaloColor?.ToPlatform();
+        result.TextHaloWidth = xvalue.TextHaloWidth;
+        result.TextOpacity = xvalue.TextOpacity;
+
+        return result;
+    }
+
     internal static TMBCircleAnnotation ToPlatformValue(
         this CircleAnnotation xvalue)
     {

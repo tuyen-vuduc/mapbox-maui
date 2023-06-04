@@ -10,10 +10,45 @@ using Microsoft.Maui.Platform;
 using MapboxMaui.Styles;
 using System.Collections;
 using MapboxMaui.Expressions;
-using System.Text.Json;
 
 static class AdditionalExtensions
 {
+    internal static Java.Lang.Boolean ToPlatform(this bool xvalue)
+    {
+        return new Java.Lang.Boolean(xvalue);
+    }
+
+    internal static Java.Lang.Double ToPlatform(this double xvalue)
+    {
+        return new Java.Lang.Double(xvalue);
+    }
+
+    internal static double[] GetValue(this IList<Java.Lang.Double> xvalue, bool defaultToEmpty = false)
+    {
+        if (xvalue == null && defaultToEmpty)
+        {
+            return Array.Empty<double>();
+        }
+
+        return xvalue?
+            .Select(x => x.DoubleValue())
+            .ToArray();
+    }
+
+    internal static IList<Java.Lang.Double> ToPlatform(this IEnumerable<double> xvalue)
+    {
+        return xvalue?
+            .Select(x => new Java.Lang.Double(x))
+            .ToList();
+    }
+
+    internal static IList<Java.Lang.String> ToPlatform(this IEnumerable<string> xvalue)
+    {
+        return xvalue?
+            .Select(x => new Java.Lang.String(x))
+            .ToList();
+    }
+
     internal static Com.Mapbox.Common.NetworkRestriction ToNative(this Offline.NetworkRestriction xvalue)
     {
         return xvalue switch

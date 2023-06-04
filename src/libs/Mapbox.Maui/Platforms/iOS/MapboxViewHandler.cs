@@ -142,7 +142,8 @@ public partial class MapboxViewHandler : IAnnotationController
             {
                 mapView.AddGeoJSONSourceWithId(
                     source.Id, platformValue, raw.Data,
-                    (error) => {
+                    (error) =>
+                    {
                         if (error == null) return;
 
                         System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
@@ -152,7 +153,8 @@ public partial class MapboxViewHandler : IAnnotationController
 
             mapView.AddSource(
                 source.Id, platformValue,
-                (error) => {
+                (error) =>
+                {
                     if (error == null) return;
 
                     System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
@@ -270,5 +272,55 @@ public partial class MapboxViewHandler : IAnnotationController
             layerPosition.Parameter?.Wrap());
 
         return new CircleAnnotationManager(id, nativeManager);
+    }
+
+    public IPointAnnotationManager CreatePointAnnotationManager(
+        string id,
+        Styles.LayerPosition layerPosition,
+        ClusterOptions clusterOptions = null)
+    {
+        var mapView = PlatformView?.MapView;
+
+        if (mapView == null) return null;
+
+        TMBClusterOptions nativeClusterOptions = null;
+        if (clusterOptions != null)
+        {
+            nativeClusterOptions = TMBClusterOptions.Default;
+
+
+            if (clusterOptions.CircleColor != null)
+            {
+                nativeClusterOptions.CircleColor = clusterOptions.CircleColor.ToTMBValue();
+            }
+            if (clusterOptions.TextColor != null)
+            {
+                nativeClusterOptions.TextColor = clusterOptions.TextColor.ToTMBValue();
+            }
+            if (clusterOptions.TextSize != null)
+            {
+                nativeClusterOptions.TextSize = clusterOptions.TextSize.ToTMBValue();
+            }
+            if (clusterOptions.TextField != null)
+            {
+                nativeClusterOptions.TextField = clusterOptions.TextField.ToTMBValue();
+            }
+
+            nativeClusterOptions.ClusterRadius = clusterOptions.ClusterRadius;
+            nativeClusterOptions.ClusterMaxZoom = clusterOptions.ClusterMaxZoom;
+
+            if (clusterOptions.ClusterProperties != null)
+            {
+                nativeClusterOptions.ClusterProperties = clusterOptions.ClusterProperties.ToNative();
+            }
+        }
+
+        var nativeManager = mapView.PointAnnotationManagerWithId(
+            id,
+            layerPosition.ToPlatformValue(),
+            layerPosition.Parameter?.Wrap(),
+            nativeClusterOptions);
+
+        return new PointAnnotationManager(id, nativeManager);
     }
 }

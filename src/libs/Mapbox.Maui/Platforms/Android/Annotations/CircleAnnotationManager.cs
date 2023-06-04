@@ -19,18 +19,12 @@ public partial class CircleAnnotationManager
     public CirclePitchAlignment? CirclePitchAlignment
     {
         get => nativeManager.CirclePitchAlignment?.GetValue();
-        set => nativeManager.CirclePitchAlignment = value != null
-            ? Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.CirclePitchAlignment.ValueOf(
-                value.Value)
-            : null;
+        set => nativeManager.CirclePitchAlignment = value?.ToPlatform();
     }
     public CirclePitchScale? CirclePitchScale
     {
         get => nativeManager.CirclePitchScale?.GetValue();
-        set => nativeManager.CirclePitchScale = value != null
-            ? Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.CirclePitchScale.ValueOf(
-                value.Value)
-            : null;
+        set => nativeManager.CirclePitchScale = value?.ToPlatform();
     }
     public double[] CircleTranslate
     {
@@ -44,12 +38,8 @@ public partial class CircleAnnotationManager
     public CircleTranslateAnchor? CircleTranslateAnchor
     {
         get => nativeManager.CircleTranslateAnchor?.GetValue();
-        set => nativeManager.CircleTranslateAnchor = value != null
-            ? Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.CircleTranslateAnchor.ValueOf(
-                value.Value)
-            : null;
+        set => nativeManager.CircleTranslateAnchor = value?.ToPlatform();
     }
-
 
     public override void AddAnnotations(params CircleAnnotation[] xitems)
     {

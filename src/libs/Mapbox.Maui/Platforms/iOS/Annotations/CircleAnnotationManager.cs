@@ -23,17 +23,13 @@ public partial class CircleAnnotationManager
 
     public CirclePitchAlignment? CirclePitchAlignment
     {
-        get => nativeManager.CirclePitchAlignment.StringValue;
-        set => nativeManager.CirclePitchAlignment = string.IsNullOrWhiteSpace(value)
-            ? null
-            : new TMBCirclePitchAlignment(value);
+        get => nativeManager.CirclePitchAlignment?.StringValue;
+        set => nativeManager.CirclePitchAlignment = value?.ToPlatform();
     }
     public CirclePitchScale? CirclePitchScale
     {
-        get => nativeManager.CirclePitchScale.StringValue;
-        set => nativeManager.CirclePitchScale = string.IsNullOrWhiteSpace(value)
-            ? null
-            : new TMBCirclePitchScale(value);
+        get => nativeManager.CirclePitchScale?.StringValue;
+        set => nativeManager.CirclePitchScale = value?.ToPlatform();
     }
     public double[] CircleTranslate
     {
@@ -46,10 +42,8 @@ public partial class CircleAnnotationManager
     }
     public CircleTranslateAnchor? CircleTranslateAnchor
     {
-        get => nativeManager.CircleTranslateAnchor.StringValue;
-        set => nativeManager.CircleTranslateAnchor = string.IsNullOrWhiteSpace(value)
-            ? null
-            : new TMBCircleTranslateAnchor(value);
+        get => nativeManager.CircleTranslateAnchor?.StringValue;
+        set => nativeManager.CircleTranslateAnchor = value?.ToPlatform();
     }
 
     public override void AddAnnotations(params CircleAnnotation[] xitems)

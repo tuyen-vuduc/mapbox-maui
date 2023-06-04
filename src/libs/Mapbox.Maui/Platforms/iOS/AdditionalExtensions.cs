@@ -4,18 +4,56 @@ namespace MapboxMaui;
 using System.Collections;
 using CoreLocation;
 using Foundation;
-using GeoJSON.Text.Geometry;
 using MapboxMaui.Expressions;
 using MapboxMaui.Offline;
 using MapboxMaui.Styles;
 using MapboxCoreMaps;
 using MapboxMapsObjC;
 using Microsoft.Maui.Controls.Compatibility.Platform.iOS;
-using GeoJSON.Text;
-using System.Text.Json;
 
 public static partial class AdditionalExtensions
 {
+    internal static NSDictionary ToNative(this IDictionary<string, DslExpression> dictionary)
+    {
+        var list = new NSMutableDictionary<NSString, TMBExpression>();
+        foreach (var item in dictionary)
+        {
+            list[item.Key] = item.Value.ToPlatformValue();
+        }
+        return new NSDictionary<NSString, TMBExpression>(list.Keys, list.Values);
+    }
+
+    internal static TMBValue ToTMBValue<T>(this PropertyValue<T> propertyValue)
+    {
+        if (propertyValue.Expression != null)
+        {
+            var nativeExpression = propertyValue.Expression.ToPlatformValue();
+            return TMBValue.Expression(nativeExpression);
+        }
+
+        return TMBValue.Constant(propertyValue.Value.Wrap());
+    }
+
+    internal static NSNumber[] ToPlatform(this double[] values, bool defaultToEmpty = false)
+    {
+        if (defaultToEmpty && values == null)
+        {
+            return Array.Empty<NSNumber>();
+        }
+
+        return values.Select(NSNumber.FromDouble).ToArray();
+    }
+
+    internal static double[] ToDoubles(this NSNumber[] values, bool defaultToEmpty = false)
+    {
+        if (defaultToEmpty && values == null)
+        {
+            return Array.Empty<double>();
+        }
+
+        return values.Select(x => x.DoubleValue).ToArray();
+    }
+
     internal static MBMStylePackLoadOptions ToNative(this StylePackLoadOptions options)
     {
         var metadata = new NSMutableDictionary();

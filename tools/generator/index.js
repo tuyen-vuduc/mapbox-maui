@@ -21,7 +21,39 @@ const swift2CsTypeMapping = {
     'StyleColor': 'Color'
 };
 
-generateLayerProperties('CircleLayerKey');
+// annnotationManager_swiftProperties2JavaProperties()
+
+// generateAndroidNamedString();
+
+// swiftProperties2CsInterfaceProperties()
+
+// generateLayerProperties('CircleLayerKey');
+
+function generateAndroidNamedString() {
+    var transformed = lines
+        .filter(x => /enum/.test(x))
+        .map(item => {
+            var match = /enum (\w+)/.exec(item);
+            return `public static Enums.${match[1]} ToPlatform(this ${match[1]} xvalue) {
+                return Enums.${match[1]}.ValueOf(xvalue);
+            }`
+        });
+    
+    fs.writeFileSync('output.txt', transformed.join('\n'));
+}
+
+function generateIOSNamedString() {
+    var transformed = lines
+        .filter(x => /enum/.test(x))
+        .map(item => {
+            var match = /enum (\w+)/.exec(item);
+            return `public static TMB${match[1]} ToPlatform(this ${match[1]} xvalue) {
+                return new TMB${match[1]}(xvalue);
+            }`
+        });
+    
+    fs.writeFileSync('output.txt', transformed.join('\n'));
+}
 
 function generateSourceProperties(keyClassName) {
     var transformed = lines.map(item => {

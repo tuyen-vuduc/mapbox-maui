@@ -10,12 +10,16 @@ public static class ExpressionExtensions
         this DslExpression xvalue
     )
     {
-        var expression = TMBExpression.CreateWithOperator(
-            xvalue.Operator.ToPlatformValue(),
-            NSArray.FromNSObjects(xvalue.Select(x => x.Wrap()).ToArray())
-        );
+        var arguments = NSArray.FromNSObjects(xvalue.Select(x => x.Wrap()).ToArray());
 
-        return expression;
+        return string.IsNullOrWhiteSpace(xvalue.Operator.Value)
+            ? TMBExpression.CreateWithArguments(
+                arguments
+            )
+            : TMBExpression.CreateWithOperator(
+                xvalue.Operator.ToPlatformValue(),
+                arguments
+            );
     }
 
     internal static TMBOperator ToPlatformValue(this DslOperator xvalue)
@@ -24,7 +28,7 @@ public static class ExpressionExtensions
     }
 
     static readonly Dictionary<string, TMBOperator> stringToOperatorMapping = new Dictionary<string, TMBOperator>
-	{
+    {
 		/// For two inputs, returns the result of subtracting the second input from the first. For a single input, returns the result of subtracting it from 0.
         { "-", TMBOperator.Subtract },
 

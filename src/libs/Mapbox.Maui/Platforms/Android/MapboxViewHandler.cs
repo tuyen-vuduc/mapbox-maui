@@ -3,6 +3,7 @@
 using PlatformView = AndroidX.Fragment.App.FragmentContainerView;
 using PlatformPolygonAnnotationManager = Com.Mapbox.Maps.Plugin.Annotation.Generated.PolygonAnnotationManager;
 using PlatformCircleAnnotationManager = Com.Mapbox.Maps.Plugin.Annotation.Generated.CircleAnnotationManager;
+using PlatformPointAnnotationManager = Com.Mapbox.Maps.Plugin.Annotation.Generated.PointAnnotationManager;
 using MapboxMapsStyle = Com.Mapbox.Maps.Style;
 using Com.Mapbox.Maps;
 using Com.Mapbox.Maps.Plugin.Scalebar;
@@ -271,6 +272,48 @@ public partial class MapboxViewHandler : IAnnotationController
             ) as PlatformCircleAnnotationManager;
 
         return new CircleAnnotationManager(id, nativeManager);
+    }
+
+    public IPointAnnotationManager CreatePointAnnotationManager(
+        string id,
+        Styles.LayerPosition layerPosition,
+        Annotations.ClusterOptions clusterOptions = null)
+    {
+        var mapView = mapboxFragment?.MapView;
+
+        if (mapView == null) return null;
+
+        var options = new AnnotationSourceOptions(
+            null, null, null, null,
+            new Com.Mapbox.Maps.Plugin.Annotation.ClusterOptions(
+                true,
+                (long)clusterOptions.ClusterRadius,
+                clusterOptions.CircleRadius?.Wrap(),
+                18.0,
+                clusterOptions.TextColor?.Wrap(),
+                Color.White,
+                clusterOptions.TextSize?.Wrap(),
+                12.0,
+                clusterOptions.TextField?.Wrap(),
+                (long)clusterOptions.ClusterMaxZoom,
+                null,
+                new Dictionary<string, Java.Lang.Object>(
+                clusterOptions.ClusterProperties?
+                    .Select(
+                        x => new KeyValuePair<string, Java.Lang.Object>(
+                            x.Key,
+                            x.Wrap()
+                        )
+                    )
+                )));
+        var nativeManager = AnnotationPluginImplKt
+            .GetAnnotations(mapView)
+            .CreateAnnotationManager(
+                AnnotationType.PointAnnotation,
+                new AnnotationConfig(null, id, id, null)
+            ) as PlatformPointAnnotationManager;
+
+        return new PointAnnotationManager(id, nativeManager);
     }
 }
 

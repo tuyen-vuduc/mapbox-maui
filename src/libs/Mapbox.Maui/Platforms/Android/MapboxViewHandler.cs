@@ -296,21 +296,26 @@ public partial class MapboxViewHandler : IAnnotationController
                 12.0,
                 clusterOptions.TextField?.Wrap(),
                 (long)clusterOptions.ClusterMaxZoom,
-                null,
-                new Dictionary<string, Java.Lang.Object>(
-                clusterOptions.ClusterProperties?
-                    .Select(
-                        x => new KeyValuePair<string, Java.Lang.Object>(
-                            x.Key,
-                            x.Wrap()
-                        )
-                    )
-                )));
+                new List<Kotlin.Pair> {
+                    new Kotlin.Pair(new Java.Lang.Integer(100), new Java.Lang.Integer(Color.Red)),
+                    new Kotlin.Pair(new Java.Lang.Integer(50), new Java.Lang.Integer(Color.Blue)),
+                    new Kotlin.Pair(new Java.Lang.Integer(0), new Java.Lang.Integer(Color.Green)),
+                },
+                null //new Dictionary<string, Java.Lang.Object>(
+                //    clusterOptions.ClusterProperties?
+                //        .Select(
+                //            x => new KeyValuePair<string, Java.Lang.Object>(
+                //                x.Key,
+                //                x.Value.Wrap()
+                //            )
+                //        )
+                //    )
+                ));
         var nativeManager = AnnotationPluginImplKt
             .GetAnnotations(mapView)
             .CreateAnnotationManager(
                 AnnotationType.PointAnnotation,
-                new AnnotationConfig(null, id, id, null)
+                new AnnotationConfig(null, id, id, options)
             ) as PlatformPointAnnotationManager;
 
         return new PointAnnotationManager(id, nativeManager);

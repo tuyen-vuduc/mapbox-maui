@@ -88,7 +88,7 @@ public class PointAnnotationClusteringExample : ContentPage, IExamplePage, IQuer
                 })
             .ToArray();
 
-        CreateClusters(annotations);
+        MainThread.BeginInvokeOnMainThread(() => CreateClusters(annotations));
     }
 
     void CreateClusters(PointAnnotation[] annotations)
@@ -150,8 +150,10 @@ public class PointAnnotationClusteringExample : ContentPage, IExamplePage, IQuer
             CircleRadius = (PropertyValue<double>)circleRadiusExpression,
             CircleColor = (PropertyValue<Color>)circleColorExpression,
             TextColor = Colors.Black,
+            TextSize = (PropertyValue<double>)12,
             TextField = (PropertyValue<string>)textFieldExpression,
             ClusterRadius = 75,
+            ClusterMaxZoom = 14,
             ClusterProperties = clusterProperties,
         };
 
@@ -165,7 +167,7 @@ public class PointAnnotationClusteringExample : ContentPage, IExamplePage, IQuer
 
         var layerIdPrefix = DeviceInfo.Current.Platform == DevicePlatform.Android
             ? "mapbox-android-cluster-text-layer-"
-            : "mapbox-iOS-cluster-text-layer-manager-";
+            : "mapbox-iOS-cluster-circle-layer-manager-";
         var layerId = layerIdPrefix + clusterLayerID;
         var circleLayer = new CircleLayer(layerId)
         {

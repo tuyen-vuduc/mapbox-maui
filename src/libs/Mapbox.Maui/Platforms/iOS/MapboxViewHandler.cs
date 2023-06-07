@@ -286,33 +286,16 @@ public partial class MapboxViewHandler : IAnnotationController
         TMBClusterOptions nativeClusterOptions = null;
         if (clusterOptions != null)
         {
-            nativeClusterOptions = TMBClusterOptions.Default;
-
-
-            if (clusterOptions.CircleColor != null)
-            {
-                nativeClusterOptions.CircleColor = clusterOptions.CircleColor.ToTMBValue();
-            }
-            if (clusterOptions.TextColor != null)
-            {
-                nativeClusterOptions.TextColor = clusterOptions.TextColor.ToTMBValue();
-            }
-            if (clusterOptions.TextSize != null)
-            {
-                nativeClusterOptions.TextSize = clusterOptions.TextSize.ToTMBValue();
-            }
-            if (clusterOptions.TextField != null)
-            {
-                nativeClusterOptions.TextField = clusterOptions.TextField.ToTMBValue();
-            }
-
-            nativeClusterOptions.ClusterRadius = clusterOptions.ClusterRadius;
-            nativeClusterOptions.ClusterMaxZoom = clusterOptions.ClusterMaxZoom;
-
-            if (clusterOptions.ClusterProperties != null)
-            {
-                nativeClusterOptions.ClusterProperties = clusterOptions.ClusterProperties.ToNative();
-            }
+            nativeClusterOptions = new TMBClusterOptions(
+                clusterOptions.CircleRadius?.ToTMBValue(),
+                clusterOptions.CircleColor?.ToTMBValue(),
+                clusterOptions.TextColor?.ToTMBValue(),
+                clusterOptions.TextSize?.ToTMBValue(),
+                clusterOptions.TextField?.ToTMBValue(),
+                clusterOptions.ClusterRadius,
+                clusterOptions.ClusterMaxZoom,
+                clusterOptions.ClusterProperties?.ToNative()
+            );
         }
 
         var nativeManager = mapView.PointAnnotationManagerWithId(

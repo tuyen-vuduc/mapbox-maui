@@ -10,6 +10,7 @@ using MapboxMaui.Styles;
 using MapboxCoreMaps;
 using MapboxMapsObjC;
 using Microsoft.Maui.Controls.Compatibility.Platform.iOS;
+using Microsoft.Maui.Platform;
 
 public static partial class AdditionalExtensions
 {
@@ -29,6 +30,11 @@ public static partial class AdditionalExtensions
         {
             var nativeExpression = propertyValue.Expression.ToPlatformValue();
             return TMBValue.Expression(nativeExpression);
+        }
+
+        if (propertyValue.Value is Color color)
+        {
+            return TMBValue.Constant(color.ToPlatform());
         }
 
         return TMBValue.Constant(propertyValue.Value.Wrap());

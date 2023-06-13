@@ -99,7 +99,7 @@ public class PointAnnotationClusteringExample : ContentPage, IExamplePage, IQuer
         //   * 30 when point count is between 50 and 100
         //   * 35 when point count is greater than or equal to 100
         var circleRadiusExpression = DslExpression.step(
-            DslExpression.geometryType("point_count"),
+            DslExpression.get("point_count"),
             25,
             50,
             30,
@@ -114,7 +114,7 @@ public class PointAnnotationClusteringExample : ContentPage, IExamplePage, IQuer
         //   * orange when point count is between 150 and 250
         //   * light pink when point count is greater than or equal to 250
         var circleColorExpression = DslExpression.step(
-            DslExpression.geometryType("point_count"),
+            DslExpression.get("point_count"),
             Colors.Yellow,
             10,
             Colors.Green,
@@ -135,8 +135,9 @@ public class PointAnnotationClusteringExample : ContentPage, IExamplePage, IQuer
         var sumExpression = DslExpression.args(
             DslExpression.sum(
                 DslExpression.accumulated(),
-                DslExpression.get("sum"),
-                1)
+                DslExpression.get("sum")
+            ),
+            1
         );
 
         // Create a cluster property to add to each cluster
@@ -158,7 +159,7 @@ public class PointAnnotationClusteringExample : ContentPage, IExamplePage, IQuer
         };
 
         var pointAnnotationManager = map.AnnotationController.CreatePointAnnotationManager(
-            Guid.NewGuid().ToString(),
+            clusterLayerID,
             LayerPosition.Unknown(),
             clusterOptions
         );

@@ -10,15 +10,18 @@ public static class ExpressionExtensions
         this DslExpression xvalue
     )
     {
-        var arguments = NSArray.FromNSObjects(xvalue.Select(x => x.Wrap()).ToArray());
+        var arguments = xvalue.Select(x => x switch {
+            DslExpression expression => expression.ToPlatformValue(),
+            _ => x.Wrap()
+        }).ToArray() ?? Array.Empty<NSObject>();
 
         return string.IsNullOrWhiteSpace(xvalue.Operator.Value)
             ? TMBExpression.CreateWithArguments(
-                arguments
+                NSArray.FromObjects(arguments)
             )
             : TMBExpression.CreateWithOperator(
                 xvalue.Operator.ToPlatformValue(),
-                arguments
+                NSArray.FromObjects(arguments)
             );
     }
 

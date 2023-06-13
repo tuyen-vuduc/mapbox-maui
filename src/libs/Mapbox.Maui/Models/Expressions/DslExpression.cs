@@ -2,7 +2,7 @@
 
 namespace MapboxMaui.Expressions;
 
-[DebuggerDisplay("{ToString()}")]
+[DebuggerDisplay("{GetString()}")]
 public class DslExpression : List<object>
 {
     public DslOperator Operator { get; }
@@ -48,10 +48,9 @@ public class DslExpression : List<object>
         return result.ToArray();
     }
 
-    public override string ToString()
+    private string GetString()
     {
         var items = new List<string>();
-
 
         if (!string.IsNullOrWhiteSpace(Operator.Value))
         {

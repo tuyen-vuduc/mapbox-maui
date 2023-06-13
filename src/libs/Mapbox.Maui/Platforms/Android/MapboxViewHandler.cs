@@ -301,15 +301,15 @@ public partial class MapboxViewHandler : IAnnotationController
                     new Kotlin.Pair(new Java.Lang.Integer(50), new Java.Lang.Integer(Color.Blue)),
                     new Kotlin.Pair(new Java.Lang.Integer(0), new Java.Lang.Integer(Color.Green)),
                 },
-                null //new Dictionary<string, Java.Lang.Object>(
-                //    clusterOptions.ClusterProperties?
-                //        .Select(
-                //            x => new KeyValuePair<string, Java.Lang.Object>(
-                //                x.Key,
-                //                x.Value.Wrap()
-                //            )
-                //        )
-                //    )
+                new Dictionary<string, Java.Lang.Object>(
+                    clusterOptions.ClusterProperties?
+                        .Select(
+                            x => new KeyValuePair<string, Java.Lang.Object>(
+                                x.Key,
+                                x.Value.ToPlatformValue()
+                            )
+                        )
+                    )
                 ));
         var nativeManager = AnnotationPluginImplKt
             .GetAnnotations(mapView)

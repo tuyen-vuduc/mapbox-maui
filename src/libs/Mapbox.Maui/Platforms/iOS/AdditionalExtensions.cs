@@ -14,7 +14,7 @@ using Microsoft.Maui.Platform;
 
 public static partial class AdditionalExtensions
 {
-    internal static NSDictionary ToNative(this IDictionary<string, DslExpression> dictionary)
+    internal static NSDictionary<NSString, TMBExpression> ToNative(this IDictionary<string, DslExpression> dictionary)
     {
         var list = new NSMutableDictionary<NSString, TMBExpression>();
         foreach (var item in dictionary)
@@ -122,7 +122,7 @@ public static partial class AdditionalExtensions
         var result = xvalue switch
         {
             bool value => NSNumber.FromBoolean(value),
-            int value => NSNumber.FromLong((nint)value),
+            int value => NSNumber.FromLong(value),
             long value => NSNumber.FromLong((nint)value),
             float value => NSNumber.FromDouble(value),
             double value => NSNumber.FromDouble(value),

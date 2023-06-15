@@ -31,6 +31,8 @@ public record class PropertyValue<T> : IPropertyValue
         Constant = default;
     }
 
+    public T GetConstant(T defaultValue) => Expression == null ? Constant : defaultValue;
+
     public static implicit operator PropertyValue<T>(T value) => new(value);
     public static explicit operator PropertyValue<T>(DslExpression value) => new(value);
 }

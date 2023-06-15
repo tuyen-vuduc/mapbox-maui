@@ -131,7 +131,7 @@ b/ iOS's `info.plist`
 | 41 | [OfflineManagerExample](./mapboxqs/OfflineManagerExample.m) | OK |
 | 42 | [OfflineRegionManagerExample](./mapboxqs/OfflineRegionManagerExample.m) |  |
 | 43 | [PitchAndDistanceExample](./mapboxqs/PitchAndDistanceExample.m) |  |
-| 44 | [PointAnnotationClusteringExample](./mapboxqs/PointAnnotationClusteringExample.m) |  |
+| 44 | [PointAnnotationClusteringExample](./mapboxqs/PointAnnotationClusteringExample.m) | OK |
 | 45 | [PointClusteringExample](./mapboxqs/PointClusteringExample.m) |  |
 | 46 | [PolygonAnnotationExample](./mapboxqs/PolygonAnnotationExample.m) | OK |
 | 47 | [RasterTileSourceExample](./mapboxqs/RasterTileSourceExample.m) |  |

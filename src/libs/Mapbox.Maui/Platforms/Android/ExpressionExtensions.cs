@@ -11,11 +11,7 @@ public static class ExpressionExtensions
         this DslExpression xvalue
     )
     {
-        var @operator = string.IsNullOrWhiteSpace(xvalue.Operator.Value)
-            ? xvalue.Operator.Value
-            : xvalue.First();
-
-        var expressionBuilder = new Expression.ExpressionBuilder(@operator);
+        var expressionBuilder = new Expression.ExpressionBuilder(xvalue.Operator.Value);
 
         foreach (var argument in xvalue)
         {

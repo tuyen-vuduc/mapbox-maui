@@ -283,34 +283,38 @@ public partial class MapboxViewHandler : IAnnotationController
 
         if (mapView == null) return null;
 
-        var options = new AnnotationSourceOptions(
-            null, null, null, null,
-            new Com.Mapbox.Maps.Plugin.Annotation.ClusterOptions(
+        var xclusterOptions = new Com.Mapbox.Maps.Plugin.Annotation.ClusterOptions(
                 true,
                 (long)clusterOptions.ClusterRadius,
-                clusterOptions.CircleRadius?.Wrap(),
-                18.0,
-                clusterOptions.TextColor?.Wrap(),
-                Color.White,
-                clusterOptions.TextSize?.Wrap(),
-                12.0,
-                clusterOptions.TextField?.Wrap(),
+                clusterOptions.CircleRadius?.Expression?.ToPlatformValue(),
+                clusterOptions.CircleRadius?.GetConstant(18.0) ?? 18.0,
+                clusterOptions.TextColor?.Expression?.ToPlatformValue(),
+                clusterOptions.TextColor?.GetConstant(Color.White.ToColor())?.ToPlatform() ?? Color.White,
+                clusterOptions.TextSize?.Expression?.ToPlatformValue(),
+                clusterOptions.TextSize?.GetConstant(12.0) ?? 12.0,
+                clusterOptions.TextField?.Expression?.ToPlatformValue(),
                 (long)clusterOptions.ClusterMaxZoom,
                 new List<Kotlin.Pair> {
+                    new Kotlin.Pair(new Java.Lang.Integer(250), new Java.Lang.Integer(Color.LightPink)),
+                    new Kotlin.Pair(new Java.Lang.Integer(150), new Java.Lang.Integer(Color.Orange)),
                     new Kotlin.Pair(new Java.Lang.Integer(100), new Java.Lang.Integer(Color.Red)),
-                    new Kotlin.Pair(new Java.Lang.Integer(50), new Java.Lang.Integer(Color.Blue)),
-                    new Kotlin.Pair(new Java.Lang.Integer(0), new Java.Lang.Integer(Color.Green)),
+                    new Kotlin.Pair(new Java.Lang.Integer(50), new Java.Lang.Integer(Color.Cyan)),
+                    new Kotlin.Pair(new Java.Lang.Integer(10), new Java.Lang.Integer(Color.Green)),
+                    new Kotlin.Pair(new Java.Lang.Integer(0), new Java.Lang.Integer(Color.Yellow)),
                 },
                 new Dictionary<string, Java.Lang.Object>(
                     clusterOptions.ClusterProperties?
                         .Select(
                             x => new KeyValuePair<string, Java.Lang.Object>(
                                 x.Key,
-                                x.Value.ToPlatformValue()
+                                x.Value.Wrap()
                             )
                         )
                     )
-                ));
+                );
+        var options = new AnnotationSourceOptions(
+            new Java.Lang.Long((long)clusterOptions.ClusterMaxZoom),
+            null, null, null, xclusterOptions);
         var nativeManager = AnnotationPluginImplKt
             .GetAnnotations(mapView)
             .CreateAnnotationManager(

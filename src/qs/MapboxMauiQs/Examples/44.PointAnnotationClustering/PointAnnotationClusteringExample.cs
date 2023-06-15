@@ -166,10 +166,9 @@ public class PointAnnotationClusteringExample : ContentPage, IExamplePage, IQuer
 
         pointAnnotationManager.AddAnnotations(annotations);
 
-        var layerIdPrefix = DeviceInfo.Current.Platform == DevicePlatform.Android
-            ? "mapbox-android-cluster-text-layer-"
-            : "mapbox-iOS-cluster-circle-layer-manager-";
-        var layerId = layerIdPrefix + clusterLayerID;
+        var layerId = DeviceInfo.Current.Platform == DevicePlatform.Android
+            ? clusterLayerID
+            : $"mapbox-iOS-cluster-circle-layer-manager-{clusterLayerID}";
         var circleLayer = new CircleLayer(layerId)
         {
             CircleStrokeColor = Colors.Black,

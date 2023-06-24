@@ -1,5 +1,6 @@
 ﻿using CoreGraphics;
 using Foundation;
+using GeoJSON.Text.Feature;
 using GeoJSON.Text.Geometry;
 using MapboxCommon;
 using MapboxMapsObjC;
@@ -69,20 +70,20 @@ public static class GeometryExtensions
                             .ToArray()));
 
                 //case FeatureCollection featureCollection:
-                //    return GeometryHelper.CreateMultiPolygon(
-                //        NSArray.FromNSObjects(
-                //            multiPolygon.Coordinates
-                //                .Select(
-                //                    x => NSArray.FromNSObjects(
-                //                        x.Coordinates
-                //                            .Select(
-                //                                y => NSArray.FromNSObjects(
-                //                                    y.Coordinates
-                //                                    .Select(
-                //                                        z => z.ToNSValue())
-                //                                    .ToArray()))
-                //                            .ToArray()))
-                //                .ToArray()));
+                //return GeometryHelper.CreateMultiPolygon(
+                //    NSArray.FromNSObjects(
+                //        multiPolygon.Coordinates
+                //            .Select(
+                //                x => NSArray.FromNSObjects(
+                //                    x.Coordinates
+                //                        .Select(
+                //                            y => NSArray.FromNSObjects(
+                //                                y.Coordinates
+                //                                .Select(
+                //                                    z => z.ToNSValue())
+                //                                .ToArray()))
+                //                        .ToArray()))
+                //            .ToArray()));
         }
 
         return null;

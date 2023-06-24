@@ -88,7 +88,7 @@ b/ iOS's `info.plist`
 
 | # | Example | Ported |
 | - | - | - |
-| 1 | [AddMarkersSymbolExample](./mapboxqs/AddMarkersSymbolExample.m) |  |
+| 1 | [AddMarkersSymbolExample](./mapboxqs/AddMarkersSymbolExample.m) | OK |
 | 2 | [AddOneMarkerSymbolExample](./mapboxqs/AddOneMarkerSymbolExample.m) | OK |
 | 3 | [AdvancedViewportGesturesExample](./mapboxqs/AdvancedViewportGesturesExample.m) |  |
 | 4 | [AnimateGeoJSONLineExample](./mapboxqs/AnimateGeoJSONLineExample.m) |  |

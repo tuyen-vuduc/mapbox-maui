@@ -106,7 +106,7 @@ b/ iOS's `info.plist`
 | 16 | [Custom3DPuckExample](./mapboxqs/Custom3DPuckExample.m) |  |
 | 17 | [CustomLayerExample](./mapboxqs/CustomLayerExample.m) |  |
 | 18 | [CustomLocationProviderExample](./mapboxqs/CustomLocationProviderExample.m) |  |
-| 19 | [CustomPointAnnotationExample](./mapboxqs/CustomPointAnnotationExample.m) |  |
+| 19 | [CustomPointAnnotationExample](./mapboxqs/CustomPointAnnotationExample.m) | OK |
 | 20 | [CustomStyleURLExample](./mapboxqs/CustomStyleURLExample.m) | OK |
 | 21 | [DataDrivenSymbolsExample](./mapboxqs/DataDrivenSymbolsExample.m) |  |
 | 22 | [DataJoinExample](./mapboxqs/DataJoinExample.m) |  |

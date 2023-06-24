@@ -1,12 +1,5 @@
 namespace MapboxMauiQs;
 
-using System;
-using GeoJSON.Text.Geometry;
-using MapboxMaui;
-using MapboxMaui.Annotations;
-using MapboxMaui.Styles;
-using iOSPage = Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific.Page;
-
 public class PolygonAnnotationExample : ContentPage, IExamplePage, IQueryAttributable
 {
     MapboxView map;

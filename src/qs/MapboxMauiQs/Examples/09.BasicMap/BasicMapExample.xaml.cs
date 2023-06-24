@@ -1,7 +1,4 @@
-﻿using MapboxMaui;
-using iOSPage = Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific.Page;
-
-namespace MapboxMauiQs;
+﻿namespace MapboxMauiQs;
 
 public partial class BasicMapExample : ContentPage, IExamplePage, IQueryAttributable
 {

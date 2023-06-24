@@ -1,13 +1,3 @@
-using System;
-using System.Text.Json;
-using GeoJSON.Text;
-using GeoJSON.Text.Feature;
-using MapboxMaui;
-using MapboxMaui.Expressions;
-using MapboxMaui.Styles;
-using iOSPage = Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific.Page;
-using Point = Microsoft.Maui.Graphics.Point;
-
 namespace MapboxMauiQs;
 
 public class SymbolClusteringExample : ContentPage, IExamplePage, IQueryAttributable

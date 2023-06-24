@@ -1,6 +1,3 @@
-using MapboxMaui;
-using MapboxMaui.Styles;
-using iOSPage = Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific.Page;
 namespace MapboxMauiQs;
 
 public class SkyLayerExample : ContentPage, IExamplePage, IQueryAttributable

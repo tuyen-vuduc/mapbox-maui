@@ -1,6 +1,4 @@
-﻿using MapboxMaui;
-
-namespace MapboxMauiQs;
+﻿namespace MapboxMauiQs;
 
 public partial class DebugOptionsPage : ContentPage, IQueryAttributable, IExamplePage
 {

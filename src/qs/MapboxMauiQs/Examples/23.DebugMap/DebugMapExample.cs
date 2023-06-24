@@ -1,6 +1,3 @@
-using System;
-using MapboxMaui;
-using iOSPage = Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific.Page;
 namespace MapboxMauiQs;
 
 public class DebugMapExample : ContentPage, IExamplePage, IQueryAttributable

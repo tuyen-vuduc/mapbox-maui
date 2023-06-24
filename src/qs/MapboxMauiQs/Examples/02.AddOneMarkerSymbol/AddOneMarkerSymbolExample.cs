@@ -1,7 +1,3 @@
-using MapboxMaui;
-using MapboxMaui.Annotations;
-using MapboxMaui.Styles;
-using iOSPage = Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific.Page;
 namespace MapboxMauiQs;
 
 public class AddOneMarkerSymbolExample : ContentPage, IExamplePage, IQueryAttributable

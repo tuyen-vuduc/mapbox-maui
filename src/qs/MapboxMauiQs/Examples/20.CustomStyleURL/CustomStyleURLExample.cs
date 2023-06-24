@@ -1,8 +1,4 @@
-﻿using System;
-using MapboxMaui;
-using iOSPage = Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific.Page;
-
-namespace MapboxMauiQs;
+﻿namespace MapboxMauiQs;
 
 public class CustomStyleURLExample : ContentPage, IExamplePage, IQueryAttributable
 {

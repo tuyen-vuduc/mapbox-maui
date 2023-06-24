@@ -1,0 +1,12 @@
+﻿global using System;
+global using System.Text.Json;
+global using GeoJSON.Text;
+global using GeoJSON.Text.Feature;
+global using GeoJSON.Text.Geometry;
+global using Point = Microsoft.Maui.Graphics.Point;
+global using MapboxMaui;
+global using MapboxMaui.Expressions;
+global using MapboxMaui.Styles;
+global using MapboxMaui.Offline;
+global using MapboxMaui.Annotations;
+global using iOSPage = Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific.Page;

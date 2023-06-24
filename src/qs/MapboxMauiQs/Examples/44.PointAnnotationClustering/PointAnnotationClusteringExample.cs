@@ -1,9 +1,3 @@
-using GeoJSON.Text.Feature;
-using MapboxMaui;
-using MapboxMaui.Annotations;
-using MapboxMaui.Expressions;
-using MapboxMaui.Styles;
-using iOSPage = Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific.Page;
 namespace MapboxMauiQs;
 
 public class PointAnnotationClusteringExample : ContentPage, IExamplePage, IQueryAttributable

@@ -1,6 +1,3 @@
-using MapboxMaui;
-using MapboxMaui.Styles;
-using iOSPage = Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific.Page;
 namespace MapboxMauiQs;
 
 public class TerrainExample : ContentPage, IExamplePage, IQueryAttributable
@@ -30,8 +27,10 @@ public class TerrainExample : ContentPage, IExamplePage, IQueryAttributable
             rasterDemSource,
         };
 
-        var terrain = new Terrain(sourceId);
-        terrain.Exaggeration = new PropertyValue<double>(1.5);
+        var terrain = new Terrain(sourceId)
+        {
+            Exaggeration = new PropertyValue<double>(1.5)
+        };
         map.Terrain = terrain;
 
         var skyLayer = new SkyLayer("sky-layer")

@@ -29,6 +29,7 @@ Task("example")
 
     Information($"\n>> Generate >> {name}ExampleInfo.cs");
     FileWriteText($@"{exampleFolderPath}/{name}ExampleInfo.cs", $@"namespace MapboxMauiQs;
+
 class {name}ExampleInfo : IExampleInfo
 {{
     public string Group => ""{group ?? "None"}"";
@@ -38,10 +39,7 @@ class {name}ExampleInfo : IExampleInfo
 }}");
 
     Information($"\n>> Generate >> {name}ExamplePage.cs");
-    FileWriteText($"{exampleFolderPath}/{name}Example.cs", $@"{"using"} System;
-{"using"} MapboxMaui;
-{"using"} iOSPage = Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific.Page;
-namespace MapboxMauiQs;
+    FileWriteText($"{exampleFolderPath}/{name}Example.cs", $@"namespace MapboxMauiQs;
 
 public class {name}Example : ContentPage, IExamplePage, IQueryAttributable
 {{
@@ -54,18 +52,24 @@ public class {name}Example : ContentPage, IExamplePage, IQueryAttributable
 		Content = map = new MapboxView();
 
         map.MapReady += Map_MapReady;
+        map.MapLoaded += Map_MapLoaded;
 	}}
-
-    private void Map_MapReady(object sender, EventArgs e)
-    {{
-        // Setup Map here
-    }}
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {{
         info = query[""example""] as IExampleInfo;
 
         Title = info?.Title;
+    }}
+
+    private void Map_MapReady(object sender, EventArgs e)
+    {{
+        // Setup Map here
+    }}
+
+    private void Map_MapLoaded(object sender, EventArgs e)
+    {{
+        // Setup Styles, Annotations, etc here
     }}
 }}");
 });

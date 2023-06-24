@@ -1,8 +1,3 @@
-using System;
-using MapboxMaui;
-using MapboxMaui.Annotations;
-using MapboxMaui.Styles;
-using iOSPage = Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific.Page;
 namespace MapboxMauiQs;
 
 public class CircleAnnotationExample : ContentPage, IExamplePage, IQueryAttributable
@@ -35,7 +30,7 @@ public class CircleAnnotationExample : ContentPage, IExamplePage, IQueryAttribut
 
             var circleAnnotation = new CircleAnnotation(
                 new GeoJSON.Text.Geometry.Point(
-                    new GeoJSON.Text.Geometry.Position(center.X, center.Y)
+                    new Position(center.X, center.Y)
                 )
             )
             {

@@ -1,6 +1,3 @@
-using MapboxMaui;
-using MapboxMaui.Offline;
-using iOSPage = Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific.Page;
 namespace MapboxMauiQs;
 
 public class OfflineManagerExample : ContentPage, IExamplePage, IQueryAttributable

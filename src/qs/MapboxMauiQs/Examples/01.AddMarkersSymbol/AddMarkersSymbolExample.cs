@@ -1,9 +1,3 @@
-using System.Text.Json;
-using GeoJSON.Text.Feature;
-using MapboxMaui;
-using MapboxMaui.Expressions;
-using MapboxMaui.Styles;
-using iOSPage = Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific.Page;
 namespace MapboxMauiQs;
 
 public class AddMarkersSymbolExample : ContentPage, IExamplePage, IQueryAttributable

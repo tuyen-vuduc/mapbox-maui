@@ -96,6 +96,12 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\..\libs\Mapbox.Maui\Mapbox.Maui.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="Resources\Images\star.svg" />
+	</ItemGroup>
+	<ItemGroup>
+	  <BundleResource Include="Resources\Images\star.svg" />
+	</ItemGroup>
 	<ProjectExtensions>
 	  <MonoDevelop>
 	    <Properties>

@@ -64,7 +64,15 @@ public class {name}Example : ContentPage, IExamplePage, IQueryAttributable
 
     private void Map_MapReady(object sender, EventArgs e)
     {{
-        // Setup Map here
+        var centerLocation = new Point(21.0278, 105.8342);
+        var cameraOptions = new CameraOptions
+        {{
+            Center = centerLocation,
+            Zoom = 14,
+        }};
+
+        map.CameraOptions = cameraOptions;
+        map.MapboxStyle = MapboxStyle.MAPBOX_STREETS;
     }}
 
     private void Map_MapLoaded(object sender, EventArgs e)

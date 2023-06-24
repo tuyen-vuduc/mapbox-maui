@@ -2,7 +2,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Foundation;
 using MapboxMapsObjC;
 
 public partial class PolygonAnnotationManager
@@ -28,19 +27,13 @@ public partial class PolygonAnnotationManager
     }
     public double[] FillTranslate
     {
-        get => nativeManager.FillTranslate?
-            .Select(x => x.DoubleValue)
-            .ToArray();
-        set => nativeManager.FillTranslate = value?
-            .Select(NSNumber.FromDouble)
-            .ToArray();
+        get => nativeManager.FillTranslate?.ToDoubles();
+        set => nativeManager.FillTranslate = value?.ToPlatform();
     }
     public FillTranslateAnchor? FillTranslateAnchor
     {
         get => nativeManager.FillTranslateAnchor.StringValue;
-        set => nativeManager.FillTranslateAnchor = string.IsNullOrWhiteSpace(value)
-            ? null
-            : new TMBFillTranslateAnchor(value);
+        set => nativeManager.FillTranslateAnchor = value?.ToPlatform();
     }
 
     public override void AddAnnotations(params PolygonAnnotation[] xitems)

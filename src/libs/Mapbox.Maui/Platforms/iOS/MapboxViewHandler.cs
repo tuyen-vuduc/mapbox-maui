@@ -2,12 +2,11 @@
 namespace MapboxMaui;
 
 using Foundation;
-using MapboxMaui.Annotations;
 using MapboxMapsObjC;
 using PlatformView = MapViewContainer;
 using UIKit;
 
-public partial class MapboxViewHandler : IAnnotationController
+public partial class MapboxViewHandler
 {
     private static void HandleLightChanged(MapboxViewHandler handler, IMapboxView view)
     {
@@ -238,72 +237,5 @@ public partial class MapboxViewHandler : IAnnotationController
         {
             (VirtualView as MapboxView)?.InvokeMapLoaded();
         });
-    }
-
-    public IPolygonAnnotationManager CreatePolygonAnnotationManager(
-        string id,
-        Styles.LayerPosition layerPosition
-        )
-    {
-        var mapView = PlatformView?.MapView;
-
-        if (mapView == null) return null;
-
-        var nativeManager = mapView.PolygonAnnotationManagerWithId(
-            id,
-            layerPosition.ToPlatformValue(),
-            layerPosition.Parameter?.Wrap());
-
-        return new PolygonAnnotationManager(id, nativeManager);
-    }
-
-    public ICircleAnnotationManager CreateCircleAnnotationManager(
-        string id,
-        Styles.LayerPosition layerPosition
-        )
-    {
-        var mapView = PlatformView?.MapView;
-
-        if (mapView == null) return null;
-
-        var nativeManager = mapView.CircleAnnotationManagerWithId(
-            id,
-            layerPosition.ToPlatformValue(),
-            layerPosition.Parameter?.Wrap());
-
-        return new CircleAnnotationManager(id, nativeManager);
-    }
-
-    public IPointAnnotationManager CreatePointAnnotationManager(
-        string id,
-        Styles.LayerPosition layerPosition,
-        ClusterOptions clusterOptions = null)
-    {
-        var mapView = PlatformView?.MapView;
-
-        if (mapView == null) return null;
-
-        TMBClusterOptions nativeClusterOptions = null;
-        if (clusterOptions != null)
-        {
-            nativeClusterOptions = new TMBClusterOptions(
-                clusterOptions.CircleRadius?.ToTMBValue(),
-                clusterOptions.CircleColor?.ToTMBValue(),
-                clusterOptions.TextColor?.ToTMBValue(),
-                clusterOptions.TextSize?.ToTMBValue(),
-                clusterOptions.TextField?.ToTMBValue(),
-                clusterOptions.ClusterRadius,
-                clusterOptions.ClusterMaxZoom,
-                clusterOptions.ClusterProperties?.ToNative()
-            );
-        }
-
-        var nativeManager = mapView.PointAnnotationManagerWithId(
-            id,
-            layerPosition.ToPlatformValue(),
-            layerPosition.Parameter?.Wrap(),
-            nativeClusterOptions);
-
-        return new PointAnnotationManager(id, nativeManager);
     }
 }

@@ -1,20 +1,14 @@
 ﻿namespace MapboxMaui;
 
 using PlatformView = AndroidX.Fragment.App.FragmentContainerView;
-using PlatformPolygonAnnotationManager = Com.Mapbox.Maps.Plugin.Annotation.Generated.PolygonAnnotationManager;
-using PlatformCircleAnnotationManager = Com.Mapbox.Maps.Plugin.Annotation.Generated.CircleAnnotationManager;
-using PlatformPointAnnotationManager = Com.Mapbox.Maps.Plugin.Annotation.Generated.PointAnnotationManager;
 using MapboxMapsStyle = Com.Mapbox.Maps.Style;
 using Com.Mapbox.Maps;
 using Com.Mapbox.Maps.Plugin.Scalebar;
 using Microsoft.Maui.Platform;
 using Android.Content;
-using MapboxMaui.Annotations;
-using Com.Mapbox.Maps.Plugin.Annotation;
 using Android.Graphics;
-using Com.Mapbox.Geojson;
 
-public partial class MapboxViewHandler : IAnnotationController
+public partial class MapboxViewHandler
 {
     MapboxFragment mapboxFragment;
 
@@ -237,68 +231,5 @@ public partial class MapboxViewHandler : IAnnotationController
 
     private void HandleStyleLoaded(MapView view)
         => (VirtualView as MapboxView)?.InvokeStyleLoaded();
-
-    public IPolygonAnnotationManager CreatePolygonAnnotationManager(
-        string id,
-        Styles.LayerPosition layerPosition)
-    {
-        var mapView = mapboxFragment?.MapView;
-
-        if (mapView == null) return null;
-
-        var nativeManager = AnnotationPluginImplKt
-            .GetAnnotations(mapView)
-            .CreateAnnotationManager(
-                AnnotationType.PolygonAnnotation,
-                new AnnotationConfig(null, id, id, null)
-            ) as PlatformPolygonAnnotationManager;
-
-        return new PolygonAnnotationManager(id, nativeManager);
-    }
-
-    public ICircleAnnotationManager CreateCircleAnnotationManager(
-        string id,
-        Styles.LayerPosition layerPosition)
-    {
-        var mapView = mapboxFragment?.MapView;
-
-        if (mapView == null) return null;
-
-        var nativeManager = AnnotationPluginImplKt
-            .GetAnnotations(mapView)
-            .CreateAnnotationManager(
-                AnnotationType.CircleAnnotation,
-                new AnnotationConfig(null, id, id, null)
-            ) as PlatformCircleAnnotationManager;
-
-        return new CircleAnnotationManager(id, nativeManager);
-    }
-
-    public IPointAnnotationManager CreatePointAnnotationManager(
-        string id,
-        Styles.LayerPosition layerPosition,
-        Annotations.ClusterOptions clusterOptions = null)
-    {
-        var mapView = mapboxFragment?.MapView;
-
-        if (mapView == null) return null;
-
-        var xclusterOptions = clusterOptions.ToPlatform();
-        var clusterMaxZoom = clusterOptions != null
-            ? new Java.Lang.Long((long)clusterOptions.ClusterMaxZoom)
-            : null;
-        var options = new AnnotationSourceOptions(
-            clusterMaxZoom,
-            null, null, null,
-            xclusterOptions);
-        var nativeManager = AnnotationPluginImplKt
-            .GetAnnotations(mapView)
-            .CreateAnnotationManager(
-                AnnotationType.PointAnnotation,
-                new AnnotationConfig(null, id, id, options)
-            ) as PlatformPointAnnotationManager;
-
-        return new PointAnnotationManager(id, nativeManager);
-    }
 }
 

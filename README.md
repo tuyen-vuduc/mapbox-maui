@@ -122,7 +122,7 @@ b/ iOS's `info.plist`
 | 32 | [IconSizeChangeExample](./mapboxqs/IconSizeChangeExample.m) |  |
 | 33 | [LargeGeoJSONPerformanceExample](./mapboxqs/LargeGeoJSONPerformanceExample.m) |  |
 | 34 | [LayerPositionExample](./mapboxqs/LayerPositionExample.m) |  |
-| 35 | [LineAnnotationExample](./mapboxqs/LineAnnotationExample.m) |  |
+| 35 | [LineAnnotationExample](./mapboxqs/LineAnnotationExample.m) | OK |
 | 36 | [LineGradientExample](./mapboxqs/LineGradientExample.m) |  |
 | 37 | [LiveDataExample](./mapboxqs/LiveDataExample.m) |  |
 | 38 | [LocalizationExample](./mapboxqs/LocalizationExample.m) |  |

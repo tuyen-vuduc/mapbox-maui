@@ -3,6 +3,7 @@
 using PlatformPolygonAnnotationOptions = Com.Mapbox.Maps.Plugin.Annotation.Generated.PolygonAnnotationOptions;
 using PlatformCircleAnnotationOptions = Com.Mapbox.Maps.Plugin.Annotation.Generated.CircleAnnotationOptions;
 using PlatformPointAnnotationOptions = Com.Mapbox.Maps.Plugin.Annotation.Generated.PointAnnotationOptions;
+using PlatformPolylineAnnotationOptions = Com.Mapbox.Maps.Plugin.Annotation.Generated.PolylineAnnotationOptions;
 
 public static class AnnotationExtensions
 {
@@ -88,6 +89,34 @@ public static class AnnotationExtensions
             FillOutlineColor = annotation.FillOutlineColor?.ToRgbaString(),
             FillPattern = annotation.FillPattern,
             FillSortKey = annotation.FillSortKey?.AsDouble()
+        }
+        .WithDraggable(annotation.IsDraggable)
+        .WithPoints(points);
+
+        return result;
+    }
+
+    internal static PlatformPolylineAnnotationOptions ToPlatformValue(this PolylineAnnotation annotation)
+    {
+        var points = annotation
+            .GeometryValue
+            .Coordinates
+            .Select(
+                y => Com.Mapbox.Geojson.Point.FromLngLat(y.Longitude, y.Latitude)
+            )
+            .ToList();
+
+        var result = new PlatformPolylineAnnotationOptions
+        {
+            LineBlur = annotation.LineBlur?.ToPlatform(),
+            LineColor = annotation.LineColor?.ToRgbaString(),
+            LineGapWidth = annotation.LineGapWidth?.ToPlatform(),
+            LineJoin = annotation.LineJoin?.ToPlatform(),
+            LineOffset = annotation.LineOffset?.ToPlatform(),
+            LineOpacity = annotation.LineOpacity?.ToPlatform(),
+            LinePattern = annotation.LinePattern,
+            LineSortKey = annotation.LineSortKey?.ToPlatform(),
+            LineWidth = annotation.LineWidth?.ToPlatform(),
         }
         .WithDraggable(annotation.IsDraggable)
         .WithPoints(points);

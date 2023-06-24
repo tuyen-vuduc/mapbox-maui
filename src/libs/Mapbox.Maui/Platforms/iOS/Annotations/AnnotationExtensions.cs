@@ -3,6 +3,7 @@
 using CoreLocation;
 using Foundation;
 using MapboxMapsObjC;
+using MapKit;
 using Microsoft.Maui.Platform;
 
 public static class AnnotationExtensions
@@ -102,5 +103,37 @@ public static class AnnotationExtensions
         return result;
     }
 
+    internal static TMBPolylineAnnotation ToPlatformValue(
+        this PolylineAnnotation xvalue
+    )
+    {
+        var coordinates = NSArray.FromNSObjects(xvalue
+                .GeometryValue
+                .Coordinates
+                .Select(
+                    y => NSValue.FromMKCoordinate(
+                        new CLLocationCoordinate2D(y.Latitude, y.Longitude)
+                    )
+                ).ToArray()
+            );
+        var result = TMBPolylineAnnotation.FromId(
+            xvalue.Id,
+            coordinates,
+            xvalue.IsSelected,
+            xvalue.IsDraggable
+        );
+
+        result.LineBlur = xvalue.LineBlur.ToPlatform();
+        result.LineColor = xvalue.LineColor.ToPlatform();
+        result.LineGapWidth = xvalue.LineGapWidth.ToPlatform();
+        result.LineJoin = xvalue.LineJoin?.ToPlatform();
+        result.LineOffset = xvalue.LineOffset.ToPlatform();
+        result.LineOpacity = xvalue.LineOpacity.ToPlatform();
+        result.LinePattern = xvalue.LinePattern;
+        result.LineSortKey = xvalue.LineSortKey.ToPlatform();
+        result.LineWidth = xvalue.LineWidth.ToPlatform();
+
+        return result;
+    }
 }
 

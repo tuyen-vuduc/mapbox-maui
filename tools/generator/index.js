@@ -21,6 +21,12 @@ const swift2CsTypeMapping = {
     'StyleColor': 'Color'
 };
 
+// swiftProperties2CsInterfaceProperties();
+
+// swiftProperties2CsClassProperties();
+
+// generateLayerProperties();
+
 // annnotationManager_swiftProperties2JavaProperties()
 
 // generateAndroidNamedString();

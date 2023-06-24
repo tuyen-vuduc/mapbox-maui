@@ -19,18 +19,12 @@ partial class PolygonAnnotationManager
     public bool? FillAntialias
     {
         get => nativeManager.FillAntialias?.BooleanValue();
-        set => nativeManager.FillAntialias = value.HasValue
-            ? new Java.Lang.Boolean(value.Value)
-            : null;
+        set => nativeManager.FillAntialias = value?.ToPlatform();
     }
     public double[] FillTranslate
     {
-        get => nativeManager.FillTranslate
-            .Select(x => x.DoubleValue())
-            .ToArray();
-        set => nativeManager.FillTranslate = value?
-            .Select(x => new Java.Lang.Double(x))
-            .ToList();
+        get => nativeManager.FillTranslate.GetValue();
+        set => nativeManager.FillTranslate = value.ToPlatform();
     }
     public FillTranslateAnchor? FillTranslateAnchor
     {

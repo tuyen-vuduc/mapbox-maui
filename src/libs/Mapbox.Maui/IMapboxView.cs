@@ -44,5 +44,5 @@ public interface IAnnotationController
     IPolygonAnnotationManager CreatePolygonAnnotationManager(string id, LayerPosition layerPosition);
     ICircleAnnotationManager CreateCircleAnnotationManager(string id, LayerPosition layerPosition);
     IPointAnnotationManager CreatePointAnnotationManager(string id, LayerPosition layerPosition, ClusterOptions clusterOptions = null);
-    //public IPolylineAnnotationManager CreatePolylineAnnotationManager(string, LayerPosition layerPosition);
+    public IPolylineAnnotationManager CreatePolylineAnnotationManager(string id, LayerPosition layerPosition);
 }

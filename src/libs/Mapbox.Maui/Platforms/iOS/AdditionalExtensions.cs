@@ -50,6 +50,11 @@ public static partial class AdditionalExtensions
         return values.Select(NSNumber.FromDouble).ToArray();
     }
 
+    internal static NSNumber ToPlatform(this double? value)
+        => value.HasValue
+        ? NSNumber.FromDouble(value.Value)
+        : null;
+
     internal static double[] ToDoubles(this NSNumber[] values, bool defaultToEmpty = false)
     {
         if (defaultToEmpty && values == null)

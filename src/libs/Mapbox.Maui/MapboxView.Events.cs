@@ -38,6 +38,17 @@ partial class MapboxView
         }
     }
 
+    public event EventHandler MapTapped;
+    internal void InvokeMapTapped(Point point)
+    {
+        MapTapped?.Invoke(this, new MapTappedEventArgs(point));
+
+        if (Command?.CanExecute(point) == true)
+        {
+            Command.Execute(point);
+        }
+    }
+
     public static readonly BindableProperty StyleLoadedCommandProperty = BindableProperty.Create(
        nameof(StyleLoadedCommand),
        typeof(ICommand),
@@ -71,6 +82,16 @@ partial class MapboxView
     {
         get => (ICommand)GetValue(MapLoadedCommandProperty);
         set => SetValue(MapLoadedCommandProperty, value);
+    }
+}
+
+public class MapTappedEventArgs : EventArgs
+{
+    public Point Position { get; }
+
+    public MapTappedEventArgs(Point position)
+    {
+        Position = position;
     }
 }
 

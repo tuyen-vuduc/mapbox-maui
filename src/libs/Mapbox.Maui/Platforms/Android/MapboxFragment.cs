@@ -8,12 +8,15 @@ using System;
 using Android.Runtime;
 using Com.Mapbox.Maps.Plugin.Delegates.Listeners;
 using Com.Mapbox.Maps.Extension.Observable.Eventdata;
+using Com.Mapbox.Maps.Plugin.Gestures;
+using Com.Mapbox.Geojson;
 
 public partial class MapboxFragment : Fragment
 {
     public event Action<MapView> MapViewReady;
     public event Action<MapView> StyleLoaded;
     public event Action<MapView> MapLoaded;
+    public event Action<Microsoft.Maui.Graphics.Point> MapClicked;
 
     public MapView MapView { get; private set; }
 
@@ -60,6 +63,8 @@ public partial class MapboxFragment : Fragment
         MapViewReady?.Invoke(MapView);
         MapView.MapboxMap.AddOnStyleLoadedListener(this);
         MapView.MapboxMap.AddOnMapLoadedListener(this);
+
+        GesturesUtils.AddOnMapClickListener(MapView.MapboxMap, this);
     }
 
     public override void OnStart()
@@ -94,6 +99,7 @@ public partial class MapboxFragment : Fragment
         {
             MapView.MapboxMap.RemoveOnStyleLoadedListener(this);
             MapView.MapboxMap.RemoveOnMapLoadedListener(this);
+            GesturesUtils.RemoveOnMapClickListener(MapView.MapboxMap, this);
             MapView?.Dispose();
         }
     }
@@ -103,7 +109,19 @@ public partial class MapboxFragment : Fragment
 partial class MapboxFragment
     : IOnStyleLoadedListener
     , IOnMapLoadedListener
+    , IOnMapClickListener
 {
+    public bool OnMapClick(Point point)
+    {
+        if (MapClicked is null) return false;
+
+        var xpoint = new Microsoft.Maui.Graphics.Point(
+            point.Latitude(),
+            point.Longitude());
+        MapClicked?.Invoke(xpoint);
+        return true;
+    }
+
     public void OnMapLoaded(MapLoadedEventData eventData)
     {
         MapLoaded?.Invoke(MapView);

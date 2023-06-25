@@ -26,6 +26,8 @@ public partial interface IMapboxView : IView
     Light Light { get; set; }
 
     IAnnotationController AnnotationController { get; }
+
+    ICommand Command { get;  }
 }
 
 partial interface IMapboxView { 

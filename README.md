@@ -94,7 +94,7 @@ b/ iOS's `info.plist`
 | 4 | [AnimateGeoJSONLineExample](./mapboxqs/AnimateGeoJSONLineExample.m) |  |
 | 5 | [AnimateImageLayerExample](./mapboxqs/AnimateImageLayerExample.m) |  |
 | 6 | [AnimateLayerExample](./mapboxqs/AnimateLayerExample.m) |  |
-| 7 | [AnimatedMarkerExample](./mapboxqs/AnimatedMarkerExample.m) |  |
+| 7 | [AnimatedMarkerExample](./mapboxqs/AnimatedMarkerExample.m) | OK |
 | 8 | [BasicLocationPulsingExample](./mapboxqs/BasicLocationPulsingExample.m) |  |
 | 9 | [BasicMapExample](./mapboxqs/BasicMapExample.m) | OK |
 | 10 | [BuildingExtrusionsExample](./mapboxqs/BuildingExtrusionsExample.m) | OK |

@@ -8,6 +8,8 @@ using UIKit;
 
 public partial class MapboxViewHandler
 {
+    UITapGestureRecognizer mapTapGestureRecognizer;
+
     private static void HandleLightChanged(MapboxViewHandler handler, IMapboxView view)
     {
         var mapView = handler.PlatformView.MapView;
@@ -135,10 +137,24 @@ public partial class MapboxViewHandler
         foreach (var source in sources)
         {
             var platformValue = source.ToPlatformValue();
+            var sourceExists = mapView.SourceExists(source.Id);
 
             if (source is Styles.GeoJSONSource geojsonSource
                 && geojsonSource.Data is Styles.RawGeoJSONObject raw)
             {
+                if (sourceExists)
+                {
+                    mapView.UpdateGeoJSONSourceWithId(
+                        source.Id, raw.Data,
+                        (error) =>
+                        {
+                            if (error == null) return;
+
+                            System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
+                        });
+                    continue;
+                }
+
                 mapView.AddGeoJSONSourceWithId(
                     source.Id, platformValue, raw.Data,
                     (error) =>
@@ -147,6 +163,13 @@ public partial class MapboxViewHandler
 
                         System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
                     });
+                continue;
+            }
+
+            if (sourceExists)
+            {
+                // TODO Update source
+                System.Diagnostics.Debugger.Break();
                 continue;
             }
 
@@ -216,6 +239,19 @@ public partial class MapboxViewHandler
         return new PlatformView(accessToken);
     }
 
+    protected override void DisconnectHandler(PlatformView platformView)
+    {
+        base.DisconnectHandler(platformView);
+
+        var mapView = platformView.MapView;
+        if (mapView == null) return;
+
+        if (mapTapGestureRecognizer != null)
+        {
+            mapView.RemoveGestureRecognizer(mapTapGestureRecognizer);
+        }
+    }
+
     protected override void ConnectHandler(PlatformView platformView)
     {
         base.ConnectHandler(platformView);
@@ -237,5 +273,25 @@ public partial class MapboxViewHandler
         {
             (VirtualView as MapboxView)?.InvokeMapLoaded();
         });
+
+        mapTapGestureRecognizer = new UITapGestureRecognizer(HandleMapTapped);
+        mapView.AddGestureRecognizer(mapTapGestureRecognizer);
+    }
+
+    private void HandleMapTapped(UITapGestureRecognizer tapGestureRecognizer)
+    {
+        var mapView = this.PlatformView.MapView;
+        if (mapView == null) return;
+
+        var tapPosition = mapView.CoordinateFromScreenPosition(
+            tapGestureRecognizer.LocationInView(mapView)
+        );
+
+        (VirtualView as MapboxView)?.InvokeMapTapped(
+            new Point(
+                tapPosition.Latitude,
+                tapPosition.Longitude
+            )
+        );
     }
 }

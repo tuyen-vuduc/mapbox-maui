@@ -1,10 +1,22 @@
 ﻿namespace MapboxMaui;
 
+using System.Windows.Input;
 using MapboxMaui.Annotations;
 using MapboxMaui.Styles;
 
 public partial class MapboxView : View, IMapboxView
 {
+    public static readonly BindableProperty CommandProperty = BindableProperty.Create(
+       nameof(Command),
+       typeof(ICommand),
+       typeof(MapboxView)
+    );
+    public ICommand Command
+    {
+        get => (ICommand)GetValue(CommandProperty);
+        set => SetValue(CommandProperty, value);
+    }
+
     public static readonly BindableProperty AnnotationsProperty = BindableProperty.Create(
        nameof(Annotations),
        typeof(IEnumerable<IAnnotation>),

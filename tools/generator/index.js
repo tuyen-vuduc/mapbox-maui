@@ -25,15 +25,13 @@ const swift2CsTypeMapping = {
 
 // swiftProperties2CsClassProperties();
 
-// generateLayerProperties();
-
 // annnotationManager_swiftProperties2JavaProperties()
 
 // generateAndroidNamedString();
 
 // swiftProperties2CsInterfaceProperties()
 
-// generateLayerProperties('CircleLayerKey');
+generateLayerProperties('LineLayerKey');
 
 function generateAndroidNamedString() {
     var transformed = lines

@@ -126,7 +126,7 @@ b/ iOS's `info.plist`
 | 36 | [LineGradientExample](./mapboxqs/LineGradientExample.m) |  |
 | 37 | [LiveDataExample](./mapboxqs/LiveDataExample.m) |  |
 | 38 | [LocalizationExample](./mapboxqs/LocalizationExample.m) |  |
-| 39 | [MultipleGeometriesExample](./mapboxqs/MultipleGeometriesExample.m) |  |
+| 39 | [MultipleGeometriesExample](./mapboxqs/MultipleGeometriesExample.m) | OK |
 | 40 | [NavigationSimulatorExample](./mapboxqs/NavigationSimulatorExample.m) |  |
 | 41 | [OfflineManagerExample](./mapboxqs/OfflineManagerExample.m) | OK |
 | 42 | [OfflineRegionManagerExample](./mapboxqs/OfflineRegionManagerExample.m) |  |

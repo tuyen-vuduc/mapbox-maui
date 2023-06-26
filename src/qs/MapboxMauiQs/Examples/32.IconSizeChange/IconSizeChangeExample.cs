@@ -105,10 +105,11 @@ public class IconSizeChangeExample : ContentPage, IExamplePage, IQueryAttributab
             return;
         }
 
-        var geometry = features.First().Feature.Geometry;
+        var geometry = features.First().Feature;
+        var geojson = JsonSerializer.Serialize(geometry);
         var geoJSONSource = new GeoJSONSource(Constants.selectedMarkerSourceId)
         {
-            Data = new RawGeoJSONObject(JsonSerializer.Serialize(geometry)),
+            Data = new RawGeoJSONObject(geojson),
         };
         map.Sources = new[] { geoJSONSource };
 

@@ -186,7 +186,7 @@ public static class GeometryExtensions
         var geometry = src.Geometry.ToX();
 
         var properties = new Dictionary<string, object>();
-        // TODO Convert properties
+        // TODO Convert to C# obj
         // properties = src.Properties;
 
         return new Feature(geometry, properties, src.Identifier?.ToString());

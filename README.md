@@ -119,7 +119,7 @@ b/ iOS's `info.plist`
 | 29 | [GlobeExample](./mapboxqs/GlobeExample.m) |  |
 | 30 | [GlobeFlyToExample](./mapboxqs/GlobeFlyToExample.m) |  |
 | 31 | [HeatmapLayerGlobeExample](./mapboxqs/HeatmapLayerGlobeExample.m) |  |
-| 32 | [IconSizeChangeExample](./mapboxqs/IconSizeChangeExample.m) |  |
+| 32 | [IconSizeChangeExample](./mapboxqs/IconSizeChangeExample.m) | OK |
 | 33 | [LargeGeoJSONPerformanceExample](./mapboxqs/LargeGeoJSONPerformanceExample.m) |  |
 | 34 | [LayerPositionExample](./mapboxqs/LayerPositionExample.m) |  |
 | 35 | [LineAnnotationExample](./mapboxqs/LineAnnotationExample.m) | OK |

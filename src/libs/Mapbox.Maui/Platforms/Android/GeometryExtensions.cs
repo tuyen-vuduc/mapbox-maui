@@ -70,7 +70,7 @@ public static class GeometryExtensions
     internal static GeoJSON.Text.Feature.Feature ToX(this Com.Mapbox.Geojson.Feature src)
         => new GeoJSON.Text.Feature.Feature(
             src.Geometry().ToX(),
-            src.Properties(),
+            null, // TODO Convert to C# obj: src.Properties(),
             src.Id());
 
     internal static IGeometryObject ToX(this Com.Mapbox.Geojson.IGeometry src)

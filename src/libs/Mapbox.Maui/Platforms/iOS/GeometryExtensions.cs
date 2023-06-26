@@ -68,22 +68,6 @@ public static class GeometryExtensions
                                                 .ToArray()))
                                         .ToArray()))
                             .ToArray()));
-
-                //case FeatureCollection featureCollection:
-                //return GeometryHelper.CreateMultiPolygon(
-                //    NSArray.FromNSObjects(
-                //        multiPolygon.Coordinates
-                //            .Select(
-                //                x => NSArray.FromNSObjects(
-                //                    x.Coordinates
-                //                        .Select(
-                //                            y => NSArray.FromNSObjects(
-                //                                y.Coordinates
-                //                                .Select(
-                //                                    z => z.ToNSValue())
-                //                                .ToArray()))
-                //                        .ToArray()))
-                //            .ToArray()));
         }
 
         return null;
@@ -102,6 +86,110 @@ public static class GeometryExtensions
         return NSValue.FromCGPoint(
             xobj.ToCGPoint()
         );
+    }
+
+    internal static IPosition ToPosition(this NSValue src)
+        => new Position(
+            src.CoordinateValue.Latitude,
+            src.CoordinateValue.Longitude
+        );
+
+    internal static IGeometryObject ToX(this MBXGeometry src)
+    {
+        switch (src.GeometryType) {
+            case MBXGeometryType.Point:
+                var pointPosition = src
+                    .ExtractLocations()
+                    .ToPosition();
+                return new GeoJSON.Text.Geometry.Point(
+                    pointPosition
+                );
+            case MBXGeometryType.Line:
+                var linePoints = src
+                    .ExtractLocationsArray()
+                    .Select(y => y.ToPosition());
+                return new LineString(
+                    linePoints
+                );
+            case MBXGeometryType.Polygon:
+                var polygonPoints = src
+                    .ExtractLocations2DArray()
+                    .Select(
+                    z => z
+                        .ToArray()
+                        .Select(                        
+                        y => new[] {
+                            y.CoordinateValue.Longitude,
+                            y.CoordinateValue.Latitude
+                        })
+                    );
+                return new Polygon(
+                    polygonPoints
+                );
+            case MBXGeometryType.MultiPoint:
+                var multiPoints = src
+                    .ExtractLocationsArray()
+                    .Select(
+                    y => new[] {
+                        y.CoordinateValue.Longitude,
+                        y.CoordinateValue.Latitude
+                    });
+                return new MultiPoint(
+                    multiPoints
+                );
+            case MBXGeometryType.MultiLine:
+                var multiLinePoints = src
+                    .ExtractLocations2DArray()
+                    .Select(
+                    z => z
+                        .ToArray()
+                        .Select(
+                        y => new[] {
+                            y.CoordinateValue.Longitude,
+                            y.CoordinateValue.Latitude
+                        })
+                    );
+                return new MultiLineString(
+                    multiLinePoints
+                );
+            case MBXGeometryType.MultiPolygon:
+                var multiPolygonPoints = src
+                    .ExtractLocations3DArray()
+                    .Select(
+                    x => x
+                        .ToArray()
+                        .Select(
+                        z => z
+                            .ToArray()
+                            .Select(
+                            y => new[] {
+                                y.CoordinateValue.Longitude,
+                                y.CoordinateValue.Latitude
+                            })
+                        )
+                    );
+                return new MultiPolygon(
+                    multiPolygonPoints
+                );
+            case MBXGeometryType.GeometryCollection:
+                var geometries = src
+                    .ExtractGeometriesArray()
+                    .Select(x => x.ToX());
+                return new GeometryCollection(geometries);
+        }
+
+        throw new NotSupportedException("Invalid geometry type");
+    }
+
+    internal static Feature ToX(this MBXFeature src)
+    {
+        var geometry = src.Geometry.ToX();
+
+        var properties = new Dictionary<string, object>();
+        // TODO Convert properties
+        // properties = src.Properties;
+
+        return new Feature(geometry, properties, src.Identifier?.ToString());
     }
 }
 

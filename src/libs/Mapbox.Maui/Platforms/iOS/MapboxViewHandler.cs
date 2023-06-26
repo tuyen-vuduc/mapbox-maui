@@ -243,6 +243,12 @@ public partial class MapboxViewHandler
     {
         base.DisconnectHandler(platformView);
 
+        if (VirtualView is MapboxView mapboxView)
+        {
+            mapboxView.AnnotationController = null;
+            mapboxView.QueryManager = null;
+        }
+
         var mapView = platformView.MapView;
         if (mapView == null) return;
 
@@ -260,6 +266,7 @@ public partial class MapboxViewHandler
         {
             mapboxView.InvokeMapReady();
             mapboxView.AnnotationController = this;
+            mapboxView.QueryManager = this;
         }
 
         var mapView = platformView.MapView;
@@ -282,16 +289,26 @@ public partial class MapboxViewHandler
     {
         var mapView = this.PlatformView.MapView;
         if (mapView == null) return;
-
-        var tapPosition = mapView.CoordinateFromScreenPosition(
-            tapGestureRecognizer.LocationInView(mapView)
+        var screenPosition = tapGestureRecognizer.LocationInView(mapView);
+        var coords = mapView.CoordinateFromScreenPosition(
+            screenPosition
         );
+        var mapTappedPosition = new MapTappedPosition
+        {
+            ScreenPosition = new Point(
+                screenPosition.X,
+                screenPosition.Y
+            ),
+            Point = new GeoJSON.Text.Geometry.Point(
+                new GeoJSON.Text.Geometry.Position(
+                    coords.Latitude,
+                    coords.Longitude
+                )
+            ),
+        };
 
         (VirtualView as MapboxView)?.InvokeMapTapped(
-            new Point(
-                tapPosition.Latitude,
-                tapPosition.Longitude
-            )
+            mapTappedPosition
         );
     }
 }

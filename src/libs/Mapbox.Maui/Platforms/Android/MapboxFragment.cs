@@ -16,7 +16,7 @@ public partial class MapboxFragment : Fragment
     public event Action<MapView> MapViewReady;
     public event Action<MapView> StyleLoaded;
     public event Action<MapView> MapLoaded;
-    public event Action<Microsoft.Maui.Graphics.Point> MapClicked;
+    public event Action<MapTappedPosition> MapClicked;
 
     public MapView MapView { get; private set; }
 
@@ -118,7 +118,17 @@ partial class MapboxFragment
         var xpoint = new Microsoft.Maui.Graphics.Point(
             point.Latitude(),
             point.Longitude());
-        MapClicked?.Invoke(xpoint);
+        MapClicked?.Invoke(new MapTappedPosition
+        {
+            ScreenPosition = xpoint,
+            Point = new GeoJSON.Text.Geometry.Point(
+                new GeoJSON.Text.Geometry.Position(
+                    point.Latitude(),
+                    point.Longitude(),
+                    point.HasAltitude ? point.Altitude() : null
+                )
+            )
+        });
         return true;
     }
 

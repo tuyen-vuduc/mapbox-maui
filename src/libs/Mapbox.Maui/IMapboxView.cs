@@ -2,6 +2,7 @@
 
 using System.Windows.Input;
 using MapboxMaui.Annotations;
+using MapboxMaui.Query;
 using MapboxMaui.Styles;
 
 public partial interface IMapboxView : IView
@@ -27,10 +28,11 @@ public partial interface IMapboxView : IView
 
     IAnnotationController AnnotationController { get; }
 
-    ICommand Command { get;  }
+    IMapFeatureQueryable QueryManager { get; }
 }
 
-partial interface IMapboxView { 
+partial interface IMapboxView
+{
     event EventHandler MapReady;
     ICommand MapReadyCommand { get; set; }
 
@@ -39,6 +41,9 @@ partial interface IMapboxView {
 
     event EventHandler MapLoaded;
     ICommand MapLoadedCommand { get; set; }
+
+    event EventHandler<MapTappedEventArgs> MapTapped;
+    ICommand Command { get; }
 }
 
 public interface IAnnotationController
@@ -46,5 +51,20 @@ public interface IAnnotationController
     IPolygonAnnotationManager CreatePolygonAnnotationManager(string id, LayerPosition layerPosition);
     ICircleAnnotationManager CreateCircleAnnotationManager(string id, LayerPosition layerPosition);
     IPointAnnotationManager CreatePointAnnotationManager(string id, LayerPosition layerPosition, ClusterOptions clusterOptions = null);
-    public IPolylineAnnotationManager CreatePolylineAnnotationManager(string id, LayerPosition layerPosition);
+    IPolylineAnnotationManager CreatePolylineAnnotationManager(string id, LayerPosition layerPosition);
+}
+
+public interface IMapFeatureQueryable
+{
+    Task<IEnumerable<QueriedFeature>> QueryRenderedFeaturesWith(Point point, RenderedQueryOptions options);
+}
+
+public class MapTappedEventArgs : EventArgs
+{
+    public MapTappedPosition Position { get; }
+
+    public MapTappedEventArgs(MapTappedPosition position)
+    {
+        Position = position;
+    }
 }

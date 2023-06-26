@@ -1,4 +1,7 @@
-﻿namespace MapboxMaui;
+﻿using GeoJSON.Text.Geometry;
+using Point = Microsoft.Maui.Graphics.Point;
+
+namespace MapboxMaui;
 
 public static class GeometryExtensions
 {
@@ -17,13 +20,13 @@ public static class GeometryExtensions
                 point.Coordinates.Longitude,
                 point.Coordinates.Latitude),
 
-            GeoJSON.Text.Geometry.LineString line => Com.Mapbox.Geojson.LineString.FromLngLats(
+            LineString line => Com.Mapbox.Geojson.LineString.FromLngLats(
                 Com.Mapbox.Geojson.MultiPoint.FromLngLats(
                     line.Coordinates.Select(ToGeoPoint).ToList()
                     )
                 ),
 
-            GeoJSON.Text.Geometry.Polygon polygon => Com.Mapbox.Geojson.Polygon.FromLngLats(
+            Polygon polygon => Com.Mapbox.Geojson.Polygon.FromLngLats(
                 polygon.Coordinates
                     .Select(
                         x => x.Coordinates.Select(ToGeoPoint).ToList()
@@ -31,13 +34,13 @@ public static class GeometryExtensions
                     .ToList()
                 ),
 
-            GeoJSON.Text.Geometry.MultiPoint multiPoint => Com.Mapbox.Geojson.MultiPoint.FromLngLats(
+            MultiPoint multiPoint => Com.Mapbox.Geojson.MultiPoint.FromLngLats(
                    multiPoint.Coordinates
                        .Select(x => x.Coordinates.ToGeoPoint())
                        .ToList()
                    ),
 
-            GeoJSON.Text.Geometry.MultiLineString multiLineString => Com.Mapbox.Geojson.Polygon.FromLngLats(
+            MultiLineString multiLineString => Com.Mapbox.Geojson.Polygon.FromLngLats(
                 multiLineString.Coordinates
                     .Select(
                         x => x.Coordinates.Select(ToGeoPoint).ToList()
@@ -45,7 +48,7 @@ public static class GeometryExtensions
                     .ToList()
                 ),
 
-            GeoJSON.Text.Geometry.MultiPolygon multiPolygon => Com.Mapbox.Geojson.Polygon.FromLngLats(
+            MultiPolygon multiPolygon => Com.Mapbox.Geojson.Polygon.FromLngLats(
                 multiPolygon.Coordinates
                     .Select(
                         x => x.Coordinates
@@ -62,6 +65,81 @@ public static class GeometryExtensions
     internal static Com.Mapbox.Geojson.Point ToNative(this Point xvalue)
     {
         return Com.Mapbox.Geojson.Point.FromLngLat(xvalue.Y, xvalue.X);
+    }
+
+    internal static GeoJSON.Text.Feature.Feature ToX(this Com.Mapbox.Geojson.Feature src)
+        => new GeoJSON.Text.Feature.Feature(
+            src.Geometry().ToX(),
+            src.Properties(),
+            src.Id());
+
+    internal static IGeometryObject ToX(this Com.Mapbox.Geojson.IGeometry src)
+    {
+        switch(src)
+        {
+            case Com.Mapbox.Geojson.Point point:
+                return new GeoJSON.Text.Geometry.Point(
+                    new Position(
+                        point.Latitude(), point.Longitude(),
+                        point.HasAltitude ? point.Altitude() : null
+                    )
+                );
+            case Com.Mapbox.Geojson.LineString lineString:
+                return new LineString(
+                    lineString
+                    .Coordinates()
+                    .Select(x => new [] { x.Longitude(), x.Latitude() })
+                    .ToList()
+                );
+            case Com.Mapbox.Geojson.Polygon polygon:
+                return new Polygon(
+                    polygon
+                    .Coordinates()
+                    .Select(
+                    y => y.Select(
+                        x => new[] { x.Longitude(), x.Latitude() }
+                        ))
+                    .ToList()
+                );
+            case Com.Mapbox.Geojson.MultiPoint multiPoint:
+                return new MultiPoint(
+                    multiPoint
+                    .Coordinates()
+                    .Select(x => new[] { x.Longitude(), x.Latitude() })
+                    .ToList()
+                );
+            case Com.Mapbox.Geojson.MultiLineString multiLineString:
+                return new MultiLineString(
+                    multiLineString
+                    .Coordinates()
+                    .Select(
+                    y => y.Select(
+                        x => new[] { x.Longitude(), x.Latitude() }
+                        ))
+                    .ToList()
+                );
+            case Com.Mapbox.Geojson.MultiPolygon multiPolygon:
+                return new MultiPolygon(
+                    multiPolygon
+                    .Coordinates()
+                    .Select(
+                    z => z.Select(
+                        y => y.Select(
+                            x => new[] { x.Longitude(), x.Latitude() }
+                            )
+                        )
+                    )
+                    .ToList()
+                );
+            case Com.Mapbox.Geojson.GeometryCollection geometryCollection:
+                return new GeometryCollection(
+                    geometryCollection
+                    .Geometries()
+                    .Select(x => x.ToX())
+                    .ToList()
+                );
+        }
+        throw new NotSupportedException("Invalid geometry type");
     }
 }
 

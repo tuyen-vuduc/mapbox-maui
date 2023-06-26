@@ -7,7 +7,6 @@ using Com.Mapbox.Maps.Plugin.Scalebar;
 using Microsoft.Maui.Platform;
 using Android.Content;
 using Android.Graphics;
-using System;
 
 public partial class MapboxViewHandler
 {
@@ -209,6 +208,7 @@ public partial class MapboxViewHandler
         if (VirtualView is MapboxView mapboxView)
         {
             mapboxView.AnnotationController = this;
+            mapboxView.QueryManager = this;
         }
     }
 
@@ -223,6 +223,12 @@ public partial class MapboxViewHandler
             mapboxFragment.Dispose();
             mapboxFragment = null;
         }
+
+        if (VirtualView is MapboxView mapboxView)
+        {
+            mapboxView.AnnotationController = null;
+            mapboxView.QueryManager = null;
+        }
         base.DisconnectHandler(platformView);
     }
 
@@ -235,7 +241,7 @@ public partial class MapboxViewHandler
     private void HandleStyleLoaded(MapView view)
         => (VirtualView as MapboxView)?.InvokeStyleLoaded();
 
-    private void HandleMapClicked(Microsoft.Maui.Graphics.Point point)
+    private void HandleMapClicked(MapTappedPosition point)
         => (VirtualView as MapboxView)?.InvokeMapTapped(point);
 
 }

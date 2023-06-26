@@ -10,6 +10,7 @@ using Microsoft.Maui.Platform;
 using MapboxMaui.Styles;
 using System.Collections;
 using MapboxMaui.Expressions;
+using AndroidX.Fragment.App;
 
 static class AdditionalExtensions
 {
@@ -258,9 +259,12 @@ static class AdditionalExtensions
     }
 
     internal static MapView GetMapView(this MapboxViewHandler handler)
+        => handler.PlatformView.GetMapView();
+
+    internal static MapView GetMapView(this FragmentContainerView container)
     {
-        var mainActivity = (MauiAppCompatActivity)handler.Context.GetActivity();
-        var tag = $"mapbox-maui-{handler.PlatformView.Id}";
+        var mainActivity = (MauiAppCompatActivity)container.Context.GetActivity();
+        var tag = $"mapbox-maui-{container.Id}";
         var fragnent = mainActivity.SupportFragmentManager.FindFragmentByTag(tag);
         return (fragnent as MapboxFragment)?.MapView;
     }

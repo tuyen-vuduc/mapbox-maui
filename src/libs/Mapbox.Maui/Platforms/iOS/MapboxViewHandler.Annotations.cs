@@ -6,10 +6,9 @@ using MapboxMaui.Styles;
 
 partial class MapboxViewHandler : IAnnotationController
 {
-
     public IPolygonAnnotationManager CreatePolygonAnnotationManager(
         string id,
-        Styles.LayerPosition layerPosition
+        LayerPosition layerPosition
         )
     {
         var mapView = PlatformView?.MapView;
@@ -26,7 +25,7 @@ partial class MapboxViewHandler : IAnnotationController
 
     public ICircleAnnotationManager CreateCircleAnnotationManager(
         string id,
-        Styles.LayerPosition layerPosition
+        LayerPosition layerPosition
         )
     {
         var mapView = PlatformView?.MapView;
@@ -43,7 +42,7 @@ partial class MapboxViewHandler : IAnnotationController
 
     public IPointAnnotationManager CreatePointAnnotationManager(
         string id,
-        Styles.LayerPosition layerPosition,
+        LayerPosition layerPosition,
         ClusterOptions clusterOptions = null)
     {
         var mapView = PlatformView?.MapView;

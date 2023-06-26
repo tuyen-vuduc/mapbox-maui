@@ -4,6 +4,28 @@ using System.Windows.Input;
 
 partial class MapboxView
 {
+    public event EventHandler<MapTappedEventArgs> MapTapped;
+    internal void InvokeMapTapped(MapTappedPosition point)
+    {
+        MapTapped?.Invoke(this, new MapTappedEventArgs(point));
+
+        if (Command?.CanExecute(point) == true)
+        {
+            Command.Execute(point);
+        }
+    }
+
+    public static readonly BindableProperty CommandProperty = BindableProperty.Create(
+       nameof(Command),
+       typeof(ICommand),
+       typeof(MapboxView)
+    );
+    public ICommand Command
+    {
+        get => (ICommand)GetValue(CommandProperty);
+        set => SetValue(CommandProperty, value);
+    }
+
     public event EventHandler MapReady;
     internal void InvokeMapReady()
     {
@@ -35,17 +57,6 @@ partial class MapboxView
         if (StyleLoadedCommand?.CanExecute(null) == true)
         {
             StyleLoadedCommand.Execute(null);
-        }
-    }
-
-    public event EventHandler MapTapped;
-    internal void InvokeMapTapped(Point point)
-    {
-        MapTapped?.Invoke(this, new MapTappedEventArgs(point));
-
-        if (Command?.CanExecute(point) == true)
-        {
-            Command.Execute(point);
         }
     }
 
@@ -85,13 +96,10 @@ partial class MapboxView
     }
 }
 
-public class MapTappedEventArgs : EventArgs
+public class MapTappedPosition
 {
-    public Point Position { get; }
+    public Point ScreenPosition { get; set; }
 
-    public MapTappedEventArgs(Point position)
-    {
-        Position = position;
-    }
+    public GeoJSON.Text.Geometry.Point Point { get; set; }
 }
 

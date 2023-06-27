@@ -22,6 +22,8 @@ public partial interface IMapboxView : IView
 
     IEnumerable<ResolvedImage> Images { get; set; }
 
+    IEnumerable<ViewAnnotationOptions> ViewAnnotations { get; set; }
+
     Terrain Terrain { get; set; }
 
     Light Light { get; set; }

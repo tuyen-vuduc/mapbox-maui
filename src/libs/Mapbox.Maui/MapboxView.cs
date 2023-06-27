@@ -5,6 +5,17 @@ using MapboxMaui.Styles;
 
 public partial class MapboxView : View, IMapboxView
 {
+    public static readonly BindableProperty ViewAnnotationsProperty = BindableProperty.Create(
+       nameof(ViewAnnotations),
+       typeof(IEnumerable<ViewAnnotationOptions>),
+       typeof(MapboxView)
+    );
+    public IEnumerable<ViewAnnotationOptions> ViewAnnotations
+    {
+        get => (IEnumerable<ViewAnnotationOptions>)GetValue(ViewAnnotationsProperty);
+        set => SetValue(ViewAnnotationsProperty, value);
+    }
+
     public static readonly BindableProperty AnnotationsProperty = BindableProperty.Create(
        nameof(Annotations),
        typeof(IEnumerable<IAnnotation>),

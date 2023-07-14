@@ -17,11 +17,11 @@ public static class ExpressionExtensions
 
         return string.IsNullOrWhiteSpace(xvalue.Operator.Value)
             ? TMBExpression.CreateWithArguments(
-                NSArray.FromObjects(arguments)
+                arguments
             )
             : TMBExpression.CreateWithOperator(
                 xvalue.Operator.ToPlatformValue(),
-                NSArray.FromObjects(arguments)
+                arguments
             );
     }
 

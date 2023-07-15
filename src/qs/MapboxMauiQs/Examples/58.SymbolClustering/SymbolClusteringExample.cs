@@ -37,24 +37,24 @@ public class SymbolClusteringExample : ContentPage, IExamplePage, IQueryAttribut
 
         // Create expression to identify the max flow rate of one hydrant in the cluster
         // ["max", ["get", "FLOW"]]
-        var maxExpression = DslExpression.max(
-            DslExpression.get("FLOW"));
+        var maxExpression = DslExpression.Max(
+            DslExpression.Get("FLOW"));
 
         // Create expression to determine if a hydrant with EngineID E-9 is in the cluster
         // ["any", ["==", ["get", "ENGINEID"], "E-9"]]
-        var ine9Expression = DslExpression.any(
-            DslExpression.eq(
-                DslExpression.get("ENGINEID"),
+        var ine9Expression = DslExpression.Any(
+            DslExpression.Eq(
+                DslExpression.Get("ENGINEID"),
                 "E-9"
                 ));
 
         // Create expression to get the sum of all of the flow rates in the cluster
         // [["+",["accumulated"],["get", "sum"]],["get", "FLOW"]]
-        var sumExpression = DslExpression.args(
-            DslExpression.sum(
-                DslExpression.accumulated(),
-                DslExpression.get("sum")),
-            DslExpression.get("FLOW"));
+        var sumExpression = DslExpression.Args(
+            DslExpression.Sum(
+                DslExpression.Accumulated(),
+                DslExpression.Get("sum")),
+            DslExpression.Get("FLOW"));
 
         // Add the expressions to the cluster as ClusterProperties so they can be accessed below
         var clusterProperties = new Dictionary<string, object> {
@@ -84,12 +84,12 @@ public class SymbolClusteringExample : ContentPage, IExamplePage, IQueryAttribut
             // is added to clusters when the cluster is created. If your source
             // data includes a `point_count` property, consider checking
             // for `cluster_id`.
-            Filter = DslExpression.has("point_count"),
+            Filter = DslExpression.Has("point_count"),
 
             // Set the color of the icons based on the number of points within
             // a given cluster. The first value is a default value.
-            CircleColor = (PropertyValue<Color>)DslExpression.step(
-                DslExpression.get("point_count"),
+            CircleColor = (PropertyValue<Color>)DslExpression.Step(
+                DslExpression.Get("point_count"),
                 Colors.Green,
                 50,
                 Colors.Blue,
@@ -109,8 +109,8 @@ public class SymbolClusteringExample : ContentPage, IExamplePage, IQueryAttribut
         {
             Source = sourceId,
             // Filter out clusters by checking for `point_count`.
-            Filter = DslExpression.not(
-                DslExpression.has("point_count")),
+            Filter = DslExpression.Not(
+                DslExpression.Has("point_count")),
 
             IconImage = image,
             IconColor = Colors.White,
@@ -118,8 +118,8 @@ public class SymbolClusteringExample : ContentPage, IExamplePage, IQueryAttribut
             // Rotate the icon image based on the recorded water flow.
             // The `mod` operator allows you to use the remainder after dividing
             // the specified values.
-            IconRotate = (PropertyValue<Double>)DslExpression.mod(
-                DslExpression.get("FLOW"),
+            IconRotate = (PropertyValue<Double>)DslExpression.Mod(
+                DslExpression.Get("FLOW"),
                 360),
         };
 
@@ -132,10 +132,10 @@ public class SymbolClusteringExample : ContentPage, IExamplePage, IQueryAttribut
         {
             Source = sourceId,
             // check whether the point feature is clustered
-            Filter = DslExpression.has("point_count"),
+            Filter = DslExpression.Has("point_count"),
 
             // Display the value for 'point_count' in the text field
-            TextField = (PropertyValue<string>)DslExpression.get("point_count"),
+            TextField = (PropertyValue<string>)DslExpression.Get("point_count"),
             TextSize = 12.0,
         };
 

@@ -5,8 +5,8 @@ public class LineLayer : MapboxLayer
     public LineLayer(string id)
         : base(id)
     {
-        Type = LayerType.line;
-        Visibility = new PropertyValue<Visibility>(MapboxMaui.Visibility.visible);
+        Type = LayerType.Line;
+        Visibility = new PropertyValue<Visibility>(MapboxMaui.Visibility.Visible);
     }
 
     /// The display of line endings.

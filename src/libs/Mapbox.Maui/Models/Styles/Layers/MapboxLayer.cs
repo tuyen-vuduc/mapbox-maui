@@ -107,7 +107,7 @@ public class MapboxLayer : BaseKVContainer
     {
         get => GetProperty(
             MapboxLayerKey.visibility,
-            new PropertyValue<Visibility>(MapboxMaui.Visibility.visible),
+            new PropertyValue<Visibility>(MapboxMaui.Visibility.Visible),
             MapboxLayerKey.layout
         );
         set => SetProperty(

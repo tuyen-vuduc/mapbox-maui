@@ -15,7 +15,7 @@ partial class MapboxViewHandler : IMapFeatureQueryable
 
         var tcs = new TaskCompletionSource<IEnumerable<QueriedFeature>>();
 
-        _ = mapView.QueryRenderedFeaturesWith(point, options.ToPlatform(), (features, error) => {
+        _ = mapView.MapboxMap().QueryRenderedFeaturesWithPoint(point, options.ToPlatform(), (features, error) => {
             if (error != null) {
                 tcs.TrySetException(new NSErrorException(error));
                 return;

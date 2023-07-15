@@ -82,14 +82,14 @@ public class AddMarkersSymbolExample : ContentPage, IExamplePage, IQueryAttribut
 
         map.Sources = new[] { source };
 
-        var rotateExpression = DslExpression.match(
-            DslExpression.get(Constants.ICON_KEY),
+        var rotateExpression = DslExpression.Match(
+            DslExpression.Get(Constants.ICON_KEY),
             Constants.BLUE_MARKER_PROPERTY,
             45,
             0
         );
-        var imageExpression = DslExpression.match(
-            DslExpression.get(Constants.ICON_KEY),
+        var imageExpression = DslExpression.Match(
+            DslExpression.Get(Constants.ICON_KEY),
             Constants.BLUE_MARKER_PROPERTY,
             Constants.BLUE_ICON_ID,
             Constants.RED_MARKER_PROPERTY,
@@ -101,7 +101,7 @@ public class AddMarkersSymbolExample : ContentPage, IExamplePage, IQueryAttribut
         {
             Source = Constants.SOURCE_ID,
             IconImage = (PropertyValue<ResolvedImage>)imageExpression,
-            IconAnchor = IconAnchor.bottom,
+            IconAnchor = IconAnchor.Bottom,
             IconAllowOverlap = false,
             IconRotate = (PropertyValue<double>)rotateExpression
         };

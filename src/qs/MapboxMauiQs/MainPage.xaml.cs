@@ -303,6 +303,8 @@ Use the overlayHandler parameter to draw on top of a snapshot using Core Graphhi
         Shell.Current.GoToAsync(example.PageRoute, new Dictionary<string, object>
         {
             { nameof(example), example }
+        }).ContinueWith(t => {
+
         });
     }
 }

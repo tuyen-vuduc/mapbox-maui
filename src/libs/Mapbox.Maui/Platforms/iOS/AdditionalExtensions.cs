@@ -105,16 +105,21 @@ public static partial class AdditionalExtensions
     }
 
     internal static TMBLayerPosition ToPlatformValue(
-        this LayerPosition xvalue
+        this LayerPosition xvalue,
+        NSObject arg
     )
     {
-        return xvalue.Enum switch
+        var layerPositionType = xvalue.Enum switch
         {
-            LayerPositionEnum.Above => TMBLayerPosition.Above,
-            LayerPositionEnum.At => TMBLayerPosition.At,
-            LayerPositionEnum.Below => TMBLayerPosition.Below,
-            _ => TMBLayerPosition.Unowned,
+            LayerPositionEnum.Above => TMBLayerPositionType.Above,
+            LayerPositionEnum.Below => TMBLayerPositionType.Below,
+            LayerPositionEnum.At => TMBLayerPositionType.At,
+            _ => (TMBLayerPositionType?)null
         };
+
+        return layerPositionType.HasValue
+            ? new TMBLayerPosition(layerPositionType.Value, arg)
+            : null;
     }
 
     internal static TMBStyleTransition ToPlatformValue(this StyleTransition xvalue)

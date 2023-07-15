@@ -1,4 +1,5 @@
-﻿using MapboxMaps;
+﻿using MapboxCoreMaps;
+using MapboxMaps;
 using MapboxMapsObjC;
 using UIKit;
 
@@ -11,16 +12,15 @@ public class MapViewContainer : UIView
     public MapViewContainer(string accessToken)
         : base()
     {
-        MapInitOptions options = MapInitOptionsBuilder
-                .Create()
-                .AccessToken(accessToken)
-                .Build();
+        var resourceOptions = new MBMResourceOptions(accessToken, null,  null, null, null);
+        var options = MapInitOptionsFactory
+            .CreateWithResourceOptions(resourceOptions, null, null, null, null);
 
         var mapView = MapViewFactory.CreateWithFrame(
             CoreGraphics.CGRect.FromLTRB(0, 0, 320, 675),
             options
         );
-        mapView.AutoresizingMask = UIKit.UIViewAutoresizing.FlexibleWidth | UIKit.UIViewAutoresizing.FlexibleHeight;
+        mapView.AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
 
         AddSubview(mapView);
 

@@ -1,0 +1,7 @@
+{
+    "mapboxRepo": "PATH_TO_MAPBOX_IOS_REPO",
+    "mauiRepo": "PATH_TO_MAPBOX_MAUI",
+    "input": "Sources/MapboxMaps/Style/Generated/Expressions",
+    "output": "src/libs/Mapbox.Maui/Models/Expressions",
+    "name": "AllExpressions.swift"
+}

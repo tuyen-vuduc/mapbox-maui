@@ -5,8 +5,8 @@ public class SymbolLayer : MapboxLayer
     public SymbolLayer(string id)
         : base(id)
     {
-        Type = LayerType.symbol;
-        Visibility = new PropertyValue<Visibility>(MapboxMaui.Visibility.visible);
+        Type = LayerType.Symbol;
+        Visibility = new PropertyValue<Visibility>(MapboxMaui.Visibility.Visible);
     }
 
 

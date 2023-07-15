@@ -92,8 +92,8 @@ public class PointAnnotationClusteringExample : ContentPage, IExamplePage, IQuer
         //   * 25 when point count is less than 50
         //   * 30 when point count is between 50 and 100
         //   * 35 when point count is greater than or equal to 100
-        var circleRadiusExpression = DslExpression.step(
-            DslExpression.get("point_count"),
+        var circleRadiusExpression = DslExpression.Step(
+            DslExpression.Get("point_count"),
             25,
             50,
             30,
@@ -107,8 +107,8 @@ public class PointAnnotationClusteringExample : ContentPage, IExamplePage, IQuer
         //   * red when point count is between 100 and 150
         //   * orange when point count is between 150 and 250
         //   * light pink when point count is greater than or equal to 250
-        var circleColorExpression = DslExpression.step(
-            DslExpression.get("point_count"),
+        var circleColorExpression = DslExpression.Step(
+            DslExpression.Get("point_count"),
             Colors.Yellow,
             10,
             Colors.Green,
@@ -121,15 +121,15 @@ public class PointAnnotationClusteringExample : ContentPage, IExamplePage, IQuer
             250,
             Colors.LightPink);
 
-        var textFieldExpression = DslExpression.concat(
-            DslExpression.stringLiteral("Count:\n"),
-            DslExpression.get("sum"));
+        var textFieldExpression = DslExpression.Concat(
+            DslExpression.String("Count:\n"),
+            DslExpression.Get("sum"));
 
         // Create expression to get the total count of hydrants in a cluster
-        var sumExpression = DslExpression.args(
-            DslExpression.sum(
-                DslExpression.accumulated(),
-                DslExpression.get("sum")
+        var sumExpression = DslExpression.Args(
+            DslExpression.Sum(
+                DslExpression.Accumulated(),
+                DslExpression.Get("sum")
             ),
             1
         );

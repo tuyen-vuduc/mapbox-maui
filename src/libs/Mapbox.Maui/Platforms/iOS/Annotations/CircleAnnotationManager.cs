@@ -23,13 +23,13 @@ public partial class CircleAnnotationManager
 
     public CirclePitchAlignment? CirclePitchAlignment
     {
-        get => nativeManager.CirclePitchAlignment?.StringValue;
-        set => nativeManager.CirclePitchAlignment = value?.ToPlatform();
+        get => nativeManager.CirclePitchAlignment?.CirclePitchAlignmentX();
+        set => nativeManager.CirclePitchAlignment = value?.AsNumber();
     }
     public CirclePitchScale? CirclePitchScale
     {
         get => nativeManager.CirclePitchScale?.StringValue;
-        set => nativeManager.CirclePitchScale = value?.ToPlatform();
+        set => nativeManager.CirclePitchScale = value?.AsNumber();
     }
     public double[] CircleTranslate
     {
@@ -43,7 +43,7 @@ public partial class CircleAnnotationManager
     public CircleTranslateAnchor? CircleTranslateAnchor
     {
         get => nativeManager.CircleTranslateAnchor?.StringValue;
-        set => nativeManager.CircleTranslateAnchor = value?.ToPlatform();
+        set => nativeManager.CircleTranslateAnchor = value?.AsNumber();
     }
 
     public override void AddAnnotations(params CircleAnnotation[] xitems)

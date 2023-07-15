@@ -71,3 +71,8 @@ public struct MapboxStyle : INamedString
      */
     public static readonly MapboxStyle TRAFFIC_NIGHT = (MapboxStyle)"mapbox://styles/mapbox/traffic-night-v2";
 }
+
+public interface INamedString
+{
+    string Value { get; }
+}

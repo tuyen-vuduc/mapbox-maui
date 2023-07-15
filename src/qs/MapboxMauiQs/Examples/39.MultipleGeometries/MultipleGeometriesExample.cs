@@ -63,7 +63,7 @@ public class MultipleGeometriesExample : ContentPage, IExamplePage, IQueryAttrib
         // and apply basic styling to it.
         var circleLayer = new CircleLayer(id: "circle-layer")
         {
-            Filter = DslExpression.eq(
+            Filter = DslExpression.Eq(
                 "$type",
                 "Point"
             ),
@@ -82,7 +82,7 @@ public class MultipleGeometriesExample : ContentPage, IExamplePage, IQueryAttrib
         // Create and style a LineLayer that uses the Line String Feature's coordinates in the GeoJSON data
         var lineLayer = new LineLayer(id: "line-layer")
         {
-            Filter = DslExpression.eq(
+            Filter = DslExpression.Eq(
                 "$type",
                 "LineString"
             ),
@@ -98,7 +98,7 @@ public class MultipleGeometriesExample : ContentPage, IExamplePage, IQueryAttrib
     {
         var polygonLayer = new FillLayer(id: "fill-layer")
         {
-            Filter = DslExpression.eq(
+            Filter = DslExpression.Eq(
                 "$type",
                 "Polygon"
             ),

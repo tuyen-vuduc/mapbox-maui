@@ -47,18 +47,18 @@ public partial class PointAnnotationManager
     }
     public IconPitchAlignment? IconPitchAlignment
     {
-        get => nativeManager.IconPitchAlignment?.StringValue;
-        set => nativeManager.IconPitchAlignment = value?.ToPlatform();
+        get => nativeManager.IconPitchAlignment?.IconPitchAlignmentX();
+        set => nativeManager.IconPitchAlignment = value?.AsNumber();
     }
     public IconRotationAlignment? IconRotationAlignment
     {
-        get => nativeManager.IconRotationAlignment?.StringValue;
-        set => nativeManager.IconRotationAlignment = value?.ToPlatform();
+        get => nativeManager.IconRotationAlignment?.IconRotationAlignmentX();
+        set => nativeManager.IconRotationAlignment = value?.AsNumber();
     }
     public IconTextFit? IconTextFit
     {
-        get => nativeManager.IconTextFit?.StringValue;
-        set => nativeManager.IconTextFit = value?.ToPlatform();
+        get => nativeManager.IconTextFit?.IconTextFitX();
+        set => nativeManager.IconTextFit = value?.AsNumber();
     }
     public double[] IconTextFitPadding
     {
@@ -76,8 +76,8 @@ public partial class PointAnnotationManager
     }
     public SymbolPlacement? SymbolPlacement
     {
-        get => nativeManager.SymbolPlacement?.StringValue;
-        set => nativeManager.SymbolPlacement = value?.ToPlatform();
+        get => nativeManager.SymbolPlacement?.SymbolPlacementX();
+        set => nativeManager.SymbolPlacement = value?.AsNumber();
     }
     public double? SymbolSpacing
     {
@@ -86,8 +86,8 @@ public partial class PointAnnotationManager
     }
     public SymbolZOrder? SymbolZOrder
     {
-        get => nativeManager.SymbolZOrder?.StringValue;
-        set => nativeManager.SymbolZOrder = value?.ToPlatform();
+        get => nativeManager.SymbolZOrder?.SymbolZOrderX();
+        set => nativeManager.SymbolZOrder = value?.AsNumber();
     }
     public bool? TextAllowOverlap
     {
@@ -126,30 +126,30 @@ public partial class PointAnnotationManager
     }
     public TextPitchAlignment? TextPitchAlignment
     {
-        get => nativeManager.TextPitchAlignment?.StringValue;
-        set => nativeManager.TextPitchAlignment = value?.ToPlatform();
+        get => nativeManager.TextPitchAlignment?.TextPitchAlignmentX();
+        set => nativeManager.TextPitchAlignment = value?.AsNumber();
     }
     public TextRotationAlignment? TextRotationAlignment
     {
         get => nativeManager.TextRotationAlignment?.StringValue;
-        set => nativeManager.TextRotationAlignment = value?.ToPlatform();
+        set => nativeManager.TextRotationAlignment = value?.AsNumber();
     }
     public TextAnchor[] TextVariableAnchor
     {
         get => nativeManager.TextVariableAnchor?
-                .Select(x => (TextAnchor)x.StringValue)
+                .Select(x => (TextAnchor)x.TextAnchorX())
                 .ToArray() ?? Array.Empty<TextAnchor>();
         set => nativeManager.TextVariableAnchor = value?
-            .Select(x => x.ToPlatform())
+            .Select(x => x.AsNumber())
             .ToArray();
     }
     public TextWritingMode[] TextWritingMode
     {
         get => nativeManager.TextWritingMode?
-                .Select(x => (TextWritingMode)x.StringValue)
+                .Select(x => (TextWritingMode)x.TextWritingModeX())
                 .ToArray() ?? Array.Empty<TextWritingMode>();
         set => nativeManager.TextWritingMode = value?
-            .Select(x => x.ToPlatform())
+            .Select(x => x.AsNumber())
             .ToArray();
     }
     public double[] IconTranslate
@@ -163,8 +163,8 @@ public partial class PointAnnotationManager
     }
     public IconTranslateAnchor? IconTranslateAnchor
     {
-        get => nativeManager.IconTranslateAnchor?.StringValue;
-        set => nativeManager.IconTranslateAnchor = value?.ToPlatform();
+        get => nativeManager.IconTranslateAnchor?.IconTranslateAnchorX();
+        set => nativeManager.IconTranslateAnchor = value?.AsNumber();
     }
     public double[] TextTranslate
     {
@@ -177,8 +177,8 @@ public partial class PointAnnotationManager
     }
     public TextTranslateAnchor? TextTranslateAnchor
     {
-        get => nativeManager.TextTranslateAnchor?.StringValue;
-        set => nativeManager.TextTranslateAnchor = value?.ToPlatform();
+        get => nativeManager.TextTranslateAnchor?.TextTranslateAnchorX();
+        set => nativeManager.TextTranslateAnchor = value?.AsNumber();
     }
     public double? TextLineHeight
     {

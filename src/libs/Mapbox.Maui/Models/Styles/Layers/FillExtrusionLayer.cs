@@ -4,8 +4,8 @@ public class FillExtrusionLayer : MapboxLayer
 {
 	public FillExtrusionLayer(string id) : base(id)
 	{
-		Type = LayerType.fillExtrusion;
-        Visibility = new PropertyValue<Visibility>(MapboxMaui.Visibility.visible);
+		Type = LayerType.FillExtrusion;
+        Visibility = new PropertyValue<Visibility>(MapboxMaui.Visibility.Visible);
 	}
 
     public static class FillExtrusionLayerKey

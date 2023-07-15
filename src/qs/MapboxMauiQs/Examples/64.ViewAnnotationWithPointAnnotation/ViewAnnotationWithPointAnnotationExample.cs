@@ -97,7 +97,7 @@ public class ViewAnnotationWithPointAnnotationExample : ContentPage, IExamplePag
             id: Constants.markerId)
         {
             IconImage = Constants.blueIconId,
-            IconAnchor = IconAnchor.bottom,
+            IconAnchor = IconAnchor.Bottom,
         };
 
         pointAnnotationManager.AddAnnotations(pointAnnotation);

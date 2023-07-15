@@ -32,8 +32,8 @@ public partial class PolygonAnnotationManager
     }
     public FillTranslateAnchor? FillTranslateAnchor
     {
-        get => nativeManager.FillTranslateAnchor.StringValue;
-        set => nativeManager.FillTranslateAnchor = value?.ToPlatform();
+        get => nativeManager.FillTranslateAnchor?.FillTranslateAnchorX();
+        set => nativeManager.FillTranslateAnchor = value?.AsNumber();
     }
 
     public override void AddAnnotations(params PolygonAnnotation[] xitems)

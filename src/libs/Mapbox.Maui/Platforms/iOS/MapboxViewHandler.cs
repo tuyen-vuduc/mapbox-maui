@@ -19,7 +19,8 @@ public partial class MapboxViewHandler
         if (light == null) return;
 
         var platformProperties = light.Properties.Wrap() as NSDictionary<NSString, NSObject>;
-        mapView.SetLightWithProperties(platformProperties, (error) =>
+        var style = mapView.MapboxMap().Style;
+        style.SetLightWithProperties(platformProperties, (error) =>
         {
             if (error == null) return;
 
@@ -35,6 +36,8 @@ public partial class MapboxViewHandler
         var images = view.Images;
         if (images == null) return;
 
+        var style = mapView.MapboxMap().Style;
+
         foreach (var ximage in images)
         {
             if (!string.IsNullOrWhiteSpace(ximage.Name))
@@ -48,9 +51,9 @@ public partial class MapboxViewHandler
                     image = image.ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate);
                 }
 
-                mapView.AddImageWithId(
-                    ximage.Id,
+                style.AddImage(
                     image,
+                    ximage.Id,
                     ximage.Sdf,
                     UIEdgeInsets.Zero,
                     (error) =>
@@ -73,22 +76,18 @@ public partial class MapboxViewHandler
         var layers = view.Layers;
         if (layers == null) return;
 
+        var style = mapView.MapboxMap().Style;
+
         foreach (var layer in layers)
         {
             var properties = layer.ToPlatformValue();
+            var layerPosition = layer.LayerPosition.ToPlatformValue(layer.LayerPosition.Parameter?.Wrap());
 
-            if (mapView.LayerExistsWithId(
-                    layer.Id,
-                    (error) =>
-                    {
-                        if (error == null) return;
-
-                        System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
-                    }))
+            if (style.LayerExistsWithId(layer.Id))
             {
-                mapView.UpdateLayerPropertiesFor(
-                    layer.Id,
+                style.AddLayerWithProperties(
                     properties,
+                    layerPosition,
                     (error) =>
                     {
                         if (error == null) return;
@@ -99,10 +98,9 @@ public partial class MapboxViewHandler
                 continue;
             }
 
-            mapView.AddLayerWithProperties(
+            style.AddLayerWithProperties(
                 properties,
-                layer.LayerPosition.ToPlatformValue(),
-                layer.LayerPosition.Parameter?.Wrap(),
+                layerPosition,
                 (error) =>
                 {
                     if (error == null) return;
@@ -123,7 +121,7 @@ public partial class MapboxViewHandler
 
         var platformValue = terrain.ToPlatformValue();
 
-        mapView.SetTerrain(platformValue, null);
+        mapView.MapboxMap().Style.SetTerrain(platformValue, null);
     }
 
     private static void HandleSourcesChanged(MapboxViewHandler handler, IMapboxView view)
@@ -134,17 +132,19 @@ public partial class MapboxViewHandler
         var sources = view.Sources;
         if (sources == null) return;
 
+        var style = mapView.MapboxMap().Style;
+
         foreach (var source in sources)
         {
             var platformValue = source.ToPlatformValue();
-            var sourceExists = mapView.SourceExists(source.Id);
+            var sourceExists = style.SourceExistsWithId(source.Id);
 
             if (source is Styles.GeoJSONSource geojsonSource
                 && geojsonSource.Data is Styles.RawGeoJSONObject raw)
             {
                 if (sourceExists)
                 {
-                    mapView.UpdateGeoJSONSourceWithId(
+                    style.UpdateGeoJSONSourceWithId(
                         source.Id, raw.Data,
                         (error) =>
                         {
@@ -155,7 +155,7 @@ public partial class MapboxViewHandler
                     continue;
                 }
 
-                mapView.AddGeoJSONSourceWithId(
+                style.AddGeoJSONSourceWithId(
                     source.Id, platformValue, raw.Data,
                     (error) =>
                     {
@@ -173,8 +173,9 @@ public partial class MapboxViewHandler
                 continue;
             }
 
-            mapView.AddSource(
-                source.Id, platformValue,
+            style.AddSourceWithId(
+                source.Id,
+                platformValue,
                 (error) =>
                 {
                     if (error == null) return;
@@ -192,7 +193,7 @@ public partial class MapboxViewHandler
         var cameraOptions = view.CameraOptions.ToNative();
         if (cameraOptions == null) return;
 
-        mapView.SetCameraTo(cameraOptions);
+        mapView.MapboxMap().SetCameraTo(cameraOptions);
     }
 
     private static void HandleDebugOptionsChanged(MapboxViewHandler handler, IMapboxView view)
@@ -216,7 +217,7 @@ public partial class MapboxViewHandler
         var mapView = handler.PlatformView.MapView;
         if (mapView == null) return;
 
-        mapView.OrnamentsOptionsScaleBarVisibility(view.ScaleBarVisibility.ToNative());
+        mapView.Ornaments().Options.ScaleBar.Visibility = view.ScaleBarVisibility.ToNative();
     }
 
     private static void HandleMapboxStyleChanged(MapboxViewHandler handler, IMapboxView view)
@@ -227,13 +228,17 @@ public partial class MapboxViewHandler
         var styleUri = view.MapboxStyle.ToNative();
         if (string.IsNullOrWhiteSpace(styleUri)) return;
 
-        mapView.SetStyle(styleUri);
+        mapView.MapboxMap().LoadStyleURI(styleUri, (style, error) => {
+            if (error == null) return;
+
+            System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
+        });
     }
 
     protected override PlatformView CreatePlatformView()
     {
         var accessToken = string.IsNullOrWhiteSpace(ACCESS_TOKEN)
-            ? MapInitOptionsBuilder.DefaultResourceOptions.AccessToken
+            ? TMBResourceOptionsManager.Default.ResourceOptions.AccessToken
             : ACCESS_TOKEN;
 
         return new PlatformView(accessToken);
@@ -272,11 +277,13 @@ public partial class MapboxViewHandler
         var mapView = platformView.MapView;
         if (mapView == null) return;
 
-        mapView.OnStyleLoaded(_ =>
+        var mapboxMap = mapView.MapboxMap();
+
+        mapboxMap.OnStyleLoaded(_ =>
         {
             (VirtualView as MapboxView)?.InvokeStyleLoaded();
         });
-        mapView.OnMapLoaded(_ =>
+        mapboxMap.OnMapLoaded(_ =>
         {
             (VirtualView as MapboxView)?.InvokeMapLoaded();
         });
@@ -290,7 +297,7 @@ public partial class MapboxViewHandler
         var mapView = this.PlatformView.MapView;
         if (mapView == null) return;
         var screenPosition = tapGestureRecognizer.LocationInView(mapView);
-        var coords = mapView.CoordinateFromScreenPosition(
+        var coords = mapView.MapboxMap().CoordinateFor(
             screenPosition
         );
         var mapTappedPosition = new MapTappedPosition

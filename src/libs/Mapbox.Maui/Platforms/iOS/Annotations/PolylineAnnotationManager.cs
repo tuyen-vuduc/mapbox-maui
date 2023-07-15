@@ -22,8 +22,8 @@ public partial class PolylineAnnotationManager
 
     public LineCap? LineCap
     {
-        get => nativeManager.LineCap?.StringValue;
-        set => nativeManager.LineCap = value?.ToPlatform();
+        get => nativeManager.LineCap?.LineCapX();
+        set => nativeManager.LineCap = value?.AsNumber();
     }
     public double? LineMiterLimit
     {
@@ -47,8 +47,8 @@ public partial class PolylineAnnotationManager
     }
     public LineTranslateAnchor? LineTranslateAnchor
     {
-        get => nativeManager.LineTranslateAnchor?.StringValue;
-        set => nativeManager.LineTranslateAnchor = value?.ToPlatform();
+        get => nativeManager.LineTranslateAnchor?.LineTranslateAnchorX();
+        set => nativeManager.LineTranslateAnchor = value?.AsNumber();
     }
     public double[] LineTrimOffset
     {

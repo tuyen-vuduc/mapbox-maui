@@ -5,8 +5,8 @@ public class CircleLayer : MapboxLayer
     public CircleLayer(string id)
         : base(id)
     {
-        Type = LayerType.circle;
-        Visibility = new PropertyValue<Visibility>(MapboxMaui.Visibility.visible);
+        Type = LayerType.Circle;
+        Visibility = new PropertyValue<Visibility>(MapboxMaui.Visibility.Visible);
     }
     /// Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
     public PropertyValue<double> CircleSortKey

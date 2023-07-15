@@ -35,7 +35,7 @@ public class TerrainExample : ContentPage, IExamplePage, IQueryAttributable
 
         var skyLayer = new SkyLayer("sky-layer")
         {
-            SkyType = new PropertyValue<SkyType>(SkyType.atmosphere),
+            SkyType = new PropertyValue<SkyType>(SkyType.Atmosphere),
             SkyAtmosphereSun = new PropertyValue<double[]>(new[] { 0.0, 0.0 }),
             SkyAtmosphereSunIntensity = new PropertyValue<double>(15.0),
         };

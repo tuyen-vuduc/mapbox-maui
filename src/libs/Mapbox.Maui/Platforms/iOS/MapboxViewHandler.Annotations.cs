@@ -15,10 +15,9 @@ partial class MapboxViewHandler : IAnnotationController
 
         if (mapView == null) return null;
 
-        var nativeManager = mapView.PolygonAnnotationManagerWithId(
+        var nativeManager = mapView.Annotations().MakePolygonAnnotationManagerWithId(
             id,
-            layerPosition.ToPlatformValue(),
-            layerPosition.Parameter?.Wrap());
+            layerPosition.ToPlatformValue(layerPosition.Parameter?.Wrap()));
 
         return new PolygonAnnotationManager(id, nativeManager);
     }
@@ -32,10 +31,9 @@ partial class MapboxViewHandler : IAnnotationController
 
         if (mapView == null) return null;
 
-        var nativeManager = mapView.CircleAnnotationManagerWithId(
+        var nativeManager = mapView.Annotations().MakeCircleAnnotationManagerWithId(
             id,
-            layerPosition.ToPlatformValue(),
-            layerPosition.Parameter?.Wrap());
+            layerPosition.ToPlatformValue(layerPosition.Parameter?.Wrap()));
 
         return new CircleAnnotationManager(id, nativeManager);
     }
@@ -64,10 +62,9 @@ partial class MapboxViewHandler : IAnnotationController
             );
         }
 
-        var nativeManager = mapView.PointAnnotationManagerWithId(
+        var nativeManager = mapView.Annotations().MakePointAnnotationManagerWithId(
             id,
-            layerPosition.ToPlatformValue(),
-            layerPosition.Parameter?.Wrap(),
+            layerPosition.ToPlatformValue(layerPosition.Parameter?.Wrap()),
             nativeClusterOptions);
 
         return new PointAnnotationManager(id, nativeManager);
@@ -79,11 +76,9 @@ partial class MapboxViewHandler : IAnnotationController
 
         if (mapView == null) return null;
 
-        var nativeManager = mapView.PolylineAnnotationManagerWithId(
+        var nativeManager = mapView.Annotations().MakePolylineAnnotationManagerWithId(
             id,
-            layerPosition.ToPlatformValue(),
-            layerPosition.Parameter?.Wrap()
-        );
+            layerPosition.ToPlatformValue(layerPosition.Parameter?.Wrap()));
 
         return new PolylineAnnotationManager(id, nativeManager);
     }

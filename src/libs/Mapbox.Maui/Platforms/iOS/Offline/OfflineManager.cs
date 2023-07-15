@@ -14,10 +14,13 @@ partial class OfflineManager : NSObject, IOfflineManager
 
     partial void InitializePlatformManager()
     {
-        var optionsBuilder = MapInitOptionsBuilder.Create();
-        optionsBuilder.CameraOptions(cameraOptions.ToNative());
-        optionsBuilder.AccessToken(accessToken);
-        var options = optionsBuilder.Build();
+        var resourceOptions = new MBMResourceOptions(accessToken, null, null, null, null);
+        var options = MapInitOptionsFactory.CreateWithResourceOptions(
+            resourceOptions,
+            null,
+            cameraOptions.ToNative(),
+            null,
+            null);
 
         nativeManager = new PlatformOfflineManager(
             options.ResourceOptions()

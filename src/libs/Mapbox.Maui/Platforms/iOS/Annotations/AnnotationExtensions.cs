@@ -16,15 +16,15 @@ public static class AnnotationExtensions
                 xvalue.GeometryValue.Coordinates.Latitude,
                 xvalue.GeometryValue.Coordinates.Longitude));
 
-        result.IconAnchor = xvalue.IconAnchor?.ToPlatform();
+        result.IconAnchor = xvalue.IconAnchor?.AsNumber();
         result.IconImage = xvalue.IconImage;
         result.IconOffset = xvalue.IconOffset?.ToPlatform();
         result.IconRotate = xvalue.IconRotate;
         result.IconSize = xvalue.IconSize;
         result.SymbolSortKey = xvalue.SymbolSortKey;
-        result.TextAnchor = xvalue.TextAnchor?.ToPlatform();
+        result.TextAnchor = xvalue.TextAnchor?.AsNumber();
         result.TextField = xvalue.TextField;
-        result.TextJustify = xvalue.TextJustify?.ToPlatform();
+        result.TextJustify = xvalue.TextJustify?.AsNumber();
         result.TextLetterSpacing = xvalue.TextLetterSpacing;
         result.TextLineHeight = xvalue.TextLineHeight;
         result.TextMaxWidth = xvalue.TextMaxWidth;
@@ -32,7 +32,7 @@ public static class AnnotationExtensions
         result.TextRadialOffset = xvalue.TextRadialOffset;
         result.TextRotate = xvalue.TextRotate;
         result.TextSize = xvalue.TextSize;
-        result.TextTransform = xvalue.TextTransform?.ToPlatform();
+        result.TextTransform = xvalue.TextTransform?.AsNumber();
         result.IconColor = xvalue.IconColor?.ToPlatform();
         result.IconHaloBlur = xvalue.IconHaloBlur;
         result.IconHaloColor = xvalue.IconHaloColor?.ToPlatform();
@@ -115,7 +115,9 @@ public static class AnnotationExtensions
                         new CLLocationCoordinate2D(y.Latitude, y.Longitude)
                     )
                 ).ToArray()
-            );
+            )
+            .Cast<NSValue>()
+            .ToArray();
         var result = TMBPolylineAnnotation.FromId(
             xvalue.Id,
             coordinates,
@@ -126,7 +128,7 @@ public static class AnnotationExtensions
         result.LineBlur = xvalue.LineBlur.ToPlatform();
         result.LineColor = xvalue.LineColor.ToPlatform();
         result.LineGapWidth = xvalue.LineGapWidth.ToPlatform();
-        result.LineJoin = xvalue.LineJoin?.ToPlatform();
+        result.LineJoin = xvalue.LineJoin?.AsNumber();
         result.LineOffset = xvalue.LineOffset.ToPlatform();
         result.LineOpacity = xvalue.LineOpacity.ToPlatform();
         result.LinePattern = xvalue.LinePattern;

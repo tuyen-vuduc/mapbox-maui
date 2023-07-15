@@ -55,8 +55,8 @@ public class SkyLayerExample : ContentPage, IExamplePage, IQueryAttributable
     {
         skyLayer.SkyType = new PropertyValue<SkyType>(
             e.Value
-            ? SkyType.atmosphere
-            : SkyType.gradient
+            ? SkyType.Atmosphere
+            : SkyType.Gradient
         );
 
         map.Layers = new List<MapboxLayer>
@@ -113,7 +113,7 @@ public class SkyLayerExample : ContentPage, IExamplePage, IQueryAttributable
         // Initialize a sky layer with a sky type of `gradient`, which applies a gradient effect to the sky.
         // Read more about sky layer types on the Mapbox blog: https://www.mapbox.com/blog/sky-api-atmospheric-scattering-algorithm-for-3d-maps
         skyLayer = new SkyLayer("sky-layer");
-        skyLayer.SkyType = new PropertyValue<SkyType>(SkyType.atmosphere);
+        skyLayer.SkyType = new PropertyValue<SkyType>(SkyType.Atmosphere);
 
         // Define the position of the sun.
         // The azimuthal angle indicates the sun's position relative to 0 degrees north. When the map's bearing

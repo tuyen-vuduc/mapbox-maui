@@ -1,0 +1,36 @@
+{
+    "mapboxRepo": "PATH_TO_MAPBOX_IOS_REPO",
+    "mauiRepo": "PATH_TO_MAPBOX_MAUI",
+    "enums": [
+        {
+            "input": "Sources/MapboxMaps/Style/Generated/Enums",
+            "output": "src/libs/Mapbox.Maui/Models/Styles",
+            "javaNs": "Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.",
+            "name": "Enums.swift"
+        },
+        {
+            "input": "Sources/MapboxMaps/Style",
+            "output": "src/libs/Mapbox.Maui/Models/Styles",
+            "name": "SourceType.swift",
+            "javaMappingSkipped": true
+        },
+        {
+            "input": "Sources/MapboxMaps/Style",
+            "output": "src/libs/Mapbox.Maui/Models/Styles/Layers",
+            "name": "LayerType.swift",
+            "javaMappingSkipped": true
+        },
+        {
+            "input": "Sources/MapboxMaps/Style/Generated/Sources",
+            "output": "src/libs/Mapbox.Maui/Models/Styles/Sources",
+            "javaNs": "Com.Mapbox.Maps.Extension.Style.Sources.Generated.",
+            "name": "SourceProperties.swift"
+        },
+        {
+            "input": "Sources/MapboxMaps/Style/Generated/Expressions",
+            "output": "src/libs/Mapbox.Maui/Models/Expressions",
+            "name": "AllExpressions.swift",
+            "javaMappingSkipped": true
+        }
+    ]
+}

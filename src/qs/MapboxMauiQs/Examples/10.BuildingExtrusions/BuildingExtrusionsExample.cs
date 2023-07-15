@@ -89,28 +89,28 @@ public class BuildingExtrusionsExample : ContentPage, IExamplePage, IQueryAttrib
             FillExtrusionOpacity = new PropertyValue<double>(0.6),
             FillExtrusionAmbientOcclusionIntensity = new PropertyValue<double>(0.3),
             FillExtrusionAmbientOcclusionRadius = new PropertyValue<double>(3.0),
-            Filter = DslExpression.eq(
-                DslExpression.get("extrude"),
+            Filter = DslExpression.Eq(
+                DslExpression.Get("extrude"),
                 "true"
             ),
             FillExtrusionHeight = new PropertyValue<double>(
-                DslExpression.interpolate(
-                    DslExpression.linear(),
-                    DslExpression.zoom(),
+                DslExpression.Interpolate(
+                    DslExpression.Linear(),
+                    DslExpression.Zoom(),
                     15,
                     0,
                     15.05,
-                    DslExpression.get("height")
+                    DslExpression.Get("height")
                 )
             ),
             FillExtrusionBase = new PropertyValue<double>(
-                DslExpression.interpolate(
-                    DslExpression.linear(),
-                    DslExpression.zoom(),
+                DslExpression.Interpolate(
+                    DslExpression.Linear(),
+                    DslExpression.Zoom(),
                     15,
                     0,
                     15.05,
-                    DslExpression.get("min_height")
+                    DslExpression.Get("min_height")
                 )
             ),
         };

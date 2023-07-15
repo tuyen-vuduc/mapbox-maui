@@ -14,10 +14,6 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 		<RootNamespace>MapboxMaui</RootNamespace>
 	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-ios|AnyCPU'">
-	  <CreatePackage>false</CreatePackage>
-	</PropertyGroup>
 	<!-- Android -->
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 	  <WarningLevel>4</WarningLevel>
@@ -52,13 +48,14 @@
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0-android'">
 		<PackageReference Include="Com.Mapbox.Maps.Android" Version="10.11.1" />
-		<PackageReference Include="Xamarin.Kotlin.StdLib.Jdk8" Version="1.8.10" />
+		<PackageReference Include="Xamarin.Kotlin.StdLib.Jdk8" Version="1.8.21.1" />
 		<PackageReference Include="Square.OkHttp3" Version="4.10.0.1" />
-		<PackageReference Include="Xamarin.Kotlin.StdLib" Version="1.8.10" />
+		<PackageReference Include="Xamarin.Kotlin.StdLib" Version="1.8.21.1" />
+		<PackageReference Include="Xamarin.AndroidX.Annotation" Version="1.6.0.2" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0-ios'">
-		<PackageReference Include="MapboxMapsObjC.iOS" Version="10.11.1-alpha4" />
+		<PackageReference Include="MapboxMapsObjC.iOS" Version="10.11.1" />
 		<PackageReference Include="MapboxMobileEvents.iOS" Version="1.0.10" />
 	</ItemGroup>
 	<ItemGroup>

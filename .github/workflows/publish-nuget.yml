@@ -1,0 +1,56 @@
+name: Publish Nuget
+run-name: ${{ github.actor }} is publishing NuGet 🚀
+on:
+  workflow_dispatch:
+    inputs:
+      SHOULD_RUN:
+        description: 'True to run'
+        required: true
+        type: boolean
+jobs:
+  build-then-publish:
+    environment: production
+    runs-on: macos-latest
+    if:  ${{ inputs.SHOULD_RUN }} 
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set default Xamarin SDK versions
+      run: |
+        $VM_ASSETS/select-xamarin-sdk-v2.sh --mono=6.12 --android=13.0
+
+    - name: Setup .NET Core SDK 7.0.101
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '7.0.101'
+
+    - name: Install ios workload
+      run: |
+        dotnet workload install ios android maui maui-ios maui-android
+
+    - name: Build
+      run: |
+        sh build.sh
+  
+    - name: Publish NuGet and symbols
+      id: nuget-push
+      uses: edumserrano/nuget-push@v1.2.0
+      with:
+        api-key: '${{ secrets.NUGET_PUSH_API_KEY }}' # this example is using GitHub secrets to pass the API key
+        working-directory: 'nugets'
+    # The next step is using powershell to parse the action's output but you can use whatever you prefer.
+    # Note that in order to read the step outputs the action step must have an id.
+    - name: Log output
+      if: steps.nuget-push.conclusion != 'skipped' && always() # run regardless if the previous step failed or not, just as long as it wasn't skipped
+      shell: pwsh
+      run: |
+        $pushResult = '${{ steps.nuget-push.outputs.push-result }}' | ConvertFrom-Json
+        $pushResultAsJsonIndented = ConvertTo-Json $pushResult
+        Write-Output $pushResultAsJsonIndented  # outputs the result of the nuget push operation as an indented JSON string
+        Write-Output '${{ steps.nuget-push.outputs.status }}' # outputs the overall status of the nuget push action
+
+        # iterates over all list of packages and outputs the data from the nuget push operation for each
+        foreach($package in $pushResult.packages) {
+            Write-Output "$($package.status)"  # outputs the status of the nuget push operation
+            Write-Output "$($package.package)" # outputs the NuGet package name that was pushed
+            Write-Output "$($package.symbols)" # outputs the symbols package name that was pushed
+        }

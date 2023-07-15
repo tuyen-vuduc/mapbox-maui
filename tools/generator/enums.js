@@ -168,7 +168,9 @@ partial class ${csName}Extensions
 {
     public static ${javaQualifiedName} ToPlatform(this ${csName} value)
     {
-        return ${javaQualifiedName}.ValueOf(value);
+        return ${javaQualifiedName}.ValueOf(
+            value.Value.ToUpper(new System.Globalization.CultureInfo("en-US"))
+        );
     }
 }
 #endif`;

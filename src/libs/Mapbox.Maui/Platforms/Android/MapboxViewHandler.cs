@@ -1,5 +1,4 @@
-﻿namespace MapboxMaui;
-
+﻿
 using PlatformView = AndroidX.Fragment.App.FragmentContainerView;
 using MapboxMapsStyle = Com.Mapbox.Maps.Style;
 using Com.Mapbox.Maps;
@@ -7,7 +6,9 @@ using Com.Mapbox.Maps.Plugin.Scalebar;
 using Microsoft.Maui.Platform;
 using Android.Content;
 using Android.Graphics;
+using GeoJSON.Text;
 
+namespace MapboxMaui;
 public partial class MapboxViewHandler
 {
     MapboxFragment mapboxFragment;
@@ -93,29 +94,26 @@ public partial class MapboxViewHandler
         if (mapView == null) return;
 
         if (view.Sources == null) return;
+        var style = mapView.MapboxMap.Style;
 
         foreach (var source in view.Sources)
         {
-            var addStyleSourceResult = mapView.MapboxMap.Style.AddStyleSource(
-                source.Id,
-                source.ToPlatformValue()
-            );
+            var sourceExists = style.StyleSourceExists(source.Id);
+            var platformValue = source.ToPlatformValue();
 
-            if (addStyleSourceResult.IsError)
+            if (sourceExists)
             {
-                System.Diagnostics.Debug.WriteLine(addStyleSourceResult.Error);
+                style.SetStyleSourceProperties(source.Id, platformValue);
+            }
+            else
+            {
+                style.AddStyleSource(source.Id, platformValue);
             }
 
-            if (source is Styles.GeoJSONSource geojsonSource
-                && geojsonSource.Data is Styles.RawGeoJSONObject raw)
+            if (source is Styles.GeoJSONSource geojsonSource)
             {
-                var data = GeoJSONSourceData.ValueOf(raw.Data);
-                var setStyleGeoJSONSourceDataResult = mapView.MapboxMap.Style.SetStyleGeoJSONSourceData(source.Id, data);
-
-                if (setStyleGeoJSONSourceDataResult.IsError)
-                {
-                    System.Diagnostics.Debug.WriteLine(addStyleSourceResult.Error);
-                }
+                HandleGeoJSONSourceChanged(style, source.Id, geojsonSource.Data);
+                continue;
             }
 
             if (!source.VolatileProperties.Any()) continue;
@@ -129,6 +127,25 @@ public partial class MapboxViewHandler
             {
                 System.Diagnostics.Debug.WriteLine(setStyleSourcePropertiesResult.Error);
             }
+        }
+    }
+
+    private static void HandleGeoJSONSourceChanged(MapboxMapsStyle style, string sourceId, IGeoJSONObject data)
+    {
+        var xdata = data switch
+        {
+            Styles.RawGeoJSONObject raw => GeoJSONSourceData.ValueOf(raw.Data),
+            GeoJSON.Text.Geometry.IGeometryObject geometry => GeoJSONSourceData.ValueOf(geometry.ToNative()),
+            _ => null,
+        };
+
+        if (xdata is null) return;
+
+        var setStyleGeoJSONSourceDataResult = style.SetStyleGeoJSONSourceData(sourceId, xdata);
+
+        if (setStyleGeoJSONSourceDataResult.IsError)
+        {
+            System.Diagnostics.Debug.WriteLine(setStyleGeoJSONSourceDataResult.Error);
         }
     }
 

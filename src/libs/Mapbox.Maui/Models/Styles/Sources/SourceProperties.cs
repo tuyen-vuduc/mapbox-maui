@@ -61,7 +61,9 @@ partial class SchemeExtensions
 {
     public static Com.Mapbox.Maps.Extension.Style.Sources.Generated.Scheme ToPlatform(this Scheme value)
     {
-        return Com.Mapbox.Maps.Extension.Style.Sources.Generated.Scheme.ValueOf(value);
+        return Com.Mapbox.Maps.Extension.Style.Sources.Generated.Scheme.ValueOf(
+            value.Value.ToUpper(new System.Globalization.CultureInfo("en-US"))
+        );
     }
 }
 #endif
@@ -123,7 +125,9 @@ partial class EncodingExtensions
 {
     public static Com.Mapbox.Maps.Extension.Style.Sources.Generated.Encoding ToPlatform(this Encoding value)
     {
-        return Com.Mapbox.Maps.Extension.Style.Sources.Generated.Encoding.ValueOf(value);
+        return Com.Mapbox.Maps.Extension.Style.Sources.Generated.Encoding.ValueOf(
+            value.Value.ToUpper(new System.Globalization.CultureInfo("en-US"))
+        );
     }
 }
 #endif

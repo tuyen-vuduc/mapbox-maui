@@ -5,6 +5,7 @@ using Foundation;
 using MapboxMapsObjC;
 using PlatformView = MapViewContainer;
 using UIKit;
+using MapboxMaui.Styles;
 
 public partial class MapboxViewHandler
 {
@@ -20,12 +21,14 @@ public partial class MapboxViewHandler
 
         var platformProperties = light.Properties.Wrap() as NSDictionary<NSString, NSObject>;
         var style = mapView.MapboxMap().Style;
-        style.SetLightWithProperties(platformProperties, (error) =>
-        {
-            if (error == null) return;
+        style.SetLightWithProperties(
+            platformProperties,
+            (error) =>
+            {
+                if (error == null) return;
 
-            System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
-        });
+                System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
+            });
     }
 
     private static void HandleImagesChanged(MapboxViewHandler handler, IMapboxView view)
@@ -85,9 +88,9 @@ public partial class MapboxViewHandler
 
             if (style.LayerExistsWithId(layer.Id))
             {
-                style.AddLayerWithProperties(
+                style.SetLayerPropertiesFor(
+                    layer.Id,
                     properties,
-                    layerPosition,
                     (error) =>
                     {
                         if (error == null) return;
@@ -139,37 +142,22 @@ public partial class MapboxViewHandler
             var platformValue = source.ToPlatformValue();
             var sourceExists = style.SourceExistsWithId(source.Id);
 
-            if (source is Styles.GeoJSONSource geojsonSource
-                && geojsonSource.Data is Styles.RawGeoJSONObject raw)
+            if (source is GeoJSONSource geojsonSource)
             {
-                if (sourceExists)
-                {
-                    style.UpdateGeoJSONSourceWithId(
-                        source.Id, raw.Data,
-                        (error) =>
-                        {
-                            if (error == null) return;
+                HandleGeoJSONSource(style, source.Id, platformValue, geojsonSource.Data);
+                continue;
+            }
 
-                            System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
-                        });
-                    continue;
-                }
-
-                style.AddGeoJSONSourceWithId(
-                    source.Id, platformValue, raw.Data,
+            if (sourceExists)
+            {
+                style.SetSourcePropertiesFor(
+                    source.Id, platformValue,
                     (error) =>
                     {
                         if (error == null) return;
 
                         System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
                     });
-                continue;
-            }
-
-            if (sourceExists)
-            {
-                // TODO Update source
-                System.Diagnostics.Debugger.Break();
                 continue;
             }
 
@@ -183,6 +171,56 @@ public partial class MapboxViewHandler
                     System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
                 });
         }
+    }
+
+    private static void HandleGeoJSONSource(TMBStyle style, string sourceId, NSDictionary<NSString, NSObject> platformValue, GeoJSON.Text.IGeoJSONObject data)
+    {
+        var sourceExists = style.SourceExistsWithId(sourceId);
+
+        switch(data) {
+            case RawGeoJSONObject raw:
+                if (sourceExists)
+                {
+                    style.UpdateGeoJSONSourceWithId(
+                        sourceId, raw.Data,
+                        (error) =>
+                        {
+                            if (error == null) return;
+
+                            System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
+                        });
+                    return;
+                }
+
+                style.AddGeoJSONSourceWithId(
+                    sourceId, platformValue, raw.Data,
+                    (error) =>
+                    {
+                        if (error == null) return;
+
+                        System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
+                    });
+                break;
+            case GeoJSON.Text.Geometry.IGeometryObject geometry:
+                if (sourceExists) {
+                    style.UpdateGeoJSONSourceWithId(
+                        sourceId, geometry.ToNative(),
+                        (error) => {
+                            if (error == null) return;
+
+                            System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
+                        });
+                    return;
+                }
+                style.AddSourceWithId(
+                    sourceId, geometry.ToNative(),
+                    (error) => {
+                        if (error == null) return;
+
+                        System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
+                    });
+                break;
+        }        
     }
 
     private static void HandleCameraOptionsChanged(MapboxViewHandler handler, IMapboxView view)
@@ -228,7 +266,8 @@ public partial class MapboxViewHandler
         var styleUri = view.MapboxStyle.ToNative();
         if (string.IsNullOrWhiteSpace(styleUri)) return;
 
-        mapView.MapboxMap().LoadStyleURI(styleUri, (style, error) => {
+        mapView.MapboxMap().LoadStyleURI(styleUri, (style, error) =>
+        {
             if (error == null) return;
 
             System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);

@@ -21,7 +21,7 @@ public class AnimatedMarkerExample : ContentPage, IExamplePage, IQueryAttributab
 
         map.MapReady += Map_MapReady;
         map.MapLoaded += Map_MapLoaded;
-        map.Command = new Command<Point>(HandleMapTapped);
+        map.Command = new Command<MapTappedPosition>(HandleMapTapped);
 	}
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
@@ -31,13 +31,11 @@ public class AnimatedMarkerExample : ContentPage, IExamplePage, IQueryAttributab
         Title = info?.Title;
     }
 
-    private void HandleMapTapped(Point point)
+    private void HandleMapTapped(MapTappedPosition point)
     {
         // Create a GeoJSON data source.
         var feature = new Feature(
-            new GeoJSON.Text.Geometry.Point(
-                new Position(point.X, point.Y)
-            )
+            point.Point
         );
         var source = new GeoJSONSource(Constants.sourceId)
         {

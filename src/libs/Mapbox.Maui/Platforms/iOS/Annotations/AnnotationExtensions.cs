@@ -3,7 +3,6 @@
 using CoreLocation;
 using Foundation;
 using MapboxMapsObjC;
-using MapKit;
 using Microsoft.Maui.Platform;
 
 public static class AnnotationExtensions

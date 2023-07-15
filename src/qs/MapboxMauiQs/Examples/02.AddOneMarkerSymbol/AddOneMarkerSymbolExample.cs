@@ -26,7 +26,7 @@ public class AddOneMarkerSymbolExample : ContentPage, IExamplePage, IQueryAttrib
         var source = new GeoJSONSource(sourceId)
         {
             Data = new GeoJSON.Text.Geometry.Point(
-                new GeoJSON.Text.Geometry.Position(55.665957, 12.550343))
+                new Position(55.665957, 12.550343))
         };
 
         map.Sources = new[] { source };

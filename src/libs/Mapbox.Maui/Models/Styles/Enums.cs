@@ -59,7 +59,9 @@ partial class VisibilityExtensions
 {
     public static Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.Visibility ToPlatform(this Visibility value)
     {
-        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.Visibility.ValueOf(value);
+        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.Visibility.ValueOf(
+            value.Value.ToUpper(new System.Globalization.CultureInfo("en-US"))
+        );
     }
 }
 #endif
@@ -128,7 +130,9 @@ partial class LineCapExtensions
 {
     public static Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.LineCap ToPlatform(this LineCap value)
     {
-        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.LineCap.ValueOf(value);
+        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.LineCap.ValueOf(
+            value.Value.ToUpper(new System.Globalization.CultureInfo("en-US"))
+        );
     }
 }
 #endif
@@ -197,7 +201,9 @@ partial class LineJoinExtensions
 {
     public static Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.LineJoin ToPlatform(this LineJoin value)
     {
-        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.LineJoin.ValueOf(value);
+        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.LineJoin.ValueOf(
+            value.Value.ToUpper(new System.Globalization.CultureInfo("en-US"))
+        );
     }
 }
 #endif
@@ -296,7 +302,9 @@ partial class IconAnchorExtensions
 {
     public static Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.IconAnchor ToPlatform(this IconAnchor value)
     {
-        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.IconAnchor.ValueOf(value);
+        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.IconAnchor.ValueOf(
+            value.Value.ToUpper(new System.Globalization.CultureInfo("en-US"))
+        );
     }
 }
 #endif
@@ -365,7 +373,9 @@ partial class IconPitchAlignmentExtensions
 {
     public static Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.IconPitchAlignment ToPlatform(this IconPitchAlignment value)
     {
-        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.IconPitchAlignment.ValueOf(value);
+        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.IconPitchAlignment.ValueOf(
+            value.Value.ToUpper(new System.Globalization.CultureInfo("en-US"))
+        );
     }
 }
 #endif
@@ -434,7 +444,9 @@ partial class IconRotationAlignmentExtensions
 {
     public static Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.IconRotationAlignment ToPlatform(this IconRotationAlignment value)
     {
-        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.IconRotationAlignment.ValueOf(value);
+        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.IconRotationAlignment.ValueOf(
+            value.Value.ToUpper(new System.Globalization.CultureInfo("en-US"))
+        );
     }
 }
 #endif
@@ -508,7 +520,9 @@ partial class IconTextFitExtensions
 {
     public static Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.IconTextFit ToPlatform(this IconTextFit value)
     {
-        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.IconTextFit.ValueOf(value);
+        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.IconTextFit.ValueOf(
+            value.Value.ToUpper(new System.Globalization.CultureInfo("en-US"))
+        );
     }
 }
 #endif
@@ -577,7 +591,9 @@ partial class SymbolPlacementExtensions
 {
     public static Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.SymbolPlacement ToPlatform(this SymbolPlacement value)
     {
-        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.SymbolPlacement.ValueOf(value);
+        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.SymbolPlacement.ValueOf(
+            value.Value.ToUpper(new System.Globalization.CultureInfo("en-US"))
+        );
     }
 }
 #endif
@@ -646,7 +662,9 @@ partial class SymbolZOrderExtensions
 {
     public static Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.SymbolZOrder ToPlatform(this SymbolZOrder value)
     {
-        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.SymbolZOrder.ValueOf(value);
+        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.SymbolZOrder.ValueOf(
+            value.Value.ToUpper(new System.Globalization.CultureInfo("en-US"))
+        );
     }
 }
 #endif
@@ -745,7 +763,9 @@ partial class TextAnchorExtensions
 {
     public static Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.TextAnchor ToPlatform(this TextAnchor value)
     {
-        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.TextAnchor.ValueOf(value);
+        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.TextAnchor.ValueOf(
+            value.Value.ToUpper(new System.Globalization.CultureInfo("en-US"))
+        );
     }
 }
 #endif
@@ -819,7 +839,9 @@ partial class TextJustifyExtensions
 {
     public static Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.TextJustify ToPlatform(this TextJustify value)
     {
-        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.TextJustify.ValueOf(value);
+        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.TextJustify.ValueOf(
+            value.Value.ToUpper(new System.Globalization.CultureInfo("en-US"))
+        );
     }
 }
 #endif
@@ -888,7 +910,9 @@ partial class TextPitchAlignmentExtensions
 {
     public static Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.TextPitchAlignment ToPlatform(this TextPitchAlignment value)
     {
-        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.TextPitchAlignment.ValueOf(value);
+        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.TextPitchAlignment.ValueOf(
+            value.Value.ToUpper(new System.Globalization.CultureInfo("en-US"))
+        );
     }
 }
 #endif
@@ -957,7 +981,9 @@ partial class TextRotationAlignmentExtensions
 {
     public static Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.TextRotationAlignment ToPlatform(this TextRotationAlignment value)
     {
-        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.TextRotationAlignment.ValueOf(value);
+        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.TextRotationAlignment.ValueOf(
+            value.Value.ToUpper(new System.Globalization.CultureInfo("en-US"))
+        );
     }
 }
 #endif
@@ -1026,7 +1052,9 @@ partial class TextTransformExtensions
 {
     public static Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.TextTransform ToPlatform(this TextTransform value)
     {
-        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.TextTransform.ValueOf(value);
+        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.TextTransform.ValueOf(
+            value.Value.ToUpper(new System.Globalization.CultureInfo("en-US"))
+        );
     }
 }
 #endif
@@ -1090,7 +1118,9 @@ partial class FillTranslateAnchorExtensions
 {
     public static Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.FillTranslateAnchor ToPlatform(this FillTranslateAnchor value)
     {
-        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.FillTranslateAnchor.ValueOf(value);
+        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.FillTranslateAnchor.ValueOf(
+            value.Value.ToUpper(new System.Globalization.CultureInfo("en-US"))
+        );
     }
 }
 #endif
@@ -1154,7 +1184,9 @@ partial class LineTranslateAnchorExtensions
 {
     public static Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.LineTranslateAnchor ToPlatform(this LineTranslateAnchor value)
     {
-        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.LineTranslateAnchor.ValueOf(value);
+        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.LineTranslateAnchor.ValueOf(
+            value.Value.ToUpper(new System.Globalization.CultureInfo("en-US"))
+        );
     }
 }
 #endif
@@ -1218,7 +1250,9 @@ partial class IconTranslateAnchorExtensions
 {
     public static Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.IconTranslateAnchor ToPlatform(this IconTranslateAnchor value)
     {
-        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.IconTranslateAnchor.ValueOf(value);
+        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.IconTranslateAnchor.ValueOf(
+            value.Value.ToUpper(new System.Globalization.CultureInfo("en-US"))
+        );
     }
 }
 #endif
@@ -1282,7 +1316,9 @@ partial class TextTranslateAnchorExtensions
 {
     public static Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.TextTranslateAnchor ToPlatform(this TextTranslateAnchor value)
     {
-        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.TextTranslateAnchor.ValueOf(value);
+        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.TextTranslateAnchor.ValueOf(
+            value.Value.ToUpper(new System.Globalization.CultureInfo("en-US"))
+        );
     }
 }
 #endif
@@ -1346,7 +1382,9 @@ partial class CirclePitchAlignmentExtensions
 {
     public static Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.CirclePitchAlignment ToPlatform(this CirclePitchAlignment value)
     {
-        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.CirclePitchAlignment.ValueOf(value);
+        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.CirclePitchAlignment.ValueOf(
+            value.Value.ToUpper(new System.Globalization.CultureInfo("en-US"))
+        );
     }
 }
 #endif
@@ -1410,7 +1448,9 @@ partial class CirclePitchScaleExtensions
 {
     public static Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.CirclePitchScale ToPlatform(this CirclePitchScale value)
     {
-        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.CirclePitchScale.ValueOf(value);
+        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.CirclePitchScale.ValueOf(
+            value.Value.ToUpper(new System.Globalization.CultureInfo("en-US"))
+        );
     }
 }
 #endif
@@ -1474,7 +1514,9 @@ partial class CircleTranslateAnchorExtensions
 {
     public static Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.CircleTranslateAnchor ToPlatform(this CircleTranslateAnchor value)
     {
-        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.CircleTranslateAnchor.ValueOf(value);
+        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.CircleTranslateAnchor.ValueOf(
+            value.Value.ToUpper(new System.Globalization.CultureInfo("en-US"))
+        );
     }
 }
 #endif
@@ -1538,7 +1580,9 @@ partial class FillExtrusionTranslateAnchorExtensions
 {
     public static Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.FillExtrusionTranslateAnchor ToPlatform(this FillExtrusionTranslateAnchor value)
     {
-        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.FillExtrusionTranslateAnchor.ValueOf(value);
+        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.FillExtrusionTranslateAnchor.ValueOf(
+            value.Value.ToUpper(new System.Globalization.CultureInfo("en-US"))
+        );
     }
 }
 #endif
@@ -1602,7 +1646,9 @@ partial class RasterResamplingExtensions
 {
     public static Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.RasterResampling ToPlatform(this RasterResampling value)
     {
-        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.RasterResampling.ValueOf(value);
+        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.RasterResampling.ValueOf(
+            value.Value.ToUpper(new System.Globalization.CultureInfo("en-US"))
+        );
     }
 }
 #endif
@@ -1666,7 +1712,9 @@ partial class HillshadeIlluminationAnchorExtensions
 {
     public static Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.HillshadeIlluminationAnchor ToPlatform(this HillshadeIlluminationAnchor value)
     {
-        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.HillshadeIlluminationAnchor.ValueOf(value);
+        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.HillshadeIlluminationAnchor.ValueOf(
+            value.Value.ToUpper(new System.Globalization.CultureInfo("en-US"))
+        );
     }
 }
 #endif
@@ -1730,7 +1778,9 @@ partial class SkyTypeExtensions
 {
     public static Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.SkyType ToPlatform(this SkyType value)
     {
-        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.SkyType.ValueOf(value);
+        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.SkyType.ValueOf(
+            value.Value.ToUpper(new System.Globalization.CultureInfo("en-US"))
+        );
     }
 }
 #endif
@@ -1794,7 +1844,9 @@ partial class AnchorExtensions
 {
     public static Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.Anchor ToPlatform(this Anchor value)
     {
-        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.Anchor.ValueOf(value);
+        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.Anchor.ValueOf(
+            value.Value.ToUpper(new System.Globalization.CultureInfo("en-US"))
+        );
     }
 }
 #endif
@@ -1858,7 +1910,9 @@ partial class StyleProjectionNameExtensions
 {
     public static Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.ProjectionName ToPlatform(this StyleProjectionName value)
     {
-        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.ProjectionName.ValueOf(value);
+        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.ProjectionName.ValueOf(
+            value.Value.ToUpper(new System.Globalization.CultureInfo("en-US"))
+        );
     }
 }
 #endif
@@ -1922,7 +1976,9 @@ partial class TextWritingModeExtensions
 {
     public static Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.TextWritingMode ToPlatform(this TextWritingMode value)
     {
-        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.TextWritingMode.ValueOf(value);
+        return Com.Mapbox.Maps.Extension.Style.Layers.Properties.Generated.TextWritingMode.ValueOf(
+            value.Value.ToUpper(new System.Globalization.CultureInfo("en-US"))
+        );
     }
 }
 #endif

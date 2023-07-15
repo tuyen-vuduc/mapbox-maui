@@ -18,6 +18,14 @@ jobs:
       run: |
         $VM_ASSETS/select-xamarin-sdk-v2.sh --mono=6.12 --android=13.0
 
+    - name: Set .netrc
+      run: |
+        echo $NETRC >> ~/.netrc
+        cat ~/.netrc
+      shell: bash
+      env:
+        NETRC : ${{secrets.NETRC}}
+
     - name: Setup .NET Core SDK 7.0.101
       uses: actions/setup-dotnet@v3
       with:

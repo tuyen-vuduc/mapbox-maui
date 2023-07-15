@@ -40,7 +40,26 @@
 		<Compile Include="**\**\*.iOS.cs" />
 	</ItemGroup>
 
+	<PropertyGroup>
+		<PackageId>Mapbox.Maui</PackageId>
+		<Title>Mapbox SDK for .NET MAUI</Title>
+		<Summary>MAUI control and APIS for Mapbox</Summary>
+		<Description>MAUI control and APIS for Mapbox</Description>
+		<Authors>tuyen,tuyen-vuduc</Authors>
+		<Owners>tuyen,tuyen-vuduc</Owners>
+		<Copyright>© tuyen-vuduc. All rights reserved.</Copyright>
+		<PackageProjectUrl>https://github.com/tuyen-vuduc/mapbox-maui</PackageProjectUrl>
+		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+		<PackageVersion>10.11.1</PackageVersion>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageIconFile>tv-ico.png</PackageIconFile>
+	  </PropertyGroup>
 	<ItemGroup>
+		<None Include="../../../assets/tv-ico.png" Pack="True" PackagePath="" />
+		<None Include="../../../LICENSE" Pack="True" PackagePath="" />
+		<None Include="../../../README.md" Pack="True" PackagePath="" />
+
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="Xamarin.Build.Download" Version="0.11.4" />
 		<PackageReference Include="GeoJSON.Text" Version="1.0.2" />
@@ -57,19 +76,6 @@
 	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0-ios'">
 		<PackageReference Include="MapboxMapsObjC.iOS" Version="10.11.1" />
 		<PackageReference Include="MapboxMobileEvents.iOS" Version="1.0.10" />
-	</ItemGroup>
-	<ItemGroup>
-	  <None Remove="Models\Styles\" />
-	  <None Remove="Models\Styles\Sources\" />
-	  <None Remove="Models\Expressions\" />
-	  <None Remove="Models\Styles\Layers\" />
-	  <None Remove="Models\Annotations\" />
-	  <None Remove="Platforms\iOS\Annotations\" />
-	  <None Remove="Platforms\Android\Annotations\" />
-	  <None Remove="Models\Offline\" />
-	  <None Remove="Platforms\iOS\Offline\" />
-	  <None Remove="Platforms\Android\Offline\" />
-	  <None Remove="Models\Query\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Models\Styles\" />

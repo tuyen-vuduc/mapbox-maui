@@ -161,6 +161,16 @@ NOTE: A handy command to generate a new example
 dotnet cake -- --name SymbolClustering --index 58 --group Annotations --title "Add Cluster Symbol Annotations" --subtitle "Show fire hydrants in Washington DC area in a cluster using a symbol layer."
 ````
 
+# Known issues
+- The library is not yet able to build to run on iOS real device. [Issue](https://github.com/xamarin/xamarin-macios/issues/8917)
+
+# Maintainer
+This project is maintained by [tuyen-vuduc](https://github.com/tuyen-vuduc) in his spare time and/or when requested.<br>
+
+If you find this project is helpful and benefit your work/business, please give it a star, become a sponsor of the project and/or buy him a coffee.
+
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/tuyen.vuduc)
+
 # LICENSE
 This library is release under The BSD 3-Clause License. You are freely to use and make changes. 
 However, this license doesn't override [the license from Mapbox](https://www.mapbox.com/legal/tos).

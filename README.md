@@ -8,152 +8,108 @@ A dedicated library and starting sample for integrating Mapbox into your MAUI ap
 Install-Package Mapbox.Maui --version 10.11.1
 ```
 
-## Setup
+## Integrate into your project
 
-1/ MAPBOX_DOWNLOADS_TOKEN
+Please check out [my step-by-step blog post](https://tuyen-vuduc.tech/how-to-use-mapbox-in-your-dotnet-maui-app) for more details.
 
-All Mapbox libraries required an access token to download them for use. 
-Please follow [the guide from Mapbox](https://docs.mapbox.com/android/maps/guides/install/) and go the dashboard of your Mapbox account and grab one.
+## How to run the examples
 
-a/ Android
-On Android, we will leverage the gradle way of downloading Mapbox native libraries, please set `MAPBOX_DOWNLOADS_TOKEN` property and put it in `~/.gradle/gradle.properties` as below example
+### Prerequisites
+- Visual Studio for Mac or Visual Studio for Windows
+- .NET 7.0.306
+- .NET workloads for iOS, Android, MAUI
 
+### Steps
+
+- 1/ Generate/grab `MAPBOX_DOWNLOADS_TOKEN` from [your Mapbox account page](https://account.mapbox.com/)
+   
+- 2/ Android: Put it into your local `~/.gradle/gradle.properties`
+
+```bash
+echo "MAPBOX_DOWNLOADS_TOKEN=YOUR_MAPBOX_DOWNLOADS_TOKEN" >> ~/.gradle/gradle.properties
 ```
-MAPBOX_DOWNLOADS_TOKEN=YOUR_MAPBOX_DOWNLOADS_TOKEN
-```
+- 3/ Make a copy of `MapboxMauiQs.props.template`
+	- Name it `MapboxMauiQs.props`
+	- Replace `YOUR_MAPBOX_DOWNLOADS_TOKEN` with yours in `MapboxMauiQs.props` file
+- 4/ Grab `mapbox_access_token` from [your Mapbox account page](https://account.mapbox.com/)
+    - Make a copy of `MauiProgram.dev.cs.template`
+	- Name it `MauiProgram.dev.cs`
+	- Replace `YOUR_MAPBOX_ACCESS_TOKEN` with yours in `MauiProgram.dev.cs` file
 
-b/ iOS
-oOn iOS, we will need to edit iOS's CSPROJ file to have `MAPBOX_DOWNLOADS_TOKEN` property as below example.
+![Files with ignored](assets/files-w-ignored.png)
 
-```
-<Project ...>
-    ...
-
-	<PropertyGroup>
-		<MAPBOX_DOWNLOADS_TOKEN>YOUR_MAPBOX_DOWNLOADS_TOKEN</MAPBOX_DOWNLOADS_TOKEN>
-	</PropertyGroup>
-    ...
-</Project>
-```
-
-2/ Android addtional setup
-As Mapbox has its own private Gradle repository, we need to add these lines to Android's CSPROJ file.
-
-```
-<Project ...>
-    ...
-
-	<ItemGroup>
-		<GradleRepository Include="https://api.mapbox.com/downloads/v2/releases/maven">
-			<Repository>
-			maven {
-				url 'https://api.mapbox.com/downloads/v2/releases/maven'
-				authentication {
-					basic(BasicAuthentication)
-				}
-				credentials {
-					// Do not change the username below.
-					// This should always be `mapbox` (not your username).
-					username = "mapbox"
-					// Use the secret token you stored in gradle.properties as the password
-					password = MAPBOX_DOWNLOADS_TOKEN
-				}
-			}
-			</Repository>
-		</GradleRepository>
-	</ItemGroup>
-
-    ...
-</Project>
-```
-
-2/ YOUR_ACCESS_TOKEN
-
-To display Mapbox Map in your app, you will need another access token which can be easily grabbed by following [the guide from Mapbox](https://docs.mapbox.com/help/getting-started/access-tokens/).
-
-You can set it conventionally in `strings.xml` for Android or in `info.plist` for iOS. Otherwise, you can also set the value in code as the guide from Mapbox documetation.
-
-a/ Android's `strings.xml`
-```
-<string name="mapbox_access_token">YOUR_MAPBOX_ACCESS_TOKEN</string>
-```
-
-b/ iOS's `info.plist`
-```
-<key>MBXAccessToken</key>
-<string>YOUR_MAPBOX_ACCESS_TOKEN</string>
-```
+- 5/ Run the solution
 
 # Ported Examples
 
-| # | Example | Ported |
+| # | Example | Ported (18/66) |
 | - | - | - |
-| 1 | [AddMarkersSymbolExample](./mapboxqs/AddMarkersSymbolExample.m) | OK |
-| 2 | [AddOneMarkerSymbolExample](./mapboxqs/AddOneMarkerSymbolExample.m) | OK |
-| 3 | [AdvancedViewportGesturesExample](./mapboxqs/AdvancedViewportGesturesExample.m) |  |
-| 4 | [AnimateGeoJSONLineExample](./mapboxqs/AnimateGeoJSONLineExample.m) |  |
-| 5 | [AnimateImageLayerExample](./mapboxqs/AnimateImageLayerExample.m) |  |
-| 6 | [AnimateLayerExample](./mapboxqs/AnimateLayerExample.m) |  |
-| 7 | [AnimatedMarkerExample](./mapboxqs/AnimatedMarkerExample.m) | OK |
-| 8 | [BasicLocationPulsingExample](./mapboxqs/BasicLocationPulsingExample.m) |  |
-| 9 | [BasicMapExample](./mapboxqs/BasicMapExample.m) | OK |
-| 10 | [BuildingExtrusionsExample](./mapboxqs/BuildingExtrusionsExample.m) | OK |
-| 11 | [CameraAnimationExample](./mapboxqs/CameraAnimationExample.m) |  |
-| 12 | [CameraAnimatorsExample](./mapboxqs/CameraAnimatorsExample.m) |  |
-| 13 | [CircleAnnotationExample](./mapboxqs/CircleAnnotationExample.m) | OK |
-| 14 | [ColorExpressionExample](./mapboxqs/ColorExpressionExample.m) |  |
-| 15 | [Custom2DPuckExample](./mapboxqs/Custom2DPuckExample.m) |  |
-| 16 | [Custom3DPuckExample](./mapboxqs/Custom3DPuckExample.m) |  |
-| 17 | [CustomLayerExample](./mapboxqs/CustomLayerExample.m) |  |
-| 18 | [CustomLocationProviderExample](./mapboxqs/CustomLocationProviderExample.m) |  |
-| 19 | [CustomPointAnnotationExample](./mapboxqs/CustomPointAnnotationExample.m) | OK |
-| 20 | [CustomStyleURLExample](./mapboxqs/CustomStyleURLExample.m) | OK |
-| 21 | [DataDrivenSymbolsExample](./mapboxqs/DataDrivenSymbolsExample.m) |  |
-| 22 | [DataJoinExample](./mapboxqs/DataJoinExample.m) |  |
-| 23 | [DebugMapExample](./mapboxqs/DebugMapExample.m) | OK |
-| 24 | [DistanceExpressionExample](./mapboxqs/DistanceExpressionExample.m) |  |
-| 25 | [ExternalVectorSourceExample](./mapboxqs/ExternalVectorSourceExample.m) |  |
-| 26 | [FeatureStateExample](./mapboxqs/FeatureStateExample.m) |  |
-| 27 | [FeaturesAtPointExample](./mapboxqs/FeaturesAtPointExample.m) |  |
-| 28 | [FrameViewAnnotationsExample](./mapboxqs/FrameViewAnnotationsExample.m) |  |
-| 29 | [GlobeExample](./mapboxqs/GlobeExample.m) |  |
-| 30 | [GlobeFlyToExample](./mapboxqs/GlobeFlyToExample.m) |  |
-| 31 | [HeatmapLayerGlobeExample](./mapboxqs/HeatmapLayerGlobeExample.m) |  |
-| 32 | [IconSizeChangeExample](./mapboxqs/IconSizeChangeExample.m) | OK |
-| 33 | [LargeGeoJSONPerformanceExample](./mapboxqs/LargeGeoJSONPerformanceExample.m) |  |
-| 34 | [LayerPositionExample](./mapboxqs/LayerPositionExample.m) |  |
-| 35 | [LineAnnotationExample](./mapboxqs/LineAnnotationExample.m) | OK |
-| 36 | [LineGradientExample](./mapboxqs/LineGradientExample.m) |  |
-| 37 | [LiveDataExample](./mapboxqs/LiveDataExample.m) |  |
-| 38 | [LocalizationExample](./mapboxqs/LocalizationExample.m) |  |
-| 39 | [MultipleGeometriesExample](./mapboxqs/MultipleGeometriesExample.m) | OK |
-| 40 | [NavigationSimulatorExample](./mapboxqs/NavigationSimulatorExample.m) |  |
-| 41 | [OfflineManagerExample](./mapboxqs/OfflineManagerExample.m) | OK |
-| 42 | [OfflineRegionManagerExample](./mapboxqs/OfflineRegionManagerExample.m) |  |
-| 43 | [PitchAndDistanceExample](./mapboxqs/PitchAndDistanceExample.m) |  |
-| 44 | [PointAnnotationClusteringExample](./mapboxqs/PointAnnotationClusteringExample.m) | OK |
-| 45 | [PointClusteringExample](./mapboxqs/PointClusteringExample.m) |  |
-| 46 | [PolygonAnnotationExample](./mapboxqs/PolygonAnnotationExample.m) | OK |
-| 47 | [RasterTileSourceExample](./mapboxqs/RasterTileSourceExample.m) |  |
-| 48 | [ResizableImageExample](./mapboxqs/ResizableImageExample.m) |  |
-| 49 | [RestrictCoordinateBoundsExample](./mapboxqs/RestrictCoordinateBoundsExample.m) |  |
-| 50 | [SceneKitExample](./mapboxqs/SceneKitExample.m) | N/A |
-| 51 | [ShowHideLayerExample](./mapboxqs/ShowHideLayerExample.m) |  |
-| 52 | [SkyLayerExample](./mapboxqs/SkyLayerExample.m) | OK |
-| 53 | [SnapshotterCoreGraphicsExample](./mapboxqs/SnapshotterCoreGraphicsExample.m) |  |
-| 54 | [SnapshotterExample](./mapboxqs/SnapshotterExample.m) |  |
-| 55 | [SpinningGlobeExample](./mapboxqs/SpinningGlobeExample.m) |  |
-| 56 | [StoryboardMapViewExample](./mapboxqs/StoryboardMapViewExample.m) | N/A |
-| 57 | [SwitchStylesExample](./mapboxqs/SwitchStylesExample.m) |  |
-| 58 | [SymbolClusteringExample](./mapboxqs/SymbolClusteringExample.m) | OK |
-| 59 | [TerrainExample](./mapboxqs/TerrainExample.m) | OK |
-| 60 | [TrackingModeExample](./mapboxqs/TrackingModeExample.m) |  |
-| 61 | [ViewAnnotationAnimationExample](./mapboxqs/ViewAnnotationAnimationExample.m) |  |
-| 62 | [ViewAnnotationBasicExample](./mapboxqs/ViewAnnotationBasicExample.m) |  |
-| 63 | [ViewAnnotationMarkerExample](./mapboxqs/ViewAnnotationMarkerExample.m) |  |
-| 64 | [ViewAnnotationWithPointAnnotationExample](./mapboxqs/ViewAnnotationWithPointAnnotationExample.m) |  |
-| 65 | [ViewportExample](./mapboxqs/ViewportExample.m) |  |
-| 66 | [VoiceOverAccessibilityExample](./mapboxqs/VoiceOverAccessibilityExample.m) |  |
+| 1 | [AddMarkersSymbol](./src/qs/MapboxMauiQs/Examples/01.AddMarkersSymbol/AddMarkersSymbolExample.cs) |  OK  |
+| 2 | [AddOneMarkerSymbol](./src/qs/MapboxMauiQs/Examples/02.AddOneMarkerSymbol/AddOneMarkerSymbolExample.cs) |  OK  |
+| 3 | [AdvancedViewportGestures](./src/qs/MapboxMauiQs/Examples/03.AdvancedViewportGestures/AdvancedViewportGesturesExample.cs) |    |
+| 4 | [AnimateGeoJSONLine](./src/qs/MapboxMauiQs/Examples/04.AnimateGeoJSONLine/AnimateGeoJSONLineExample.cs) |    |
+| 5 | [AnimateImageLayer](./src/qs/MapboxMauiQs/Examples/05.AnimateImageLayer/AnimateImageLayerExample.cs) |    |
+| 6 | [AnimateLayer](./src/qs/MapboxMauiQs/Examples/06.AnimateLayer/AnimateLayerExample.cs) |    |
+| 7 | [AnimatedMarker](./src/qs/MapboxMauiQs/Examples/07.AnimatedMarker/AnimatedMarkerExample.cs) |  OK  |
+| 8 | [BasicLocationPulsing](./src/qs/MapboxMauiQs/Examples/08.BasicLocationPulsing/BasicLocationPulsingExample.cs) |    |
+| 9 | [BasicMap](./src/qs/MapboxMauiQs/Examples/09.BasicMap/BasicMapExample.xaml) |  OK  |
+| 10 | [BuildingExtrusions](./src/qs/MapboxMauiQs/Examples/10.BuildingExtrusions/BuildingExtrusionsExample.cs) |  OK  |
+| 11 | [CameraAnimation](./src/qs/MapboxMauiQs/Examples/11.CameraAnimation/CameraAnimationExample.cs) |    |
+| 12 | [CameraAnimators](./src/qs/MapboxMauiQs/Examples/12.CameraAnimators/CameraAnimatorsExample.cs) |    |
+| 13 | [CircleAnnotation](./src/qs/MapboxMauiQs/Examples/13.CircleAnnotation/CircleAnnotationExample.cs) |  OK  |
+| 14 | [ColorExpression](./src/qs/MapboxMauiQs/Examples/14.ColorExpression/ColorExpressionExample.cs) |    |
+| 15 | [Custom2DPuck](./src/qs/MapboxMauiQs/Examples/15.Custom2DPuck/Custom2DPuckExample.cs) |    |
+| 16 | [Custom3DPuck](./src/qs/MapboxMauiQs/Examples/16.Custom3DPuck/Custom3DPuckExample.cs) |    |
+| 17 | [CustomLayer](./src/qs/MapboxMauiQs/Examples/17.CustomLayer/CustomLayerExample.cs) |    |
+| 18 | [CustomLocationProvider](./src/qs/MapboxMauiQs/Examples/18.CustomLocationProvider/CustomLocationProviderExample.cs) |    |
+| 19 | [CustomPointAnnotation](./src/qs/MapboxMauiQs/Examples/19.CustomPointAnnotation/CustomPointAnnotationExample.cs) |  OK  |
+| 20 | [CustomStyleURL](./src/qs/MapboxMauiQs/Examples/20.CustomStyleURL/CustomStyleURLExample.cs) |  OK  |
+| 21 | [DataDrivenSymbols](./src/qs/MapboxMauiQs/Examples/21.DataDrivenSymbols/DataDrivenSymbolsExample.cs) |    |
+| 22 | [DataJoin](./src/qs/MapboxMauiQs/Examples/22.DataJoin/DataJoinExample.cs) |    |
+| 23 | [DebugMap](./src/qs/MapboxMauiQs/Examples/23.DebugMap/DebugMapExample.cs) |  OK  |
+| 24 | [DistanceExpression](./src/qs/MapboxMauiQs/Examples/24.DistanceExpression/DistanceExpressionExample.cs) |    |
+| 25 | [ExternalVectorSource](./src/qs/MapboxMauiQs/Examples/25.ExternalVectorSource/ExternalVectorSourceExample.cs) |    |
+| 26 | [FeatureState](./src/qs/MapboxMauiQs/Examples/26.FeatureState/FeatureStateExample.cs) |    |
+| 27 | [FeaturesAtPoint](./src/qs/MapboxMauiQs/Examples/27.FeaturesAtPoint/FeaturesAtPointExample.cs) |    |
+| 28 | [FrameViewAnnotations](./src/qs/MapboxMauiQs/Examples/28.FrameViewAnnotations/FrameViewAnnotationsExample.cs) |    |
+| 29 | [Globe](./src/qs/MapboxMauiQs/Examples/29.Globe/GlobeExample.cs) |    |
+| 30 | [GlobeFlyTo](./src/qs/MapboxMauiQs/Examples/30.GlobeFlyTo/GlobeFlyToExample.cs) |    |
+| 31 | [HeatmapLayerGlobe](./src/qs/MapboxMauiQs/Examples/31.HeatmapLayerGlobe/HeatmapLayerGlobeExample.cs) |    |
+| 32 | [IconSizeChange](./src/qs/MapboxMauiQs/Examples/32.IconSizeChange/IconSizeChangeExample.cs) |  OK  |
+| 33 | [LargeGeoJSONPerformance](./src/qs/MapboxMauiQs/Examples/33.LargeGeoJSONPerformance/LargeGeoJSONPerformanceExample.cs) |    |
+| 34 | [LayerPosition](./src/qs/MapboxMauiQs/Examples/34.LayerPosition/LayerPositionExample.cs) |    |
+| 35 | [LineAnnotation](./src/qs/MapboxMauiQs/Examples/35.LineAnnotation/LineAnnotationExample.cs) |  OK  |
+| 36 | [LineGradient](./src/qs/MapboxMauiQs/Examples/36.LineGradient/LineGradientExample.cs) |    |
+| 37 | [LiveData](./src/qs/MapboxMauiQs/Examples/37.LiveData/LiveDataExample.cs) |    |
+| 38 | [Localization](./src/qs/MapboxMauiQs/Examples/38.Localization/LocalizationExample.cs) |    |
+| 39 | [MultipleGeometries](./src/qs/MapboxMauiQs/Examples/39.MultipleGeometries/MultipleGeometriesExample.cs) |  OK  |
+| 40 | [NavigationSimulator](./src/qs/MapboxMauiQs/Examples/40.NavigationSimulator/NavigationSimulatorExample.cs) |    |
+| 41 | [OfflineManager](./src/qs/MapboxMauiQs/Examples/41.OfflineManager/OfflineManagerExample.cs) |  OK  |
+| 42 | [OfflineRegionManager](./src/qs/MapboxMauiQs/Examples/42.OfflineRegionManager/OfflineRegionManagerExample.cs) |    |
+| 43 | [PitchAndDistance](./src/qs/MapboxMauiQs/Examples/43.PitchAndDistance/PitchAndDistanceExample.cs) |    |
+| 44 | [PointAnnotationClustering](./src/qs/MapboxMauiQs/Examples/44.PointAnnotationClustering/PointAnnotationClusteringExample.cs) |  OK  |
+| 45 | [PointClustering](./src/qs/MapboxMauiQs/Examples/45.PointClustering/PointClusteringExample.cs) |    |
+| 46 | [PolygonAnnotation](./src/qs/MapboxMauiQs/Examples/46.PolygonAnnotation/PolygonAnnotationExample.cs) |  OK  |
+| 47 | [RasterTileSource](./src/qs/MapboxMauiQs/Examples/47.RasterTileSource/RasterTileSourceExample.cs) |    |
+| 48 | [ResizableImage](./src/qs/MapboxMauiQs/Examples/48.ResizableImage/ResizableImageExample.cs) |    |
+| 49 | [RestrictCoordinateBounds](./src/qs/MapboxMauiQs/Examples/49.RestrictCoordinateBounds/RestrictCoordinateBoundsExample.cs) |    |
+| 50 | [SceneKit](./src/qs/MapboxMauiQs/Examples/50.SceneKit/SceneKitExample.cs) |  N/A  |
+| 51 | [ShowHideLayer](./src/qs/MapboxMauiQs/Examples/51.ShowHideLayer/ShowHideLayerExample.cs) |    |
+| 52 | [SkyLayer](./src/qs/MapboxMauiQs/Examples/52.SkyLayer/SkyLayerExample.cs) |  OK  |
+| 53 | [SnapshotterCoreGraphics](./src/qs/MapboxMauiQs/Examples/53.SnapshotterCoreGraphics/SnapshotterCoreGraphicsExample.cs) |    |
+| 54 | [Snapshotter](./src/qs/MapboxMauiQs/Examples/54.Snapshotter/SnapshotterExample.cs) |    |
+| 55 | [SpinningGlobe](./src/qs/MapboxMauiQs/Examples/55.SpinningGlobe/SpinningGlobeExample.cs) |    |
+| 56 | [StoryboardMapView](./src/qs/MapboxMauiQs/Examples/56.StoryboardMapView/StoryboardMapViewExample.cs) |  N/A  |
+| 57 | [SwitchStyles](./src/qs/MapboxMauiQs/Examples/57.SwitchStyles/SwitchStylesExample.cs) |    |
+| 58 | [SymbolClustering](./src/qs/MapboxMauiQs/Examples/58.SymbolClustering/SymbolClusteringExample.cs) |  OK  |
+| 59 | [Terrain](./src/qs/MapboxMauiQs/Examples/59.Terrain/TerrainExample.cs) |  OK  |
+| 60 | [TrackingMode](./src/qs/MapboxMauiQs/Examples/60.TrackingMode/TrackingModeExample.cs) |    |
+| 61 | [ViewAnnotationAnimation](./src/qs/MapboxMauiQs/Examples/61.ViewAnnotationAnimation/ViewAnnotationAnimationExample.cs) |    |
+| 62 | [ViewAnnotationBasic](./src/qs/MapboxMauiQs/Examples/62.ViewAnnotationBasic/ViewAnnotationBasicExample.cs) |    |
+| 63 | [ViewAnnotationMarker](./src/qs/MapboxMauiQs/Examples/63.ViewAnnotationMarker/ViewAnnotationMarkerExample.cs) |    |
+| 64 | [ViewAnnotationWithPointAnnotation](./src/qs/MapboxMauiQs/Examples/64.ViewAnnotationWithPointAnnotation/ViewAnnotationWithPointAnnotationExample.cs) |    |
+| 65 | [Viewport](./src/qs/MapboxMauiQs/Examples/65.Viewport/ViewportExample.cs) |    |
+| 66 | [VoiceOverAccessibility](./src/qs/MapboxMauiQs/Examples/66.VoiceOverAccessibility/VoiceOverAccessibilityExample.cs) |    |
 
 NOTE: A handy command to generate a new example
 

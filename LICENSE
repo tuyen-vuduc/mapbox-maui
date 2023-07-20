@@ -1,3 +1,9 @@
+**tuyen-vuduc is not responsible for, nor does it grant any licenses to, third-party packages. Some packages may require or install dependencies which are governed by additional licenses.**
+
+Note: This component depends on Mapbox SDK for iOS, which is subject to the Mapbox Terms of Service
+
+**The 3-Clause BSD License**
+
 Copyright 2023 tuyen-vuduc
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:

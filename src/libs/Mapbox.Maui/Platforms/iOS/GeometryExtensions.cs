@@ -114,9 +114,10 @@ public static class GeometryExtensions
             case MBXGeometryType.Polygon:
                 var polygonPoints = src
                     .ExtractLocations2DArray()
+                    .Cast<NSArray>()
                     .Select(
                     z => z
-                        .ToArray()
+                        .Cast<NSValue>()
                         .Select(                        
                         y => new[] {
                             y.CoordinateValue.Longitude,
@@ -140,9 +141,10 @@ public static class GeometryExtensions
             case MBXGeometryType.MultiLine:
                 var multiLinePoints = src
                     .ExtractLocations2DArray()
+                    .Cast<NSArray>()
                     .Select(
                     z => z
-                        .ToArray()
+                        .Cast<NSValue>()
                         .Select(
                         y => new[] {
                             y.CoordinateValue.Longitude,
@@ -155,12 +157,13 @@ public static class GeometryExtensions
             case MBXGeometryType.MultiPolygon:
                 var multiPolygonPoints = src
                     .ExtractLocations3DArray()
+                    .Cast<NSArray>()
                     .Select(
                     x => x
-                        .ToArray()
+                        .Cast<NSArray>()
                         .Select(
                         z => z
-                            .ToArray()
+                            .Cast<NSValue>()
                             .Select(
                             y => new[] {
                                 y.CoordinateValue.Longitude,

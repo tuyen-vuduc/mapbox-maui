@@ -73,17 +73,17 @@
 		<PackageReference Include="Xamarin.Build.Download" Version="0.11.4" />
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0-android'">
+	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
 		<PackageReference Include="Com.Mapbox.Maps.Android" Version="10.11.1" />
 		<PackageReference Include="Xamarin.Kotlin.StdLib.Jdk8" Version="1.8.21.1" />
 		<PackageReference Include="Square.OkHttp3" Version="4.10.0.1" />
 		<PackageReference Include="Xamarin.Kotlin.StdLib" Version="1.8.21.1" />
 		<PackageReference Include="Xamarin.AndroidX.Annotation" Version="1.6.0.2" />
 	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0-ios'">
-		<PackageReference Include="MapboxMapsObjC.iOS" Version="10.11.1" />
-		<PackageReference Include="MapboxMobileEvents.iOS" Version="1.0.10" />
-		<PackageReference Include="MapboxMaps.iOS" Version="10.11.1" />
+	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
+		<PackageReference Include="MapboxMapsObjC.iOS" Version="10.11.1.1" />
+		<PackageReference Include="MapboxMobileEvents.iOS" Version="1.0.10.1" />
+		<PackageReference Include="MapboxMaps.iOS" Version="10.11.1.1" />
 	</ItemGroup>
 <!-- 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|iPhone'">

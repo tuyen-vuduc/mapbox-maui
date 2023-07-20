@@ -26,10 +26,10 @@ jobs:
       env:
         NETRC : ${{secrets.NETRC}}
 
-    - name: Setup .NET Core SDK 7.0.101
+    - name: Setup .NET Core SDK 7.0.306
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '7.0.101'
+        dotnet-version: '7.0.306'
 
     - name: Install ios workload
       run: |

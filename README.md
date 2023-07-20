@@ -5,7 +5,7 @@ A dedicated library and starting sample for integrating Mapbox into your MAUI ap
 # Installation
 
 ```
-Install-Package Mapbox.Maui --version 10.11.1
+Install-Package Mapbox.Maui --version 10.11.1.1
 ```
 
 ## Integrate into your project

@@ -53,7 +53,7 @@
 		<RepositoryUrl>https://github.com/tuyen-vuduc/mapbox-maui</RepositoryUrl>
 		<PackageProjectUrl>https://mapbox.tuyen-vuduc.tech</PackageProjectUrl>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-		<PackageVersion>10.11.1.1</PackageVersion>
+		<PackageVersion>11.0.0</PackageVersion>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<PackageIcon>tv-mapbox.png</PackageIcon>
@@ -69,16 +69,15 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
-		<PackageReference Include="Com.Mapbox.Maps.Android" Version="10.11.1" />
-		<PackageReference Include="Xamarin.Kotlin.StdLib.Jdk8" Version="1.9.0.1" />
+		<PackageReference Include="Com.Mapbox.Maps.Android" Version="11.0.0" />
+		<PackageReference Include="Xamarin.Kotlin.StdLib.Jdk8" Version="1.9.21.1" />
 		<PackageReference Include="Square.OkHttp3" Version="4.10.0.1" />
-		<PackageReference Include="Xamarin.Kotlin.StdLib" Version="1.9.0.1" />
-		<PackageReference Include="Xamarin.AndroidX.Annotation" Version="1.6.0.4" />
+		<PackageReference Include="Xamarin.Kotlin.StdLib" Version="1.9.21.1" />
+		<PackageReference Include="Xamarin.AndroidX.Annotation" Version="1.7.0.3" />
 	</ItemGroup>
 
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
-		<PackageReference Include="MapboxMapsObjC.iOS" Version="10.11.1.1" />
-		<PackageReference Include="MapboxMobileEvents.iOS" Version="1.0.10.1" />
+		<PackageReference Include="MapboxMapsObjC.iOS" Version="11.0.0" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Models\Styles\" />

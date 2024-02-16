@@ -2,7 +2,7 @@
 using PlatformView = AndroidX.Fragment.App.FragmentContainerView;
 using MapboxMapsStyle = Com.Mapbox.Maps.Style;
 using Com.Mapbox.Maps;
-using Com.Mapbox.Maps.Plugin.Scalebar;
+using Com.Mapbox.Maps.Plugins.Scalebar;
 using Microsoft.Maui.Platform;
 using Android.Content;
 using Android.Graphics;
@@ -20,7 +20,7 @@ public partial class MapboxViewHandler
 
         if (view.Light == null) return;
 
-        mapView.MapboxMap.Style.SetStyleLight(
+        mapView.MapboxMap.Style.SetStyleLights(
             view.Light.ToPlatformValue(true)
         );
     }
@@ -141,7 +141,7 @@ public partial class MapboxViewHandler
 
         if (xdata is null) return;
 
-        var setStyleGeoJSONSourceDataResult = style.SetStyleGeoJSONSourceData(sourceId, xdata);
+        var setStyleGeoJSONSourceDataResult = style.SetStyleGeoJSONSourceData(sourceId, null, xdata);
 
         if (setStyleGeoJSONSourceDataResult.IsError)
         {

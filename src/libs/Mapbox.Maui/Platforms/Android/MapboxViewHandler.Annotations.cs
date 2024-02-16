@@ -1,10 +1,8 @@
 ﻿namespace MapboxMaui;
 
-using PlatformPolygonAnnotationManager = Com.Mapbox.Maps.Plugin.Annotation.Generated.PolygonAnnotationManager;
-using PlatformCircleAnnotationManager = Com.Mapbox.Maps.Plugin.Annotation.Generated.CircleAnnotationManager;
-using PlatformPointAnnotationManager = Com.Mapbox.Maps.Plugin.Annotation.Generated.PointAnnotationManager;
-using PlatformPolylineAnnotationManager = Com.Mapbox.Maps.Plugin.Annotation.Generated.PolylineAnnotationManager;
-using Com.Mapbox.Maps.Plugin.Annotation;
+using PlatformCircleAnnotationManager = Com.Mapbox.Maps.Plugins.Annotations.Generated.CircleAnnotationManager;
+using PlatformPointAnnotationManager = Com.Mapbox.Maps.Plugins.Annotations.Generated.PointAnnotationManager;
+using PlatformPolylineAnnotationManager = Com.Mapbox.Maps.Plugins.Annotations.Generated.PolylineAnnotationManager;
 using MapboxMaui.Annotations;
 using MapboxMaui.Styles;
 
@@ -18,12 +16,10 @@ partial class MapboxViewHandler : IAnnotationController
 
         if (mapView == null) return null;
 
-        var nativeManager = AnnotationPluginImplKt
-            .GetAnnotations(mapView)
-            .CreateAnnotationManager(
-                AnnotationType.PolygonAnnotation,
-                new AnnotationConfig(null, id, id, null)
-            ) as PlatformPolygonAnnotationManager;
+        var annotationsPlugin = Com.Mapbox.Maps.Plugins.Annotations.AnnotationsUtils.GetAnnotations(mapView);
+        var config = new Com.Mapbox.Maps.Plugins.Annotations.AnnotationConfig(null, id, id, null);
+        var nativeManager = Com.Mapbox.Maps.Plugins.Annotations.Generated.PolygonAnnotationManagerKt
+            .CreatePolygonAnnotationManager(annotationsPlugin, config);
 
         return new PolygonAnnotationManager(id, nativeManager);
     }
@@ -36,12 +32,11 @@ partial class MapboxViewHandler : IAnnotationController
 
         if (mapView == null) return null;
 
-        var nativeManager = AnnotationPluginImplKt
-            .GetAnnotations(mapView)
-            .CreateAnnotationManager(
-                AnnotationType.CircleAnnotation,
-                new AnnotationConfig(null, id, id, null)
-            ) as PlatformCircleAnnotationManager;
+        var annotationsPlugin = Com.Mapbox.Maps.Plugins.Annotations.AnnotationsUtils.GetAnnotations(mapView);
+        var config = new Com.Mapbox.Maps.Plugins.Annotations.AnnotationConfig(null, id, id, null);
+
+        var nativeManager = Com.Mapbox.Maps.Plugins.Annotations.Generated.CircleAnnotationManagerKt
+            .CreateCircleAnnotationManager(annotationsPlugin, config);
 
         return new CircleAnnotationManager(id, nativeManager);
     }
@@ -59,6 +54,10 @@ partial class MapboxViewHandler : IAnnotationController
         var clusterMaxZoom = clusterOptions != null
             ? new Java.Lang.Long((long)clusterOptions.ClusterMaxZoom)
             : null;
+
+        var annotationsPlugin = Com.Mapbox.Maps.Plugins.Annotations.AnnotationsUtils.GetAnnotations(mapView);
+        var config = new Com.Mapbox.Maps.Plugins.Annotations.AnnotationConfig(null, id, id, null);
+
         var options = new AnnotationSourceOptions(
             clusterMaxZoom,
             null, null, null,
@@ -78,6 +77,9 @@ partial class MapboxViewHandler : IAnnotationController
         var mapView = mapboxFragment?.MapView;
 
         if (mapView == null) return null;
+
+        var annotationsPlugin = Com.Mapbox.Maps.Plugins.Annotations.AnnotationsUtils.GetAnnotations(mapView);
+        var config = new Com.Mapbox.Maps.Plugins.Annotations.AnnotationConfig(null, id, id, null);
 
         var nativeManager = AnnotationPluginImplKt
             .GetAnnotations(mapView)

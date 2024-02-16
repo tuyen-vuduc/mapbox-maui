@@ -6,10 +6,11 @@ using AndroidX.Fragment.App;
 using Android.OS;
 using System;
 using Android.Runtime;
-using Com.Mapbox.Maps.Plugin.Delegates.Listeners;
+using Com.Mapbox.Maps.Plugins.Delegates.Listeners;
 using Com.Mapbox.Maps.Extension.Observable.Eventdata;
-using Com.Mapbox.Maps.Plugin.Gestures;
+using Com.Mapbox.Maps.Plugins.Gestures;
 using Com.Mapbox.Geojson;
+using Com.Mapbox.Common;
 
 public partial class MapboxFragment : Fragment
 {
@@ -39,21 +40,11 @@ public partial class MapboxFragment : Fragment
 
     public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        if (string.IsNullOrWhiteSpace(MapboxViewHandler.ACCESS_TOKEN))
+        if (!string.IsNullOrWhiteSpace(MapboxViewHandler.ACCESS_TOKEN))
         {
-            return new MapView(Context);
+            MapboxOptions.AccessToken = MapboxViewHandler.ACCESS_TOKEN;
         }
-
-        var resourceOptionsManager = ResourceOptionsManager.CompanionField.GetDefault(
-                Context,
-                MapboxViewHandler.ACCESS_TOKEN
-            );
-        var initOptions = new MapInitOptions(
-            Context,
-            resourceOptionsManager?.ResourceOptions
-        );
-
-        return MapView = new MapView(Context, initOptions);
+        return new MapView(Context);
     }
 
     public override void OnViewCreated(View view, Bundle savedInstanceState)

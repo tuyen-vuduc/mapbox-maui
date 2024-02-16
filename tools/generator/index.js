@@ -36,7 +36,9 @@ const swift2CsTypeMapping = {
 var commonTypeToConversionNameMapping = {
     'bool': 'boolean',
 };
-generateSourcePropertiesObjc('GeoJSON');
+// generateSourcePropertiesObjc('Vector');
+
+// generateLayerPropertiesObjc
 
 function generateLayerPropertiesObjc(layerName) {
     var topLines = `// This file is generated.

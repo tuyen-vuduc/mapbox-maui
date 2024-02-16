@@ -7,7 +7,7 @@ using Java.Text;
 
 public partial class OfflineManager: Java.Lang.Object
 {
-    IOfflineManagerInterface nativeManager;
+    Com.Mapbox.Maps.OfflineManager nativeManager;
     TileStore tileStore;
 
     partial void InitializePlatformManager()
@@ -17,14 +17,7 @@ public partial class OfflineManager: Java.Lang.Object
             TileStoreOptions.MAPBOX_ACCESS_TOKEN,
             Value.ValueOf(accessToken));
 
-        var resourceOptions = new ResourceOptions.Builder()
-            .AccessToken(accessToken)
-            .TileStore(tileStore)
-            .Build();
-
-        nativeManager = new Com.Mapbox.Maps.OfflineManager(
-            resourceOptions
-        );
+        nativeManager = new Com.Mapbox.Maps.OfflineManager();
     }
 
     public bool IsMapboxStackConnected

@@ -11,6 +11,7 @@ using MapboxCoreMaps;
 using MapboxMapsObjC;
 using Microsoft.Maui.Controls.Compatibility.Platform.iOS;
 using Microsoft.Maui.Platform;
+using System.Runtime.InteropServices;
 
 public static partial class AdditionalExtensions
 {
@@ -29,15 +30,15 @@ public static partial class AdditionalExtensions
         if (propertyValue.Expression != null)
         {
             var nativeExpression = propertyValue.Expression.ToPlatformValue();
-            return TMBValue.Expression(nativeExpression);
+            return TMBValue.FromExpression(nativeExpression);
         }
 
         if (propertyValue.Value is Color color)
         {
-            return TMBValue.Constant(color.ToPlatform());
+            return TMBValue.FromConstant(color.ToPlatform());
         }
 
-        return TMBValue.Constant(propertyValue.Value.Wrap());
+        return TMBValue.FromConstant(propertyValue.Value.Wrap());
     }
 
     internal static NSNumber[] ToPlatform(this double[] values, bool defaultToEmpty = false)
@@ -81,7 +82,7 @@ public static partial class AdditionalExtensions
             ? NSNumber.FromInt32((int)options.Mode)
             : null,
             metadata,
-            options.AcceptsExpired
+            null // TODO options.AcceptsExpired
         );
     }
 
@@ -94,10 +95,10 @@ public static partial class AdditionalExtensions
         switch (xvalue.Exaggeration.Value)
         {
             case DslExpression expression:
-                result.Exaggeration = TMBValue.Expression(expression.ToPlatformValue());
+                result.Exaggeration = TMBValue.FromExpression(expression.ToPlatformValue());
                 break;
             case double doubleValue:
-                result.Exaggeration = TMBValue.Constant(doubleValue.Wrap());
+                result.Exaggeration = TMBValue.FromConstant(doubleValue.Wrap());
                 break;
         }
 
@@ -263,42 +264,34 @@ public static partial class AdditionalExtensions
             .ToList();
     }
 
-    public static MBMCameraOptions ToNative(this CameraOptions cameraOptions)
+    public static TMBCameraOptions ToNative(this CameraOptions cameraOptions)
     {
-        var center = cameraOptions.Center.HasValue
-            ? new CLLocation(cameraOptions.Center.Value.X, cameraOptions.Center.Value.Y)
-            : null;
-        var padding = cameraOptions.Padding.HasValue
-            ? new MBMEdgeInsets(
-                cameraOptions.Padding.Value.Top,
-                cameraOptions.Padding.Value.Left,
-                cameraOptions.Padding.Value.Bottom,
-                cameraOptions.Padding.Value.Right)
-            : null;
-        var anchor = cameraOptions.Anchor.HasValue
-            ? new MBMScreenCoordinate(
+        CLLocationCoordinate2D? center = cameraOptions.Center.HasValue
+            ? new CLLocationCoordinate2D(cameraOptions.Center.Value.X, cameraOptions.Center.Value.Y)
+            : new CLLocationCoordinate2D(0,0);
+        UIKit.UIEdgeInsets padding = cameraOptions.Padding.HasValue
+            ? new UIKit.UIEdgeInsets(
+                (NFloat)cameraOptions.Padding.Value.Top,
+                (NFloat)cameraOptions.Padding.Value.Left,
+                (NFloat)cameraOptions.Padding.Value.Bottom,
+                (NFloat)cameraOptions.Padding.Value.Right)
+            : UIKit.UIEdgeInsets.Zero;
+        CoreGraphics.CGPoint anchor = cameraOptions.Anchor.HasValue
+            ? new CoreGraphics.CGPoint(
                 cameraOptions.Anchor.Value.X,
                 cameraOptions.Anchor.Value.Y
                 )
-            : null;
+            : CoreGraphics.CGPoint.Empty;
         var zoom = cameraOptions.Zoom.HasValue
-            ? NSNumber.FromFloat(cameraOptions.Zoom.Value)
-            : null;
-        var bearing = cameraOptions.Bearing.HasValue
-            ? NSNumber.FromFloat(cameraOptions.Bearing.Value)
-            : null;
+            ? (NFloat)cameraOptions.Zoom.Value
+            : 0;
+        var bearing = cameraOptions.Bearing ?? 0;
         var pitch = cameraOptions.Pitch.HasValue
-            ? NSNumber.FromFloat(cameraOptions.Pitch.Value)
-            : null;
+            ? (NFloat)cameraOptions.Pitch.Value
+            : 0;
 
-        if (center == null &&
-            padding == null &&
-            anchor == null &&
-            zoom == null &&
-            pitch == null) return null;
-
-        return new MBMCameraOptions(
-            center,
+        return new TMBCameraOptions(
+            center.Value,
             padding,
             anchor,
             zoom,

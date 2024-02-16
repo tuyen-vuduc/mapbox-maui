@@ -32,7 +32,7 @@ partial class MapboxViewHandler : IMapFeatureQueryable
         return tcs.Task;
     }
 
-    class QueryRenderedFeaturesWithPointCallback : Java.Lang.Object, IQueryFeaturesCallback
+    class QueryRenderedFeaturesWithPointCallback : Java.Lang.Object, IQueryRenderedFeaturesCallback
     {
         private readonly TaskCompletionSource<IEnumerable<XQueriedFeature>> tcs;
 

@@ -20,11 +20,14 @@ partial class MapboxViewHandler : IMapFeatureQueryable
                 tcs.TrySetException(new NSErrorException(error));
                 return;
             }
-            var xfeatures = features
-                .Select(x => x.ToX())
-                .ToArray();
 
-            tcs.TrySetResult(xfeatures);
+            // TODO
+            //var xfeatures = features
+            //    .ToArray()
+            //    .Select(x => x.ToX())
+            //    .ToArray();
+
+            //tcs.TrySetResult(xfeatures);
         });
 
         return tcs.Task;

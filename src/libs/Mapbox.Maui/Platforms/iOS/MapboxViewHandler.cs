@@ -135,7 +135,7 @@ public partial class MapboxViewHandler
         var sources = view.Sources;
         if (sources == null) return;
 
-        var style = mapView.MapboxMap().Style;
+        var style = mapView.MapboxMap();
 
         foreach (var source in sources)
         {
@@ -173,7 +173,7 @@ public partial class MapboxViewHandler
         }
     }
 
-    private static void HandleGeoJSONSource(TMBStyle style, string sourceId, NSDictionary<NSString, NSObject> platformValue, GeoJSON.Text.IGeoJSONObject data)
+    private static void HandleGeoJSONSource(TMBMapboxMap style, string sourceId, NSDictionary<NSString, NSObject> platformValue, GeoJSON.Text.IGeoJSONObject data)
     {
         var sourceExists = style.SourceExistsWithId(sourceId);
 
@@ -182,17 +182,13 @@ public partial class MapboxViewHandler
                 if (sourceExists)
                 {
                     style.UpdateGeoJSONSourceWithId(
-                        sourceId, raw.Data,
-                        (error) =>
-                        {
-                            if (error == null) return;
-
-                            System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
-                        });
+                        sourceId,
+                        TMBGeoJSONSourceData.StringWithString(raw.Data),
+                        null);
                     return;
                 }
 
-                style.AddGeoJSONSourceWithId(
+                style.AddSiu(
                     sourceId, platformValue, raw.Data,
                     (error) =>
                     {
@@ -202,18 +198,20 @@ public partial class MapboxViewHandler
                     });
                 break;
             case GeoJSON.Text.Geometry.IGeometryObject geometry:
+                var geoJSONData = TMBGeoJSONSourceData.GeometryWithGeometry(geometry.ToNative());
                 if (sourceExists) {
                     style.UpdateGeoJSONSourceWithId(
-                        sourceId, geometry.ToNative(),
-                        (error) => {
-                            if (error == null) return;
-
-                            System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
-                        });
+                        sourceId,
+                        geoJSONData,
+                        null);
                     return;
                 }
-                style.AddSourceWithId(
-                    sourceId, geometry.ToNative(),
+                style.AddSource(
+                    new TMBGeoJSONSource(sourceId)
+                    {
+                        Data = geoJSONData,
+                    },
+                    null,
                     (error) => {
                         if (error == null) return;
 

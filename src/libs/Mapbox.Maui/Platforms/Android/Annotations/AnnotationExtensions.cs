@@ -1,9 +1,9 @@
 ﻿namespace MapboxMaui.Annotations;
 
-using PlatformPolygonAnnotationOptions = Com.Mapbox.Maps.Plugin.Annotation.Generated.PolygonAnnotationOptions;
-using PlatformCircleAnnotationOptions = Com.Mapbox.Maps.Plugin.Annotation.Generated.CircleAnnotationOptions;
-using PlatformPointAnnotationOptions = Com.Mapbox.Maps.Plugin.Annotation.Generated.PointAnnotationOptions;
-using PlatformPolylineAnnotationOptions = Com.Mapbox.Maps.Plugin.Annotation.Generated.PolylineAnnotationOptions;
+using PlatformPolygonAnnotationOptions = Com.Mapbox.Maps.Plugins.Annotations.Generated.PolygonAnnotationOptions;
+using PlatformCircleAnnotationOptions = Com.Mapbox.Maps.Plugins.Annotations.Generated.CircleAnnotationOptions;
+using PlatformPointAnnotationOptions = Com.Mapbox.Maps.Plugins.Annotations.Generated.PointAnnotationOptions;
+using PlatformPolylineAnnotationOptions = Com.Mapbox.Maps.Plugins.Annotations.Generated.PolylineAnnotationOptions;
 
 public static class AnnotationExtensions
 {

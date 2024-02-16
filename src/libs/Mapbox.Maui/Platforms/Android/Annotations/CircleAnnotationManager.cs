@@ -1,6 +1,6 @@
 ﻿namespace MapboxMaui.Annotations;
 
-using PlatformCircleAnnotationManager = Com.Mapbox.Maps.Plugin.Annotation.Generated.CircleAnnotationManager;
+using PlatformCircleAnnotationManager = Com.Mapbox.Maps.Plugins.Annotations.Generated.CircleAnnotationManager;
 
 public partial class CircleAnnotationManager
 	: AnnotationManager<PlatformCircleAnnotationManager, CircleAnnotation>

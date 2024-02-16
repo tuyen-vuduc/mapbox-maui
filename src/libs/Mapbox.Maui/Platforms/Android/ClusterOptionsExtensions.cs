@@ -6,10 +6,10 @@ namespace MapboxMaui;
 
 public static class ClusterOptionsExtensions
 {
-    public static new Com.Mapbox.Maps.Plugin.Annotation.ClusterOptions ToPlatform(this ClusterOptions clusterOptions)
+    public static new Com.Mapbox.Maps.Plugins.Annotations.ClusterOptions ToPlatform(this ClusterOptions clusterOptions)
         => clusterOptions == null
             ? null
-            : new Com.Mapbox.Maps.Plugin.Annotation.ClusterOptions(
+            : new Com.Mapbox.Maps.Plugins.Annotations.ClusterOptions(
                 true,
                 (long)clusterOptions.ClusterRadius,
                 clusterOptions.CircleRadius?.Expression?.ToPlatformValue(),

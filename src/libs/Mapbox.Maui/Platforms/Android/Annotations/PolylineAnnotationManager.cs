@@ -1,6 +1,6 @@
 ﻿namespace MapboxMaui.Annotations;
 
-using PlatformPolylineAnnotationManager = Com.Mapbox.Maps.Plugin.Annotation.Generated.PolylineAnnotationManager;
+using PlatformPolylineAnnotationManager = Com.Mapbox.Maps.Plugins.Annotations.Generated.PolylineAnnotationManager;
 
 partial class PolylineAnnotationManager
     : AnnotationManager<PlatformPolylineAnnotationManager, PolylineAnnotation>
@@ -62,7 +62,7 @@ partial class PolylineAnnotationManager
 
         for (int i = 0; i < platformAnnotations.Count; i++)
         {
-            var item = platformAnnotations[i] as Com.Mapbox.Maps.Plugin.Annotation.Generated.PolylineAnnotation;
+            var item = platformAnnotations[i] as Com.Mapbox.Maps.Plugins.Annotations.Generated.PolylineAnnotation;
             xitems[i].Id = item.Id.ToString();
         }
     }
@@ -76,12 +76,10 @@ partial class PolylineAnnotationManager
     {
         foreach (var xid in annotationIDs)
         {
-            if (!long.TryParse(xid, out var id)) continue;
-
             var item = nativeManager
                 .Annotations
-                .Cast<Com.Mapbox.Maps.Plugin.Annotation.Generated.PolylineAnnotation>()
-                .FirstOrDefault(x => x.Id == id);
+                .Cast<Com.Mapbox.Maps.Plugins.Annotations.Generated.PolylineAnnotation>()
+                .FirstOrDefault(x => x.Id == xid);
 
             if (item == null) continue;
 

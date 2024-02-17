@@ -69,16 +69,12 @@
 		<Compile Remove="**\**\*.iOS.cs" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 		<PackageReference Include="Xamarin.Build.Download" Version="0.11.4" />
 	</ItemGroup>
 
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
 		<PackageReference Include="Com.Mapbox.Maps.Android" Version="11.0.0" />
-		<PackageReference Include="Xamarin.Kotlin.StdLib.Jdk8" Version="1.9.21.1" />
-		<PackageReference Include="Square.OkHttp3" Version="4.10.0.1" />
-		<PackageReference Include="Xamarin.Kotlin.StdLib" Version="1.9.21.1" />
-		<PackageReference Include="Xamarin.AndroidX.Annotation" Version="1.7.0.3" />
 	</ItemGroup>
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
 		<PackageReference Include="MapboxMapsObjC.iOS" Version="11.0.0" />

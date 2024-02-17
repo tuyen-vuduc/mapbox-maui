@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>net6.0-android;net6.0-ios;net7.0-android;net7.0-ios;</TargetFrameworks>
@@ -36,9 +36,6 @@
 	<ItemGroup Condition="$(TargetFramework.StartsWith('net6.0-ios')) != true">
 		<Compile Remove="**\**\*.iOS.cs" />
 	</ItemGroup>
-	<ItemGroup Condition="$(TargetFramework.StartsWith('net6.0-ios')) == true">
-		<Compile Include="**\**\*.iOS.cs" />
-	</ItemGroup>
 
 	<PropertyGroup>
 		<PackageId>Mapbox.Maui</PackageId>
@@ -61,21 +58,18 @@
 		<None Include="../../../LICENSE" Pack="True" PackagePath="" />
 		<None Include="../../../README.md" Pack="True" PackagePath="README.md" />
 
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 		<PackageReference Include="Xamarin.Build.Download" Version="0.11.4" />
 		<PackageReference Include="GeoJSON.Text" Version="1.0.2" />
 	</ItemGroup>
 
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
 		<PackageReference Include="Com.Mapbox.Maps.Android" Version="11.0.0" />
-		<PackageReference Include="Xamarin.Kotlin.StdLib.Jdk8" Version="1.9.21.1" />
-		<PackageReference Include="Square.OkHttp3" Version="4.10.0.1" />
-		<PackageReference Include="Xamarin.Kotlin.StdLib" Version="1.9.21.1" />
-		<PackageReference Include="Xamarin.AndroidX.Annotation" Version="1.7.0.3" />
 	</ItemGroup>
 
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
 		<PackageReference Include="MapboxMapsObjC.iOS" Version="11.0.0" />
+		<PackageReference Include="MapboxMaps.iOS" Version="11.0.0" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Models\Styles\" />

@@ -279,10 +279,7 @@ public partial class MapboxViewHandler
 
     protected override PlatformView CreatePlatformView()
     {
-        // TODO Use default access token if not available the custom one
-        var accessToken = ACCESS_TOKEN;
-
-        return new PlatformView(accessToken);
+        return new PlatformView(ACCESS_TOKEN);
     }
 
     protected override void DisconnectHandler(PlatformView platformView)

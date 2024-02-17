@@ -12,7 +12,11 @@ public class MapViewContainer : UIView
     public MapViewContainer(string accessToken)
         : base()
     {
-        // TODO Set access token
+        if (!string.IsNullOrWhiteSpace(accessToken)) 
+        {
+            MapboxCommon.MBXMapboxOptions.SetAccessTokenForToken(accessToken);
+        }
+
         var mapboxOptions = new MBMMapOptions(null, null, null, null, null, null, 1, null);
         var options = MapInitOptionsFactory
             .CreateWithMapOptions(mapboxOptions, null, null, null, 0);

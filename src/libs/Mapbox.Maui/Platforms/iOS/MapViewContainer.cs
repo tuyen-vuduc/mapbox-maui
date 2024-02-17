@@ -13,8 +13,9 @@ public class MapViewContainer : UIView
         : base()
     {
         // TODO Set access token
+        var mapboxOptions = new MBMMapOptions(null, null, null, null, null, null, 1, null);
         var options = MapInitOptionsFactory
-            .CreateWithMapOptions(null, null, null, null, 0);
+            .CreateWithMapOptions(mapboxOptions, null, null, null, 0);
 
         var mapView = MapViewFactory.CreateWithFrame(
             CoreGraphics.CGRect.FromLTRB(0, 0, 320, 675),

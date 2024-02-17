@@ -116,7 +116,7 @@ partial class OfflineManager : NSObject, IOfflineManager
         var options = new MBXTileRegionLoadOptions(
             xoptions.Geometry?.ToNative(),
             descriptors,
-            metadata,
+            null, // TODO Pass metadata in
             xoptions.AcceptsExpired,
             (MBXNetworkRestriction)xoptions.NetworkRestriction,
             xoptions.StartLocation.HasValue

@@ -22,7 +22,6 @@ public partial class MapboxViewHandler
         if (view.Light == null) return;
 
         mapView.MapboxMap.Style.SetStyleLights(
-        mapView.MapboxMap.Style.SetStyleLights(
             view.Light.ToPlatformValue(true)
         );
     }

@@ -44,7 +44,8 @@ public partial class MapboxFragment : Fragment
         {
             MapboxOptions.AccessToken = MapboxViewHandler.ACCESS_TOKEN;
         }
-        return new MapView(Context);
+
+        return MapView = new MapView(Context);
     }
 
     public override void OnViewCreated(View view, Bundle savedInstanceState)

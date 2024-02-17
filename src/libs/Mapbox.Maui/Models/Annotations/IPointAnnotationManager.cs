@@ -9,8 +9,6 @@ public interface IPointAnnotationManager : IAnnotationManager<PointAnnotation>
     double? IconPadding { get; set; }
     IconPitchAlignment? IconPitchAlignment { get; set; }
     IconRotationAlignment? IconRotationAlignment { get; set; }
-    IconTextFit? IconTextFit { get; set; }
-    double[] IconTextFitPadding { get; set; }
     bool? SymbolAvoidEdges { get; set; }
     SymbolPlacement? SymbolPlacement { get; set; }
     double? SymbolSpacing { get; set; }
@@ -30,7 +28,6 @@ public interface IPointAnnotationManager : IAnnotationManager<PointAnnotation>
     IconTranslateAnchor? IconTranslateAnchor { get; set; }
     double[] TextTranslate { get; set; }
     TextTranslateAnchor? TextTranslateAnchor { get; set; }
-    double? TextLineHeight { get; set; }
 }
 
 public partial class PointAnnotationManager

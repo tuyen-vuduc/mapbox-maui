@@ -29,30 +29,12 @@ partial class SchemeExtensions
 {
     public static MapboxMapsObjC.TMBScheme ToPlatform(this Scheme value)
     {
-        return value.Value switch 
-        {
-            "xyz" => MapboxMapsObjC.TMBScheme.Xyz,
-            "tms" => MapboxMapsObjC.TMBScheme.Tms
-        };
+        return new (value.Value);
     }
 
     public static Scheme ToPlatform(this MapboxMapsObjC.TMBScheme value)
     {
-        return value switch 
-        {
-            MapboxMapsObjC.TMBScheme.Xyz => "xyz",
-            MapboxMapsObjC.TMBScheme.Tms => "tms"
-        };
-    }
-
-    public static Scheme SchemeX(this Foundation.NSNumber value)
-    {
-        return value.Scheme().ToPlatform();
-    }
-
-    public static Foundation.NSNumber AsNumber(this Scheme value)
-    {
-        return Foundation.NSNumber.FromInt32((int)ToPlatform(value));
+        return value.RawValue;
     }
 }
 #endif
@@ -93,30 +75,12 @@ partial class EncodingExtensions
 {
     public static MapboxMapsObjC.TMBEncoding ToPlatform(this Encoding value)
     {
-        return value.Value switch 
-        {
-            "terrarium" => MapboxMapsObjC.TMBEncoding.Terrarium,
-            "mapbox" => MapboxMapsObjC.TMBEncoding.Mapbox
-        };
+        return new(value.Value);
     }
 
     public static Encoding ToPlatform(this MapboxMapsObjC.TMBEncoding value)
     {
-        return value switch 
-        {
-            MapboxMapsObjC.TMBEncoding.Terrarium => "terrarium",
-            MapboxMapsObjC.TMBEncoding.Mapbox => "mapbox"
-        };
-    }
-
-    public static Encoding EncodingX(this Foundation.NSNumber value)
-    {
-        return value.Encoding().ToPlatform();
-    }
-
-    public static Foundation.NSNumber AsNumber(this Encoding value)
-    {
-        return Foundation.NSNumber.FromInt32((int)ToPlatform(value));
+        return value.RawValue;
     }
 }
 #endif

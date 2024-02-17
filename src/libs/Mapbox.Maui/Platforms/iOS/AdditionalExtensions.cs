@@ -82,7 +82,7 @@ public static partial class AdditionalExtensions
             ? NSNumber.FromInt32((int)options.Mode)
             : null,
             metadata,
-            null // TODO options.AcceptsExpired
+            NSNumber.FromBoolean(options.AcceptsExpired)
         );
     }
 
@@ -266,32 +266,34 @@ public static partial class AdditionalExtensions
 
     public static TMBCameraOptions ToNative(this CameraOptions cameraOptions)
     {
-        CLLocationCoordinate2D? center = cameraOptions.Center.HasValue
+        CLLocationCoordinate2D center = cameraOptions.Center.HasValue
             ? new CLLocationCoordinate2D(cameraOptions.Center.Value.X, cameraOptions.Center.Value.Y)
-            : new CLLocationCoordinate2D(0,0);
+            : new CLLocationCoordinate2D(0, 0);
         UIKit.UIEdgeInsets padding = cameraOptions.Padding.HasValue
             ? new UIKit.UIEdgeInsets(
-                (NFloat)cameraOptions.Padding.Value.Top,
-                (NFloat)cameraOptions.Padding.Value.Left,
-                (NFloat)cameraOptions.Padding.Value.Bottom,
-                (NFloat)cameraOptions.Padding.Value.Right)
+                (float)cameraOptions.Padding.Value.Top,
+                (float)cameraOptions.Padding.Value.Left,
+                (float)cameraOptions.Padding.Value.Bottom,
+                (float)cameraOptions.Padding.Value.Right)
             : UIKit.UIEdgeInsets.Zero;
-        CoreGraphics.CGPoint anchor = cameraOptions.Anchor.HasValue
+        var anchor = cameraOptions.Anchor.HasValue
             ? new CoreGraphics.CGPoint(
                 cameraOptions.Anchor.Value.X,
                 cameraOptions.Anchor.Value.Y
                 )
             : CoreGraphics.CGPoint.Empty;
         var zoom = cameraOptions.Zoom.HasValue
-            ? (NFloat)cameraOptions.Zoom.Value
-            : 0;
-        var bearing = cameraOptions.Bearing ?? 0;
+            ? cameraOptions.Zoom.Value
+            : 14f;
+        var bearing = cameraOptions.Bearing.HasValue
+            ? cameraOptions.Bearing.Value
+            : 0f;
         var pitch = cameraOptions.Pitch.HasValue
-            ? (NFloat)cameraOptions.Pitch.Value
-            : 0;
+            ? cameraOptions.Pitch.Value
+            : 0f;
 
         return new TMBCameraOptions(
-            center.Value,
+            center,
             padding,
             anchor,
             zoom,

@@ -40,38 +40,12 @@ partial class SourceTypeExtensions
 {
     public static MapboxMapsObjC.TMBSourceType ToPlatform(this SourceType value)
     {
-        return value.Value switch 
-        {
-            "vector" => MapboxMapsObjC.TMBSourceType.Vector,
-            "raster" => MapboxMapsObjC.TMBSourceType.Raster,
-            "raster-dem" => MapboxMapsObjC.TMBSourceType.RasterDem,
-            "geojson" => MapboxMapsObjC.TMBSourceType.GeoJson,
-            "image" => MapboxMapsObjC.TMBSourceType.Image,
-            "model" => MapboxMapsObjC.TMBSourceType.Model
-        };
+        return new(value.Value);
     }
 
     public static SourceType ToPlatform(this MapboxMapsObjC.TMBSourceType value)
     {
-        return value switch 
-        {
-            MapboxMapsObjC.TMBSourceType.Vector => "vector",
-            MapboxMapsObjC.TMBSourceType.Raster => "raster",
-            MapboxMapsObjC.TMBSourceType.RasterDem => "raster-dem",
-            MapboxMapsObjC.TMBSourceType.GeoJson => "geojson",
-            MapboxMapsObjC.TMBSourceType.Image => "image",
-            MapboxMapsObjC.TMBSourceType.Model => "model"
-        };
-    }
-
-    public static SourceType SourceTypeX(this Foundation.NSNumber value)
-    {
-        return value.SourceType().ToPlatform();
-    }
-
-    public static Foundation.NSNumber AsNumber(this SourceType value)
-    {
-        return Foundation.NSNumber.FromInt32((int)ToPlatform(value));
+        return value.RawValue;
     }
 }
 #endif

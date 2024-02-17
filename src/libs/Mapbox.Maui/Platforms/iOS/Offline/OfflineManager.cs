@@ -15,8 +15,14 @@ partial class OfflineManager : NSObject, IOfflineManager
     partial void InitializePlatformManager()
     {
         nativeManager = new PlatformOfflineManager();
+        nativeManager = new PlatformOfflineManager();
 
         titleStore = MBXTileStore.Create();
+
+        // TODO Assign access token
+        //titleStore.SetOptionForKey(
+        //    MBXTileStoreOptions.MapboxAccessToken,
+        //    new NSString(accessToken));
     }
 
     public bool IsMapboxStackConnected
@@ -33,7 +39,8 @@ partial class OfflineManager : NSObject, IOfflineManager
     {
         var nativeOptions = options.ToNative();
 
-        // TODO
+        // TODO Check missing API
+        throw new NotImplementedException();
         //nativeManager.LoadStyleWithStyleUriString(
         //    styleUri,
         //    nativeOptions,
@@ -83,18 +90,19 @@ partial class OfflineManager : NSObject, IOfflineManager
     {
         if (xoptions == null) return;
 
-        // TODO
-        //var descriptors = xoptions.TilesetDescriptors?
-        //    .Select(
-        //        x => new MBMTilesetDescriptorOptions(
-        //            x.StyleUri,
-        //            (byte)x.MinZoom,
-        //            (byte)x.MaxZoom,
-        //            x.StylePackLoadOptions?.ToNative()
-        //        ))
-        //    .Select(
-        //        nativeManager.CreateTilesetDescriptorForTilesetDescriptorOptions)
-        //    .ToArray();
+        var descriptors = xoptions.TilesetDescriptors?
+            .Select(
+                x => new MBMTilesetDescriptorOptions(
+                    x.StyleUri,
+                    (byte)x.MinZoom,
+                    (byte)x.MaxZoom,
+                    null,
+                    x.StylePackLoadOptions?.ToNative(),
+                    null
+                ))
+            .Select(
+                nativeManager.CreateTilesetDescriptorForTilesetDescriptorOptions)
+            .ToArray();
 
         //var metadata = new NSMutableDictionary();
         //if (xoptions.Metadata != null)
@@ -105,24 +113,27 @@ partial class OfflineManager : NSObject, IOfflineManager
         //    }
         //}
 
-        //var options = new MBXTileRegionLoadOptions(
-        //    xoptions.Geometry?.ToNative(),
-        //    descriptors,
-        //    metadata,
-        //    xoptions.AcceptsExpired,
-        //    (MBXNetworkRestriction)xoptions.NetworkRestriction,
-        //    xoptions.StartLocation.HasValue
-        //        ? new CoreLocation.CLLocation(
-        //            xoptions.StartLocation.Value.X,
-        //            xoptions.StartLocation.Value.Y
-        //            )
-        //        : null,
-        //    xoptions.AvarageBytesPerSecond.HasValue
-        //        ? NSNumber.FromInt32(xoptions.AvarageBytesPerSecond.Value)
-        //        : null,
-        //    xoptions.ExtraOptions?.Wrap()
-        //);
+        var options = new MBXTileRegionLoadOptions(
+            xoptions.Geometry?.ToNative(),
+            descriptors,
+            metadata,
+            xoptions.AcceptsExpired,
+            (MBXNetworkRestriction)xoptions.NetworkRestriction,
+            xoptions.StartLocation.HasValue
+                ? new MBXCoordinate2D(
+                    new CoreLocation.CLLocationCoordinate2D(
+                    xoptions.StartLocation.Value.X,
+                    xoptions.StartLocation.Value.Y
+                    ))
+                : null,
+            xoptions.AvarageBytesPerSecond.HasValue
+                ? NSNumber.FromInt32(xoptions.AvarageBytesPerSecond.Value)
+                : null,
+            xoptions.ExtraOptions?.Wrap()
+        );
 
+        // TODO Check API wrongly bound
+        throw new NotImplementedException();
         //titleStore.LoadTileRegionForId(
         //    tileId,
         //    options,

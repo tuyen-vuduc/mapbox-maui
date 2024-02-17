@@ -51,7 +51,7 @@ public partial class CircleAnnotationManager
 
         for (int i = 0; i < platformAnnotations.Count; i++)
         {
-            var item = platformAnnotations[i] as Com.Mapbox.Maps.Plugin.Annotation.Generated.CircleAnnotation;
+            var item = platformAnnotations[i] as Com.Mapbox.Maps.Plugins.Annotations.Generated.CircleAnnotation;
             xitems[i].Id = item.Id.ToString();
         }
     }
@@ -65,12 +65,10 @@ public partial class CircleAnnotationManager
     {
         foreach (var xid in annotationIDs)
         {
-            if (!long.TryParse(xid, out var id)) continue;
-
             var item = nativeManager
                 .Annotations
-                .Cast<Com.Mapbox.Maps.Plugin.Annotation.Generated.CircleAnnotation>()
-                .FirstOrDefault(x => x.Id == id);
+                .Cast<Com.Mapbox.Maps.Plugins.Annotations.Generated.CircleAnnotation>()
+                .FirstOrDefault(x => x.Id == xid);
 
             if (item == null) continue;
 

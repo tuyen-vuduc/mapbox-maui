@@ -12,9 +12,9 @@ public class MapViewContainer : UIView
     public MapViewContainer(string accessToken)
         : base()
     {
-        var resourceOptions = new MBMResourceOptions(accessToken, null,  null, null, null);
+        // TODO Set access token
         var options = MapInitOptionsFactory
-            .CreateWithResourceOptions(resourceOptions, null, null, null, null);
+            .CreateWithMapOptions(null, null, null, null, 0);
 
         var mapView = MapViewFactory.CreateWithFrame(
             CoreGraphics.CGRect.FromLTRB(0, 0, 320, 675),

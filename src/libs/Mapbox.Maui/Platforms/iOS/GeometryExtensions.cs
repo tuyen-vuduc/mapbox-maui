@@ -99,21 +99,21 @@ public static class GeometryExtensions
         switch (src.GeometryType) {
             case MBXGeometryType.Point:
                 var pointPosition = src
-                    .ExtractLocations()
+                    .ExtractLocations
                     .ToPosition();
                 return new GeoJSON.Text.Geometry.Point(
                     pointPosition
                 );
             case MBXGeometryType.Line:
                 var linePoints = src
-                    .ExtractLocationsArray()
+                    .ExtractLocationsArray
                     .Select(y => y.ToPosition());
                 return new LineString(
                     linePoints
                 );
             case MBXGeometryType.Polygon:
                 var polygonPoints = src
-                    .ExtractLocations2DArray()
+                    .ExtractLocations2DArray
                     .Cast<NSArray>()
                     .Select(
                     z => z
@@ -129,7 +129,7 @@ public static class GeometryExtensions
                 );
             case MBXGeometryType.MultiPoint:
                 var multiPoints = src
-                    .ExtractLocationsArray()
+                    .ExtractLocationsArray
                     .Select(
                     y => new[] {
                         y.CoordinateValue.Longitude,
@@ -140,7 +140,7 @@ public static class GeometryExtensions
                 );
             case MBXGeometryType.MultiLine:
                 var multiLinePoints = src
-                    .ExtractLocations2DArray()
+                    .ExtractLocations2DArray
                     .Cast<NSArray>()
                     .Select(
                     z => z
@@ -156,7 +156,7 @@ public static class GeometryExtensions
                 );
             case MBXGeometryType.MultiPolygon:
                 var multiPolygonPoints = src
-                    .ExtractLocations3DArray()
+                    .ExtractLocations3DArray
                     .Cast<NSArray>()
                     .Select(
                     x => x
@@ -176,7 +176,7 @@ public static class GeometryExtensions
                 );
             case MBXGeometryType.GeometryCollection:
                 var geometries = src
-                    .ExtractGeometriesArray()
+                    .ExtractGeometriesArray
                     .Select(x => x.ToX());
                 return new GeometryCollection(geometries);
         }

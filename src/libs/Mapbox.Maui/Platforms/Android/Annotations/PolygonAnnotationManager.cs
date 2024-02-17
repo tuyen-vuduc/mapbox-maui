@@ -58,12 +58,12 @@ partial class PolygonAnnotationManager
 
     public override void RemoveAnnotations(params string[] annotationIDs)
     {
-        foreach (var xid in annotationIDs)
+        foreach (var id in annotationIDs)
         {
             var item = nativeManager
                 .Annotations
                 .Cast<Com.Mapbox.Maps.Plugins.Annotations.Generated.PolygonAnnotation>()
-                .FirstOrDefault(x => x.Id == xid);
+                .FirstOrDefault(x => x.Id == id);
 
             if (item == null) continue;
 

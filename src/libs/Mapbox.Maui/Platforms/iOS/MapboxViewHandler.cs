@@ -20,15 +20,17 @@ public partial class MapboxViewHandler
         if (light == null) return;
 
         var platformProperties = light.Properties.Wrap() as NSDictionary<NSString, NSObject>;
-        var style = mapView.MapboxMap().Style;
-        style.SetLightWithProperties(
-            platformProperties,
-            (error) =>
-            {
-                if (error == null) return;
+        var style = mapView.MapboxMap();
+        // TODO SetLightWithProperties
+        throw new NotImplementedException();
+        //style.SetLightWithProperties(
+        //    platformProperties,
+        //    (error) =>
+        //    {
+        //        if (error == null) return;
 
-                System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
-            });
+        //        System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
+        //    });
     }
 
     private static void HandleImagesChanged(MapboxViewHandler handler, IMapboxView view)
@@ -39,7 +41,7 @@ public partial class MapboxViewHandler
         var images = view.Images;
         if (images == null) return;
 
-        var style = mapView.MapboxMap().Style;
+        var style = mapView.MapboxMap();
 
         foreach (var ximage in images)
         {
@@ -79,7 +81,7 @@ public partial class MapboxViewHandler
         var layers = view.Layers;
         if (layers == null) return;
 
-        var style = mapView.MapboxMap().Style;
+        var style = mapView.MapboxMap();
 
         foreach (var layer in layers)
         {
@@ -101,7 +103,7 @@ public partial class MapboxViewHandler
                 continue;
             }
 
-            style.AddLayerWithProperties(
+            style.AddLayerWith(
                 properties,
                 layerPosition,
                 (error) =>
@@ -124,7 +126,7 @@ public partial class MapboxViewHandler
 
         var platformValue = terrain.ToPlatformValue();
 
-        mapView.MapboxMap().Style.SetTerrain(platformValue, null);
+        mapView.MapboxMap().SetTerrain(platformValue, null);
     }
 
     private static void HandleSourcesChanged(MapboxViewHandler handler, IMapboxView view)
@@ -177,48 +179,51 @@ public partial class MapboxViewHandler
     {
         var sourceExists = style.SourceExistsWithId(sourceId);
 
-        switch(data) {
-            case RawGeoJSONObject raw:
-                if (sourceExists)
-                {
-                    style.UpdateGeoJSONSourceWithId(
-                        sourceId,
-                        TMBGeoJSONSourceData.StringWithString(raw.Data),
-                        null);
-                    return;
-                }
+        throw new NotImplementedException();
+        //switch(data) {
+        //    //case RawGeoJSONObject raw:
+        //    //    if (sourceExists)
+        //    //    {
+        //    //        style.UpdateGeoJSONSourceWithId(
+        //    //            sourceId, raw.Data,
+        //    //            (error) =>
+        //    //            {
+        //    //                if (error == null) return;
 
-                style.AddSiu(
-                    sourceId, platformValue, raw.Data,
-                    (error) =>
-                    {
-                        if (error == null) return;
+        //    //                System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
+        //    //            });
+        //    //        return;
+        //    //    }
 
-                        System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
-                    });
-                break;
-            case GeoJSON.Text.Geometry.IGeometryObject geometry:
-                var geoJSONData = TMBGeoJSONSourceData.GeometryWithGeometry(geometry.ToNative());
-                if (sourceExists) {
-                    style.UpdateGeoJSONSourceWithId(
-                        sourceId,
-                        geoJSONData,
-                        null);
-                    return;
-                }
-                style.AddSource(
-                    new TMBGeoJSONSource(sourceId)
-                    {
-                        Data = geoJSONData,
-                    },
-                    null,
-                    (error) => {
-                        if (error == null) return;
+        //    //    style.AddGeoJSONSourceWithId(
+        //    //        sourceId, platformValue, raw.Data,
+        //    //        (error) =>
+        //    //        {
+        //    //            if (error == null) return;
 
-                        System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
-                    });
-                break;
-        }        
+        //    //            System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
+        //    //        });
+        //    //    break;
+        //    //case GeoJSON.Text.Geometry.IGeometryObject geometry:
+        //    //    if (sourceExists) {
+        //    //        style.UpdateGeoJSONSourceWithId(
+        //    //            sourceId, geometry.ToNative(),
+        //    //            (error) => {
+        //    //                if (error == null) return;
+
+        //    //                System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
+        //    //            });
+        //    //        return;
+        //    //    }
+        //    //    style.AddSourceWithId(
+        //    //        sourceId, geometry.ToNative(),
+        //    //        (error) => {
+        //    //            if (error == null) return;
+
+        //    //            System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
+        //    //        });
+        //    //    break;
+        //}        
     }
 
     private static void HandleCameraOptionsChanged(MapboxViewHandler handler, IMapboxView view)
@@ -264,7 +269,7 @@ public partial class MapboxViewHandler
         var styleUri = view.MapboxStyle.ToNative();
         if (string.IsNullOrWhiteSpace(styleUri)) return;
 
-        mapView.MapboxMap().LoadStyleURI(styleUri, (style, error) =>
+        mapView.MapboxMap().LoadStyleWithUri(styleUri, null, (error) =>
         {
             if (error == null) return;
 
@@ -274,9 +279,8 @@ public partial class MapboxViewHandler
 
     protected override PlatformView CreatePlatformView()
     {
-        var accessToken = string.IsNullOrWhiteSpace(ACCESS_TOKEN)
-            ? TMBResourceOptionsManager.Default.ResourceOptions.AccessToken
-            : ACCESS_TOKEN;
+        // TODO Use default access token if not available the custom one
+        var accessToken = ACCESS_TOKEN;
 
         return new PlatformView(accessToken);
     }

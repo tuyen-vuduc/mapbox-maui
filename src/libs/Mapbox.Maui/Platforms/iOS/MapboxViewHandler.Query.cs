@@ -20,6 +20,9 @@ partial class MapboxViewHandler : IMapFeatureQueryable
                 tcs.TrySetException(new NSErrorException(error));
                 return;
             }
+            var xfeatures = features.ToArray()
+                .Select(x => x.ToX())
+                .ToArray();
 
             // TODO
             //var xfeatures = features

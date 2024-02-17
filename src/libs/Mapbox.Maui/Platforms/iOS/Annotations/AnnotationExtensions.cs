@@ -10,20 +10,23 @@ public static class AnnotationExtensions
     internal static TMBPointAnnotation ToPlatformValue(
         this PointAnnotation xvalue)
     {
-        var result = TMBPointAnnotation.FromCoordinate(
+        var result = new TMBPointAnnotation(
+            xvalue.Id, 
             new CLLocationCoordinate2D(
                 xvalue.GeometryValue.Coordinates.Latitude,
-                xvalue.GeometryValue.Coordinates.Longitude));
+                xvalue.GeometryValue.Coordinates.Longitude), 
+            xvalue.IsSelected, 
+            xvalue.IsDraggable);
 
-        result.IconAnchor = xvalue.IconAnchor?.AsNumber();
+        result.IconAnchor = xvalue.IconAnchor?.ToPlatform();
         result.IconImage = xvalue.IconImage;
         result.IconOffset = xvalue.IconOffset?.ToPlatform();
         result.IconRotate = xvalue.IconRotate;
         result.IconSize = xvalue.IconSize;
         result.SymbolSortKey = xvalue.SymbolSortKey;
-        result.TextAnchor = xvalue.TextAnchor?.AsNumber();
+        result.TextAnchor = xvalue.TextAnchor?.ToPlatform();
         result.TextField = xvalue.TextField;
-        result.TextJustify = xvalue.TextJustify?.AsNumber();
+        result.TextJustify = xvalue.TextJustify?.ToPlatform();
         result.TextLetterSpacing = xvalue.TextLetterSpacing;
         result.TextLineHeight = xvalue.TextLineHeight;
         result.TextMaxWidth = xvalue.TextMaxWidth;
@@ -31,7 +34,7 @@ public static class AnnotationExtensions
         result.TextRadialOffset = xvalue.TextRadialOffset;
         result.TextRotate = xvalue.TextRotate;
         result.TextSize = xvalue.TextSize;
-        result.TextTransform = xvalue.TextTransform?.AsNumber();
+        result.TextTransform = xvalue.TextTransform?.ToPlatform();
         result.IconColor = xvalue.IconColor?.ToPlatform();
         result.IconHaloBlur = xvalue.IconHaloBlur;
         result.IconHaloColor = xvalue.IconHaloColor?.ToPlatform();
@@ -49,10 +52,13 @@ public static class AnnotationExtensions
     internal static TMBCircleAnnotation ToPlatformValue(
         this CircleAnnotation xvalue)
     {
-        var result = TMBCircleAnnotation.FromCenter(
+        var result = new TMBCircleAnnotation(
+            xvalue.Id,
             new CLLocationCoordinate2D(
                 xvalue.GeometryValue.Coordinates.Latitude,
-                xvalue.GeometryValue.Coordinates.Longitude));
+                xvalue.GeometryValue.Coordinates.Longitude),
+            xvalue.IsSelected,
+            xvalue.IsDraggable);
 
         result.CircleBlur = xvalue.CircleBlur;
         result.CircleColor = xvalue.CircleColor?.ToPlatform();
@@ -70,36 +76,36 @@ public static class AnnotationExtensions
         this PolygonAnnotation xvalue
     )
     {
-        var coordinates = NSArray.FromNSObjects(xvalue
-                .GeometryValue
-                .Coordinates
-                .Select(
-                    x => NSArray.FromObjects(
-                        x.Coordinates
-                        .Select(
-                            y => NSValue.FromMKCoordinate(
-                                new CLLocationCoordinate2D(y.Latitude, y.Longitude)
-                            )
-                        )
-                        .ToArray()
-                    )
-                ).ToArray()
-            );
-        var polygon = TMBPolygon.FromCoordinates(
-            coordinates
-        );
-        var result = TMBPolygonAnnotation.Polygon(
-            polygon
-        );
-        result.FillColor = xvalue.FillColor?.ToPlatform();
-        result.FillOpacity = xvalue.FillOpacity.HasValue
-            ? NSNumber.FromDouble(xvalue.FillOpacity.Value)
-            : null;
-        result.FillOutlineColor = xvalue.FillOutlineColor?.ToPlatform();
-        result.FillPattern = xvalue.FillPattern;
-        result.FillSortKey = xvalue.FillSortKey;
+        // TODO Create TMBPolygonAnnotation
+        throw new NotImplementedException();
+        //var coordinates = NSArray.FromNSObjects(xvalue
+        //        .GeometryValue
+        //        .Coordinates
+        //        .Select(
+        //            x => NSArray.FromObjects(
+        //                x.Coordinates
+        //                .Select(
+        //                    y => NSValue.FromMKCoordinate(
+        //                        new CLLocationCoordinate2D(y.Latitude, y.Longitude)
+        //                    )
+        //                )
+        //                .ToArray()
+        //            )
+        //        ).ToArray()
+        //    );
+        //var polygon = new TMBPolygon(coordinates);
+        //var result = TMBPolygonAnnotation.Polygon(
+        //    polygon
+        //);
+        //result.FillColor = xvalue.FillColor?.ToPlatform();
+        //result.FillOpacity = xvalue.FillOpacity.HasValue
+        //    ? NSNumber.FromDouble(xvalue.FillOpacity.Value)
+        //    : null;
+        //result.FillOutlineColor = xvalue.FillOutlineColor?.ToPlatform();
+        //result.FillPattern = xvalue.FillPattern;
+        //result.FillSortKey = xvalue.FillSortKey;
 
-        return result;
+        //return result;
     }
 
     internal static TMBPolylineAnnotation ToPlatformValue(
@@ -117,7 +123,7 @@ public static class AnnotationExtensions
             )
             .Cast<NSValue>()
             .ToArray();
-        var result = TMBPolylineAnnotation.FromId(
+        var result = new TMBPolylineAnnotation(
             xvalue.Id,
             coordinates,
             xvalue.IsSelected,
@@ -127,7 +133,7 @@ public static class AnnotationExtensions
         result.LineBlur = xvalue.LineBlur.ToPlatform();
         result.LineColor = xvalue.LineColor.ToPlatform();
         result.LineGapWidth = xvalue.LineGapWidth.ToPlatform();
-        result.LineJoin = xvalue.LineJoin?.AsNumber();
+        result.LineJoin = xvalue.LineJoin?.ToPlatform();
         result.LineOffset = xvalue.LineOffset.ToPlatform();
         result.LineOpacity = xvalue.LineOpacity.ToPlatform();
         result.LinePattern = xvalue.LinePattern;

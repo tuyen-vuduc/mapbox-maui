@@ -58,13 +58,14 @@
 		<None Include="../../../LICENSE" Pack="True" PackagePath="" />
 		<None Include="../../../README.md" Pack="True" PackagePath="README.md" />
 
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="Xamarin.Build.Download" Version="0.11.4" />
 		<PackageReference Include="GeoJSON.Text" Version="1.0.2" />
 	</ItemGroup>
 
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
-		<PackageReference Include="Com.Mapbox.Maps.Android" Version="11.0.0" />
+		<PackageReference Include="Com.Mapbox.Maps.Android" Version="11.1.0" />
+		<PackageReference Include="Xamarin.AndroidX.Fragment.Ktx" Version="1.6.2.1" />
 	</ItemGroup>
 
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">

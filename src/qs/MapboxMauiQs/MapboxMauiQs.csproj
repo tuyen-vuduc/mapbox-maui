@@ -80,6 +80,7 @@
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
 		<PackageReference Include="MapboxMapsObjC.iOS" Version="11.0.0" />
 		<PackageReference Include="MapboxMaps.iOS" Version="11.0.0" />
+		<PackageReference Include="MapboxCoreMaps.iOS" Version="11.0.0" />
 	</ItemGroup>
 <!-- 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|iPhone'">
@@ -87,18 +88,14 @@
 	</PropertyGroup> -->
 	<PropertyGroup Condition="'$(TargetFramework)' == 'net7.0-ios'">
 		<PublishTrimmed>true</PublishTrimmed>
+		<CodesignKey>Apple Development: Created via API (X3MP9CYJPQ)</CodesignKey>
+		<CodesignProvision>VS: WildCard Development</CodesignProvision>
 	</PropertyGroup>
 	<Target Name="DisplayMessages" BeforeTargets="PrepareForILLink">
 		<Message Text="Project File Name = $(Configuration)|$(TargetFramework)|$(Platform)" />
 	</Target>
 	<ItemGroup>
 	  <ProjectReference Include="..\..\libs\Mapbox.Maui\Mapbox.Maui.csproj" />
-	</ItemGroup>
-	<ItemGroup>
-	  <None Remove="Resources\Images\star.svg" />
-	</ItemGroup>
-	<ItemGroup>
-	  <BundleResource Include="Resources\Images\star.svg" />
 	</ItemGroup>
 	<ProjectExtensions>
 	  <MonoDevelop>

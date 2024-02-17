@@ -304,7 +304,10 @@ Use the overlayHandler parameter to draw on top of a snapshot using Core Graphhi
         {
             { nameof(example), example }
         }).ContinueWith(t => {
-
+            if (t.IsFaulted)
+            {
+                System.Diagnostics.Debug.WriteLine(t.Exception.StackTrace);
+            }
         });
     }
 }

@@ -6,4 +6,6 @@ class ShowHideLayerExampleInfo : IExampleInfo
     public string Title => "Show and hide a layer";
     public string Subtitle => "Allow the user to toggle the visibility of a CircleLayer and LineLayer on a map.";
     public string PageRoute => typeof(ShowHideLayerExample).FullName;
+    public int GroupIndex => 8;
+    public int Index => 51;
 }

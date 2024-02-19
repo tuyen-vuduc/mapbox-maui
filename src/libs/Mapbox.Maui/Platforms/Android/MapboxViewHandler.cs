@@ -3,7 +3,6 @@ using PlatformView = AndroidX.Fragment.App.FragmentContainerView;
 using MapboxMapsStyle = Com.Mapbox.Maps.Style;
 using Com.Mapbox.Maps;
 using Com.Mapbox.Maps.Plugins.Scalebar;
-using Com.Mapbox.Maps.Plugins.Scalebar;
 using Microsoft.Maui.Platform;
 using Android.Content;
 using Android.Graphics;

@@ -5,4 +5,6 @@ class BuildingExtrusionsExampleInfo : IExampleInfo
     public string Title => "Display 3D buildings";
     public string Subtitle => "Extrude the building layer in the Mapbox Light style using FillExtrusionLayer and set up the light position.";
     public string PageRoute => typeof(BuildingExtrusionsExample).FullName;
+    public int GroupIndex => 2;
+    public int Index => 10;
 }

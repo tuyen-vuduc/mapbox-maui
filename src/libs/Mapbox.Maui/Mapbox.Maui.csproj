@@ -71,8 +71,8 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
-		<PackageReference Include="MapboxMapsObjC.iOS" Version="11.0.0" />
-		<PackageReference Include="MapboxMaps.iOS" Version="11.0.0" />
+		<PackageReference Include="MapboxMapsObjC.iOS" Version="11.0.0.2" />
+		<PackageReference Include="MapboxMaps.iOS" Version="11.1.0" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Models\Styles\" />

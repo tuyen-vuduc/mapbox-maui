@@ -78,9 +78,9 @@
 		<PackageReference Include="Xamarin.AndroidX.Fragment.Ktx" Version="1.6.2.1" />
 	</ItemGroup>
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
-		<PackageReference Include="MapboxMapsObjC.iOS" Version="11.0.0" />
-		<PackageReference Include="MapboxMaps.iOS" Version="11.0.0" />
-		<PackageReference Include="MapboxCoreMaps.iOS" Version="11.0.0" />
+		<PackageReference Include="MapboxMapsObjC.iOS" Version="11.0.0.2" />
+		<PackageReference Include="MapboxMaps.iOS" Version="11.1.0" />
+		<PackageReference Include="MapboxCoreMaps.iOS" Version="11.1.0" />
 	</ItemGroup>
 <!-- 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|iPhone'">

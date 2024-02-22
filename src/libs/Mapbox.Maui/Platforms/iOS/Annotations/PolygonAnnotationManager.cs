@@ -17,9 +17,6 @@ public partial class PolygonAnnotationManager
     : base(id, nativeManager)
     {
         this.nativeManager = nativeManager;
-        
-        // TODO Set delegate
-        //nativeManager.Delegate = this;
     }
 
     public bool? FillAntialias

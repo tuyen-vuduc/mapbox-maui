@@ -17,9 +17,6 @@ public partial class PolylineAnnotationManager
     : base(id, nativeManager)
     {
         this.nativeManager = nativeManager;
-
-        // TODO Set the delegate
-        //nativeManager.Delegate = this;
     }
 
     public LineCap? LineCap

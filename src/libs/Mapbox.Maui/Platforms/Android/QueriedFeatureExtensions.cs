@@ -11,8 +11,7 @@ public static class QueriedFeatureExtensions
             Feature = src.Feature.ToX(),
             Source = src.Source,
             SourceLayer = src.SourceLayer,
-            // TODO Convert state
-            //State = src.State.ToX(),
+            State = src.State,
         };
 }
 

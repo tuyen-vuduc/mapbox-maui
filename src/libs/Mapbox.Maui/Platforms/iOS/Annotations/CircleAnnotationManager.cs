@@ -18,9 +18,6 @@ public partial class CircleAnnotationManager
     : base(id, nativeManager)
     {
         this.nativeManager = nativeManager;
-
-        // TODO Set the right delegate
-        //nativeManager.Delegate = this;
     }
 
     public CirclePitchAlignment? CirclePitchAlignment

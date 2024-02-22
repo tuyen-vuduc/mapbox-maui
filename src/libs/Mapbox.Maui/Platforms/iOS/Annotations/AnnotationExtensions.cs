@@ -76,36 +76,32 @@ public static class AnnotationExtensions
         this PolygonAnnotation xvalue
     )
     {
-        // TODO Create TMBPolygonAnnotation
-        throw new NotImplementedException();
-        //var coordinates = NSArray.FromNSObjects(xvalue
-        //        .GeometryValue
-        //        .Coordinates
-        //        .Select(
-        //            x => NSArray.FromObjects(
-        //                x.Coordinates
-        //                .Select(
-        //                    y => NSValue.FromMKCoordinate(
-        //                        new CLLocationCoordinate2D(y.Latitude, y.Longitude)
-        //                    )
-        //                )
-        //                .ToArray()
-        //            )
-        //        ).ToArray()
-        //    );
-        //var polygon = new TMBPolygon(coordinates);
-        //var result = TMBPolygonAnnotation.Polygon(
-        //    polygon
-        //);
-        //result.FillColor = xvalue.FillColor?.ToPlatform();
-        //result.FillOpacity = xvalue.FillOpacity.HasValue
-        //    ? NSNumber.FromDouble(xvalue.FillOpacity.Value)
-        //    : null;
-        //result.FillOutlineColor = xvalue.FillOutlineColor?.ToPlatform();
-        //result.FillPattern = xvalue.FillPattern;
-        //result.FillSortKey = xvalue.FillSortKey;
+        var coordinates = NSArray.FromNSObjects(xvalue
+                .GeometryValue
+                .Coordinates
+                .Select(
+                    x => NSArray.FromObjects(
+                        x.Coordinates
+                        .Select(
+                            y => NSValue.FromMKCoordinate(
+                                new CLLocationCoordinate2D(y.Latitude, y.Longitude)
+                            )
+                        )
+                        .ToArray()
+                    )
+                ).ToArray()
+            );
+        var polygon = new TMBPolygon(coordinates);
+        var result = new TMBPolygonAnnotation(xvalue.Id, polygon, false, false);
+        result.FillColor = xvalue.FillColor?.ToPlatform();
+        result.FillOpacity = xvalue.FillOpacity.HasValue
+            ? NSNumber.FromDouble(xvalue.FillOpacity.Value)
+            : null;
+        result.FillOutlineColor = xvalue.FillOutlineColor?.ToPlatform();
+        result.FillPattern = xvalue.FillPattern;
+        result.FillSortKey = xvalue.FillSortKey;
 
-        //return result;
+        return result;
     }
 
     internal static TMBPolylineAnnotation ToPlatformValue(

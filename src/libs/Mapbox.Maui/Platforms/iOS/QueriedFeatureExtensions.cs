@@ -5,15 +5,19 @@ namespace MapboxMaui;
 
 public static class QueriedFeatureExtensions
 {
-    public static QueriedFeature ToX(this MBMQueriedRenderedFeature src)
+    public static QueriedRenderedFeature ToX(this MBMQueriedRenderedFeature src)
+        => new QueriedRenderedFeature
+        {
+            QueriedFeature = src.QueriedFeature.ToX(),
+            Layers = src.Layers,
+        };
+    public static QueriedFeature ToX(this MBMQueriedFeature src)
         => new QueriedFeature
         {
-            // TODO Check mapper
-            //Feature = src.Feature.ToX(),
-            //Source = src.Source,
-            //SourceLayer = src.SourceLayer,
-            // TODO Convert state
-            //State = src.State.ToX(),
+            Feature = src.Feature.ToX(),
+            Source = src.Source,
+            SourceLayer = src.SourceLayer,
+            State = src.State,
         };
 }
 

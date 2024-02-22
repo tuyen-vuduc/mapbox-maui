@@ -3,6 +3,7 @@ using Foundation;
 using GeoJSON.Text.Feature;
 using GeoJSON.Text.Geometry;
 using MapboxCommon;
+using MapboxCoreMaps;
 using MapboxMapsObjC;
 
 namespace MapboxMaui;
@@ -96,7 +97,8 @@ public static class GeometryExtensions
 
     internal static IGeometryObject ToX(this MBXGeometry src)
     {
-        switch (src.GeometryType) {
+        switch (src.GeometryType)
+        {
             case MBXGeometryType.Point:
                 var pointPosition = src
                     .ExtractLocations()
@@ -118,7 +120,7 @@ public static class GeometryExtensions
                     .Select(
                     z => z
                         .Cast<NSValue>()
-                        .Select(                        
+                        .Select(
                         y => new[] {
                             y.CoordinateValue.Longitude,
                             y.CoordinateValue.Latitude
@@ -188,9 +190,13 @@ public static class GeometryExtensions
     {
         var geometry = src.Geometry.ToX();
 
-        var properties = new Dictionary<string, object>();
-        // TODO Convert to C# obj
-        // properties = src.Properties;
+        var kvPairs = src.Properties
+            .Keys
+            .Select(x => new KeyValuePair<string, object>(
+                x.ToString(),
+                src.Properties[x])
+            );
+        var properties = new Dictionary<string, object>(kvPairs);
 
         return new Feature(geometry, properties, src.Identifier?.ToString());
     }

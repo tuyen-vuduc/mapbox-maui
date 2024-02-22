@@ -18,11 +18,6 @@ partial class OfflineManager : NSObject, IOfflineManager
         nativeManager = new PlatformOfflineManager();
 
         titleStore = MBXTileStore.Create();
-
-        // TODO Assign access token
-        //titleStore.SetOptionForKey(
-        //    MBXTileStoreOptions.MapboxAccessToken,
-        //    new NSString(accessToken));
     }
 
     public bool IsMapboxStackConnected
@@ -55,7 +50,6 @@ partial class OfflineManager : NSObject, IOfflineManager
         //            LoadedResourceSize = progress.LoadedResourceSize,
         //            RequiredResourceCount = progress.RequiredResourceCount,                    
         //        };
-
         //        progressHandler?.Invoke(xprogress);
         //    },
         //    (stylePack, error) =>
@@ -76,7 +70,6 @@ partial class OfflineManager : NSObject, IOfflineManager
         //        var xerror = error != null
         //            ? new NSErrorException(error)
         //            : null;
-
         //        completionHandler?.Invoke(xstylePack, xerror);
         //    });
     }
@@ -104,19 +97,19 @@ partial class OfflineManager : NSObject, IOfflineManager
                 nativeManager.CreateTilesetDescriptorForTilesetDescriptorOptions)
             .ToArray();
 
-        //var metadata = new NSMutableDictionary();
-        //if (xoptions.Metadata != null)
-        //{
-        //    foreach (var item in xoptions.Metadata)
-        //    {
-        //        metadata[new NSString(item.Key)] = item.Value.Wrap();
-        //    }
-        //}
+        var metadata = new NSMutableDictionary();
+        if (xoptions.Metadata != null)
+        {
+            foreach (var item in xoptions.Metadata)
+            {
+                metadata[new NSString(item.Key)] = item.Value.Wrap();
+            }
+        }
 
         var options = new MBXTileRegionLoadOptions(
             xoptions.Geometry?.ToNative(),
             descriptors,
-            null, // TODO Pass metadata in
+            metadata,
             xoptions.AcceptsExpired,
             (MBXNetworkRestriction)xoptions.NetworkRestriction,
             xoptions.StartLocation.HasValue

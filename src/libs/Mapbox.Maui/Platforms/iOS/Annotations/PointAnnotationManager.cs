@@ -17,9 +17,6 @@ public partial class PointAnnotationManager
     : base(id, nativeManager)
     {
         this.nativeManager = nativeManager;
-
-        // TODO Set the delegate
-        //nativeManager.Delegate = this;
     }
 
     public bool? IconAllowOverlap

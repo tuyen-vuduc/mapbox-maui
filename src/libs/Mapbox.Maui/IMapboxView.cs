@@ -58,7 +58,7 @@ public interface IAnnotationController
 
 public interface IMapFeatureQueryable
 {
-    Task<IEnumerable<QueriedFeature>> QueryRenderedFeaturesWith(Point point, RenderedQueryOptions options);
+    Task<IEnumerable<QueriedRenderedFeature>> QueryRenderedFeaturesWith(Point point, RenderedQueryOptions options);
 }
 
 public class MapTappedEventArgs : EventArgs

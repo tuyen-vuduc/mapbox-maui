@@ -21,6 +21,7 @@ public partial class MapboxViewHandler
 
         var platformProperties = light.Properties.Wrap() as NSDictionary<NSString, NSObject>;
         var style = mapView.MapboxMap();
+
         // TODO SetLightWithProperties
         throw new NotImplementedException();
         //style.SetLightWithProperties(

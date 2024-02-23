@@ -34,44 +34,42 @@ partial class OfflineManager : NSObject, IOfflineManager
     {
         var nativeOptions = options.ToNative();
 
-        // TODO Check missing API
-        throw new NotImplementedException();
-        //nativeManager.LoadStyleWithStyleUriString(
-        //    styleUri,
-        //    nativeOptions,
-        //    (progress) =>
-        //    {
-        //        var xprogress = new StylePackLoadProgress
-        //        {
-        //            CompletedResourceCount = progress.CompletedResourceCount,
-        //            CompletedResourceSize = progress.CompletedResourceSize,
-        //            ErroredResourceCount = progress.ErroredResourceCount,
-        //            LoadedResourceCount = progress.LoadedResourceCount,
-        //            LoadedResourceSize = progress.LoadedResourceSize,
-        //            RequiredResourceCount = progress.RequiredResourceCount,                    
-        //        };
-        //        progressHandler?.Invoke(xprogress);
-        //    },
-        //    (stylePack, error) =>
-        //    {
-        //        var xstylePack = stylePack != null
-        //            ? new StylePack
-        //            {
-        //                CompletedResourceCount = stylePack.CompletedResourceCount,
-        //                CompletedResourceSize = stylePack.CompletedResourceSize,
-        //                Expires = stylePack.Expires != null
-        //                    ? DateTime.Parse(stylePack.Expires.ToString())
-        //                    : null,
-        //                RequiredResourceCount = stylePack.RequiredResourceCount,
-        //                StyleUri = stylePack.StyleURI,
-        //                GlyphsRasterizationMode = (GlyphsRasterizationMode)stylePack.GlyphsRasterizationMode,
-        //            }
-        //            : null;
-        //        var xerror = error != null
-        //            ? new NSErrorException(error)
-        //            : null;
-        //        completionHandler?.Invoke(xstylePack, xerror);
-        //    });
+        nativeManager.LoadStylePackFor(
+            styleUri,
+            nativeOptions,
+            (progress) =>
+            {
+                var xprogress = new StylePackLoadProgress
+                {
+                    CompletedResourceCount = progress.CompletedResourceCount,
+                    CompletedResourceSize = progress.CompletedResourceSize,
+                    ErroredResourceCount = progress.ErroredResourceCount,
+                    LoadedResourceCount = progress.LoadedResourceCount,
+                    LoadedResourceSize = progress.LoadedResourceSize,
+                    RequiredResourceCount = progress.RequiredResourceCount,
+                };
+                progressHandler?.Invoke(xprogress);
+            },
+            (stylePack, error) =>
+            {
+                var xstylePack = stylePack != null
+                    ? new StylePack
+                    {
+                        CompletedResourceCount = stylePack.CompletedResourceCount,
+                        CompletedResourceSize = stylePack.CompletedResourceSize,
+                        Expires = stylePack.Expires != null
+                            ? DateTime.Parse(stylePack.Expires.ToString())
+                            : null,
+                        RequiredResourceCount = stylePack.RequiredResourceCount,
+                        StyleUri = stylePack.StyleURI,
+                        GlyphsRasterizationMode = (GlyphsRasterizationMode)stylePack.GlyphsRasterizationMode,
+                    }
+                    : null;
+                var xerror = error != null
+                    ? new NSErrorException(error)
+                    : null;
+                completionHandler?.Invoke(xstylePack, xerror);
+            });
     }
 
 
@@ -125,46 +123,44 @@ partial class OfflineManager : NSObject, IOfflineManager
             xoptions.ExtraOptions?.Wrap()
         );
 
-        // TODO Check API wrongly bound
-        throw new NotImplementedException();
-        //titleStore.LoadTileRegionForId(
-        //    tileId,
-        //    options,
-        //    (progress) =>
-        //    {
-        //        var xprogress = new TileRegionLoadProgress
-        //        {
-        //            CompletedResourceCount = progress.CompletedResourceCount,
-        //            CompletedResourceSize = progress.CompletedResourceSize,
-        //            ErroredResourceCount = progress.ErroredResourceCount,
-        //            LoadedResourceCount = progress.LoadedResourceCount,
-        //            LoadedResourceSize = progress.LoadedResourceSize,
-        //            RequiredResourceCount = progress.RequiredResourceCount,
-        //        };
+        titleStore.LoadTileRegionForId(
+            tileId,
+            options,
+            (progress) =>
+            {
+                var xprogress = new TileRegionLoadProgress
+                {
+                    CompletedResourceCount = progress.CompletedResourceCount,
+                    CompletedResourceSize = progress.CompletedResourceSize,
+                    ErroredResourceCount = progress.ErroredResourceCount,
+                    LoadedResourceCount = progress.LoadedResourceCount,
+                    LoadedResourceSize = progress.LoadedResourceSize,
+                    RequiredResourceCount = progress.RequiredResourceCount,
+                };
 
-        //        progressHandler?.Invoke(xprogress);
-        //    },
-        //    (tileRegion, error) =>
-        //    {
-        //        var xtileRegion = tileRegion != null
-        //            ? new TileRegion
-        //            {
-        //                CompletedResourceCount = tileRegion.CompletedResourceCount,
-        //                CompletedResourceSize = tileRegion.CompletedResourceSize,
-        //                Expires = tileRegion.Expires != null
-        //                    ? DateTime.Parse(tileRegion.Expires.ToString())
-        //                    : null,
-        //                RequiredResourceCount = tileRegion.RequiredResourceCount,
-        //                Id = tileRegion.Id,
-        //            }
-        //            : null;
-        //        var xerror = error != null
-        //            ? new NSErrorException(error)
-        //            : null;
+                progressHandler?.Invoke(xprogress);
+            },
+            (tileRegion, error) =>
+            {
+                var xtileRegion = tileRegion != null
+                    ? new TileRegion
+                    {
+                        CompletedResourceCount = tileRegion.CompletedResourceCount,
+                        CompletedResourceSize = tileRegion.CompletedResourceSize,
+                        Expires = tileRegion.Expires != null
+                            ? DateTime.Parse(tileRegion.Expires.ToString())
+                            : null,
+                        RequiredResourceCount = tileRegion.RequiredResourceCount,
+                        Id = tileRegion.Id,
+                    }
+                    : null;
+                var xerror = error != null
+                    ? new NSErrorException(error)
+                    : null;
 
-        //        completionHandler?.Invoke(xtileRegion, xerror);
-        //    }
-        //    );
+                completionHandler?.Invoke(xtileRegion, xerror);
+            }
+            );
     }
     protected override void Dispose(bool disposing)
     {

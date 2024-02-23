@@ -2,7 +2,7 @@
 
 using Com.Mapbox.Bindgen;
 using Com.Mapbox.Maps;
-using XQueriedFeature = Query.QueriedFeature;
+using XQueriedFeature = Query.QueriedRenderedFeature;
 using XRenderedQueryOptions = Query.RenderedQueryOptions;
 
 partial class MapboxViewHandler : IMapFeatureQueryable

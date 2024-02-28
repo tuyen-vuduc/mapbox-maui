@@ -75,6 +75,7 @@ public class IconSizeChangeExample : ContentPage, IExamplePage, IQueryAttributab
             Data = new GeoJSON.Text.Geometry.Point(),
         };
 
+        // TODO Check NPE
         map.Sources = new[] { markerSource, selectedMarkerSource };
 
         // Create a symbol layer for the selected marker
@@ -105,8 +106,9 @@ public class IconSizeChangeExample : ContentPage, IExamplePage, IQueryAttributab
             return;
         }
 
-        var geometry = features.First().Feature;
-        var geojson = JsonSerializer.Serialize(geometry);
+        // TODO Check the original example
+        var geometry = features.First().QueriedFeature;
+        var geojson = JsonSerializer.Serialize(geometry.Feature.Geometry);
         var geoJSONSource = new GeoJSONSource(Constants.selectedMarkerSourceId)
         {
             Data = new RawGeoJSONObject(geojson),

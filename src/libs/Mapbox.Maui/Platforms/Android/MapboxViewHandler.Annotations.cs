@@ -60,9 +60,6 @@ partial class MapboxViewHandler : IAnnotationController
             ? new Java.Lang.Long((long)clusterOptions.ClusterMaxZoom)
             : null;
 
-        var annotationsPlugin = Com.Mapbox.Maps.Plugins.Annotations.AnnotationsUtils.GetAnnotations(mapView);
-        var config = new Com.Mapbox.Maps.Plugins.Annotations.AnnotationConfig(null, id, id, null);
-
         var options = new AnnotationSourceOptions(
             clusterMaxZoom,
             null, null, null,

@@ -48,7 +48,7 @@ partial class MapboxViewHandler : IMapFeatureQueryable
                 return;
             }
 
-            var xfeatures = (p0.Value as Java.Util.IList)?.ToArray().Cast<QueriedFeature>();
+            var xfeatures = (p0.Value as Java.Util.IList)?.ToArray().Cast<QueriedRenderedFeature>();
             tcs.TrySetResult(xfeatures.Select(x => x.ToX()).ToArray());
         }
     }

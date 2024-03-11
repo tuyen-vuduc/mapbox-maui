@@ -42,6 +42,19 @@ public partial class OfflineManager : IOfflineManager
     partial void InitializePlatformManager();
 }
 
+#if !__ANDROID__ && !IOS
+public partial class OfflineManager
+{
+    public bool IsMapboxStackConnected { get; set; }
+
+    public void DownloadStyle(string styleUri, StylePackLoadOptions options, Action<StylePackLoadProgress> progressHandler, Action<StylePack, Exception> completionHandler)
+        => throw new NotSupportedException();
+
+    public void DownloadTile(string tileId, TileRegionLoadOptions options, Action<TileRegionLoadProgress> progressHandler, Action<TileRegion, Exception> completionHandler)
+        => throw new NotSupportedException();
+}
+#endif
+
 public record TilesetDescriptorOptions (
     string StyleUri,
     sbyte MinZoom,

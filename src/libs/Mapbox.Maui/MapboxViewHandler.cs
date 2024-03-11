@@ -2,7 +2,7 @@
 
 using Microsoft.Maui.Handlers;
 
-#if IOS 
+#if IOS
 using PlatformView = MapboxMaui.MapViewContainer;
 #elif __ANDROID__
 using PlatformView = AndroidX.Fragment.App.FragmentContainerView;
@@ -30,6 +30,31 @@ public partial class MapboxViewHandler : ViewHandler<IMapboxView, PlatformView>
 
     public MapboxViewHandler() : base(PropertyMapper)
     {
-        
+
     }
 }
+
+#if !__ANDROID__ && !IOS
+public partial class MapboxViewHandler
+{
+    protected override PlatformView CreatePlatformView() => throw new NotSupportedException();
+
+    private static void HandleCameraOptionsChanged(MapboxViewHandler arg1, IMapboxView arg2) => throw new NotSupportedException();
+
+    private static void HandleMapboxStyleChanged(MapboxViewHandler arg1, IMapboxView arg2) => throw new NotSupportedException();
+
+    private static void HandleScaleBarVisibilityChanged(MapboxViewHandler arg1, IMapboxView arg2) => throw new NotSupportedException();
+
+    private static void HandleDebugOptionsChanged(MapboxViewHandler arg1, IMapboxView arg2) => throw new NotSupportedException();
+
+    private static void HandleSourcesChanged(MapboxViewHandler arg1, IMapboxView arg2) => throw new NotSupportedException();
+
+    private static void HandleLayersChanged(MapboxViewHandler arg1, IMapboxView arg2) => throw new NotSupportedException();
+
+    private static void HandleImagesChanged(MapboxViewHandler arg1, IMapboxView arg2) => throw new NotSupportedException();
+
+    private static void HandleTerrainChanged(MapboxViewHandler arg1, IMapboxView arg2) => throw new NotSupportedException();
+
+    private static void HandleLightChanged(MapboxViewHandler arg1, IMapboxView arg2) => throw new NotSupportedException();
+}
+#endif

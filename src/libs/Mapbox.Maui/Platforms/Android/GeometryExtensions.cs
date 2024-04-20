@@ -1,4 +1,5 @@
-﻿using GeoJSON.Text.Geometry;
+﻿using Com.Mapbox.Maps;
+using GeoJSON.Text.Geometry;
 using Point = Microsoft.Maui.Graphics.Point;
 
 namespace MapboxMaui;
@@ -12,15 +13,13 @@ public static class GeometryExtensions
                 xvalue.Latitude);
     }
     
-    internal static MapTappedPosition ToMapTappedPosition(this Com.Mapbox.Geojson.Point point)
+    internal static MapTappedPosition ToMapTappedPosition(this Com.Mapbox.Geojson.Point point, ScreenCoordinate screenCoordinate)
     {
-        var xpoint = new Microsoft.Maui.Graphics.Point(
-            point.Latitude(),
-            point.Longitude());
-
         return new MapTappedPosition
         {
-            ScreenPosition = xpoint,
+            ScreenPosition = new Point(
+                screenCoordinate.GetX(),
+                screenCoordinate.GetY()),
             Point = new GeoJSON.Text.Geometry.Point(
                 new GeoJSON.Text.Geometry.Position(
                     point.Latitude(),

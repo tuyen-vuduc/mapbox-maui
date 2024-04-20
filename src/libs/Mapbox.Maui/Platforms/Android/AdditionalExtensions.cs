@@ -1,4 +1,6 @@
 ﻿namespace MapboxMaui;
+using Android.Content.Res;
+using Android.Util;
 using MapboxMapsCameraOptions = Com.Mapbox.Maps.CameraOptions;
 using PlatformValue = Com.Mapbox.Bindgen.Value;
 using MapboxTerrain = Com.Mapbox.Maps.Extension.Style.Terrain.Generated.Terrain;
@@ -14,6 +16,16 @@ using AndroidX.Fragment.App;
 
 static class AdditionalExtensions
 {
+    internal static DisplayMetrics Metrics;
+    
+    internal static double PixelToPoint(this double pixel)
+    {
+        Metrics ??= Resources.System?.DisplayMetrics;
+        if (Metrics == null) return 0;
+        
+        return pixel / Metrics.Density;
+    }
+    
     internal static Java.Lang.Boolean ToPlatform(this bool xvalue)
     {
         return new Java.Lang.Boolean(xvalue);

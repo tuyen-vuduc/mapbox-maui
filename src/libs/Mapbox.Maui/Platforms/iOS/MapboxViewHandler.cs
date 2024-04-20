@@ -343,6 +343,8 @@ public partial class MapboxViewHandler
 
     private void HandleMapLongPress(UILongPressGestureRecognizer longPressGestureRecognizer)
     {
+        if (longPressGestureRecognizer.State != UIGestureRecognizerState.Began) return;
+        
         var position = GetPositionForGesture(longPressGestureRecognizer);
         if (position == null) return;
         

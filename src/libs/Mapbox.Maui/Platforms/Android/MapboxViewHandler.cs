@@ -240,6 +240,7 @@ public partial class MapboxViewHandler
             mapboxFragment.StyleLoaded -= HandleStyleLoaded;
             mapboxFragment.MapLoaded -= HandleMapLoaded;
             mapboxFragment.MapClicked -= HandleMapClicked;
+            mapboxFragment.MapLongClicked -= HandleMapLongClicked;
             mapboxFragment.Dispose();
             mapboxFragment = null;
         }

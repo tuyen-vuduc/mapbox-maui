@@ -18,6 +18,7 @@ public partial class MapboxFragment : Fragment
     public event Action<MapView> StyleLoaded;
     public event Action<MapView> MapLoaded;
     public event Action<MapTappedPosition> MapClicked;
+    public event Action<MapTappedPosition> MapLongClicked;
 
     public MapView MapView { get; private set; }
 
@@ -57,6 +58,7 @@ public partial class MapboxFragment : Fragment
         MapView.MapboxMap.AddOnMapLoadedListener(this);
 
         GesturesUtils.AddOnMapClickListener(MapView.MapboxMap, this);
+        GesturesUtils.AddOnMapLongClickListener(MapView.MapboxMap, this);
     }
 
     public override void OnStart()
@@ -102,25 +104,13 @@ partial class MapboxFragment
     : IOnStyleLoadedListener
     , IOnMapLoadedListener
     , IOnMapClickListener
+    , IOnMapLongClickListener
 {
     public bool OnMapClick(Point point)
     {
         if (MapClicked is null) return false;
 
-        var xpoint = new Microsoft.Maui.Graphics.Point(
-            point.Latitude(),
-            point.Longitude());
-        MapClicked?.Invoke(new MapTappedPosition
-        {
-            ScreenPosition = xpoint,
-            Point = new GeoJSON.Text.Geometry.Point(
-                new GeoJSON.Text.Geometry.Position(
-                    point.Latitude(),
-                    point.Longitude(),
-                    point.HasAltitude ? point.Altitude() : null
-                )
-            )
-        });
+        MapClicked?.Invoke(point.ToMapTappedPosition());
         return true;
     }
 
@@ -132,5 +122,13 @@ partial class MapboxFragment
     public void OnStyleLoaded(StyleLoadedEventData eventData)
     {
         StyleLoaded?.Invoke(MapView);
+    }
+
+    public bool OnMapLongClick(Point point)
+    {
+        if (MapLongClicked is null) return false;
+        
+        MapLongClicked?.Invoke(point.ToMapTappedPosition());
+        return true;
     }
 }

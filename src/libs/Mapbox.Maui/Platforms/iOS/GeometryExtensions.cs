@@ -1,4 +1,5 @@
 ﻿using CoreGraphics;
+using CoreLocation;
 using Foundation;
 using GeoJSON.Text.Feature;
 using GeoJSON.Text.Geometry;
@@ -10,6 +11,23 @@ namespace MapboxMaui;
 
 public static class GeometryExtensions
 {
+    internal static MapTappedPosition ToMapTappedPosition(this CLLocationCoordinate2D coords, CGPoint screenCoordinate)
+    {
+        return new MapTappedPosition
+        {
+            ScreenPosition = new Microsoft.Maui.Graphics.Point(
+                screenCoordinate.X,
+                screenCoordinate.Y
+            ),
+            Point = new GeoJSON.Text.Geometry.Point(
+                new GeoJSON.Text.Geometry.Position(
+                    coords.Latitude,
+                    coords.Longitude
+                )
+            ),
+        };
+    }
+    
     internal static MBXGeometry ToNative(this IGeometryObject xobj)
     {
         switch (xobj)

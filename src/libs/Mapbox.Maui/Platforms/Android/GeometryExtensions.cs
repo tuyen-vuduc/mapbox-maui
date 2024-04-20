@@ -11,6 +11,25 @@ public static class GeometryExtensions
                 xvalue.Longitude,
                 xvalue.Latitude);
     }
+    
+    internal static MapTappedPosition ToMapTappedPosition(this Com.Mapbox.Geojson.Point point)
+    {
+        var xpoint = new Microsoft.Maui.Graphics.Point(
+            point.Latitude(),
+            point.Longitude());
+
+        return new MapTappedPosition
+        {
+            ScreenPosition = xpoint,
+            Point = new GeoJSON.Text.Geometry.Point(
+                new GeoJSON.Text.Geometry.Position(
+                    point.Latitude(),
+                    point.Longitude(),
+                    point.HasAltitude ? point.Altitude() : null
+                )
+            )
+        };
+    }
 
     internal static Com.Mapbox.Geojson.IGeometry ToNative(this GeoJSON.Text.Geometry.IGeometryObject xvalue)
     {

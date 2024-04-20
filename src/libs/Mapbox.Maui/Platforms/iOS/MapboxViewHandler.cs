@@ -372,19 +372,7 @@ public partial class MapboxViewHandler
         var coords = mapView.MapboxMap().CoordinateFor(
             screenPosition
         );
-        
-        return new MapTappedPosition
-        {
-            ScreenPosition = new Point(
-                screenPosition.X,
-                screenPosition.Y
-            ),
-            Point = new GeoJSON.Text.Geometry.Point(
-                new GeoJSON.Text.Geometry.Position(
-                    coords.Latitude,
-                    coords.Longitude
-                )
-            ),
-        };
+
+        return coords.ToMapTappedPosition(screenPosition);
     }
 }

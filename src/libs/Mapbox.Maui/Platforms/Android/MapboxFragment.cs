@@ -109,8 +109,10 @@ partial class MapboxFragment
     public bool OnMapClick(Point point)
     {
         if (MapClicked is null) return false;
+        
+        var screenCoordinate = MapView.MapboxMap.PixelForCoordinate(point);
 
-        MapClicked?.Invoke(point.ToMapTappedPosition());
+        MapClicked?.Invoke(point.ToMapTappedPosition(screenCoordinate));
         return true;
     }
 
@@ -127,8 +129,10 @@ partial class MapboxFragment
     public bool OnMapLongClick(Point point)
     {
         if (MapLongClicked is null) return false;
+
+        var screenCoordinate = MapView.MapboxMap.PixelForCoordinate(point);
         
-        MapLongClicked?.Invoke(point.ToMapTappedPosition());
+        MapLongClicked?.Invoke(point.ToMapTappedPosition(screenCoordinate));
         return true;
     }
 }

@@ -1,4 +1,5 @@
-﻿using GeoJSON.Text.Geometry;
+﻿using Com.Mapbox.Maps;
+using GeoJSON.Text.Geometry;
 using Point = Microsoft.Maui.Graphics.Point;
 
 namespace MapboxMaui;
@@ -10,6 +11,23 @@ public static class GeometryExtensions
         return Com.Mapbox.Geojson.Point.FromLngLat(
                 xvalue.Longitude,
                 xvalue.Latitude);
+    }
+    
+    internal static MapTappedPosition ToMapTappedPosition(this Com.Mapbox.Geojson.Point point, ScreenCoordinate screenCoordinate)
+    {
+        return new MapTappedPosition
+        {
+            ScreenPosition = new Point(
+                screenCoordinate.GetX().PixelToPoint(),
+                screenCoordinate.GetY().PixelToPoint()),
+            Point = new GeoJSON.Text.Geometry.Point(
+                new GeoJSON.Text.Geometry.Position(
+                    point.Latitude(),
+                    point.Longitude(),
+                    point.HasAltitude ? point.Altitude() : null
+                )
+            )
+        };
     }
 
     internal static Com.Mapbox.Geojson.IGeometry ToNative(this GeoJSON.Text.Geometry.IGeometryObject xvalue)

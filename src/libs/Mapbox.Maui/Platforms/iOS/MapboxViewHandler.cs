@@ -10,6 +10,8 @@ using MapboxMaui.Styles;
 public partial class MapboxViewHandler
 {
     UITapGestureRecognizer mapTapGestureRecognizer;
+    UILongPressGestureRecognizer mapLongPressGestureRecognizer;
+
 
     private static void HandleLightChanged(MapboxViewHandler handler, IMapboxView view)
     {
@@ -300,6 +302,11 @@ public partial class MapboxViewHandler
         {
             mapView.RemoveGestureRecognizer(mapTapGestureRecognizer);
         }
+        
+        if (mapLongPressGestureRecognizer != null)
+        {
+            mapView.RemoveGestureRecognizer(mapLongPressGestureRecognizer);
+        }
     }
 
     protected override void ConnectHandler(PlatformView platformView)
@@ -329,32 +336,43 @@ public partial class MapboxViewHandler
 
         mapTapGestureRecognizer = new UITapGestureRecognizer(HandleMapTapped);
         mapView.AddGestureRecognizer(mapTapGestureRecognizer);
+        
+        mapLongPressGestureRecognizer = new UILongPressGestureRecognizer(HandleMapLongPress);
+        mapView.AddGestureRecognizer(mapLongPressGestureRecognizer);
+    }
+
+    private void HandleMapLongPress(UILongPressGestureRecognizer longPressGestureRecognizer)
+    {
+        if (longPressGestureRecognizer.State != UIGestureRecognizerState.Began) return;
+        
+        var position = GetPositionForGesture(longPressGestureRecognizer);
+        if (position == null) return;
+        
+        (VirtualView as MapboxView)?.InvokeMapLongTapped(
+            position
+        );
     }
 
     private void HandleMapTapped(UITapGestureRecognizer tapGestureRecognizer)
     {
-        var mapView = this.PlatformView.MapView;
-        if (mapView == null) return;
-        var screenPosition = tapGestureRecognizer.LocationInView(mapView);
+        var position = GetPositionForGesture(tapGestureRecognizer);
+        if (position == null) return;
+        
+        (VirtualView as MapboxView)?.InvokeMapTapped(
+            position
+        );
+    }
+
+    private MapTappedPosition GetPositionForGesture(UIGestureRecognizer gesture)
+    {
+        var mapView = PlatformView.MapView;
+        if (mapView == null) return null;
+        
+        var screenPosition = gesture.LocationInView(mapView);
         var coords = mapView.MapboxMap().CoordinateFor(
             screenPosition
         );
-        var mapTappedPosition = new MapTappedPosition
-        {
-            ScreenPosition = new Point(
-                screenPosition.X,
-                screenPosition.Y
-            ),
-            Point = new GeoJSON.Text.Geometry.Point(
-                new GeoJSON.Text.Geometry.Position(
-                    coords.Latitude,
-                    coords.Longitude
-                )
-            ),
-        };
 
-        (VirtualView as MapboxView)?.InvokeMapTapped(
-            mapTappedPosition
-        );
+        return coords.ToMapTappedPosition(screenPosition);
     }
 }

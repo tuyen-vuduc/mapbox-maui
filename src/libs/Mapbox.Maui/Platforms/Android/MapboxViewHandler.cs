@@ -213,6 +213,7 @@ public partial class MapboxViewHandler
         mapboxFragment.StyleLoaded += HandleStyleLoaded;
         mapboxFragment.MapLoaded += HandleMapLoaded;
         mapboxFragment.MapClicked += HandleMapClicked;
+        mapboxFragment.MapLongClicked += HandleMapLongClicked;
 
         var fragmentTransaction = mainActivity.SupportFragmentManager.BeginTransaction();
         fragmentTransaction.Replace(fragmentContainerView.Id, mapboxFragment, $"mapbox-maui-{fragmentContainerView.Id}");
@@ -239,6 +240,7 @@ public partial class MapboxViewHandler
             mapboxFragment.StyleLoaded -= HandleStyleLoaded;
             mapboxFragment.MapLoaded -= HandleMapLoaded;
             mapboxFragment.MapClicked -= HandleMapClicked;
+            mapboxFragment.MapLongClicked -= HandleMapLongClicked;
             mapboxFragment.Dispose();
             mapboxFragment = null;
         }
@@ -262,6 +264,9 @@ public partial class MapboxViewHandler
 
     private void HandleMapClicked(MapTappedPosition point)
         => (VirtualView as MapboxView)?.InvokeMapTapped(point);
+    
+    private void HandleMapLongClicked(MapTappedPosition point)
+        => (VirtualView as MapboxView)?.InvokeMapLongTapped(point);
 
 }
 

@@ -66,13 +66,14 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 		<PackageReference Include="Xamarin.Build.Download" Version="0.11.4" />
 		<PackageReference Include="GeoJSON.Text" Version="1.0.2" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.21" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.40" />
 	</ItemGroup>
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
-		<PackageReference Include="Com.Mapbox.Maps.Android" Version="11.3.1.2" />
+		<PackageReference Include="Com.Mapbox.Maps.Android" Version="11.3.1.7" />
+		<PackageReference Include="Xamarin.AndroidX.AppCompat" Version="1.6.1.8" />
 		<PackageReference Include="Xamarin.AndroidX.Fragment.Ktx" Version="1.6.2.3" />
-		<PackageReference Include="Xamarin.Kotlin.StdLib" Version="1.9.23.1" /> 
-		<PackageReference Include="Xamarin.Jetbrains.Annotations" Version="24.1.0.3" /> 
+		<PackageReference Include="Xamarin.Kotlin.StdLib" Version="1.9.23.1" PrivateAssets="none" />
+		<PackageReference Include="Xamarin.Kotlin.StdLib.Common" Version="1.9.23.1" PrivateAssets="none" />
 	</ItemGroup>
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
 		<PackageReference Include="MapboxMapsObjC.iOS" Version="11.3.0.2" />
@@ -100,4 +101,7 @@
 	    </Properties>
 	  </MonoDevelop>
 	</ProjectExtensions>
+	<ItemGroup>
+	  <PackageReference Update="Microsoft.Maui.Controls.Compatibility" Version="8.0.40" />
+	</ItemGroup>
 </Project>

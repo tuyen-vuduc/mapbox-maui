@@ -182,7 +182,21 @@ public partial class MapboxViewHandler
     {
         var sourceExists = style.SourceExistsWithId(sourceId);
 
-        throw new NotImplementedException();
+        switch (data)
+        {
+            case RawGeoJSONObject raw:
+
+                var source = new TMBGeoJSONSource(sourceId);
+                source.Data = TMBGeoJSONSourceData.StringWithString(raw.Data);
+                
+                style.AddSource(source , sourceId,  (error) =>
+                {
+                    if (error == null) return;
+                    System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
+                });
+            break;
+        }
+
         //switch(data) {
         //    //case RawGeoJSONObject raw:
         //    //    if (sourceExists)

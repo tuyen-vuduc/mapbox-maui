@@ -187,7 +187,7 @@ public partial class MapboxViewHandler
             case RawGeoJSONObject raw:
 
                 var source = new TMBGeoJSONSource(sourceId);
-                source.Data = TMBGeoJSONSourceData.StringWithString(raw.Data);
+                source.Data = TMBGeoJSONSourceData.FromString(raw.Data);
                 
                 style.AddSource(source , sourceId,  (error) =>
                 {

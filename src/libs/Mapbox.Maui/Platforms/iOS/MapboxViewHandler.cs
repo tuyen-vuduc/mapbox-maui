@@ -193,6 +193,7 @@ public partial class MapboxViewHandler
                 if (sourceExists)
                 {
                     style.UpdateGeoJSONSourceWithId(sourceId, sourceData, null);
+                    return;
                 }
                 
                 var source = new TMBGeoJSONSource(sourceId);

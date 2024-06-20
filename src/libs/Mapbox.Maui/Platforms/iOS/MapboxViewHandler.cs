@@ -1,4 +1,6 @@
 ﻿
+using MapboxCommon;
+
 namespace MapboxMaui;
 
 using Foundation;
@@ -182,51 +184,43 @@ public partial class MapboxViewHandler
     {
         var sourceExists = style.SourceExistsWithId(sourceId);
 
-        throw new NotImplementedException();
-        //switch(data) {
-        //    //case RawGeoJSONObject raw:
-        //    //    if (sourceExists)
-        //    //    {
-        //    //        style.UpdateGeoJSONSourceWithId(
-        //    //            sourceId, raw.Data,
-        //    //            (error) =>
-        //    //            {
-        //    //                if (error == null) return;
+        switch (data)
+        {
+            case RawGeoJSONObject raw:
+                
+                var sourceData = TMBGeoJSONSourceData.FromString(raw.Data);
 
-        //    //                System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
-        //    //            });
-        //    //        return;
-        //    //    }
+                if (sourceExists)
+                {
+                    style.UpdateGeoJSONSourceWithId(sourceId, sourceData, null);
+                    return;
+                }
+                
+                var source = new TMBGeoJSONSource(sourceId);
+                source.Data = sourceData;
+                
+                style.AddSource(source , sourceId,  (error) =>
+                {
+                    if (error == null) return;
+                    System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
+                });
+            break;
+            
+            case GeoJSON.Text.Geometry.IGeometryObject geometry:
 
-        //    //    style.AddGeoJSONSourceWithId(
-        //    //        sourceId, platformValue, raw.Data,
-        //    //        (error) =>
-        //    //        {
-        //    //            if (error == null) return;
+                var feature = new MBXFeature(new NSString(sourceId), geometry.ToNative(), platformValue);
 
-        //    //            System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
-        //    //        });
-        //    //    break;
-        //    //case GeoJSON.Text.Geometry.IGeometryObject geometry:
-        //    //    if (sourceExists) {
-        //    //        style.UpdateGeoJSONSourceWithId(
-        //    //            sourceId, geometry.ToNative(),
-        //    //            (error) => {
-        //    //                if (error == null) return;
-
-        //    //                System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
-        //    //            });
-        //    //        return;
-        //    //    }
-        //    //    style.AddSourceWithId(
-        //    //        sourceId, geometry.ToNative(),
-        //    //        (error) => {
-        //    //            if (error == null) return;
-
-        //    //            System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
-        //    //        });
-        //    //    break;
-        //}        
+                if (sourceExists) {
+                    style.UpdateGeoJSONSourceFeaturesForSourceId(
+                        sourceId, [feature], null);
+                    return;
+                }
+                
+                style.AddGeoJSONSourceFeaturesForSourceId(
+                    sourceId, [feature], null);
+                
+                break;
+        }
     }
 
     private static void HandleCameraOptionsChanged(MapboxViewHandler handler, IMapboxView view)

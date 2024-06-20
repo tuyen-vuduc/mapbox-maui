@@ -70,7 +70,7 @@
 		<PackageReference Include="Xamarin.Kotlin.StdLib.Common" Version="1.9.23.1" PrivateAssets="none" />
 	</ItemGroup>
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
-		<PackageReference Include="MapboxMapsObjC.iOS" Version="11.3.0.2" />
+		<PackageReference Include="MapboxMapsObjC.iOS" Version="11.3.0.3" />
 		<PackageReference Include="MapboxMaps.iOS" Version="11.3.0.2" />
 	</ItemGroup>
 	<ItemGroup>

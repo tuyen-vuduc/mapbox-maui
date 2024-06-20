@@ -36,21 +36,9 @@ partial class VisibilityExtensions
 
     public static Visibility ToPlatform(this MapboxMapsObjC.TMBVisibility value)
     {
-        return value switch
-        {
-            MapboxMapsObjC.TMBVisibility.Visible => "visible",
-            MapboxMapsObjC.TMBVisibility.None => "none"
-        };
-    }
-
-    public static Visibility VisibilityX(this Foundation.NSNumber value)
-    {
-        return ((MapboxMapsObjC.TMBVisibility)value.Int32Value).ToPlatform();
-    }
-
-    public static Foundation.NSNumber AsNumber(this Visibility value)
-    {
-        return Foundation.NSNumber.FromInt32((int)ToPlatform(value));
+        return value == TMBVisibility.Visible
+            ? Visibility.Visible
+            : Visibility.None;
     }
 }
 #endif

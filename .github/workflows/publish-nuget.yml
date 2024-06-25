@@ -35,6 +35,10 @@ jobs:
       run: |
         dotnet workload install ios android maui maui-ios maui-android
 
+    - name: Create MauiProgram.dev.cs
+      run: |
+        cp src/qs/MapboxMauiQs/MauiProgram.dev.cs.example src/qs/MapboxMauiQs/MauiProgram.dev.cs
+  
     - name: Build
       run: |
         sh build.sh

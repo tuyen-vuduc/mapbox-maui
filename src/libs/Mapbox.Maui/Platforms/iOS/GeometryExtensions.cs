@@ -1,10 +1,7 @@
 ﻿using CoreGraphics;
 using CoreLocation;
 using Foundation;
-using GeoJSON.Text.Feature;
-using GeoJSON.Text.Geometry;
 using MapboxCommon;
-using MapboxCoreMaps;
 using MapboxMapsObjC;
 
 namespace MapboxMaui;
@@ -15,12 +12,12 @@ public static class GeometryExtensions
     {
         return new MapTappedPosition
         {
-            ScreenPosition = new Microsoft.Maui.Graphics.Point(
+            ScreenPosition = new ScreenPosition(
                 screenCoordinate.X,
                 screenCoordinate.Y
             ),
             Point = new GeoJSON.Text.Geometry.Point(
-                new GeoJSON.Text.Geometry.Position(
+                new Position(
                     coords.Latitude,
                     coords.Longitude
                 )

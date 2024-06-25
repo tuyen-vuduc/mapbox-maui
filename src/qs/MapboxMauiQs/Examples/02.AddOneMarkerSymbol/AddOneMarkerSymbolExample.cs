@@ -43,7 +43,7 @@ public class AddOneMarkerSymbolExample : ContentPage, IExamplePage, IQueryAttrib
     private void Map_MapReady(object sender, EventArgs e)
     {
         // Do any additional setup after loading the view.
-        var center = new Point(55.665957, 12.550343);
+        var center = new Position(55.665957, 12.550343);
         var cameraOptions = new CameraOptions {
             Center = center,
             Zoom = 8,

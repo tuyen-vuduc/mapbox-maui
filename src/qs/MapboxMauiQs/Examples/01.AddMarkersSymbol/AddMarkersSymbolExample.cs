@@ -34,7 +34,7 @@ public class AddMarkersSymbolExample : ContentPage, IExamplePage, IQueryAttribut
 
     private void Map_MapReady(object sender, EventArgs e)
     {
-        var centerLocation = new Point(55.70651, 12.554729);
+        var centerLocation = new Position(55.70651, 12.554729);
         var cameraOptions = new CameraOptions
         {
             Center = centerLocation,

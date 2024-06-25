@@ -16,7 +16,7 @@ public class PolygonAnnotationExample : ContentPage, IExamplePage, IQueryAttribu
 
     private void Map_MapReady(object sender, EventArgs e)
     {
-        var centerLocation = new Microsoft.Maui.Graphics.Point(25.04579, -88.90136);
+        var centerLocation = new Position(25.04579, -88.90136);
         var cameraOptions = new CameraOptions
         {
             Center = centerLocation,

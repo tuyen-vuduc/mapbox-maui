@@ -61,8 +61,9 @@ public interface IMapFeatureQueryable
     Task<IEnumerable<QueriedRenderedFeature>> QueryRenderedFeaturesWith(ScreenPosition point, RenderedQueryOptions options);
 }
 
-public interface IMapController
+public interface IMapboxController
 {
+    IPosition GetMapPosition(ScreenPosition position);
     CoordinateBounds GetCoordinateBoundsForCamera(CameraOptions cameraOptions);
 }
 

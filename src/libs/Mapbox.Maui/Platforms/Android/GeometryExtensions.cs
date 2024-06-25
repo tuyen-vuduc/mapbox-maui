@@ -8,11 +8,24 @@ public static class GeometryExtensions
 {
     internal static Com.Mapbox.Geojson.Point ToGeoPoint(this GeoJSON.Text.Geometry.IPosition xvalue)
     {
-        return Com.Mapbox.Geojson.Point.FromLngLat(
+        return xvalue.Altitude is not null
+            ? Com.Mapbox.Geojson.Point.FromLngLat(
+                xvalue.Longitude,
+                xvalue.Latitude,
+                xvalue.Altitude.Value)
+            : Com.Mapbox.Geojson.Point.FromLngLat(
                 xvalue.Longitude,
                 xvalue.Latitude);
     }
-    
+
+    public static IPosition ToMapPosition(this Com.Mapbox.Geojson.Point point)
+    {
+        return new MapPosition(
+            point.Latitude(),
+            point.Longitude(),
+            point.Altitude());
+    }
+
     internal static MapTappedPosition ToMapTappedPosition(this Com.Mapbox.Geojson.Point point, ScreenCoordinate screenCoordinate)
     {
         return new MapTappedPosition(
@@ -20,8 +33,8 @@ public static class GeometryExtensions
                 screenCoordinate.GetX().PixelToPoint(),
                 screenCoordinate.GetY().PixelToPoint()),
             new MapPosition(
-                screenCoordinate.GetX().PixelToPoint(),
-                screenCoordinate.GetY().PixelToPoint(),
+                point.Latitude(),
+                point.Longitude(),
                 point.HasAltitude ? point.Altitude() : null)
             );
     }
@@ -79,6 +92,11 @@ public static class GeometryExtensions
     internal static Com.Mapbox.Geojson.Point ToNative(this Point xvalue)
     {
         return Com.Mapbox.Geojson.Point.FromLngLat(xvalue.Y, xvalue.X);
+    }
+
+    internal static Com.Mapbox.Maps.ScreenCoordinate ToScreenCoordinate(this Point xvalue)
+    {
+        return new Com.Mapbox.Maps.ScreenCoordinate(xvalue.Y, xvalue.X);
     }
 
     internal static GeoJSON.Text.Feature.Feature ToX(this Com.Mapbox.Geojson.Feature src)

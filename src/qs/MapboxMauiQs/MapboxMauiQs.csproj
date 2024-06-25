@@ -80,7 +80,7 @@
 		<Compile Remove="**\**\*.iOS.cs" />
 	</ItemGroup>
 	<ItemGroup>
-	  <None Remove="Resources\Images\ic_car_top.png" />
+	  <None Remove="Resources\Images\ic_car_top.svg" />
 	  <None Remove="Resources\Images\ic_clear.png" />
 	  <None Remove="Resources\Images\ic_taxi_top.png" />
 	</ItemGroup>

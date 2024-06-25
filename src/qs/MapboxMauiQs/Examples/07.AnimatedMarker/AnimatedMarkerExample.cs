@@ -35,7 +35,7 @@ public class AnimatedMarkerExample : ContentPage, IExamplePage, IQueryAttributab
     {
         // Create a GeoJSON data source.
         var feature = new Feature(
-            point.Point
+            new GeoJSON.Text.Geometry.Point(point.MapPosition)
         );
         var source = new GeoJSONSource(Constants.sourceId)
         {

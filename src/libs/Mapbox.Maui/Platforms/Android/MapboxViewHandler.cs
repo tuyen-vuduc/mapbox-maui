@@ -229,6 +229,7 @@ public partial class MapboxViewHandler
         {
             mapboxView.AnnotationController = this;
             mapboxView.QueryManager = this;
+            mapboxView.MapboxController = this;
         }
     }
 

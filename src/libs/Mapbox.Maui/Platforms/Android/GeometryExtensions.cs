@@ -15,18 +15,15 @@ public static class GeometryExtensions
     
     internal static MapTappedPosition ToMapTappedPosition(this Com.Mapbox.Geojson.Point point, ScreenCoordinate screenCoordinate)
     {
-        return new MapTappedPosition
-        {
-            ScreenPosition = new ScreenPosition(
+        return new MapTappedPosition(
+            new ScreenPosition(
                 screenCoordinate.GetX().PixelToPoint(),
                 screenCoordinate.GetY().PixelToPoint()),
-            Point = new GeoJSON.Text.Geometry.Point(
-                new Position(
-                    screenCoordinate.GetX().PixelToPoint(),
-                    screenCoordinate.GetY().PixelToPoint(),
-                    point.HasAltitude ? point.Altitude() : null)
-                )
-        };
+            new MapPosition(
+                screenCoordinate.GetX().PixelToPoint(),
+                screenCoordinate.GetY().PixelToPoint(),
+                point.HasAltitude ? point.Altitude() : null)
+            );
     }
 
     internal static Com.Mapbox.Geojson.IGeometry ToNative(this GeoJSON.Text.Geometry.IGeometryObject xvalue)
@@ -96,7 +93,7 @@ public static class GeometryExtensions
         {
             case Com.Mapbox.Geojson.Point point:
                 return new GeoJSON.Text.Geometry.Point(
-                    new Position(
+                    new MapPosition(
                         point.Latitude(), point.Longitude(),
                         point.HasAltitude ? point.Altitude() : null
                     )

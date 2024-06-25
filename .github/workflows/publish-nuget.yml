@@ -56,13 +56,15 @@ jobs:
       run: |
         cp src/qs/MapboxMauiQs/MauiProgram.dev.cs.example src/qs/MapboxMauiQs/MauiProgram.dev.cs
 
-    - name: Create MapboxMauiQs.props
-      run: |
-        echo ${{ secrets.PROJECT_PROPS }} > src/qs/MapboxMauiQs/MapboxMauiQs.props
+    # - name: Create MapboxMauiQs.props
+    #   run: |
+    #     echo "${{ secrets.PROJECT_PROPS }}" > src/qs/MapboxMauiQs/MapboxMauiQs.props
   
     - name: Build
       run: |
         sh build.sh
+      env:
+        MAPBOX_DOWNLOADS_TOKEN : ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
   
     - name: Publish NuGet and symbols
       id: nuget-push

@@ -24,7 +24,7 @@ public class IconSizeChangeExample : ContentPage, IExamplePage, IQueryAttributab
 
     private void Map_MapReady(object sender, EventArgs e)
     {
-        var centerLocation = new Point(42.354950, -71.065634);
+        var centerLocation = new Position(42.354950, -71.065634);
         var cameraOptions = new CameraOptions
         {
             Center = centerLocation,

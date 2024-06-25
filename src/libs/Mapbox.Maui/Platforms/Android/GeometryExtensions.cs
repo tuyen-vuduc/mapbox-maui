@@ -17,16 +17,15 @@ public static class GeometryExtensions
     {
         return new MapTappedPosition
         {
-            ScreenPosition = new Point(
+            ScreenPosition = new ScreenPosition(
                 screenCoordinate.GetX().PixelToPoint(),
                 screenCoordinate.GetY().PixelToPoint()),
             Point = new GeoJSON.Text.Geometry.Point(
-                new GeoJSON.Text.Geometry.Position(
-                    point.Latitude(),
-                    point.Longitude(),
-                    point.HasAltitude ? point.Altitude() : null
+                new Position(
+                    screenCoordinate.GetX().PixelToPoint(),
+                    screenCoordinate.GetY().PixelToPoint(),
+                    point.HasAltitude ? point.Altitude() : null)
                 )
-            )
         };
     }
 

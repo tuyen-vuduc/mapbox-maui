@@ -1,4 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Target Name="_CleanAarOutputPath" AfterTargets="_CreateAar" BeforeTargets="_IncludeAarInNuGetPackage">
+		<Delete Files="$(_AarOutputPath)" />
+	</Target>
 
 	<PropertyGroup>
 		<TargetFrameworks>net8.0-android;net8.0-ios;</TargetFrameworks>

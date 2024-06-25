@@ -7,7 +7,7 @@ using XRenderedQueryOptions = Query.RenderedQueryOptions;
 
 partial class MapboxViewHandler : IMapFeatureQueryable
 {
-    public Task<IEnumerable<XQueriedFeature>> QueryRenderedFeaturesWith(Point point, XRenderedQueryOptions options)
+    public Task<IEnumerable<XQueriedFeature>> QueryRenderedFeaturesWith(ScreenPosition point, XRenderedQueryOptions options)
     {
         var mapView = PlatformView.GetMapView();
         if (mapView == null) return Task.FromResult(
@@ -15,14 +15,11 @@ partial class MapboxViewHandler : IMapFeatureQueryable
         );
 
         var tcs = new TaskCompletionSource<IEnumerable<XQueriedFeature>>();
-        var pixel = mapView.MapboxMap.PixelForCoordinate(
-            Com.Mapbox.Geojson.Point.FromLngLat(point.Y, point.X)
-            );
         _ = mapView.MapboxMap.QueryRenderedFeatures(
             new RenderedQueryGeometry(
                 new ScreenBox(
-                    new ScreenCoordinate(pixel.GetX() - 25.0, pixel.GetY() - 25.0),
-                    new ScreenCoordinate(pixel.GetX() + 25.0, pixel.GetY() + 25.0)
+                    new ScreenCoordinate(point.X - 25.0, point.Y - 25.0),
+                    new ScreenCoordinate(point.X + 25.0, point.Y + 25.0)
                 )
             ),
             options.ToPlatform(),

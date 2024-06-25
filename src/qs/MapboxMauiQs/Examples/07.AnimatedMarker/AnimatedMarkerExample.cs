@@ -12,7 +12,7 @@ public class AnimatedMarkerExample : ContentPage, IExamplePage, IQueryAttributab
     MapboxView map;
     IExampleInfo info;
 
-    private IPosition currentPosition = new Position(64.900932, -18.167040);
+    private IPosition currentPosition = new MapPosition(64.900932, -18.167040);
 
     public AnimatedMarkerExample()
 	{

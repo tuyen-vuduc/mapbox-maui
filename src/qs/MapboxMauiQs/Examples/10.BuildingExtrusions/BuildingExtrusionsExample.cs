@@ -120,7 +120,7 @@ public class BuildingExtrusionsExample : ContentPage, IExamplePage, IQueryAttrib
             layer,
         };
 
-        var center = new Position(40.7135, -74.0066);
+        var center = new MapPosition(40.7135, -74.0066);
         var cameraOptions = new CameraOptions
         {
             Center = center,

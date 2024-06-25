@@ -47,7 +47,7 @@ public class TerrainExample : ContentPage, IExamplePage, IQueryAttributable
 
     private void Map_MapReady(object sender, EventArgs e)
     {
-        var mapCenter = new Position(32.6141, -114.34411);
+        var mapCenter = new MapPosition(32.6141, -114.34411);
         var cameraOptions = new CameraOptions
         {
             Center = mapCenter,

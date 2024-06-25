@@ -67,7 +67,7 @@ public class SkyLayerExample : ContentPage, IExamplePage, IQueryAttributable
 
     private void Map_MapReady(object sender, EventArgs e)
     {
-        var center = new Position(35.67283, 127.60597);
+        var center = new MapPosition(35.67283, 127.60597);
 
         var cameraOptions = new CameraOptions
         {

@@ -311,12 +311,12 @@ static class AdditionalExtensions
     {
         var cameraOptionsBuilder = new MapboxMapsCameraOptions.Builder();
 
-        if (cameraOptions.Center.HasValue)
+        if (cameraOptions.Center is not null)
         {
             cameraOptionsBuilder.Center(
                 Com.Mapbox.Geojson.Point.FromLngLat(
-            cameraOptions.Center.Value.Y,
-                cameraOptions.Center.Value.X
+                cameraOptions.Center.Longitude,
+                cameraOptions.Center.Latitude
             ));
         }
 
@@ -345,7 +345,7 @@ static class AdditionalExtensions
                 ));
         }
 
-        if (cameraOptions.Anchor.HasValue)
+        if (cameraOptions.Anchor is not null)
         {
             cameraOptionsBuilder.Anchor(new ScreenCoordinate(
                 cameraOptions.Anchor.Value.X,

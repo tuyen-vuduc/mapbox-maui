@@ -28,7 +28,7 @@ public class MultipleGeometriesExample : ContentPage, IExamplePage, IQueryAttrib
 
     private void Map_MapReady(object sender, EventArgs e)
     {
-        var centerLocation = new Point(38.93490939383946, -77.03619251024163);
+        var centerLocation = new Position(38.93490939383946, -77.03619251024163);
         var cameraOptions = new CameraOptions
         {
             Center = centerLocation,

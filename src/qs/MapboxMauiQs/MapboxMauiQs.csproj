@@ -21,8 +21,9 @@
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
 
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">27.0</SupportedOSPlatformVersion>
+		<AssemblyName>$(MSBuildProjectName)</AssemblyName>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
@@ -48,6 +49,20 @@
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
+	
+	<ItemGroup>
+		<Compile Include="..\..\libs\Mapbox.Maui\*.cs" Exclude="..\..\libs\Mapbox.Maui\usings.cs">
+		  <Link>Shared\%(Filename)%(Extension)</Link>
+		</Compile>
+    <Compile Include="..\..\libs\Mapbox.Maui\usings.cs">
+      <Link>usings.cs</Link>
+    </Compile>
+    <Compile Include="..\..\libs\Mapbox.Maui\Models\**\**\*.cs">
+      <Link>Shared\%(RecursiveDir)%(Filename)%(Extension)</Link>
+    </Compile>
+		<Compile Remove="..\..\libs\Mapbox.Maui\Platforms\**\**\*.cs" />
+	</ItemGroup>
+
 	<!-- Android -->
 	<ItemGroup Condition="$(TargetFramework.StartsWith('net8.0-android')) != true">
 		<Compile Remove="**\**\*.Android.cs" />
@@ -69,6 +84,7 @@
 		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.40" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 		<PackageReference Include="Xamarin.Build.Download" Version="0.11.4" />
+    <PackageReference Include="GeoJSON.Text" Version="1.0.2" />
 	</ItemGroup>
 
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
@@ -77,16 +93,20 @@
 		<PackageReference Include="Xamarin.AndroidX.Fragment.Ktx" Version="1.6.2.3" />
 		<PackageReference Include="Xamarin.Kotlin.StdLib" Version="1.9.23.1" PrivateAssets="none" />
 		<PackageReference Include="Xamarin.Kotlin.StdLib.Common" Version="1.9.23.1" PrivateAssets="none" />
+
+		<Compile Include="..\..\libs\Mapbox.Maui\Platforms\Android\**\**\*.cs">
+			<Link>Platforms\Android\Shared\%(RecursiveDir)%(Filename)%(Extension)</Link>
+		</Compile>
 	</ItemGroup>
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
 		<PackageReference Include="MapboxMapsObjC.iOS" Version="11.3.0.3" />
 		<PackageReference Include="MapboxMaps.iOS" Version="11.3.0.2" />
+
+		<Compile Include="..\..\libs\Mapbox.Maui\Platforms\iOS\**\**\*.cs">
+			<Link>Platforms\iOS\Shared\%(RecursiveDir)%(Filename)%(Extension)</Link>
+		</Compile>
 	</ItemGroup>
-<!-- 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|iPhone'">
-		<RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
-	</PropertyGroup> -->
-	<PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-ios'">
+	<PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
 		<PublishTrimmed>true</PublishTrimmed>
 		<CodesignKey>Apple Development: Created via API (X3MP9CYJPQ)</CodesignKey>
 		<CodesignProvision>VS: WildCard Development</CodesignProvision>
@@ -94,9 +114,6 @@
 	<Target Name="DisplayMessages" BeforeTargets="PrepareForILLink">
 		<Message Text="Project File Name = $(Configuration)|$(TargetFramework)|$(Platform)" />
 	</Target>
-	<ItemGroup>
-	  <ProjectReference Include="..\..\libs\Mapbox.Maui\Mapbox.Maui.csproj" />
-	</ItemGroup>
 	<ProjectExtensions>
 	  <MonoDevelop>
 	    <Properties>

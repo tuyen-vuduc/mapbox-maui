@@ -120,7 +120,7 @@ partial class MapboxView
 
 public class MapTappedPosition
 {
-    public Point ScreenPosition { get; set; }
+    public ScreenPosition ScreenPosition { get; set; }
 
     public GeoJSON.Text.Geometry.Point Point { get; set; }
 }

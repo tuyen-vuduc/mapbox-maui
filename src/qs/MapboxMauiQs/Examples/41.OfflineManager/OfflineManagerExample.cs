@@ -29,7 +29,7 @@ public class OfflineManagerExample : ContentPage, IExamplePage, IQueryAttributab
         map.MapboxStyle = MapboxStyle.OUTDOORS;
 
         offlineManager = new OfflineManager(
-            MauiProgram.AccessToken,
+            MauiProgram.ACCESS_TOKEN,
             cameraOptions);
 
         offlineManager.IsMapboxStackConnected = true;

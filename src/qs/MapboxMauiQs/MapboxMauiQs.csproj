@@ -119,6 +119,10 @@
 		<CodesignKey>Apple Development: Created via API (X3MP9CYJPQ)</CodesignKey>
 		<CodesignProvision>VS: WildCard Development</CodesignProvision>
 	</PropertyGroup>
+	<PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
+	  <CodesignKey>Apple Development: Created via API (X3MP9CYJPQ)</CodesignKey>
+	  <CodesignProvision>VS: WildCard Development</CodesignProvision>
+	</PropertyGroup>
 	<Target Name="DisplayMessages" BeforeTargets="PrepareForILLink">
 		<Message Text="Project File Name = $(Configuration)|$(TargetFramework)|$(Platform)" />
 	</Target>

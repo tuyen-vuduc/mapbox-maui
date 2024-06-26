@@ -222,4 +222,5 @@ public partial class MapboxView : View, IMapboxView
     public IAnnotationController AnnotationController { get; internal set; }
     public IMapFeatureQueryable QueryManager { get; internal set; }
     public IMapboxController MapboxController { get; internal set; }
+    public IMapCameraController CameraController { get; internal set; }
 }

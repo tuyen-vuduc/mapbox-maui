@@ -13,11 +13,35 @@ using MapboxMaui.Styles;
 using System.Collections;
 using MapboxMaui.Expressions;
 using AndroidX.Fragment.App;
+using Com.Mapbox.Maps.Plugins.Animation;
+using Com.Mapbox.Functions;
 
 static class AdditionalExtensions
 {
     internal static DisplayMetrics Metrics;
     
+    public static MapAnimationOptions ToNative(this AnimationOptions animationOptions)
+    {
+        return MapAnimationOptions.CompanionField.MapAnimationOptions(
+            new Function1Action<MapAnimationOptions.Builder>((builder) =>
+            {
+                if (animationOptions.Duration.HasValue)
+                {
+                    builder.Duration(animationOptions.Duration.Value);
+                }
+                if (animationOptions.StartDelay.HasValue)
+                {
+                    builder.StartDelay(animationOptions.StartDelay.Value);
+                }
+                if (!string.IsNullOrWhiteSpace(animationOptions.Owner))
+                {
+                    builder.Owner(animationOptions.Owner);
+                }
+
+                // TODO Set curve options
+            }));
+    }
+
     internal static double PixelToPoint(this double pixel)
     {
         Metrics ??= Resources.System?.DisplayMetrics;

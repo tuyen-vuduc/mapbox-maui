@@ -3,6 +3,7 @@
 var target = Argument("target", "example");
 var name = Argument("name", "Awesome");
 var index = Argument("index", 0);
+var gindex = Argument("gindex", 0);
 var group = Argument("group", "None");
 var title = Argument("title", "Awesome");
 var subtitle = Argument("subtitle", "Awesome");
@@ -36,6 +37,8 @@ class {name}ExampleInfo : IExampleInfo
     public string Title => ""{title ?? "No title"}"";
     public string Subtitle => ""{subtitle ?? "No subtitle"}"";
     public string PageRoute => typeof({name}Example).FullName;
+    public int GroupIndex => {gindex};
+    public int Index => {index};
 }}");
 
     Information($"\n>> Generate >> {name}ExamplePage.cs");
@@ -64,7 +67,7 @@ public class {name}Example : ContentPage, IExamplePage, IQueryAttributable
 
     private void Map_MapReady(object sender, EventArgs e)
     {{
-        var centerLocation = new Point(21.0278, 105.8342);
+        var centerLocation = new MapPosition(21.0278, 105.8342);
         var cameraOptions = new CameraOptions
         {{
             Center = centerLocation,

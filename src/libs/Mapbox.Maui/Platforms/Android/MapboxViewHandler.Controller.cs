@@ -1,4 +1,5 @@
 ﻿
+
 namespace MapboxMaui;
 
 partial class MapboxViewHandler : IMapboxController

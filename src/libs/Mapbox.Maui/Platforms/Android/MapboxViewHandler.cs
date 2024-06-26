@@ -230,6 +230,7 @@ public partial class MapboxViewHandler
             mapboxView.AnnotationController = this;
             mapboxView.QueryManager = this;
             mapboxView.MapboxController = this;
+            mapboxView.CameraController = this;
         }
     }
 
@@ -250,6 +251,8 @@ public partial class MapboxViewHandler
         {
             mapboxView.AnnotationController = null;
             mapboxView.QueryManager = null;
+            mapboxView.CameraController = null;
+            mapboxView.MapboxController = null;
         }
         base.DisconnectHandler(platformView);
     }

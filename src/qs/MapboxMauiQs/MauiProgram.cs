@@ -5,14 +5,12 @@ namespace MapboxMauiQs;
 
 public static partial class MauiProgram
 {
-	public static string AccessToken => throw new Exception("[your token]");
-	
     public static MauiApp CreateMauiApp()
 	{
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
-			.UseMapbox(AccessToken)
+			.UseMapbox(ACCESS_TOKEN)
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

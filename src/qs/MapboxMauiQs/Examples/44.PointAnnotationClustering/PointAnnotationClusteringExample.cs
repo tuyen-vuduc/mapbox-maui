@@ -23,7 +23,7 @@ public class PointAnnotationClusteringExample : ContentPage, IExamplePage, IQuer
     private void Map_MapReady(object sender, EventArgs e)
     {
         // Center the map over Washington, D.C.
-        var centerLocation = new Microsoft.Maui.Graphics.Point(38.889215, -77.039354);
+        var centerLocation = new MapPosition(38.889215, -77.039354);
         var cameraOptions = new CameraOptions
         {
             Center = centerLocation,

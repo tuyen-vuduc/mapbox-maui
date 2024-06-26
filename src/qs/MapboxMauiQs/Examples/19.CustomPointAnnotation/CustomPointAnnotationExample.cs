@@ -36,7 +36,7 @@ public class CustomPointAnnotationExample : ContentPage, IExamplePage, IQueryAtt
         // and configure it with a custom image (sourced from the asset catalogue)
         var customPointAnnotation = new PointAnnotation(
             new GeoJSON.Text.Geometry.Point(
-                new Position(centerCoordinate.Value.X, centerCoordinate.Value.Y)
+                new MapPosition(centerCoordinate.Latitude, centerCoordinate.Longitude)
             )
         )
         {
@@ -51,7 +51,7 @@ public class CustomPointAnnotationExample : ContentPage, IExamplePage, IQueryAtt
 
     private void Map_MapReady(object sender, EventArgs e)
     {
-        var centerLocation = new Point(40.7128, -74.0060);
+        var centerLocation = new MapPosition(40.7128, -74.0060);
         var cameraOptions = new CameraOptions
         {
             Center = centerLocation,

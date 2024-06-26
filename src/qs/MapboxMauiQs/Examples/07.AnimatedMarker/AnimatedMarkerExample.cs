@@ -12,7 +12,7 @@ public class AnimatedMarkerExample : ContentPage, IExamplePage, IQueryAttributab
     MapboxView map;
     IExampleInfo info;
 
-    private Point currentPosition = new Point(64.900932, -18.167040);
+    private IPosition currentPosition = new MapPosition(64.900932, -18.167040);
 
     public AnimatedMarkerExample()
 	{
@@ -35,7 +35,7 @@ public class AnimatedMarkerExample : ContentPage, IExamplePage, IQueryAttributab
     {
         // Create a GeoJSON data source.
         var feature = new Feature(
-            point.Point
+            new GeoJSON.Text.Geometry.Point(point.MapPosition)
         );
         var source = new GeoJSONSource(Constants.sourceId)
         {
@@ -66,9 +66,7 @@ public class AnimatedMarkerExample : ContentPage, IExamplePage, IQueryAttributab
 
         // Create a GeoJSON data source.
         var feature = new Feature(
-            new GeoJSON.Text.Geometry.Point(
-                new Position(currentPosition.X, currentPosition.Y)
-            )
+            new GeoJSON.Text.Geometry.Point(currentPosition)
         );
         var source = new GeoJSONSource(Constants.sourceId)
         {

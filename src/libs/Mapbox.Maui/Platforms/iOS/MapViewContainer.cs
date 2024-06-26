@@ -12,9 +12,14 @@ public class MapViewContainer : UIView
     public MapViewContainer(string accessToken)
         : base()
     {
-        var resourceOptions = new MBMResourceOptions(accessToken, null,  null, null, null);
+        if (!string.IsNullOrWhiteSpace(accessToken)) 
+        {
+            MapboxCommon.MBXMapboxOptions.SetAccessTokenForToken(accessToken);
+        }
+
+        var mapboxOptions = new MBMMapOptions(null, null, null, null, null, null, 1, null);
         var options = MapInitOptionsFactory
-            .CreateWithResourceOptions(resourceOptions, null, null, null, null);
+            .CreateWithMapOptions(mapboxOptions, null, null, null, 0);
 
         var mapView = MapViewFactory.CreateWithFrame(
             CoreGraphics.CGRect.FromLTRB(0, 0, 320, 675),

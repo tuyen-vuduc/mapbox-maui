@@ -1,6 +1,6 @@
 ﻿namespace MapboxMaui.Annotations;
 
-using IPlatformAnnotationManager = Com.Mapbox.Maps.Plugin.Annotation.IAnnotationManager;
+using IPlatformAnnotationManager = Com.Mapbox.Maps.Plugins.Annotations.IAnnotationManager;
 
 public abstract partial class AnnotationManager<TAnnotationManager, TAnnotation>
     : IAnnotationManager<TAnnotation>

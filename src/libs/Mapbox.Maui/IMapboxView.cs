@@ -9,7 +9,7 @@ public partial interface IMapboxView : IView
 {
     CameraOptions CameraOptions { get; set; }
     MapboxStyle MapboxStyle { get; set; }
-    Point? MapCenter { get; set; }
+    IPosition MapCenter { get; set; }
     float? MapZoom { get; set; }
 
     OrnamentVisibility ScaleBarVisibility { get; set; }
@@ -58,7 +58,13 @@ public interface IAnnotationController
 
 public interface IMapFeatureQueryable
 {
-    Task<IEnumerable<QueriedFeature>> QueryRenderedFeaturesWith(Point point, RenderedQueryOptions options);
+    Task<IEnumerable<QueriedRenderedFeature>> QueryRenderedFeaturesWith(ScreenPosition point, RenderedQueryOptions options);
+}
+
+public interface IMapboxController
+{
+    IPosition GetMapPosition(ScreenPosition position);
+    CoordinateBounds GetCoordinateBoundsForCamera(CameraOptions cameraOptions);
 }
 
 public class MapTappedEventArgs : EventArgs

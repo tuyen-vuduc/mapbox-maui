@@ -2,6 +2,7 @@
 
 using Com.Mapbox.Maps;
 using XQueriedFeature = Query.QueriedFeature;
+using XQueriedRenderedFeature = Query.QueriedRenderedFeature;
 
 public static class QueriedFeatureExtensions
 {
@@ -11,8 +12,13 @@ public static class QueriedFeatureExtensions
             Feature = src.Feature.ToX(),
             Source = src.Source,
             SourceLayer = src.SourceLayer,
-            // TODO Convert state
-            //State = src.State.ToX(),
+            State = src.State,
+        };
+    public static XQueriedRenderedFeature ToX(this QueriedRenderedFeature src)
+        => new XQueriedRenderedFeature
+        {
+            QueriedFeature = src.QueriedFeature.ToX(),
+            Layers = src.Layers?.ToArray(),
         };
 }
 

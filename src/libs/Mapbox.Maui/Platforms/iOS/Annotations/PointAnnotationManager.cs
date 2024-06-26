@@ -17,7 +17,6 @@ public partial class PointAnnotationManager
     : base(id, nativeManager)
     {
         this.nativeManager = nativeManager;
-        nativeManager.Delegate = this;
     }
 
     public bool? IconAllowOverlap
@@ -47,27 +46,13 @@ public partial class PointAnnotationManager
     }
     public IconPitchAlignment? IconPitchAlignment
     {
-        get => nativeManager.IconPitchAlignment?.IconPitchAlignmentX();
-        set => nativeManager.IconPitchAlignment = value?.AsNumber();
+        get => nativeManager.IconPitchAlignment?.RawValue;
+        set => nativeManager.IconPitchAlignment = value?.ToPlatform();
     }
     public IconRotationAlignment? IconRotationAlignment
     {
-        get => nativeManager.IconRotationAlignment?.IconRotationAlignmentX();
-        set => nativeManager.IconRotationAlignment = value?.AsNumber();
-    }
-    public IconTextFit? IconTextFit
-    {
-        get => nativeManager.IconTextFit?.IconTextFitX();
-        set => nativeManager.IconTextFit = value?.AsNumber();
-    }
-    public double[] IconTextFitPadding
-    {
-        get => nativeManager.IconTextFitPadding?
-                .Select(x => x.DoubleValue)
-                .ToArray() ?? Array.Empty<double>();
-        set => nativeManager.IconTextFitPadding = value?
-                .Select(NSNumber.FromDouble)
-                .ToArray();
+        get => nativeManager.IconRotationAlignment?.RawValue;
+        set => nativeManager.IconRotationAlignment = value?.ToPlatform();
     }
     public bool? SymbolAvoidEdges
     {
@@ -76,8 +61,8 @@ public partial class PointAnnotationManager
     }
     public SymbolPlacement? SymbolPlacement
     {
-        get => nativeManager.SymbolPlacement?.SymbolPlacementX();
-        set => nativeManager.SymbolPlacement = value?.AsNumber();
+        get => nativeManager.SymbolPlacement?.RawValue;
+        set => nativeManager.SymbolPlacement = value?.ToPlatform();
     }
     public double? SymbolSpacing
     {
@@ -86,8 +71,8 @@ public partial class PointAnnotationManager
     }
     public SymbolZOrder? SymbolZOrder
     {
-        get => nativeManager.SymbolZOrder?.SymbolZOrderX();
-        set => nativeManager.SymbolZOrder = value?.AsNumber();
+        get => nativeManager.SymbolZOrder?.RawValue;
+        set => nativeManager.SymbolZOrder = value?.ToPlatform();
     }
     public bool? TextAllowOverlap
     {
@@ -126,30 +111,30 @@ public partial class PointAnnotationManager
     }
     public TextPitchAlignment? TextPitchAlignment
     {
-        get => nativeManager.TextPitchAlignment?.TextPitchAlignmentX();
-        set => nativeManager.TextPitchAlignment = value?.AsNumber();
+        get => nativeManager.TextPitchAlignment?.RawValue;
+        set => nativeManager.TextPitchAlignment = value?.ToPlatform();
     }
     public TextRotationAlignment? TextRotationAlignment
     {
-        get => nativeManager.TextRotationAlignment?.StringValue;
-        set => nativeManager.TextRotationAlignment = value?.AsNumber();
+        get => nativeManager.TextRotationAlignment?.RawValue;
+        set => nativeManager.TextRotationAlignment = value?.ToPlatform();
     }
     public TextAnchor[] TextVariableAnchor
     {
         get => nativeManager.TextVariableAnchor?
-                .Select(x => (TextAnchor)x.TextAnchorX())
+                .Select(x => (TextAnchor)x.RawValue)
                 .ToArray() ?? Array.Empty<TextAnchor>();
         set => nativeManager.TextVariableAnchor = value?
-            .Select(x => x.AsNumber())
+            .Select(x => x.ToPlatform())
             .ToArray();
     }
     public TextWritingMode[] TextWritingMode
     {
         get => nativeManager.TextWritingMode?
-                .Select(x => (TextWritingMode)x.TextWritingModeX())
+                .Select(x => (TextWritingMode)x.RawValue)
                 .ToArray() ?? Array.Empty<TextWritingMode>();
         set => nativeManager.TextWritingMode = value?
-            .Select(x => x.AsNumber())
+            .Select(x => x.ToPlatform())
             .ToArray();
     }
     public double[] IconTranslate
@@ -163,8 +148,8 @@ public partial class PointAnnotationManager
     }
     public IconTranslateAnchor? IconTranslateAnchor
     {
-        get => nativeManager.IconTranslateAnchor?.IconTranslateAnchorX();
-        set => nativeManager.IconTranslateAnchor = value?.AsNumber();
+        get => nativeManager.IconTranslateAnchor?.RawValue;
+        set => nativeManager.IconTranslateAnchor = value?.ToPlatform();
     }
     public double[] TextTranslate
     {
@@ -177,13 +162,8 @@ public partial class PointAnnotationManager
     }
     public TextTranslateAnchor? TextTranslateAnchor
     {
-        get => nativeManager.TextTranslateAnchor?.TextTranslateAnchorX();
-        set => nativeManager.TextTranslateAnchor = value?.AsNumber();
-    }
-    public double? TextLineHeight
-    {
-        get => nativeManager.TextLineHeight?.DoubleValue;
-        set => nativeManager.TextLineHeight = value;
+        get => nativeManager.TextTranslateAnchor?.RawValue;
+        set => nativeManager.TextTranslateAnchor = value?.ToPlatform();
     }
 
     public override void AddAnnotations(params PointAnnotation[] xitems)

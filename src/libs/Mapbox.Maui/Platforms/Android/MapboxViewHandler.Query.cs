@@ -2,12 +2,12 @@
 
 using Com.Mapbox.Bindgen;
 using Com.Mapbox.Maps;
-using XQueriedFeature = Query.QueriedFeature;
+using XQueriedFeature = Query.QueriedRenderedFeature;
 using XRenderedQueryOptions = Query.RenderedQueryOptions;
 
 partial class MapboxViewHandler : IMapFeatureQueryable
 {
-    public Task<IEnumerable<XQueriedFeature>> QueryRenderedFeaturesWith(Point point, XRenderedQueryOptions options)
+    public Task<IEnumerable<XQueriedFeature>> QueryRenderedFeaturesWith(ScreenPosition point, XRenderedQueryOptions options)
     {
         var mapView = PlatformView.GetMapView();
         if (mapView == null) return Task.FromResult(
@@ -15,14 +15,11 @@ partial class MapboxViewHandler : IMapFeatureQueryable
         );
 
         var tcs = new TaskCompletionSource<IEnumerable<XQueriedFeature>>();
-        var pixel = mapView.MapboxMap.PixelForCoordinate(
-            Com.Mapbox.Geojson.Point.FromLngLat(point.Y, point.X)
-            );
         _ = mapView.MapboxMap.QueryRenderedFeatures(
             new RenderedQueryGeometry(
                 new ScreenBox(
-                    new ScreenCoordinate(pixel.GetX() - 25.0, pixel.GetY() - 25.0),
-                    new ScreenCoordinate(pixel.GetX() + 25.0, pixel.GetY() + 25.0)
+                    new ScreenCoordinate(point.X - 25.0, point.Y - 25.0),
+                    new ScreenCoordinate(point.X + 25.0, point.Y + 25.0)
                 )
             ),
             options.ToPlatform(),
@@ -32,7 +29,7 @@ partial class MapboxViewHandler : IMapFeatureQueryable
         return tcs.Task;
     }
 
-    class QueryRenderedFeaturesWithPointCallback : Java.Lang.Object, IQueryFeaturesCallback
+    class QueryRenderedFeaturesWithPointCallback : Java.Lang.Object, IQueryRenderedFeaturesCallback
     {
         private readonly TaskCompletionSource<IEnumerable<XQueriedFeature>> tcs;
 
@@ -48,7 +45,7 @@ partial class MapboxViewHandler : IMapFeatureQueryable
                 return;
             }
 
-            var xfeatures = (p0.Value as Java.Util.IList)?.ToArray().Cast<QueriedFeature>();
+            var xfeatures = (p0.Value as Java.Util.IList)?.ToArray().Cast<QueriedRenderedFeature>();
             tcs.TrySetResult(xfeatures.Select(x => x.ToX()).ToArray());
         }
     }

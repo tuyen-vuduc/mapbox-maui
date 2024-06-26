@@ -14,10 +14,7 @@ jobs:
     if:  ${{ inputs.SHOULD_RUN }} 
     steps:
     - uses: actions/checkout@v3
-    - name: Set default Xamarin SDK versions
-      run: |
-        $VM_ASSETS/select-xamarin-sdk-v2.sh --mono=6.12 --android=13.0
-
+    
     - name: Set .netrc
       run: |
         echo $NETRC >> ~/.netrc
@@ -26,18 +23,48 @@ jobs:
       env:
         NETRC : ${{secrets.NETRC}}
 
-    - name: Setup .NET Core SDK 7.0.306
+    - name: Setup .NET Core SDK 8.0
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '7.0.306'
+        dotnet-version: '8.0'
 
     - name: Install ios workload
       run: |
         dotnet workload install ios android maui maui-ios maui-android
 
+    - name: Setup Java 17
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'microsoft'
+        java-version: '17'
+        
+    - name: Xcode Select Version
+      uses: mobiledevops/xcode-select-version-action@v1
+      with:
+        xcode-select-version: 15.1
+
+    - name: Set MAPBOX_DOWNLOADS_TOKEN
+      if: contains(${{ inputs.LIB_ARTIFACT }}, 'com.mapbox.maps')
+      run: |
+        echo "MAPBOX_DOWNLOADS_TOKEN=$MAPBOX_DOWNLOADS_TOKEN" >> ~/.gradle/gradle.properties
+        cat ~/.gradle/gradle.properties
+      shell: bash
+      env:
+        MAPBOX_DOWNLOADS_TOKEN : ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
+
+    - name: Create MauiProgram.dev.cs
+      run: |
+        cp src/qs/MapboxMauiQs/MauiProgram.dev.cs.example src/qs/MapboxMauiQs/MauiProgram.dev.cs
+
+    # - name: Create MapboxMauiQs.props
+    #   run: |
+    #     echo "${{ secrets.PROJECT_PROPS }}" > src/qs/MapboxMauiQs/MapboxMauiQs.props
+  
     - name: Build
       run: |
         sh build.sh
+      env:
+        MAPBOX_DOWNLOADS_TOKEN : ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
   
     - name: Publish NuGet and symbols
       id: nuget-push

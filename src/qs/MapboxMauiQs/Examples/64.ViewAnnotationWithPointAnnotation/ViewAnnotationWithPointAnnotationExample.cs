@@ -38,7 +38,7 @@ public class ViewAnnotationWithPointAnnotationExample : ContentPage, IExamplePag
 
     private void Map_MapReady(object sender, EventArgs e)
     {
-        var centerLocation = new Point(39.7128, -75.0060);
+        var centerLocation = new MapPosition(39.7128, -75.0060);
         var cameraOptions = new CameraOptions
         {
             Center = centerLocation,
@@ -63,37 +63,35 @@ public class ViewAnnotationWithPointAnnotationExample : ContentPage, IExamplePag
         AddPointAndViewAnnotationAt(map.CameraOptions.Center);
     }
 
-    private void AddPointAndViewAnnotationAt(Point? coordinate)
+    private void AddPointAndViewAnnotationAt(IPosition coordinate)
     {
         if (coordinate is null) return;
 
-        AddPointAnnotationAt(coordinate.Value);
-        AddViewAnnotationAt(coordinate.Value);
+        AddPointAnnotationAt(coordinate);
+        AddViewAnnotationAt(coordinate);
     }
 
-    private void AddViewAnnotationAt(Point value)
+    private void AddViewAnnotationAt(IPosition value)
     {
         var options = new ViewAnnotationOptions
         {
-            Geometry = new GeoJSON.Text.Geometry.Point(
-                new Position(value.X, value.Y)),
+            Geometry = new GeoJSON.Text.Geometry.Point(value),
             Width = 128,
             Height = 64,
             AssociatedFeatureId = Constants.markerId,
             AllowOverlap = false,
             Anchor = ViewAnnotationAnchor.Bottom,
             OffsetY = markerHeight,
-            Title = $"Lat={value.X}, Lng={value.Y}",
+            Title = $"Lat={value.Latitude}, Lng={value.Longitude}",
         };
 
         map.ViewAnnotations = new[] { options };
     }
 
-    private void AddPointAnnotationAt(Point value)
+    private void AddPointAnnotationAt(IPosition value)
     {
         var pointAnnotation = new PointAnnotation(
-            new GeoJSON.Text.Geometry.Point(
-                new Position(value.X, value.Y)),
+            new GeoJSON.Text.Geometry.Point(value),
             id: Constants.markerId)
         {
             IconImage = Constants.blueIconId,

@@ -14,22 +14,10 @@ partial class OfflineManager : NSObject, IOfflineManager
 
     partial void InitializePlatformManager()
     {
-        var resourceOptions = new MBMResourceOptions(accessToken, null, null, null, null);
-        var options = MapInitOptionsFactory.CreateWithResourceOptions(
-            resourceOptions,
-            null,
-            cameraOptions.ToNative(),
-            null,
-            null);
-
-        nativeManager = new PlatformOfflineManager(
-            options.ResourceOptions()
-        );
+        nativeManager = new PlatformOfflineManager();
+        nativeManager = new PlatformOfflineManager();
 
         titleStore = MBXTileStore.Create();
-        titleStore.SetOptionForKey(
-            MBXTileStoreOptions.MapboxAccessToken,
-            new NSString(accessToken));
     }
 
     public bool IsMapboxStackConnected
@@ -46,7 +34,7 @@ partial class OfflineManager : NSObject, IOfflineManager
     {
         var nativeOptions = options.ToNative();
 
-        nativeManager.LoadStyleWithStyleUriString(
+        nativeManager.LoadStylePackFor(
             styleUri,
             nativeOptions,
             (progress) =>
@@ -58,9 +46,8 @@ partial class OfflineManager : NSObject, IOfflineManager
                     ErroredResourceCount = progress.ErroredResourceCount,
                     LoadedResourceCount = progress.LoadedResourceCount,
                     LoadedResourceSize = progress.LoadedResourceSize,
-                    RequiredResourceCount = progress.RequiredResourceCount,                    
+                    RequiredResourceCount = progress.RequiredResourceCount,
                 };
-
                 progressHandler?.Invoke(xprogress);
             },
             (stylePack, error) =>
@@ -81,7 +68,6 @@ partial class OfflineManager : NSObject, IOfflineManager
                 var xerror = error != null
                     ? new NSErrorException(error)
                     : null;
-
                 completionHandler?.Invoke(xstylePack, xerror);
             });
     }
@@ -101,7 +87,9 @@ partial class OfflineManager : NSObject, IOfflineManager
                     x.StyleUri,
                     (byte)x.MinZoom,
                     (byte)x.MaxZoom,
-                    x.StylePackLoadOptions?.ToNative()
+                    null,
+                    x.StylePackLoadOptions?.ToNative(),
+                    null
                 ))
             .Select(
                 nativeManager.CreateTilesetDescriptorForTilesetDescriptorOptions)
@@ -123,10 +111,11 @@ partial class OfflineManager : NSObject, IOfflineManager
             xoptions.AcceptsExpired,
             (MBXNetworkRestriction)xoptions.NetworkRestriction,
             xoptions.StartLocation.HasValue
-                ? new CoreLocation.CLLocation(
+                ? new MBXCoordinate2D(
+                    new CoreLocation.CLLocationCoordinate2D(
                     xoptions.StartLocation.Value.X,
                     xoptions.StartLocation.Value.Y
-                    )
+                    ))
                 : null,
             xoptions.AvarageBytesPerSecond.HasValue
                 ? NSNumber.FromInt32(xoptions.AvarageBytesPerSecond.Value)

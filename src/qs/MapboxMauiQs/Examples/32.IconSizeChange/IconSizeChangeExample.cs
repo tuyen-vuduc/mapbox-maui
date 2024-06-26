@@ -24,7 +24,7 @@ public class IconSizeChangeExample : ContentPage, IExamplePage, IQueryAttributab
 
     private void Map_MapReady(object sender, EventArgs e)
     {
-        var centerLocation = new Point(42.354950, -71.065634);
+        var centerLocation = new MapPosition(42.354950, -71.065634);
         var cameraOptions = new CameraOptions
         {
             Center = centerLocation,
@@ -38,9 +38,9 @@ public class IconSizeChangeExample : ContentPage, IExamplePage, IQueryAttributab
     private void Map_MapLoaded(object sender, EventArgs e)
     {
         var markerFeatures = new [] {
-            new Position(latitude: 42.354950, longitude: -71.065634), // Boston Common Park
-            new Position(latitude: 42.346645, longitude: -71.097293), // Fenway Park
-            new Position(latitude: 42.363725, longitude: -71.053694) // The Paul Revere House
+            new MapPosition(latitude: 42.354950, longitude: -71.065634), // Boston Common Park
+            new MapPosition(latitude: 42.346645, longitude: -71.097293), // Fenway Park
+            new MapPosition(latitude: 42.363725, longitude: -71.053694) // The Paul Revere House
         }
         .Select(
             x => new Feature(
@@ -75,6 +75,7 @@ public class IconSizeChangeExample : ContentPage, IExamplePage, IQueryAttributab
             Data = new GeoJSON.Text.Geometry.Point(),
         };
 
+        // TODO Check NPE
         map.Sources = new[] { markerSource, selectedMarkerSource };
 
         // Create a symbol layer for the selected marker
@@ -105,8 +106,9 @@ public class IconSizeChangeExample : ContentPage, IExamplePage, IQueryAttributab
             return;
         }
 
-        var geometry = features.First().Feature;
-        var geojson = JsonSerializer.Serialize(geometry);
+        // TODO Check the original example
+        var geometry = features.First().QueriedFeature;
+        var geojson = JsonSerializer.Serialize(geometry.Feature.Geometry);
         var geoJSONSource = new GeoJSONSource(Constants.selectedMarkerSourceId)
         {
             Data = new RawGeoJSONObject(geojson),

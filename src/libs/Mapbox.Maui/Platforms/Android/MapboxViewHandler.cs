@@ -1,8 +1,8 @@
-﻿
+
 using PlatformView = AndroidX.Fragment.App.FragmentContainerView;
 using MapboxMapsStyle = Com.Mapbox.Maps.Style;
 using Com.Mapbox.Maps;
-using Com.Mapbox.Maps.Plugin.Scalebar;
+using Com.Mapbox.Maps.Plugins.Scalebar;
 using Microsoft.Maui.Platform;
 using Android.Content;
 using Android.Graphics;
@@ -20,7 +20,7 @@ public partial class MapboxViewHandler
 
         if (view.Light == null) return;
 
-        mapView.MapboxMap.Style.SetStyleLight(
+        mapView.MapboxMap.Style.SetStyleLights(
             view.Light.ToPlatformValue(true)
         );
     }
@@ -141,7 +141,9 @@ public partial class MapboxViewHandler
 
         if (xdata is null) return;
 
-        var setStyleGeoJSONSourceDataResult = style.SetStyleGeoJSONSourceData(sourceId, xdata);
+        // TODO Correctly define dataID
+        var dataId = Guid.NewGuid().ToString();
+        var setStyleGeoJSONSourceDataResult = style.SetStyleGeoJSONSourceData(sourceId, dataId, xdata);
 
         if (setStyleGeoJSONSourceDataResult.IsError)
         {
@@ -211,6 +213,7 @@ public partial class MapboxViewHandler
         mapboxFragment.StyleLoaded += HandleStyleLoaded;
         mapboxFragment.MapLoaded += HandleMapLoaded;
         mapboxFragment.MapClicked += HandleMapClicked;
+        mapboxFragment.MapLongClicked += HandleMapLongClicked;
 
         var fragmentTransaction = mainActivity.SupportFragmentManager.BeginTransaction();
         fragmentTransaction.Replace(fragmentContainerView.Id, mapboxFragment, $"mapbox-maui-{fragmentContainerView.Id}");
@@ -226,6 +229,7 @@ public partial class MapboxViewHandler
         {
             mapboxView.AnnotationController = this;
             mapboxView.QueryManager = this;
+            mapboxView.MapboxController = this;
         }
     }
 
@@ -237,6 +241,7 @@ public partial class MapboxViewHandler
             mapboxFragment.StyleLoaded -= HandleStyleLoaded;
             mapboxFragment.MapLoaded -= HandleMapLoaded;
             mapboxFragment.MapClicked -= HandleMapClicked;
+            mapboxFragment.MapLongClicked -= HandleMapLongClicked;
             mapboxFragment.Dispose();
             mapboxFragment = null;
         }
@@ -260,6 +265,9 @@ public partial class MapboxViewHandler
 
     private void HandleMapClicked(MapTappedPosition point)
         => (VirtualView as MapboxView)?.InvokeMapTapped(point);
+    
+    private void HandleMapLongClicked(MapTappedPosition point)
+        => (VirtualView as MapboxView)?.InvokeMapLongTapped(point);
 
 }
 

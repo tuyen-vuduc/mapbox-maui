@@ -20,7 +20,7 @@ public class CircleAnnotationExample : ContentPage, IExamplePage, IQueryAttribut
         var circleAnnotations = new List<CircleAnnotation>();
         for (int i = 0; i < 2000; i++)
         {
-            var center = new Point(
+            var center = new MapPosition(
                 random.NextInt64(0, 180) - 90,
                 random.NextInt64(0, 360) - 180);
             var color = new Color(
@@ -29,9 +29,7 @@ public class CircleAnnotationExample : ContentPage, IExamplePage, IQueryAttribut
                 random.Next(0, 255));
 
             var circleAnnotation = new CircleAnnotation(
-                new GeoJSON.Text.Geometry.Point(
-                    new Position(center.X, center.Y)
-                )
+                new GeoJSON.Text.Geometry.Point(center)
             )
             {
                 CircleColor = color,

@@ -17,7 +17,6 @@ public partial class PolygonAnnotationManager
     : base(id, nativeManager)
     {
         this.nativeManager = nativeManager;
-        nativeManager.Delegate = this;
     }
 
     public bool? FillAntialias
@@ -32,8 +31,8 @@ public partial class PolygonAnnotationManager
     }
     public FillTranslateAnchor? FillTranslateAnchor
     {
-        get => nativeManager.FillTranslateAnchor?.FillTranslateAnchorX();
-        set => nativeManager.FillTranslateAnchor = value?.AsNumber();
+        get => nativeManager.FillTranslateAnchor?.RawValue;
+        set => nativeManager.FillTranslateAnchor = value?.ToPlatform();
     }
 
     public override void AddAnnotations(params PolygonAnnotation[] xitems)

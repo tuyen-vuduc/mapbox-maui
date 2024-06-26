@@ -145,7 +145,7 @@ public class SymbolClusteringExample : ContentPage, IExamplePage, IQueryAttribut
     private void Map_MapReady(object sender, EventArgs e)
     {
         // Setup Map here
-        var center = new Point(38.889215, -77.039354);
+        var center = new MapPosition(38.889215, -77.039354);
         var cameraOptions = new CameraOptions
         {
             Center = center,

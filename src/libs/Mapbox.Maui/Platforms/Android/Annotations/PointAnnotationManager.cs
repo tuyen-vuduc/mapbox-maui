@@ -1,6 +1,6 @@
 ﻿namespace MapboxMaui.Annotations;
 
-using PlatformPointAnnotationManager = Com.Mapbox.Maps.Plugin.Annotation.Generated.PointAnnotationManager;
+using PlatformPointAnnotationManager = Com.Mapbox.Maps.Plugins.Annotations.Generated.PointAnnotationManager;
 
 public partial class PointAnnotationManager
     : AnnotationManager<PlatformPointAnnotationManager, PointAnnotation>
@@ -49,16 +49,6 @@ public partial class PointAnnotationManager
     {
         get => nativeManager.IconRotationAlignment?.GetValue();
         set => nativeManager.IconRotationAlignment = value?.ToPlatform();
-    }
-    public IconTextFit? IconTextFit
-    {
-        get => nativeManager.IconTextFit?.GetValue();
-        set => nativeManager.IconTextFit = value?.ToPlatform();
-    }
-    public double[] IconTextFitPadding
-    {
-        get => nativeManager.IconTextFitPadding.GetValue();
-        set => nativeManager.IconTextFitPadding = value?.ToPlatform();
     }
     public bool? SymbolAvoidEdges
     {
@@ -163,12 +153,6 @@ public partial class PointAnnotationManager
         get => nativeManager.TextTranslateAnchor?.GetValue();
         set => nativeManager.TextTranslateAnchor = value?.ToPlatform();
     }
-    public double? TextLineHeight
-    {
-        get => nativeManager.TextLineHeight?.DoubleValue();
-        set => nativeManager.TextLineHeight = value?.ToPlatform();
-    }
-
     public override void AddAnnotations(params PointAnnotation[] xitems)
     {
         var items = xitems
@@ -179,7 +163,7 @@ public partial class PointAnnotationManager
 
         for (int i = 0; i < platformAnnotations.Count; i++)
         {
-            var item = platformAnnotations[i] as Com.Mapbox.Maps.Plugin.Annotation.Generated.PointAnnotation;
+            var item = platformAnnotations[i] as Com.Mapbox.Maps.Plugins.Annotations.Generated.PointAnnotation;
             xitems[i].Id = item.Id.ToString();
         }
     }
@@ -193,12 +177,10 @@ public partial class PointAnnotationManager
     {
         foreach (var xid in annotationIDs)
         {
-            if (!long.TryParse(xid, out var id)) continue;
-
             var item = nativeManager
                 .Annotations
-                .Cast<Com.Mapbox.Maps.Plugin.Annotation.Generated.PointAnnotation>()
-                .FirstOrDefault(x => x.Id == id);
+                .Cast<Com.Mapbox.Maps.Plugins.Annotations.Generated.PointAnnotation>()
+                .FirstOrDefault(x => x.Id == xid);
 
             if (item == null) continue;
 

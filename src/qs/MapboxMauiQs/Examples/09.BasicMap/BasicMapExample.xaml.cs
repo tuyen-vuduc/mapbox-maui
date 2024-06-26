@@ -15,11 +15,11 @@ public partial class BasicMapExample : ContentPage, IExamplePage, IQueryAttribut
     private void Map_MapReady(object sender, EventArgs e)
     {
         map.ScaleBarVisibility = MapboxMaui.OrnamentVisibility.Visible;
-        map.MapboxStyle = MapboxStyle.MAPBOX_STREETS;
+        map.MapboxStyle = MapboxStyle.STANDARD;
         map.CameraOptions = new CameraOptions
         {
-            Center = new Point(21.028511, 105.804817),
-            Zoom = 12,
+            Center = new MapPosition(21.028511, 105.804817),
+            Zoom = 9,
         };
     }
 

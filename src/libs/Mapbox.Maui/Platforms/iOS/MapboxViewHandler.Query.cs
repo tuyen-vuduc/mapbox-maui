@@ -3,24 +3,26 @@
 using MapboxMaui.Query;
 using MapboxMapsObjC;
 using Foundation;
+using CoreGraphics;
 
 partial class MapboxViewHandler : IMapFeatureQueryable
 {
-    public Task<IEnumerable<QueriedFeature>> QueryRenderedFeaturesWith(Point point, RenderedQueryOptions options)
+    public Task<IEnumerable<QueriedRenderedFeature>> QueryRenderedFeaturesWith(ScreenPosition point, RenderedQueryOptions options)
     {
         var mapView = PlatformView.MapView;
         if (mapView == null) return Task.FromResult(
-            Array.Empty<QueriedFeature>() as IEnumerable<QueriedFeature>
+            Array.Empty<QueriedRenderedFeature>() as IEnumerable<QueriedRenderedFeature>
         );
 
-        var tcs = new TaskCompletionSource<IEnumerable<QueriedFeature>>();
+        var tcs = new TaskCompletionSource<IEnumerable<QueriedRenderedFeature>>();
 
-        _ = mapView.MapboxMap().QueryRenderedFeaturesWithPoint(point, options.ToPlatform(), (features, error) => {
+        var xpoint = new CGPoint(point.X, point.Y);
+        _ = mapView.MapboxMap().QueryRenderedFeaturesWithPoint(xpoint, options.ToPlatform(), (features, error) => {
             if (error != null) {
                 tcs.TrySetException(new NSErrorException(error));
                 return;
             }
-            var xfeatures = features
+            var xfeatures = features.ToArray()
                 .Select(x => x.ToX())
                 .ToArray();
 

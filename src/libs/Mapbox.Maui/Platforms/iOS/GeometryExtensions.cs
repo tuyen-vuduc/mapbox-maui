@@ -1,7 +1,6 @@
 ﻿using CoreGraphics;
+using CoreLocation;
 using Foundation;
-using GeoJSON.Text.Feature;
-using GeoJSON.Text.Geometry;
 using MapboxCommon;
 using MapboxMapsObjC;
 
@@ -9,6 +8,19 @@ namespace MapboxMaui;
 
 public static class GeometryExtensions
 {
+    internal static MapTappedPosition ToMapTappedPosition(this CLLocationCoordinate2D coords, CGPoint screenCoordinate)
+    {
+        return new MapTappedPosition(
+            new ScreenPosition(
+                screenCoordinate.X,
+                screenCoordinate.Y
+            ),
+            new MapPosition(
+                coords.Latitude,
+                coords.Longitude
+            ));
+    }
+    
     internal static MBXGeometry ToNative(this IGeometryObject xobj)
     {
         switch (xobj)
@@ -81,6 +93,21 @@ public static class GeometryExtensions
         );
     }
 
+    internal static CGPoint ToCGPoint(this ScreenPosition xobj)
+    {
+        return new CGPoint(
+            xobj.X,
+            xobj.Y
+        );
+    }
+
+    public static IPosition ToMapPosition(this CLLocationCoordinate2D point)
+    {
+        return new MapPosition(
+            point.Latitude,
+            point.Longitude);
+    }
+
     internal static NSValue ToNSValue(this IPosition xobj)
     {
         return NSValue.FromCGPoint(
@@ -89,14 +116,15 @@ public static class GeometryExtensions
     }
 
     internal static IPosition ToPosition(this NSValue src)
-        => new Position(
+        => new MapPosition(
             src.CoordinateValue.Latitude,
             src.CoordinateValue.Longitude
         );
 
     internal static IGeometryObject ToX(this MBXGeometry src)
     {
-        switch (src.GeometryType) {
+        switch (src.GeometryType)
+        {
             case MBXGeometryType.Point:
                 var pointPosition = src
                     .ExtractLocations()
@@ -118,7 +146,7 @@ public static class GeometryExtensions
                     .Select(
                     z => z
                         .Cast<NSValue>()
-                        .Select(                        
+                        .Select(
                         y => new[] {
                             y.CoordinateValue.Longitude,
                             y.CoordinateValue.Latitude
@@ -188,9 +216,13 @@ public static class GeometryExtensions
     {
         var geometry = src.Geometry.ToX();
 
-        var properties = new Dictionary<string, object>();
-        // TODO Convert to C# obj
-        // properties = src.Properties;
+        var kvPairs = src.Properties
+            .Keys
+            .Select(x => new KeyValuePair<string, object>(
+                x.ToString(),
+                src.Properties[x])
+            );
+        var properties = new Dictionary<string, object>(kvPairs);
 
         return new Feature(geometry, properties, src.Identifier?.ToString());
     }

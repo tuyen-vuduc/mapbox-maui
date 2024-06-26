@@ -119,11 +119,11 @@ public partial class MapboxView : View, IMapboxView
 
     public static readonly BindableProperty MapCenterProperty = BindableProperty.Create(
        nameof(MapCenter),
-       typeof(Point?),
+       typeof(IPosition),
        typeof(MapboxView),
-       default(Point?)
+       default(IPosition)
     );
-    public Point? MapCenter
+    public IPosition MapCenter
     {
         get => CameraOptions.Center;
         set => CameraOptions = CameraOptions with
@@ -149,11 +149,11 @@ public partial class MapboxView : View, IMapboxView
 
     public static readonly BindableProperty MapAnchorProperty = BindableProperty.Create(
        nameof(MapAnchor),
-       typeof(Point?),
+       typeof(ScreenPosition?),
        typeof(MapboxView),
-       default(Point?)
+       default(ScreenPosition?)
     );
-    public Point? MapAnchor
+    public ScreenPosition? MapAnchor
     {
         get => CameraOptions.Anchor;
         set => CameraOptions = CameraOptions with
@@ -221,4 +221,5 @@ public partial class MapboxView : View, IMapboxView
 
     public IAnnotationController AnnotationController { get; internal set; }
     public IMapFeatureQueryable QueryManager { get; internal set; }
+    public IMapboxController MapboxController { get; internal set; }
 }

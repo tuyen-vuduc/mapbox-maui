@@ -19,29 +19,34 @@ public struct MapboxStyle : INamedString
     public override string ToString() => $"Uri: {Value}";
 
     /**
+     * Mapbox Standard: A dynamic and performant 3D style that is the default for Mapbox maps.
+     */
+    public static readonly MapboxStyle STANDARD = (MapboxStyle)"mapbox://styles/mapbox/standard";
+
+    /**
      * Mapbox Streets: A complete base map, perfect for incorporating your own data. Using this
      * constant means your map style will always use the latest version and may change as we
      * improve the style.
      */
-    public static readonly MapboxStyle MAPBOX_STREETS = (MapboxStyle)"mapbox://styles/mapbox/streets-v11";
+    public static readonly MapboxStyle MAPBOX_STREETS = (MapboxStyle)"mapbox://styles/mapbox/streets-v12";
 
     /**
      * Outdoors: A general-purpose style tailored to outdoor activities. Using this constant means
      * your map style will always use the latest version and may change as we improve the style.
      */
-    public static readonly MapboxStyle OUTDOORS = (MapboxStyle)"mapbox://styles/mapbox/outdoors-v11";
+    public static readonly MapboxStyle OUTDOORS = (MapboxStyle)"mapbox://styles/mapbox/outdoors-v12";
 
     /**
      * Light: Subtle light backdrop for data visualizations. Using this constant means your map
      * style will always use the latest version and may change as we improve the style.
      */
-    public static readonly MapboxStyle LIGHT = (MapboxStyle)"mapbox://styles/mapbox/light-v10";
+    public static readonly MapboxStyle LIGHT = (MapboxStyle)"mapbox://styles/mapbox/light-v11";
 
     /**
      * Dark: Subtle dark backdrop for data visualizations. Using this constant means your map style
      * will always use the latest version and may change as we improve the style.
      */
-    public static readonly MapboxStyle DARK = (MapboxStyle)"mapbox://styles/mapbox/dark-v10";
+    public static readonly MapboxStyle DARK = (MapboxStyle)"mapbox://styles/mapbox/dark-v11";
 
     /**
      * Satellite: A beautiful global satellite and aerial imagery layer. Using this constant means
@@ -54,7 +59,7 @@ public struct MapboxStyle : INamedString
      * constant means your map style will always use the latest version and may change as we
      * improve the style.
      */
-    public static readonly MapboxStyle SATELLITE_STREETS = (MapboxStyle)"mapbox://styles/mapbox/satellite-streets-v11";
+    public static readonly MapboxStyle SATELLITE_STREETS = (MapboxStyle)"mapbox://styles/mapbox/satellite-streets-v12";
 
     /**
      * Traffic Day: Color-coded roads based on live traffic congestion data. Traffic data is currently

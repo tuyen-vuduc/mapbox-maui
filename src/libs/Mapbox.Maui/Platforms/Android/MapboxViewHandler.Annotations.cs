@@ -1,10 +1,10 @@
 ﻿namespace MapboxMaui;
 
-using PlatformPolygonAnnotationManager = Com.Mapbox.Maps.Plugin.Annotation.Generated.PolygonAnnotationManager;
-using PlatformCircleAnnotationManager = Com.Mapbox.Maps.Plugin.Annotation.Generated.CircleAnnotationManager;
-using PlatformPointAnnotationManager = Com.Mapbox.Maps.Plugin.Annotation.Generated.PointAnnotationManager;
-using PlatformPolylineAnnotationManager = Com.Mapbox.Maps.Plugin.Annotation.Generated.PolylineAnnotationManager;
-using Com.Mapbox.Maps.Plugin.Annotation;
+using PlatformPolygonAnnotationManager = Com.Mapbox.Maps.Plugins.Annotations.Generated.PolygonAnnotationManager;
+using PlatformCircleAnnotationManager = Com.Mapbox.Maps.Plugins.Annotations.Generated.CircleAnnotationManager;
+using PlatformPointAnnotationManager = Com.Mapbox.Maps.Plugins.Annotations.Generated.PointAnnotationManager;
+using PlatformPolylineAnnotationManager = Com.Mapbox.Maps.Plugins.Annotations.Generated.PolylineAnnotationManager;
+using Com.Mapbox.Maps.Plugins.Annotations;
 using MapboxMaui.Annotations;
 using MapboxMaui.Styles;
 
@@ -18,7 +18,7 @@ partial class MapboxViewHandler : IAnnotationController
 
         if (mapView == null) return null;
 
-        var nativeManager = AnnotationPluginImplKt
+        var nativeManager = AnnotationsUtils
             .GetAnnotations(mapView)
             .CreateAnnotationManager(
                 AnnotationType.PolygonAnnotation,
@@ -36,7 +36,7 @@ partial class MapboxViewHandler : IAnnotationController
 
         if (mapView == null) return null;
 
-        var nativeManager = AnnotationPluginImplKt
+        var nativeManager = AnnotationsUtils
             .GetAnnotations(mapView)
             .CreateAnnotationManager(
                 AnnotationType.CircleAnnotation,
@@ -59,11 +59,12 @@ partial class MapboxViewHandler : IAnnotationController
         var clusterMaxZoom = clusterOptions != null
             ? new Java.Lang.Long((long)clusterOptions.ClusterMaxZoom)
             : null;
+
         var options = new AnnotationSourceOptions(
             clusterMaxZoom,
             null, null, null,
             xclusterOptions);
-        var nativeManager = AnnotationPluginImplKt
+        var nativeManager = AnnotationsUtils
             .GetAnnotations(mapView)
             .CreateAnnotationManager(
                 AnnotationType.PointAnnotation,
@@ -79,7 +80,7 @@ partial class MapboxViewHandler : IAnnotationController
 
         if (mapView == null) return null;
 
-        var nativeManager = AnnotationPluginImplKt
+        var nativeManager = AnnotationsUtils
             .GetAnnotations(mapView)
             .CreateAnnotationManager(
                 AnnotationType.PolylineAnnotation,

@@ -26,7 +26,7 @@ public abstract partial class AnnotationManager<TAnnotationManager, TAnnotation>
 
     public event EventHandler<AnnotationsSelectedEventArgs> AnnotationsSelected;
 
-    public void DidDetectTappedAnnotations(ITMBAnnotationManager manager, NSArray annotations)
+    public void DidDetectTappedAnnotations(ITMBAnnotationManager manager, NSObject[] annotations)
     {
         if (AnnotationsSelected == null) return;
 

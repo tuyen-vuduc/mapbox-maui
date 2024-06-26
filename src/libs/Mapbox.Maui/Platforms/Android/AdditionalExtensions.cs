@@ -1,4 +1,6 @@
 ﻿namespace MapboxMaui;
+using Android.Content.Res;
+using Android.Util;
 using MapboxMapsCameraOptions = Com.Mapbox.Maps.CameraOptions;
 using PlatformValue = Com.Mapbox.Bindgen.Value;
 using MapboxTerrain = Com.Mapbox.Maps.Extension.Style.Terrain.Generated.Terrain;
@@ -14,6 +16,16 @@ using AndroidX.Fragment.App;
 
 static class AdditionalExtensions
 {
+    internal static DisplayMetrics Metrics;
+    
+    internal static double PixelToPoint(this double pixel)
+    {
+        Metrics ??= Resources.System?.DisplayMetrics;
+        if (Metrics == null) return 0;
+        
+        return pixel / Metrics.Density;
+    }
+    
     internal static Java.Lang.Boolean ToPlatform(this bool xvalue)
     {
         return new Java.Lang.Boolean(xvalue);
@@ -299,12 +311,12 @@ static class AdditionalExtensions
     {
         var cameraOptionsBuilder = new MapboxMapsCameraOptions.Builder();
 
-        if (cameraOptions.Center.HasValue)
+        if (cameraOptions.Center is not null)
         {
             cameraOptionsBuilder.Center(
                 Com.Mapbox.Geojson.Point.FromLngLat(
-            cameraOptions.Center.Value.Y,
-                cameraOptions.Center.Value.X
+                cameraOptions.Center.Longitude,
+                cameraOptions.Center.Latitude
             ));
         }
 
@@ -333,7 +345,7 @@ static class AdditionalExtensions
                 ));
         }
 
-        if (cameraOptions.Anchor.HasValue)
+        if (cameraOptions.Anchor is not null)
         {
             cameraOptionsBuilder.Anchor(new ScreenCoordinate(
                 cameraOptions.Anchor.Value.X,

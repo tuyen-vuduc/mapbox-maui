@@ -18,18 +18,17 @@ public partial class CircleAnnotationManager
     : base(id, nativeManager)
     {
         this.nativeManager = nativeManager;
-        nativeManager.Delegate = this;
     }
 
     public CirclePitchAlignment? CirclePitchAlignment
     {
-        get => nativeManager.CirclePitchAlignment?.CirclePitchAlignmentX();
-        set => nativeManager.CirclePitchAlignment = value?.AsNumber();
+        get => nativeManager.CirclePitchAlignment?.RawValue;
+        set => nativeManager.CirclePitchAlignment = value?.ToPlatform();
     }
     public CirclePitchScale? CirclePitchScale
     {
-        get => nativeManager.CirclePitchScale?.StringValue;
-        set => nativeManager.CirclePitchScale = value?.AsNumber();
+        get => nativeManager.CirclePitchScale?.RawValue;
+        set => nativeManager.CirclePitchScale = value?.ToPlatform();
     }
     public double[] CircleTranslate
     {
@@ -42,8 +41,8 @@ public partial class CircleAnnotationManager
     }
     public CircleTranslateAnchor? CircleTranslateAnchor
     {
-        get => nativeManager.CircleTranslateAnchor?.StringValue;
-        set => nativeManager.CircleTranslateAnchor = value?.AsNumber();
+        get => nativeManager.CircleTranslateAnchor?.RawValue;
+        set => nativeManager.CircleTranslateAnchor = value?.ToPlatform();
     }
 
     public override void AddAnnotations(params CircleAnnotation[] xitems)

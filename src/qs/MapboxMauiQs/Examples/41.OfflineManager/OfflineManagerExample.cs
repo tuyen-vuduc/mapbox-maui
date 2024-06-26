@@ -4,7 +4,7 @@ public class OfflineManagerExample : ContentPage, IExamplePage, IQueryAttributab
 {
     MapboxView map;
     IExampleInfo info;
-    Point tokyoCoord;
+    IPosition tokyoCoord;
     string tileRegionId = @"myTileRegion";
     float tokyoZoom = 12;
     IOfflineManager offlineManager;
@@ -13,7 +13,7 @@ public class OfflineManagerExample : ContentPage, IExamplePage, IQueryAttributab
     {
         iOSPage.SetUseSafeArea(this, false);
         Content = map = new MapboxView();
-        tokyoCoord = new Point(35.682027, 139.769305);
+        tokyoCoord = new MapPosition(35.682027, 139.769305);
 
         map.MapReady += Map_MapReady;
     }
@@ -70,10 +70,8 @@ public class OfflineManagerExample : ContentPage, IExamplePage, IQueryAttributab
             );
 
         var tileRegionLoadOptions = new TileRegionLoadOptions(
-            Geometry: new GeoJSON.Text.Geometry.Point(
-                    new GeoJSON.Text.Geometry.Position(tokyoCoord.X, tokyoCoord.Y)
-                ),
-            TilesetDescriptors: new [] { tilesetDescriptorOptions },
+            Geometry: new GeoJSON.Text.Geometry.Point(tokyoCoord),
+            TilesetDescriptors: [tilesetDescriptorOptions],
             AcceptsExpired: true,
             NetworkRestriction: NetworkRestriction.None,
             Metadata: new Dictionary<string, object>

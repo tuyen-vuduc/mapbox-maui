@@ -1,4 +1,6 @@
 ﻿
+using MapboxCommon;
+
 namespace MapboxMaui;
 
 using Foundation;
@@ -10,6 +12,7 @@ using MapboxMaui.Styles;
 public partial class MapboxViewHandler
 {
     UITapGestureRecognizer mapTapGestureRecognizer;
+    UILongPressGestureRecognizer mapLongPressGestureRecognizer;
 
     private static void HandleLightChanged(MapboxViewHandler handler, IMapboxView view)
     {
@@ -20,15 +23,18 @@ public partial class MapboxViewHandler
         if (light == null) return;
 
         var platformProperties = light.Properties.Wrap() as NSDictionary<NSString, NSObject>;
-        var style = mapView.MapboxMap().Style;
-        style.SetLightWithProperties(
-            platformProperties,
-            (error) =>
-            {
-                if (error == null) return;
+        var style = mapView.MapboxMap();
 
-                System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
-            });
+        // TODO SetLightWithProperties
+        throw new NotImplementedException();
+        //style.SetLightWithProperties(
+        //    platformProperties,
+        //    (error) =>
+        //    {
+        //        if (error == null) return;
+
+        //        System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
+        //    });
     }
 
     private static void HandleImagesChanged(MapboxViewHandler handler, IMapboxView view)
@@ -39,7 +45,7 @@ public partial class MapboxViewHandler
         var images = view.Images;
         if (images == null) return;
 
-        var style = mapView.MapboxMap().Style;
+        var style = mapView.MapboxMap();
 
         foreach (var ximage in images)
         {
@@ -79,7 +85,7 @@ public partial class MapboxViewHandler
         var layers = view.Layers;
         if (layers == null) return;
 
-        var style = mapView.MapboxMap().Style;
+        var style = mapView.MapboxMap();
 
         foreach (var layer in layers)
         {
@@ -101,7 +107,7 @@ public partial class MapboxViewHandler
                 continue;
             }
 
-            style.AddLayerWithProperties(
+            style.AddLayerWith(
                 properties,
                 layerPosition,
                 (error) =>
@@ -124,7 +130,7 @@ public partial class MapboxViewHandler
 
         var platformValue = terrain.ToPlatformValue();
 
-        mapView.MapboxMap().Style.SetTerrain(platformValue, null);
+        mapView.MapboxMap().SetTerrain(platformValue, null);
     }
 
     private static void HandleSourcesChanged(MapboxViewHandler handler, IMapboxView view)
@@ -135,7 +141,7 @@ public partial class MapboxViewHandler
         var sources = view.Sources;
         if (sources == null) return;
 
-        var style = mapView.MapboxMap().Style;
+        var style = mapView.MapboxMap();
 
         foreach (var source in sources)
         {
@@ -173,54 +179,47 @@ public partial class MapboxViewHandler
         }
     }
 
-    private static void HandleGeoJSONSource(TMBStyle style, string sourceId, NSDictionary<NSString, NSObject> platformValue, GeoJSON.Text.IGeoJSONObject data)
+    private static void HandleGeoJSONSource(TMBMapboxMap style, string sourceId, NSDictionary<NSString, NSObject> platformValue, GeoJSON.Text.IGeoJSONObject data)
     {
         var sourceExists = style.SourceExistsWithId(sourceId);
 
-        switch(data) {
+        switch (data)
+        {
             case RawGeoJSONObject raw:
+                
+                var sourceData = TMBGeoJSONSourceData.FromString(raw.Data);
+
                 if (sourceExists)
                 {
-                    style.UpdateGeoJSONSourceWithId(
-                        sourceId, raw.Data,
-                        (error) =>
-                        {
-                            if (error == null) return;
-
-                            System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
-                        });
+                    style.UpdateGeoJSONSourceWithId(sourceId, sourceData, null);
                     return;
                 }
-
-                style.AddGeoJSONSourceWithId(
-                    sourceId, platformValue, raw.Data,
-                    (error) =>
-                    {
-                        if (error == null) return;
-
-                        System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
-                    });
-                break;
+                
+                var source = new TMBGeoJSONSource(sourceId);
+                source.Data = sourceData;
+                
+                style.AddSource(source , sourceId,  (error) =>
+                {
+                    if (error == null) return;
+                    System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
+                });
+            break;
+            
             case GeoJSON.Text.Geometry.IGeometryObject geometry:
-                if (sourceExists) {
-                    style.UpdateGeoJSONSourceWithId(
-                        sourceId, geometry.ToNative(),
-                        (error) => {
-                            if (error == null) return;
 
-                            System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
-                        });
+                var feature = new MBXFeature(new NSString(sourceId), geometry.ToNative(), platformValue);
+
+                if (sourceExists) {
+                    style.UpdateGeoJSONSourceFeaturesForSourceId(
+                        sourceId, [feature], null);
                     return;
                 }
-                style.AddSourceWithId(
-                    sourceId, geometry.ToNative(),
-                    (error) => {
-                        if (error == null) return;
-
-                        System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
-                    });
+                
+                style.AddGeoJSONSourceFeaturesForSourceId(
+                    sourceId, [feature], null);
+                
                 break;
-        }        
+        }
     }
 
     private static void HandleCameraOptionsChanged(MapboxViewHandler handler, IMapboxView view)
@@ -266,7 +265,7 @@ public partial class MapboxViewHandler
         var styleUri = view.MapboxStyle.ToNative();
         if (string.IsNullOrWhiteSpace(styleUri)) return;
 
-        mapView.MapboxMap().LoadStyleURI(styleUri, (style, error) =>
+        mapView.MapboxMap().LoadStyleWithUri(styleUri, null, (error) =>
         {
             if (error == null) return;
 
@@ -276,11 +275,7 @@ public partial class MapboxViewHandler
 
     protected override PlatformView CreatePlatformView()
     {
-        var accessToken = string.IsNullOrWhiteSpace(ACCESS_TOKEN)
-            ? TMBResourceOptionsManager.Default.ResourceOptions.AccessToken
-            : ACCESS_TOKEN;
-
-        return new PlatformView(accessToken);
+        return new PlatformView(ACCESS_TOKEN);
     }
 
     protected override void DisconnectHandler(PlatformView platformView)
@@ -291,6 +286,7 @@ public partial class MapboxViewHandler
         {
             mapboxView.AnnotationController = null;
             mapboxView.QueryManager = null;
+            mapboxView.MapboxController = null;
         }
 
         var mapView = platformView.MapView;
@@ -299,6 +295,11 @@ public partial class MapboxViewHandler
         if (mapTapGestureRecognizer != null)
         {
             mapView.RemoveGestureRecognizer(mapTapGestureRecognizer);
+        }
+        
+        if (mapLongPressGestureRecognizer != null)
+        {
+            mapView.RemoveGestureRecognizer(mapLongPressGestureRecognizer);
         }
     }
 
@@ -311,6 +312,7 @@ public partial class MapboxViewHandler
             mapboxView.InvokeMapReady();
             mapboxView.AnnotationController = this;
             mapboxView.QueryManager = this;
+            mapboxView.MapboxController = this;
         }
 
         var mapView = platformView.MapView;
@@ -329,32 +331,43 @@ public partial class MapboxViewHandler
 
         mapTapGestureRecognizer = new UITapGestureRecognizer(HandleMapTapped);
         mapView.AddGestureRecognizer(mapTapGestureRecognizer);
+        
+        mapLongPressGestureRecognizer = new UILongPressGestureRecognizer(HandleMapLongPress);
+        mapView.AddGestureRecognizer(mapLongPressGestureRecognizer);
+    }
+
+    private void HandleMapLongPress(UILongPressGestureRecognizer longPressGestureRecognizer)
+    {
+        if (longPressGestureRecognizer.State != UIGestureRecognizerState.Began) return;
+        
+        var position = GetPositionForGesture(longPressGestureRecognizer);
+        if (position == null) return;
+        
+        (VirtualView as MapboxView)?.InvokeMapLongTapped(
+            position
+        );
     }
 
     private void HandleMapTapped(UITapGestureRecognizer tapGestureRecognizer)
     {
-        var mapView = this.PlatformView.MapView;
-        if (mapView == null) return;
-        var screenPosition = tapGestureRecognizer.LocationInView(mapView);
+        var position = GetPositionForGesture(tapGestureRecognizer);
+        if (position == null) return;
+        
+        (VirtualView as MapboxView)?.InvokeMapTapped(
+            position
+        );
+    }
+
+    private MapTappedPosition GetPositionForGesture(UIGestureRecognizer gesture)
+    {
+        var mapView = PlatformView.MapView;
+        if (mapView == null) return null;
+        
+        var screenPosition = gesture.LocationInView(mapView);
         var coords = mapView.MapboxMap().CoordinateFor(
             screenPosition
         );
-        var mapTappedPosition = new MapTappedPosition
-        {
-            ScreenPosition = new Point(
-                screenPosition.X,
-                screenPosition.Y
-            ),
-            Point = new GeoJSON.Text.Geometry.Point(
-                new GeoJSON.Text.Geometry.Position(
-                    coords.Latitude,
-                    coords.Longitude
-                )
-            ),
-        };
 
-        (VirtualView as MapboxView)?.InvokeMapTapped(
-            mapTappedPosition
-        );
+        return coords.ToMapTappedPosition(screenPosition);
     }
 }

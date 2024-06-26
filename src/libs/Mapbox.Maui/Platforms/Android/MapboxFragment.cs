@@ -6,10 +6,11 @@ using AndroidX.Fragment.App;
 using Android.OS;
 using System;
 using Android.Runtime;
-using Com.Mapbox.Maps.Plugin.Delegates.Listeners;
+using Com.Mapbox.Maps.Plugins.Delegates.Listeners;
 using Com.Mapbox.Maps.Extension.Observable.Eventdata;
-using Com.Mapbox.Maps.Plugin.Gestures;
+using Com.Mapbox.Maps.Plugins.Gestures;
 using Com.Mapbox.Geojson;
+using Com.Mapbox.Common;
 
 public partial class MapboxFragment : Fragment
 {
@@ -17,6 +18,7 @@ public partial class MapboxFragment : Fragment
     public event Action<MapView> StyleLoaded;
     public event Action<MapView> MapLoaded;
     public event Action<MapTappedPosition> MapClicked;
+    public event Action<MapTappedPosition> MapLongClicked;
 
     public MapView MapView { get; private set; }
 
@@ -39,21 +41,12 @@ public partial class MapboxFragment : Fragment
 
     public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        if (string.IsNullOrWhiteSpace(MapboxViewHandler.ACCESS_TOKEN))
+        if (!string.IsNullOrWhiteSpace(MapboxViewHandler.ACCESS_TOKEN))
         {
-            return new MapView(Context);
+            MapboxOptions.AccessToken = MapboxViewHandler.ACCESS_TOKEN;
         }
 
-        var resourceOptionsManager = ResourceOptionsManager.CompanionField.GetDefault(
-                Context,
-                MapboxViewHandler.ACCESS_TOKEN
-            );
-        var initOptions = new MapInitOptions(
-            Context,
-            resourceOptionsManager?.ResourceOptions
-        );
-
-        return MapView = new MapView(Context, initOptions);
+        return MapView = new MapView(Context);
     }
 
     public override void OnViewCreated(View view, Bundle savedInstanceState)
@@ -65,6 +58,7 @@ public partial class MapboxFragment : Fragment
         MapView.MapboxMap.AddOnMapLoadedListener(this);
 
         GesturesUtils.AddOnMapClickListener(MapView.MapboxMap, this);
+        GesturesUtils.AddOnMapLongClickListener(MapView.MapboxMap, this);
     }
 
     public override void OnStart()
@@ -110,25 +104,15 @@ partial class MapboxFragment
     : IOnStyleLoadedListener
     , IOnMapLoadedListener
     , IOnMapClickListener
+    , IOnMapLongClickListener
 {
     public bool OnMapClick(Point point)
     {
         if (MapClicked is null) return false;
+        
+        var screenCoordinate = MapView.MapboxMap.PixelForCoordinate(point);
 
-        var xpoint = new Microsoft.Maui.Graphics.Point(
-            point.Latitude(),
-            point.Longitude());
-        MapClicked?.Invoke(new MapTappedPosition
-        {
-            ScreenPosition = xpoint,
-            Point = new GeoJSON.Text.Geometry.Point(
-                new GeoJSON.Text.Geometry.Position(
-                    point.Latitude(),
-                    point.Longitude(),
-                    point.HasAltitude ? point.Altitude() : null
-                )
-            )
-        });
+        MapClicked?.Invoke(point.ToMapTappedPosition(screenCoordinate));
         return true;
     }
 
@@ -140,5 +124,15 @@ partial class MapboxFragment
     public void OnStyleLoaded(StyleLoadedEventData eventData)
     {
         StyleLoaded?.Invoke(MapView);
+    }
+
+    public bool OnMapLongClick(Point point)
+    {
+        if (MapLongClicked is null) return false;
+
+        var screenCoordinate = MapView.MapboxMap.PixelForCoordinate(point);
+        
+        MapLongClicked?.Invoke(point.ToMapTappedPosition(screenCoordinate));
+        return true;
     }
 }

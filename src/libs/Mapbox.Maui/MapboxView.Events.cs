@@ -5,6 +5,7 @@ using System.Windows.Input;
 partial class MapboxView
 {
     public event EventHandler<MapTappedEventArgs> MapTapped;
+    public event EventHandler<MapTappedEventArgs> MapLongTapped;
     internal void InvokeMapTapped(MapTappedPosition point)
     {
         MapTapped?.Invoke(this, new MapTappedEventArgs(point));
@@ -13,6 +14,27 @@ partial class MapboxView
         {
             Command.Execute(point);
         }
+    }
+    
+    internal void InvokeMapLongTapped(MapTappedPosition position)
+    {
+        MapLongTapped?.Invoke(this, new MapTappedEventArgs(position));
+
+        if (LongTapCommand?.CanExecute(position) == true)
+        {
+            LongTapCommand.Execute(position);
+        }
+    }
+    
+    public static readonly BindableProperty LongTapCommandProperty = BindableProperty.Create(
+        nameof(LongTapCommand),
+        typeof(ICommand),
+        typeof(MapboxView)
+    );
+    public ICommand LongTapCommand
+    {
+        get => (ICommand)GetValue(CommandProperty);
+        set => SetValue(CommandProperty, value);
     }
 
     public static readonly BindableProperty CommandProperty = BindableProperty.Create(
@@ -95,11 +117,3 @@ partial class MapboxView
         set => SetValue(MapLoadedCommandProperty, value);
     }
 }
-
-public class MapTappedPosition
-{
-    public Point ScreenPosition { get; set; }
-
-    public GeoJSON.Text.Geometry.Point Point { get; set; }
-}
-

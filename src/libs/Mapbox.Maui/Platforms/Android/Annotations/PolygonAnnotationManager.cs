@@ -1,6 +1,6 @@
 ﻿namespace MapboxMaui.Annotations;
 
-using PlatformPolygonAnnotationManager = Com.Mapbox.Maps.Plugin.Annotation.Generated.PolygonAnnotationManager;
+using PlatformPolygonAnnotationManager = Com.Mapbox.Maps.Plugins.Annotations.Generated.PolygonAnnotationManager;
 
 partial class PolygonAnnotationManager
     : AnnotationManager<PlatformPolygonAnnotationManager, PolygonAnnotation>
@@ -46,7 +46,7 @@ partial class PolygonAnnotationManager
 
         for (int i = 0; i < platformAnnotations.Count; i++)
         {
-            var item = platformAnnotations[i] as Com.Mapbox.Maps.Plugin.Annotation.Generated.PolygonAnnotation;
+            var item = platformAnnotations[i] as Com.Mapbox.Maps.Plugins.Annotations.Generated.PolygonAnnotation;
             xitems[i].Id = item.Id.ToString();
         }
     }
@@ -58,13 +58,11 @@ partial class PolygonAnnotationManager
 
     public override void RemoveAnnotations(params string[] annotationIDs)
     {
-        foreach (var xid in annotationIDs)
+        foreach (var id in annotationIDs)
         {
-            if (!long.TryParse(xid, out var id)) continue;
-
             var item = nativeManager
                 .Annotations
-                .Cast<Com.Mapbox.Maps.Plugin.Annotation.Generated.PolygonAnnotation>()
+                .Cast<Com.Mapbox.Maps.Plugins.Annotations.Generated.PolygonAnnotation>()
                 .FirstOrDefault(x => x.Id == id);
 
             if (item == null) continue;

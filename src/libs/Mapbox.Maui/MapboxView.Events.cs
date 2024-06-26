@@ -117,11 +117,3 @@ partial class MapboxView
         set => SetValue(MapLoadedCommandProperty, value);
     }
 }
-
-public class MapTappedPosition
-{
-    public ScreenPosition ScreenPosition { get; set; }
-
-    public GeoJSON.Text.Geometry.Point Point { get; set; }
-}
-

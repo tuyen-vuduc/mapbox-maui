@@ -20,7 +20,7 @@ public class CircleAnnotationExample : ContentPage, IExamplePage, IQueryAttribut
         var circleAnnotations = new List<CircleAnnotation>();
         for (int i = 0; i < 2000; i++)
         {
-            var center = new Position(
+            var center = new MapPosition(
                 random.NextInt64(0, 180) - 90,
                 random.NextInt64(0, 360) - 180);
             var color = new Color(

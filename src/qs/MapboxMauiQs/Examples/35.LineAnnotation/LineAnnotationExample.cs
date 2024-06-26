@@ -30,10 +30,10 @@ public class LineAnnotationExample : ContentPage, IExamplePage, IQueryAttributab
     private void Map_MapLoaded(object sender, EventArgs e)
     {
         var annotations = new List<PolylineAnnotation>();
-        var coordinates = new List<Position> {
-            new Position(-2.178992, -4.375974),
-            new Position(-4.107888, -7.639772),
-            new Position(2.798737, -11.439207),
+        var coordinates = new List<MapPosition> {
+            new MapPosition(-2.178992, -4.375974),
+            new MapPosition(-4.107888, -7.639772),
+            new MapPosition(2.798737, -11.439207),
         };
         var lineAnnotation = new PolylineAnnotation(
             new LineString(coordinates)
@@ -46,7 +46,7 @@ public class LineAnnotationExample : ContentPage, IExamplePage, IQueryAttributab
         annotations.Add(lineAnnotation);
 
         // random add lines across the globe
-        var randomCoordinates = new List<Position>();
+        var randomCoordinates = new List<MapPosition>();
         for (var i = 0; i < 400; i++)
         {
             randomCoordinates.Add(RandomizePosition());
@@ -80,8 +80,8 @@ public class LineAnnotationExample : ContentPage, IExamplePage, IQueryAttributab
         polylineAnnotationManager.AddAnnotations(annotations.ToArray());
     }
 
-    static Position RandomizePosition()
-        => new Position(
+    static MapPosition RandomizePosition()
+        => new MapPosition(
             random.Next(-90, 90),
             random.Next(-180, 180)
         );

@@ -13,7 +13,7 @@ public class OfflineManagerExample : ContentPage, IExamplePage, IQueryAttributab
     {
         iOSPage.SetUseSafeArea(this, false);
         Content = map = new MapboxView();
-        tokyoCoord = new Position(35.682027, 139.769305);
+        tokyoCoord = new MapPosition(35.682027, 139.769305);
 
         map.MapReady += Map_MapReady;
     }

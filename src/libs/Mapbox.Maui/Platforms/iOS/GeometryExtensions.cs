@@ -10,19 +10,15 @@ public static class GeometryExtensions
 {
     internal static MapTappedPosition ToMapTappedPosition(this CLLocationCoordinate2D coords, CGPoint screenCoordinate)
     {
-        return new MapTappedPosition
-        {
-            ScreenPosition = new ScreenPosition(
+        return new MapTappedPosition(
+            new ScreenPosition(
                 screenCoordinate.X,
                 screenCoordinate.Y
             ),
-            Point = new GeoJSON.Text.Geometry.Point(
-                new Position(
-                    coords.Latitude,
-                    coords.Longitude
-                )
-            ),
-        };
+            new MapPosition(
+                coords.Latitude,
+                coords.Longitude
+            ));
     }
     
     internal static MBXGeometry ToNative(this IGeometryObject xobj)
@@ -97,6 +93,21 @@ public static class GeometryExtensions
         );
     }
 
+    internal static CGPoint ToCGPoint(this ScreenPosition xobj)
+    {
+        return new CGPoint(
+            xobj.X,
+            xobj.Y
+        );
+    }
+
+    public static IPosition ToMapPosition(this CLLocationCoordinate2D point)
+    {
+        return new MapPosition(
+            point.Latitude,
+            point.Longitude);
+    }
+
     internal static NSValue ToNSValue(this IPosition xobj)
     {
         return NSValue.FromCGPoint(
@@ -105,7 +116,7 @@ public static class GeometryExtensions
     }
 
     internal static IPosition ToPosition(this NSValue src)
-        => new Position(
+        => new MapPosition(
             src.CoordinateValue.Latitude,
             src.CoordinateValue.Longitude
         );

@@ -1,7 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-
-namespace MapboxMaui;
+﻿namespace MapboxMaui;
 
 public abstract class BaseKVContainer : INotifyCollectionChanged
 {

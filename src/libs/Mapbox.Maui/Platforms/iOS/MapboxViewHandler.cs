@@ -14,7 +14,6 @@ public partial class MapboxViewHandler
     UITapGestureRecognizer mapTapGestureRecognizer;
     UILongPressGestureRecognizer mapLongPressGestureRecognizer;
 
-
     private static void HandleLightChanged(MapboxViewHandler handler, IMapboxView view)
     {
         var mapView = handler.PlatformView.MapView;
@@ -287,6 +286,7 @@ public partial class MapboxViewHandler
         {
             mapboxView.AnnotationController = null;
             mapboxView.QueryManager = null;
+            mapboxView.MapboxController = null;
         }
 
         var mapView = platformView.MapView;
@@ -312,6 +312,7 @@ public partial class MapboxViewHandler
             mapboxView.InvokeMapReady();
             mapboxView.AnnotationController = this;
             mapboxView.QueryManager = this;
+            mapboxView.MapboxController = this;
         }
 
         var mapView = platformView.MapView;

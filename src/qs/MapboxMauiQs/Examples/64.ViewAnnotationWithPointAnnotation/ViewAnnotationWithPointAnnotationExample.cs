@@ -38,7 +38,7 @@ public class ViewAnnotationWithPointAnnotationExample : ContentPage, IExamplePag
 
     private void Map_MapReady(object sender, EventArgs e)
     {
-        var centerLocation = new Position(39.7128, -75.0060);
+        var centerLocation = new MapPosition(39.7128, -75.0060);
         var cameraOptions = new CameraOptions
         {
             Center = centerLocation,

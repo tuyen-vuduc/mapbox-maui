@@ -16,7 +16,7 @@ public class PolygonAnnotationExample : ContentPage, IExamplePage, IQueryAttribu
 
     private void Map_MapReady(object sender, EventArgs e)
     {
-        var centerLocation = new Position(25.04579, -88.90136);
+        var centerLocation = new MapPosition(25.04579, -88.90136);
         var cameraOptions = new CameraOptions
         {
             Center = centerLocation,
@@ -34,21 +34,21 @@ public class PolygonAnnotationExample : ContentPage, IExamplePage, IQueryAttribu
             // outer ring
             new LineString(
                 new [] {
-                    new Position(24.51713945052515, -89.857177734375 ),
-                    new Position(24.51713945052515, -87.967529296875 ),
-                    new Position(26.244156283890756, -87.967529296875) ,
-                    new Position(26.244156283890756, -89.857177734375) ,
-                    new Position(24.51713945052515, -89.857177734375 )
+                    new MapPosition(24.51713945052515, -89.857177734375 ),
+                    new MapPosition(24.51713945052515, -87.967529296875 ),
+                    new MapPosition(26.244156283890756, -87.967529296875) ,
+                    new MapPosition(26.244156283890756, -89.857177734375) ,
+                    new MapPosition(24.51713945052515, -89.857177734375 )
                 }
             ),
             // inner ring
             new LineString(
                 new [] {
-                    new Position(25.085598897064752, -89.20898437499999),
-                    new Position(25.085598897064752, -88.61572265625),
-                    new Position(25.720735134412106, -88.61572265625),
-                    new Position(25.720735134412106, -89.20898437499999),
-                    new Position(25.085598897064752, -89.20898437499999)
+                    new MapPosition(25.085598897064752, -89.20898437499999),
+                    new MapPosition(25.085598897064752, -88.61572265625),
+                    new MapPosition(25.720735134412106, -88.61572265625),
+                    new MapPosition(25.720735134412106, -89.20898437499999),
+                    new MapPosition(25.085598897064752, -89.20898437499999)
                 }
             )
         });

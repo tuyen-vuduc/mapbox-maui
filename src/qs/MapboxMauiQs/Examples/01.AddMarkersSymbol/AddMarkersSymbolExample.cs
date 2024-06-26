@@ -34,7 +34,7 @@ public class AddMarkersSymbolExample : ContentPage, IExamplePage, IQueryAttribut
 
     private void Map_MapReady(object sender, EventArgs e)
     {
-        var centerLocation = new Position(55.70651, 12.554729);
+        var centerLocation = new MapPosition(55.70651, 12.554729);
         var cameraOptions = new CameraOptions
         {
             Center = centerLocation,
@@ -56,7 +56,7 @@ public class AddMarkersSymbolExample : ContentPage, IExamplePage, IQueryAttribut
 
         var feature = new Feature(
             new GeoJSON.Text.Geometry.Point(
-                new GeoJSON.Text.Geometry.Position(latitude: 55.608166, longitude: 12.65147)
+                new MapPosition(latitude: 55.608166, longitude: 12.65147)
             ),
             new Dictionary<string, object> {
                 { Constants.ICON_KEY, Constants.BLUE_MARKER_PROPERTY }
@@ -66,7 +66,7 @@ public class AddMarkersSymbolExample : ContentPage, IExamplePage, IQueryAttribut
 
         var feature1 = new Feature(
             new GeoJSON.Text.Geometry.Point(
-                new GeoJSON.Text.Geometry.Position(latitude: 55.70651, longitude: 12.554729)
+                new MapPosition(latitude: 55.70651, longitude: 12.554729)
             ),
             new Dictionary<string, object> {
                 { Constants.ICON_KEY, Constants.RED_MARKER_PROPERTY }

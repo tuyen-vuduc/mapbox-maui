@@ -26,7 +26,7 @@ public class ShowHideLayerExample : ContentPage, IExamplePage, IQueryAttributabl
 
     private void Map_MapReady(object sender, EventArgs e)
     {
-        var centerLocation = new Position(-13.517379, -71.977221);
+        var centerLocation = new MapPosition(-13.517379, -71.977221);
         var cameraOptions = new CameraOptions
         {
             Center = centerLocation,

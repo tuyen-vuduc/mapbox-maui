@@ -11,10 +11,10 @@
 		<IsPackable>false</IsPackable>
 		
 		<!-- Display name -->
-		<ApplicationTitle>MapboxQs</ApplicationTitle>
+		<ApplicationTitle>tv.MapbX</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>tech.tuyen-vuduc.mapboxmauiqs</ApplicationId>
+		<ApplicationId>dev.tuyentv.quickstart.dotnet.maui.mapbox</ApplicationId>
 		<ApplicationIdGuid>cecaadf0-85bf-4ffd-9326-6c5c11457a29</ApplicationIdGuid>
 
 		<!-- Versions -->
@@ -80,6 +80,11 @@
 		<Compile Remove="**\**\*.iOS.cs" />
 	</ItemGroup>
 	<ItemGroup>
+	  <None Remove="Resources\Images\ic_car_top.svg" />
+	  <None Remove="Resources\Images\ic_clear.png" />
+	  <None Remove="Resources\Images\ic_taxi_top.png" />
+	</ItemGroup>
+	<ItemGroup>
 		<PackageReference Update="Microsoft.Maui.Controls.Compatibility" Version="8.0.40" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.40" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
@@ -105,6 +110,9 @@
 		<Compile Include="..\..\libs\Mapbox.Maui\Platforms\iOS\**\**\*.cs">
 			<Link>Platforms\iOS\Shared\%(RecursiveDir)%(Filename)%(Extension)</Link>
 		</Compile>
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Examples\Annotations\" />
 	</ItemGroup>
 	<PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
 		<PublishTrimmed>true</PublishTrimmed>

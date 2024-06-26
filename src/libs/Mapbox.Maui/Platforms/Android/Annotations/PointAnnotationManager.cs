@@ -50,16 +50,6 @@ public partial class PointAnnotationManager
         get => nativeManager.IconRotationAlignment?.GetValue();
         set => nativeManager.IconRotationAlignment = value?.ToPlatform();
     }
-    public IconTextFit? IconTextFit
-    {
-        get => nativeManager.IconTextFit?.GetValue();
-        set => nativeManager.IconTextFit = value?.ToPlatform();
-    }
-    public double[] IconTextFitPadding
-    {
-        get => nativeManager.IconTextFitPadding.GetValue();
-        set => nativeManager.IconTextFitPadding = value?.ToPlatform();
-    }
     public bool? SymbolAvoidEdges
     {
         get => nativeManager.SymbolAvoidEdges?.BooleanValue();
@@ -163,12 +153,6 @@ public partial class PointAnnotationManager
         get => nativeManager.TextTranslateAnchor?.GetValue();
         set => nativeManager.TextTranslateAnchor = value?.ToPlatform();
     }
-    public double? TextLineHeight
-    {
-        get => nativeManager.TextLineHeight?.DoubleValue();
-        set => nativeManager.TextLineHeight = value?.ToPlatform();
-    }
-
     public override void AddAnnotations(params PointAnnotation[] xitems)
     {
         var items = xitems

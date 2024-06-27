@@ -1,11 +1,11 @@
 namespace MapboxMauiQs;
 
-public class CameraFlyAnimationExample : ContentPage, IExamplePage, IQueryAttributable
+public class CameraAnimationsExample : ContentPage, IExamplePage, IQueryAttributable
 {
     MapboxView map;
     IExampleInfo info;
 
-    public CameraFlyAnimationExample()
+    public CameraAnimationsExample()
 	{
         iOSPage.SetUseSafeArea(this, false);
 
@@ -13,15 +13,31 @@ public class CameraFlyAnimationExample : ContentPage, IExamplePage, IQueryAttrib
 		map = new MapboxView();
         grid.Children.Add(map);
 
-        var btnMoveCamera = new Button()
+        var btnFlyCamera = new Button()
         {
-            Text = "Move Camera",
+            Text = "Fly to Hanoi",
+        };
+        btnFlyCamera.Clicked += HandleCameraFlyTo;
+
+        var btnEaseCamera = new Button()
+        {
+            Text = "Ease to HCMC",
+        };
+        btnEaseCamera.Clicked += HandleCameraEaseTo;
+
+        var btns = new HorizontalStackLayout
+        {
+            Children = {
+                btnFlyCamera,
+                btnEaseCamera,
+            },
             VerticalOptions = LayoutOptions.End,
             HorizontalOptions = LayoutOptions.Center,
             Margin = new Thickness(24),
+            Spacing = 16,
         };
-        btnMoveCamera.Clicked += HandleMoveCamera;
-        grid.Children.Add(btnMoveCamera);
+
+        grid.Children.Add(btns);
 
         map.MapReady += Map_MapReady;
         map.StyleLoaded += Map_StyleLoaded;
@@ -30,9 +46,9 @@ public class CameraFlyAnimationExample : ContentPage, IExamplePage, IQueryAttrib
         Content = grid;
 	}
 
-    private void HandleMoveCamera(object sender, EventArgs e)
+    private void HandleCameraFlyTo(object sender, EventArgs e)
     {
-        var centerLocation = new MapPosition(21.0278, 105.8342);
+        var centerLocation = new MapPosition(21.028511, 105.804817);
         var cameraOptions = new CameraOptions
         {
             Center = centerLocation,
@@ -40,6 +56,19 @@ public class CameraFlyAnimationExample : ContentPage, IExamplePage, IQueryAttrib
         };
         map.CameraController.FlyTo(
             cameraOptions, 
+            new AnimationOptions(3000L));
+    }
+
+    private void HandleCameraEaseTo(object sender, EventArgs e)
+    {
+        var centerLocation = new MapPosition(10.762622, 106.660172);
+        var cameraOptions = new CameraOptions
+        {
+            Center = centerLocation,
+            Zoom = 12,
+        };
+        map.CameraController.EaseTo(
+            cameraOptions,
             new AnimationOptions(3000L));
     }
 

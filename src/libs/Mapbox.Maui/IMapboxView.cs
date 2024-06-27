@@ -70,6 +70,7 @@ public interface IMapboxController
 public interface IMapCameraController
 {
     void FlyTo(CameraOptions cameraOptions, AnimationOptions animationOptions = default, Action<AnimationState> completion = default);
+    void EaseTo(CameraOptions cameraOptions, AnimationOptions animationOptions = default, Action<AnimationState> completion = default);
 }
 
 public class MapTappedEventArgs : EventArgs

@@ -5,6 +5,25 @@ namespace MapboxMaui;
 
 partial class MapboxViewHandler : IMapCameraController
 {
+    public void EaseTo(CameraOptions cameraOptions, AnimationOptions animationOptions = null, Action<AnimationState> completion = null)
+    {
+        var mapView = mapboxFragment?.MapView;
+
+        if (mapView == null) return;
+
+        var xcameraOptions = cameraOptions.ToNative();
+        var xanimationOptions = animationOptions?.ToNative();
+
+        // TODO Return Cancellable obj
+        CameraAnimationsUtils.EaseTo(
+            mapView.MapboxMap,
+            xcameraOptions,
+            xanimationOptions,
+            completion != null
+            ? new XAnimationListener(completion)
+            : null);
+    }
+
     public void FlyTo(CameraOptions cameraOptions, AnimationOptions animationOptions = default, Action<AnimationState> completion = default)
     {
         var mapView = mapboxFragment?.MapView;

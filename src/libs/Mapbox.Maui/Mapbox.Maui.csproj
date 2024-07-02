@@ -53,7 +53,7 @@
 		<RepositoryUrl>https://github.com/tuyen-vuduc/mapbox-maui</RepositoryUrl>
 		<PackageProjectUrl>https://mapbox.tuyen-vuduc.tech</PackageProjectUrl>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-		<PackageVersion>11.3.0-alpha04</PackageVersion>
+		<PackageVersion>11.4.0-alpha01</PackageVersion>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<PackageIcon>tv-mapbox.png</PackageIcon>
@@ -72,15 +72,16 @@
 		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.40" />
 	</ItemGroup>
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
-		<PackageReference Include="Com.Mapbox.Maps.Android" Version="11.3.1.7" />
-		<PackageReference Include="Xamarin.AndroidX.AppCompat" Version="1.6.1.8" />
-		<PackageReference Include="Xamarin.AndroidX.Fragment.Ktx" Version="1.6.2.3" />
-		<PackageReference Include="Xamarin.Kotlin.StdLib" Version="1.9.23.1" PrivateAssets="none" />
-		<PackageReference Include="Xamarin.Kotlin.StdLib.Common" Version="1.9.23.1" PrivateAssets="none" />
+		<PackageReference Include="Com.Mapbox.Maps.Android" Version="11.4.1" />
+		<PackageReference Include="Xamarin.AndroidX.AppCompat" Version="1.6.1.10" />
+    	<PackageReference Include="Xamarin.AndroidX.Fragment " Version="1.7.0.2" />
+		<PackageReference Include="Xamarin.AndroidX.Fragment.Ktx" Version="1.7.0.2" />
+		<PackageReference Include="Xamarin.Kotlin.StdLib" Version="1.9.23.3" PrivateAssets="none" />
+		<PackageReference Include="Xamarin.Kotlin.StdLib.Common" Version="1.9.23.3" PrivateAssets="none" />
 	</ItemGroup>
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
-		<PackageReference Include="MapboxMapsObjC.iOS" Version="11.3.0.3" />
-		<PackageReference Include="MapboxMaps.iOS" Version="11.3.0.2" />
+		<PackageReference Include="MapboxMapsObjC.iOS" Version="11.4.0" />
+		<PackageReference Include="MapboxMaps.iOS" Version="11.4.0" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Models\Styles\" />

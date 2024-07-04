@@ -5,6 +5,17 @@ using MapboxMaui.Styles;
 
 public partial class MapboxView : View, IMapboxView
 {
+    public static readonly BindableProperty GestureSettingsProperty = BindableProperty.Create(
+       nameof(GestureSettings),
+       typeof(GestureSettings),
+       typeof(MapboxView)
+    );
+    public GestureSettings GestureSettings
+    {
+        get => (GestureSettings)GetValue(ViewAnnotationsProperty);
+        set => SetValue(ViewAnnotationsProperty, value);
+    }
+
     public static readonly BindableProperty ViewAnnotationsProperty = BindableProperty.Create(
        nameof(ViewAnnotations),
        typeof(IEnumerable<ViewAnnotationOptions>),

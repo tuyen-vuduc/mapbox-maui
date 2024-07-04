@@ -14,6 +14,32 @@ public partial class MapboxViewHandler
     UITapGestureRecognizer mapTapGestureRecognizer;
     UILongPressGestureRecognizer mapLongPressGestureRecognizer;
 
+    private static void HandleGestureSettingsChanged(MapboxViewHandler handler, IMapboxView view)
+    {
+        var mapView = handler.PlatformView.MapView;
+        if (mapView == null) return;
+
+        var gestures = mapView.Gestures().GestureOptions();
+
+        gestures.DoubleTapToZoomInEnabled = view.GestureSettings.DoubleTapToZoomInEnabled;
+        gestures.DoubleTouchToZoomOutEnabled = view.GestureSettings.DoubleTouchToZoomOutEnabled;
+        gestures.FocalPoint = view.GestureSettings.FocalPoint?.ToNSValue();
+        //gestures.IncreasePinchToZoomThresholdWhenRotating = view.GestureSettings.IncreasePinchToZoomThresholdWhenRotating;
+        //gestures.IncreaseRotateThresholdWhenPinchingToZoom = view.GestureSettings.IncreaseRotateThresholdWhenPinchingToZoom;
+        gestures.PanEnabled = view.GestureSettings.PinchToZoomEnabled;
+        //gestures.PinchToZoomDecelerationEnabled = view.GestureSettings.PinchToZoomDecelerationEnabled;
+        gestures.PinchZoomEnabled = view.GestureSettings.PinchToZoomEnabled;
+        gestures.PitchEnabled = view.GestureSettings.PitchEnabled;
+        gestures.QuickZoomEnabled = view.GestureSettings.QuickZoomEnabled;
+        //gestures.RotateDecelerationEnabled = view.GestureSettings.RotateDecelerationEnabled;
+        gestures.RotateEnabled = view.GestureSettings.RotateEnabled;
+        //gestures.ScrollDecelerationEnabled = view.GestureSettings.ScrollDecelerationEnabled;
+        //gestures.ScrollEnabled = view.GestureSettings.ScrollEnabled;
+        gestures.PanMode = view.GestureSettings.ScrollMode.ToNative();
+        gestures.SimultaneousRotateAndPinchZoomEnabled = view.GestureSettings.SimultaneousRotateAndPinchToZoomEnabled;
+        gestures.PanDecelerationFactor = view.GestureSettings.ZoomAnimationAmount;
+    }
+
     private static void HandleLightChanged(MapboxViewHandler handler, IMapboxView view)
     {
         var mapView = handler.PlatformView.MapView;

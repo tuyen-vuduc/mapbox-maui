@@ -11,10 +11,20 @@ using MapboxCoreMaps;
 using MapboxMapsObjC;
 using Microsoft.Maui.Controls.Compatibility.Platform.iOS;
 using Microsoft.Maui.Platform;
-using System.Runtime.InteropServices;
+using CoreGraphics;
 
 public static partial class AdditionalExtensions
 {
+    internal static TMBPanMode ToNative(this PanMode panMode)
+    {
+        return panMode switch
+        {
+            PanMode.Horizontal => TMBPanMode.Horizontal,
+            PanMode.Vertical => TMBPanMode.Vertical,
+            _ => TMBPanMode.HorizontalAndVertical,
+        };
+    }
+
     internal static NSDictionary<NSString, TMBExpression> ToNative(this IDictionary<string, DslExpression> dictionary)
     {
         var list = new NSMutableDictionary<NSString, TMBExpression>();
@@ -278,12 +288,8 @@ public static partial class AdditionalExtensions
                 (float)cameraOptions.Padding.Value.Bottom,
                 (float)cameraOptions.Padding.Value.Right)
             : UIKit.UIEdgeInsets.Zero;
-        var anchor = cameraOptions.Anchor is not null
-            ? new CoreGraphics.CGPoint(
-                cameraOptions.Anchor.Value.X,
-                cameraOptions.Anchor.Value.Y
-                )
-            : CoreGraphics.CGPoint.Empty;
+        var anchor = cameraOptions.Anchor?.ToNative()
+            ?? CGPoint.Empty;
         var zoom = cameraOptions.Zoom.HasValue
             ? cameraOptions.Zoom.Value
             : 14f;
@@ -302,6 +308,16 @@ public static partial class AdditionalExtensions
             bearing,
             pitch
         );
+    }
+
+    internal static CGPoint ToNative(this ScreenPosition screenPosition)
+    {
+        return new CGPoint(screenPosition.X, screenPosition.Y);
+    }
+
+    internal static NSValue ToNSValue(this ScreenPosition screenPosition)
+    {
+        return NSValue.FromCGPoint(screenPosition.ToNative());
     }
 }
 

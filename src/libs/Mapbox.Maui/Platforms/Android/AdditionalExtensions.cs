@@ -15,10 +15,20 @@ using MapboxMaui.Expressions;
 using AndroidX.Fragment.App;
 using Com.Mapbox.Maps.Plugins.Animation;
 using Com.Mapbox.Functions;
+using Com.Mapbox.Maps.Plugins;
 
 static class AdditionalExtensions
 {
     internal static DisplayMetrics Metrics;
+
+    public static ScrollMode ToNative(this PanMode scrollDirection)
+    {
+        return scrollDirection switch {
+            PanMode.Horizontal => ScrollMode.Horizontal,
+            PanMode.Vertical => ScrollMode.Vertical,
+            _ => ScrollMode.HorizontalAndVertical,
+        };
+    }
     
     public static MapAnimationOptions ToNative(this AnimationOptions animationOptions)
     {

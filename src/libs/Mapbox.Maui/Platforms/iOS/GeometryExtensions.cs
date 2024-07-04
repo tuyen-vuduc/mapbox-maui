@@ -93,14 +93,6 @@ public static class GeometryExtensions
         );
     }
 
-    internal static CGPoint ToCGPoint(this ScreenPosition xobj)
-    {
-        return new CGPoint(
-            xobj.X,
-            xobj.Y
-        );
-    }
-
     public static IPosition ToMapPosition(this CLLocationCoordinate2D point)
     {
         return new MapPosition(

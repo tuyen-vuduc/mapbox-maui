@@ -105,8 +105,8 @@
 		</Compile>
 	</ItemGroup>
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
-		<PackageReference Include="MapboxMapsObjC.iOS" Version="11.4.0" />
-		<PackageReference Include="MapboxMaps.iOS" Version="11.4.0" />
+		<PackageReference Include="MapboxMapsObjC.iOS" Version="11.4.0.1" />
+		<PackageReference Include="MapboxMaps.iOS" Version="11.4.0.1" />
 
 		<Compile Include="..\..\libs\Mapbox.Maui\Platforms\iOS\**\**\*.cs">
 			<Link>Platforms\iOS\Shared\%(RecursiveDir)%(Filename)%(Extension)</Link>

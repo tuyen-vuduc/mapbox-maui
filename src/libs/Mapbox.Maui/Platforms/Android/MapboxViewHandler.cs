@@ -7,11 +7,39 @@ using Microsoft.Maui.Platform;
 using Android.Content;
 using Android.Graphics;
 using GeoJSON.Text;
+using Com.Mapbox.Maps.Plugins.Gestures;
+using Com.Mapbox.Maps.Plugins.Gestures.Generated;
 
 namespace MapboxMaui;
 public partial class MapboxViewHandler
 {
     MapboxFragment mapboxFragment;
+
+    private static void HandleGestureSettingsChanged(MapboxViewHandler handler, IMapboxView view)
+    {
+        var mapView = handler.GetMapView();
+        if (mapView == null) return;
+
+        var gestures = mapView.GetGestures();
+
+        gestures.DoubleTapToZoomInEnabled = view.GestureSettings.DoubleTapToZoomInEnabled;
+        gestures.DoubleTouchToZoomOutEnabled = view.GestureSettings.DoubleTouchToZoomOutEnabled;
+        gestures.FocalPoint = view.GestureSettings.FocalPoint?.ToScreenCoordinate();
+        gestures.IncreasePinchToZoomThresholdWhenRotating = view.GestureSettings.IncreasePinchToZoomThresholdWhenRotating;
+        gestures.IncreaseRotateThresholdWhenPinchingToZoom = view.GestureSettings.IncreaseRotateThresholdWhenPinchingToZoom;
+        gestures.PinchScrollEnabled = view.GestureSettings.PinchScrollEnabled;
+        gestures.PinchToZoomDecelerationEnabled = view.GestureSettings.PinchToZoomDecelerationEnabled;
+        gestures.PinchToZoomEnabled = view.GestureSettings.PinchToZoomEnabled;
+        gestures.PitchEnabled = view.GestureSettings.PitchEnabled;
+        gestures.QuickZoomEnabled = view.GestureSettings.QuickZoomEnabled;
+        gestures.RotateDecelerationEnabled = view.GestureSettings.RotateDecelerationEnabled;
+        gestures.RotateEnabled = view.GestureSettings.RotateEnabled;
+        gestures.ScrollDecelerationEnabled = view.GestureSettings.ScrollDecelerationEnabled;
+        gestures.ScrollEnabled = view.GestureSettings.ScrollEnabled;
+        gestures.ScrollMode = view.GestureSettings.ScrollMode.ToNative();
+        gestures.SimultaneousRotateAndPinchToZoomEnabled = view.GestureSettings.SimultaneousRotateAndPinchToZoomEnabled;
+        gestures.ZoomAnimationAmount = view.GestureSettings.ZoomAnimationAmount;
+    }
 
     private static void HandleLightChanged(MapboxViewHandler handler, IMapboxView view)
     {

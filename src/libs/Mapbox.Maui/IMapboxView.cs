@@ -8,6 +8,7 @@ using MapboxMaui.Styles;
 public partial interface IMapboxView : IView
 {
     CameraOptions CameraOptions { get; set; }
+    GestureSettings GestureSettings { get; set; }
     MapboxStyle MapboxStyle { get; set; }
     IPosition MapCenter { get; set; }
     float? MapZoom { get; set; }

@@ -12,8 +12,8 @@ public partial class MapboxView : View, IMapboxView
     );
     public GestureSettings GestureSettings
     {
-        get => (GestureSettings)GetValue(ViewAnnotationsProperty);
-        set => SetValue(ViewAnnotationsProperty, value);
+        get => (GestureSettings)GetValue(GestureSettingsProperty);
+        set => SetValue(GestureSettingsProperty, value);
     }
 
     public static readonly BindableProperty ViewAnnotationsProperty = BindableProperty.Create(

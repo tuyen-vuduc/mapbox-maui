@@ -80,10 +80,17 @@ public record struct GestureSettings
     /// </summary>
     public bool IncreasePinchToZoomThresholdWhenRotating { get; set; } = true;
     /// <summary>
+    /// Android only.
     /// The amount by which the zoom level increases or decreases during a double-tap-to-zoom-in or
     /// double-touch-to-zoom-out gesture. 1.0 by default. Must be positive.
     /// </summary>
     public float ZoomAnimationAmount { get; set; } = 1.0f;
+    /// <summary>
+    /// iOS only.
+    /// A constant factor that determines how quickly pan deceleration animations happen.
+    /// Multiplied with the velocity vector once per millisecond during deceleration animations.
+    /// </summary>
+    public float PanDecelerationFactor { get; set; } = 1.0f;
     /// <summary>
     /// Whether pan is enabled for the pinch gesture.
     ///

@@ -37,7 +37,7 @@ public partial class MapboxViewHandler
         //gestures.ScrollEnabled = view.GestureSettings.ScrollEnabled;
         gestures.PanMode = view.GestureSettings.ScrollMode.ToNative();
         gestures.SimultaneousRotateAndPinchZoomEnabled = view.GestureSettings.SimultaneousRotateAndPinchToZoomEnabled;
-        gestures.PanDecelerationFactor = view.GestureSettings.ZoomAnimationAmount;
+        gestures.PanDecelerationFactor = view.GestureSettings.PanDecelerationFactor;
     }
 
     private static void HandleLightChanged(MapboxViewHandler handler, IMapboxView view)

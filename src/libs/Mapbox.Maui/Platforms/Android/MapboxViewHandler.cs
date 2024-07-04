@@ -225,7 +225,7 @@ public partial class MapboxViewHandler
             styleUri = MapboxMapsStyle.MapboxStreets;
         }
 
-        handler.GetMapView()?.MapboxMap.LoadStyleUri(styleUri);
+        handler.GetMapView()?.MapboxMap.LoadStyle(styleUri);
     }
 
     protected override PlatformView CreatePlatformView()

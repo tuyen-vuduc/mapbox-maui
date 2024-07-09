@@ -53,7 +53,7 @@
 		<RepositoryUrl>https://github.com/tuyen-vuduc/mapbox-maui</RepositoryUrl>
 		<PackageProjectUrl>https://mapbox.tuyen-vuduc.tech</PackageProjectUrl>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-		<PackageVersion>11.4.0-alpha01</PackageVersion>
+		<PackageVersion>11.4.0-alpha02</PackageVersion>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<PackageIcon>tv-mapbox.png</PackageIcon>
@@ -80,7 +80,7 @@
 		<PackageReference Include="Xamarin.Kotlin.StdLib.Common" Version="1.9.23.3" PrivateAssets="none" />
 	</ItemGroup>
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
-		<PackageReference Include="MapboxMapsObjC.iOS" Version="11.4.0.1" />
+		<PackageReference Include="MapboxMapsObjC.iOS" Version="11.4.0.2" />
 		<PackageReference Include="MapboxMaps.iOS" Version="11.4.0.1" />
 	</ItemGroup>
 	<ItemGroup>

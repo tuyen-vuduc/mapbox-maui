@@ -19,25 +19,22 @@ public partial class MapboxViewHandler
         var mapView = handler.PlatformView.MapView;
         if (mapView == null) return;
 
-        var gestures = mapView.Gestures().GestureOptions();
-
-        gestures.DoubleTapToZoomInEnabled = view.GestureSettings.DoubleTapToZoomInEnabled;
-        gestures.DoubleTouchToZoomOutEnabled = view.GestureSettings.DoubleTouchToZoomOutEnabled;
-        gestures.FocalPoint = view.GestureSettings.FocalPoint?.ToNSValue();
-        //gestures.IncreasePinchToZoomThresholdWhenRotating = view.GestureSettings.IncreasePinchToZoomThresholdWhenRotating;
-        //gestures.IncreaseRotateThresholdWhenPinchingToZoom = view.GestureSettings.IncreaseRotateThresholdWhenPinchingToZoom;
-        gestures.PanEnabled = view.GestureSettings.PinchToZoomEnabled;
-        //gestures.PinchToZoomDecelerationEnabled = view.GestureSettings.PinchToZoomDecelerationEnabled;
-        gestures.PinchZoomEnabled = view.GestureSettings.PinchToZoomEnabled;
-        gestures.PitchEnabled = view.GestureSettings.PitchEnabled;
-        gestures.QuickZoomEnabled = view.GestureSettings.QuickZoomEnabled;
-        //gestures.RotateDecelerationEnabled = view.GestureSettings.RotateDecelerationEnabled;
-        gestures.RotateEnabled = view.GestureSettings.RotateEnabled;
-        //gestures.ScrollDecelerationEnabled = view.GestureSettings.ScrollDecelerationEnabled;
-        //gestures.ScrollEnabled = view.GestureSettings.ScrollEnabled;
-        gestures.PanMode = view.GestureSettings.ScrollMode.ToNative();
-        gestures.SimultaneousRotateAndPinchZoomEnabled = view.GestureSettings.SimultaneousRotateAndPinchToZoomEnabled;
-        gestures.PanDecelerationFactor = view.GestureSettings.PanDecelerationFactor;
+        var gestureOptions = new TMBGestureOptions(
+            panEnabled: view.GestureSettings.PinchScrollEnabled,
+            pinchEnabled: false,
+            rotateEnabled: view.GestureSettings.RotateEnabled,
+            simultaneousRotateAndPinchZoomEnabled: view.GestureSettings.SimultaneousRotateAndPinchToZoomEnabled,
+            pinchZoomEnabled: view.GestureSettings.PinchToZoomEnabled,
+            pinchPanEnabled: false,
+            pitchEnabled: view.GestureSettings.PitchEnabled,
+            doubleTapToZoomInEnabled: view.GestureSettings.DoubleTapToZoomInEnabled,
+            doubleTouchToZoomOutEnabled: view.GestureSettings.DoubleTouchToZoomOutEnabled,
+            quickZoomEnabled: view.GestureSettings.QuickZoomEnabled,
+            panDecelerationFactor: UIScrollView.DecelerationRateNormal,
+            panMode: view.GestureSettings.ScrollMode.ToNative(),
+            focalPoint: view.GestureSettings.FocalPoint?.ToNSValue()
+            );
+        mapView.Gestures().GestureOptions = gestureOptions;
     }
 
     private static void HandleLightChanged(MapboxViewHandler handler, IMapboxView view)

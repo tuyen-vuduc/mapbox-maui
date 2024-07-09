@@ -18,6 +18,7 @@ public partial class MapboxViewHandler : ViewHandler<IMapboxView, PlatformView>
         = new PropertyMapper<IMapboxView, MapboxViewHandler>(ViewHandler.ViewMapper)
         {
             [nameof(MapboxView.CameraOptions)] = HandleCameraOptionsChanged,
+            [nameof(MapboxView.GestureSettings)] = HandleGestureSettingsChanged,
             [nameof(MapboxView.MapboxStyle)] = HandleMapboxStyleChanged,
             [nameof(MapboxView.ScaleBarVisibility)] = HandleScaleBarVisibilityChanged,
             [nameof(MapboxView.DebugOptions)] = HandleDebugOptionsChanged,

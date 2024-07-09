@@ -14,6 +14,29 @@ public partial class MapboxViewHandler
     UITapGestureRecognizer mapTapGestureRecognizer;
     UILongPressGestureRecognizer mapLongPressGestureRecognizer;
 
+    private static void HandleGestureSettingsChanged(MapboxViewHandler handler, IMapboxView view)
+    {
+        var mapView = handler.PlatformView.MapView;
+        if (mapView == null) return;
+
+        var gestureOptions = new TMBGestureOptions(
+            panEnabled: view.GestureSettings.PinchScrollEnabled,
+            pinchEnabled: false,
+            rotateEnabled: view.GestureSettings.RotateEnabled,
+            simultaneousRotateAndPinchZoomEnabled: view.GestureSettings.SimultaneousRotateAndPinchToZoomEnabled,
+            pinchZoomEnabled: view.GestureSettings.PinchToZoomEnabled,
+            pinchPanEnabled: false,
+            pitchEnabled: view.GestureSettings.PitchEnabled,
+            doubleTapToZoomInEnabled: view.GestureSettings.DoubleTapToZoomInEnabled,
+            doubleTouchToZoomOutEnabled: view.GestureSettings.DoubleTouchToZoomOutEnabled,
+            quickZoomEnabled: view.GestureSettings.QuickZoomEnabled,
+            panDecelerationFactor: UIScrollView.DecelerationRateNormal,
+            panMode: view.GestureSettings.ScrollMode.ToNative(),
+            focalPoint: view.GestureSettings.FocalPoint?.ToNSValue()
+            );
+        mapView.Gestures().GestureOptions = gestureOptions;
+    }
+
     private static void HandleLightChanged(MapboxViewHandler handler, IMapboxView view)
     {
         var mapView = handler.PlatformView.MapView;

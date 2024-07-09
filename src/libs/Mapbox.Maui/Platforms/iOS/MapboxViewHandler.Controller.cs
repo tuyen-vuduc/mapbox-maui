@@ -26,7 +26,7 @@ partial class MapboxViewHandler : IMapboxController
         if (mapView == null) return null;
 
         var coords = mapView.MapboxMap().CoordinateFor(
-            position.ToCGPoint()
+            position.ToNative()
             );
 
         return coords.ToMapPosition();

@@ -27,28 +27,25 @@ public class AddRemoveAnnotationsExample : ContentPage, IExamplePage, IQueryAttr
                         new Button
                         {
                             Text = "+One",
-                            TextColor = Colors.Purple,
-                            BorderColor = Colors.Purple,
                             Padding = 4,
-                            BackgroundColor = Colors.Transparent,
+                            TextColor = Colors.White,
+                            BackgroundColor = Colors.Purple.WithAlpha(0.7f),
                             Command = new Command(AddAnnotation),
                         },
                         new Button
                         {
                             Text = "-One",
-                            TextColor = Colors.Purple,
-                            BorderColor = Colors.Purple,
                             Padding = 4,
-                            BackgroundColor = Colors.Transparent,
+                            TextColor = Colors.White,
+                            BackgroundColor = Colors.Purple.WithAlpha(0.7f),
                             Command = new Command(RemoveAnnotation)
                         },
                         new Button
                         {
                             Text = "-All",
-                            TextColor = Colors.Purple,
-                            BorderColor = Colors.Purple,
                             Padding = 4,
-                            BackgroundColor = Colors.Transparent,
+                            TextColor = Colors.White,
+                            BackgroundColor = Colors.Purple.WithAlpha(0.7f),
                             Command = new Command(RemoveAllAnnotations)
                         }
                     },

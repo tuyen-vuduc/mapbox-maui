@@ -11,12 +11,11 @@ public class AddRemoveAnnotationsExample : ContentPage, IExamplePage, IQueryAttr
     public AddRemoveAnnotationsExample()
     {
         iOSPage.SetUseSafeArea(this, false);
-        map = new MapboxView();
-
+        
         Content = new Grid
         {
             Children = {
-                map,
+                (map = new MapboxView()),
                 new StackLayout {
                     Margin = 16,
                     VerticalOptions = LayoutOptions.End,
@@ -169,8 +168,8 @@ public class AddRemoveAnnotationsExample : ContentPage, IExamplePage, IQueryAttr
             Zoom = 14,
         };
 
-        map.CameraOptions = cameraOptions;
         map.MapboxStyle = MapboxStyle.MAPBOX_STREETS;
+        map.CameraOptions = cameraOptions;
     }
 
     private void Map_MapLoaded(object sender, EventArgs e)

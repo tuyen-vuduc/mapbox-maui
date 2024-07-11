@@ -297,9 +297,7 @@ public partial class MapboxViewHandler
     }
 
     protected override PlatformView CreatePlatformView()
-    {
-        return new PlatformView(ACCESS_TOKEN);
-    }
+        => new PlatformView(ACCESS_TOKEN);
 
     protected override void DisconnectHandler(PlatformView platformView)
     {
@@ -352,6 +350,10 @@ public partial class MapboxViewHandler
         mapboxMap.OnMapLoaded(_ =>
         {
             (VirtualView as MapboxView)?.InvokeMapLoaded();
+        });
+        mapboxMap.OnMapLoadingError(_ =>
+        {
+            (VirtualView as MapboxView)?.InvokeMapLoadingError();
         });
 
         mapTapGestureRecognizer = new UITapGestureRecognizer(HandleMapTapped);

@@ -94,9 +94,23 @@ public record struct GestureSettings
     /// <summary>
     /// Whether pan is enabled for the pinch gesture.
     ///
-    /// iOS: PanEnabled
+    /// iOS: PinchEnabled
     /// </summary>
     public bool PinchScrollEnabled { get; set; } = true;
+    
+    /// <summary>
+    /// Whether pan is enabled for the pinch gesture.
+    ///
+    /// iOS: PanEnabled
+    /// </summary>
+    public bool PanEnabled { get; set; } = true;
+    
+    /// <summary>
+    /// Whether pan is enabled for the pinch gesture.
+    ///
+    /// iOS: PinchPanEnabled
+    /// </summary>
+    public bool PinchPanEnabled { get; set; } = true;
 }
 public enum PanMode
 {

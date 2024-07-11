@@ -20,12 +20,12 @@ public partial class MapboxViewHandler
         if (mapView == null) return;
 
         var gestureOptions = new TMBGestureOptions(
-            panEnabled: view.GestureSettings.PinchScrollEnabled,
-            pinchEnabled: false,
+            panEnabled: view.GestureSettings.PanEnabled,
+            pinchEnabled: view.GestureSettings.PinchScrollEnabled,
             rotateEnabled: view.GestureSettings.RotateEnabled,
             simultaneousRotateAndPinchZoomEnabled: view.GestureSettings.SimultaneousRotateAndPinchToZoomEnabled,
             pinchZoomEnabled: view.GestureSettings.PinchToZoomEnabled,
-            pinchPanEnabled: false,
+            pinchPanEnabled: view.GestureSettings.PinchPanEnabled,
             pitchEnabled: view.GestureSettings.PitchEnabled,
             doubleTapToZoomInEnabled: view.GestureSettings.DoubleTapToZoomInEnabled,
             doubleTouchToZoomOutEnabled: view.GestureSettings.DoubleTouchToZoomOutEnabled,

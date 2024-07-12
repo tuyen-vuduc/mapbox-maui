@@ -127,5 +127,5 @@
     Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'"
     Name="_GradleDependencyResolverTrigger"
     DependsOnTargets="_GradleSync"
-    BeforeTargets="CoreCompile" />
+    BeforeTargets="_BuildLibraryImportsCache" />
 </Project>

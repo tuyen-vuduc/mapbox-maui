@@ -104,7 +104,6 @@ partial class MapboxView
             MapLoadedCommand.Execute(null);
         }
     }
-
     public static readonly BindableProperty MapLoadedCommandProperty = BindableProperty.Create(
        nameof(MapLoadedCommand),
        typeof(ICommand),
@@ -115,5 +114,27 @@ partial class MapboxView
     {
         get => (ICommand)GetValue(MapLoadedCommandProperty);
         set => SetValue(MapLoadedCommandProperty, value);
+    }
+
+    public event EventHandler MapLoadingError;
+    internal void InvokeMapLoadingError()
+    {
+        MapLoadingError?.Invoke(this, EventArgs.Empty);
+
+        if (MapLoadingErrorCommand?.CanExecute(null) == true)
+        {
+            MapLoadingErrorCommand.Execute(null);
+        }
+    }
+    public static readonly BindableProperty MapLoadingErrorCommandProperty = BindableProperty.Create(
+       nameof(MapLoadingErrorCommand),
+       typeof(ICommand),
+       typeof(MapboxView),
+       default(ICommand)
+    );
+    public ICommand MapLoadingErrorCommand
+    {
+        get => (ICommand)GetValue(MapLoadingErrorCommandProperty);
+        set => SetValue(MapLoadingErrorCommandProperty, value);
     }
 }

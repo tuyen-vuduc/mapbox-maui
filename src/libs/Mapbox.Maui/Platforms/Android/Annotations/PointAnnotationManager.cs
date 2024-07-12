@@ -1,5 +1,7 @@
 ﻿namespace MapboxMaui.Annotations;
 
+using Com.Mapbox.Maps.Plugins.Annotations;
+using System.Collections;
 using PlatformPointAnnotationManager = Com.Mapbox.Maps.Plugins.Annotations.Generated.PointAnnotationManager;
 
 public partial class PointAnnotationManager
@@ -153,28 +155,13 @@ public partial class PointAnnotationManager
         get => nativeManager.TextTranslateAnchor?.GetValue();
         set => nativeManager.TextTranslateAnchor = value?.ToPlatform();
     }
-    public override void AddAnnotations(params PointAnnotation[] xitems)
+
+    protected override IAnnotationOptions ToPlatformAnnotationOption(PointAnnotation annotation)
+        => annotation.ToPlatformValue();
+
+    protected override IList GetNativeAnnotations(params string[] annotationIDs)
     {
-        var items = xitems
-            .Select(x => x.ToPlatformValue())
-            .ToList();
-
-        var platformAnnotations = nativeManager.Create(items);
-
-        for (int i = 0; i < platformAnnotations.Count; i++)
-        {
-            var item = platformAnnotations[i] as Com.Mapbox.Maps.Plugins.Annotations.Generated.PointAnnotation;
-            xitems[i].Id = item.Id.ToString();
-        }
-    }
-
-    public override void RemoveAllAnnotations()
-    {
-        nativeManager.Annotations.Clear();
-    }
-
-    public override void RemoveAnnotations(params string[] annotationIDs)
-    {
+        var itemsToDelete = new List<Com.Mapbox.Maps.Plugins.Annotations.Generated.PointAnnotation>();
         foreach (var xid in annotationIDs)
         {
             var item = nativeManager
@@ -184,8 +171,9 @@ public partial class PointAnnotationManager
 
             if (item == null) continue;
 
-            nativeManager.Annotations.Remove(item);
+            itemsToDelete.Add(item);
         }
+        return itemsToDelete;
     }
 }
 

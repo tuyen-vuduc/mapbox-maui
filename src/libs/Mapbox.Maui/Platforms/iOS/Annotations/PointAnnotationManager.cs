@@ -170,31 +170,21 @@ public partial class PointAnnotationManager
     {
         var items = xitems
             .Select(x => x.ToPlatformValue())
-            .ToList();
-
-        nativeManager.Annotations = nativeManager.Annotations
-            .Union(items)
             .ToArray();
+
+        nativeManager.AddAnnotations(items);
     }
 
     public override void RemoveAllAnnotations()
     {
-        nativeManager.Annotations = Array.Empty<TMBPointAnnotation>();
+        nativeManager.RemoveAllAnnotations();
     }
 
     public override void RemoveAnnotations(params string[] annotationIDs)
     {
         for (int i = 0; i < annotationIDs.Length; i++)
         {
-            var item = nativeManager.Annotations.FirstOrDefault(
-                    x => x.Id == annotationIDs[i]
-                );
-            if (item == null) continue;
-
-            var annotations = new List<TMBPointAnnotation>(nativeManager.Annotations);
-            annotations.Remove(item);
-
-            nativeManager.Annotations = annotations.ToArray();
+            nativeManager.RemoveAnnotationById(annotationIDs[i]);
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿namespace MapboxMaui.Annotations;
 
+using Com.Mapbox.Maps.Plugins.Annotations;
+using System.Collections;
 using PlatformPolygonAnnotationManager = Com.Mapbox.Maps.Plugins.Annotations.Generated.PolygonAnnotationManager;
 
 partial class PolygonAnnotationManager
@@ -36,28 +38,11 @@ partial class PolygonAnnotationManager
             : null;
     }
 
-    public override void AddAnnotations(params PolygonAnnotation[] xitems)
+    protected override IAnnotationOptions ToPlatformAnnotationOption(PolygonAnnotation annotation)
+        => annotation.ToPlatformValue();
+    protected override IList GetNativeAnnotations(params string[] annotationIDs)
     {
-        var items = xitems
-            .Select(x => x.ToPlatformValue())
-            .ToList();
-
-        var platformAnnotations = nativeManager.Create(items);
-
-        for (int i = 0; i < platformAnnotations.Count; i++)
-        {
-            var item = platformAnnotations[i] as Com.Mapbox.Maps.Plugins.Annotations.Generated.PolygonAnnotation;
-            xitems[i].Id = item.Id.ToString();
-        }
-    }
-
-    public override void RemoveAllAnnotations()
-    {
-        nativeManager.Annotations.Clear();
-    }
-
-    public override void RemoveAnnotations(params string[] annotationIDs)
-    {
+        var itemsToDelete = new List<Com.Mapbox.Maps.Plugins.Annotations.Generated.PolygonAnnotation>();
         foreach (var id in annotationIDs)
         {
             var item = nativeManager
@@ -67,7 +52,8 @@ partial class PolygonAnnotationManager
 
             if (item == null) continue;
 
-            nativeManager.Annotations.Remove(item);
+            itemsToDelete.Add(item);
         }
+        return itemsToDelete;
     }
 }

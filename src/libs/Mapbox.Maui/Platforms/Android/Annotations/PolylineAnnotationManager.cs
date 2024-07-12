@@ -1,5 +1,7 @@
 ﻿namespace MapboxMaui.Annotations;
 
+using Com.Mapbox.Maps.Plugins.Annotations;
+using System.Collections;
 using PlatformPolylineAnnotationManager = Com.Mapbox.Maps.Plugins.Annotations.Generated.PolylineAnnotationManager;
 
 partial class PolylineAnnotationManager
@@ -52,28 +54,11 @@ partial class PolylineAnnotationManager
         set => nativeManager.LineTrimOffset = value?.ToPlatform();
     }
 
-    public override void AddAnnotations(params PolylineAnnotation[] xitems)
+    protected override IAnnotationOptions ToPlatformAnnotationOption(PolylineAnnotation annotation)
+        => annotation.ToPlatformValue();
+    protected override IList GetNativeAnnotations(params string[] annotationIDs)
     {
-        var items = xitems
-            .Select(x => x.ToPlatformValue())
-            .ToList();
-
-        var platformAnnotations = nativeManager.Create(items);
-
-        for (int i = 0; i < platformAnnotations.Count; i++)
-        {
-            var item = platformAnnotations[i] as Com.Mapbox.Maps.Plugins.Annotations.Generated.PolylineAnnotation;
-            xitems[i].Id = item.Id.ToString();
-        }
-    }
-
-    public override void RemoveAllAnnotations()
-    {
-        nativeManager.Annotations.Clear();
-    }
-
-    public override void RemoveAnnotations(params string[] annotationIDs)
-    {
+        var itemsToDelete = new List<Com.Mapbox.Maps.Plugins.Annotations.Generated.PolylineAnnotation>();
         foreach (var xid in annotationIDs)
         {
             var item = nativeManager
@@ -83,7 +68,8 @@ partial class PolylineAnnotationManager
 
             if (item == null) continue;
 
-            nativeManager.Annotations.Remove(item);
+            itemsToDelete.Add(item);
         }
+        return itemsToDelete;
     }
 }

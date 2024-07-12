@@ -58,6 +58,7 @@ partial class MapboxViewHandler : IAnnotationController
                 clusterOptions.TextField?.ToTMBValue(),
                 clusterOptions.ClusterRadius,
                 clusterOptions.ClusterMaxZoom,
+                clusterOptions.ClusterMinPoints,
                 clusterOptions.ClusterProperties?.ToNative()
             );
         }

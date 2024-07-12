@@ -22,12 +22,15 @@ public class ClusterOptions
 
     /// Radius of each cluster if clustering is enabled. A value of 512 indicates a radius equal
     /// to the width of a tile, 50 by default. Value must be greater than or equal to 0.
-    public double ClusterRadius { get; set; }
+    public double ClusterRadius { get; set; } = 50;
 
     /// Max zoom on which to cluster points if clustering is enabled. Defaults to one zoom less
     /// than maxzoom (so that last zoom features are not clustered). Clusters are re-evaluated at integer zoom
     /// levels so setting clusterMaxZoom to 14 means the clusters will be displayed until z15.
-    public double ClusterMaxZoom { get; set; }
+    public double ClusterMaxZoom { get; set; } = 14;
+
+    /// Minimum number of points necessary to form a cluster if clustering is enabled. Defaults to `2`.
+    public double ClusterMinPoints { get; set; } = 2;
 
     /// An object defining custom properties on the generated clusters if clustering is enabled, aggregating values from
     /// clustered points. Has the form `{"property_name": [operator, map_expression]}`.

@@ -20,6 +20,7 @@ public static class ClusterOptionsExtensions
                 clusterOptions.TextSize?.GetConstant(12.0) ?? 12.0,
                 clusterOptions.TextField?.Expression?.ToPlatformValue(),
                 (long)clusterOptions.ClusterMaxZoom,
+                (long)clusterOptions.ClusterMinPoints,
                 new List<Kotlin.Pair> {
                     new Kotlin.Pair(new Java.Lang.Integer(250), new Java.Lang.Integer(Color.LightPink)),
                     new Kotlin.Pair(new Java.Lang.Integer(150), new Java.Lang.Integer(Color.Orange)),

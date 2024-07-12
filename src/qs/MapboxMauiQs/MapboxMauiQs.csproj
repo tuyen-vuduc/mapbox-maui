@@ -89,11 +89,11 @@
 		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.40" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 		<PackageReference Include="Xamarin.Build.Download" Version="0.11.4" />
-    <PackageReference Include="GeoJSON.Text" Version="1.0.2" />
+    	<PackageReference Include="GeoJSON.Text" Version="1.0.2" />
 	</ItemGroup>
 
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
-		<PackageReference Include="Com.Mapbox.Maps.Android" Version="11.4.1" />
+		<PackageReference Include="Com.Mapbox.Maps.Android" Version="11.5.0" />
 		<PackageReference Include="Xamarin.AndroidX.AppCompat" Version="1.6.1.10" />
     	<PackageReference Include="Xamarin.AndroidX.Fragment " Version="1.7.0.2" />
 		<PackageReference Include="Xamarin.AndroidX.Fragment.Ktx" Version="1.7.0.2" />

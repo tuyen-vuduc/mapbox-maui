@@ -1,4 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Import Condition="EXISTS('Mapbox.Maui.props')" Project="Mapbox.Maui.props" />
+	<Import Condition="EXISTS('Mapbox.Maui.targets')" Project="Mapbox.Maui.targets" />
 	<Target Name="_CleanAarOutputPath" AfterTargets="_CreateAar" BeforeTargets="_IncludeAarInNuGetPackage">
 		<Delete Files="$(_AarOutputPath)" />
 	</Target>
@@ -43,6 +45,12 @@
 	</ItemGroup>
 
 	<PropertyGroup>
+	  <AndroidTargetSdkVersion>34</AndroidTargetSdkVersion>
+	  <AndroidSdkDirectory Condition=" '$(OS)' == 'Unix' ">$(Home)/Library/Android/sdk</AndroidSdkDirectory>
+	  <AndroidSdkDirectory Condition=" '$(OS)' != 'Unix' ">$(UserProfile)/AppData/Local/Android/sdk</AndroidSdkDirectory>
+	</PropertyGroup>  
+
+	<PropertyGroup>
 		<PackageId>Mapbox.Maui</PackageId>
 		<Title>Mapbox SDK for .NET MAUI</Title>
 		<Summary>.NET MAUI control and APIs for Mapbox</Summary>
@@ -53,7 +61,7 @@
 		<RepositoryUrl>https://github.com/tuyen-vuduc/mapbox-maui</RepositoryUrl>
 		<PackageProjectUrl>https://mapbox.tuyen-vuduc.tech</PackageProjectUrl>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-		<PackageVersion>11.4.0-alpha02</PackageVersion>
+		<PackageVersion>11.5.0-alpha01</PackageVersion>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<PackageIcon>tv-mapbox.png</PackageIcon>
@@ -72,12 +80,13 @@
 		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.40" />
 	</ItemGroup>
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
-		<PackageReference Include="Com.Mapbox.Maps.Android" Version="11.4.1" />
+		<PackageReference Include="Com.Mapbox.Maps.Android" Version="11.5.0" />
 		<PackageReference Include="Xamarin.AndroidX.AppCompat" Version="1.6.1.10" />
     	<PackageReference Include="Xamarin.AndroidX.Fragment " Version="1.7.0.2" />
 		<PackageReference Include="Xamarin.AndroidX.Fragment.Ktx" Version="1.7.0.2" />
 		<PackageReference Include="Xamarin.Kotlin.StdLib" Version="1.9.23.3" PrivateAssets="none" />
 		<PackageReference Include="Xamarin.Kotlin.StdLib.Common" Version="1.9.23.3" PrivateAssets="none" />
+		<PackageReference Include="Dependencies.Gradle" Version="8.6.0.1" />
 	</ItemGroup>
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
 		<PackageReference Include="MapboxMapsObjC.iOS" Version="11.4.0.2" />
@@ -113,4 +122,10 @@
 	<ItemGroup>
 	  <PackageReference Update="Microsoft.Maui.Controls.Compatibility" Version="8.0.40" />
 	</ItemGroup>
+
+  <Target 
+    Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'"
+    Name="_GradleDependencyResolverTrigger"
+    DependsOnTargets="_GradleSync"
+    BeforeTargets="CoreCompile" />
 </Project>

@@ -25,19 +25,21 @@ public partial class MapboxViewHandler
         gestures.DoubleTapToZoomInEnabled = view.GestureSettings.DoubleTapToZoomInEnabled;
         gestures.DoubleTouchToZoomOutEnabled = view.GestureSettings.DoubleTouchToZoomOutEnabled;
         gestures.FocalPoint = view.GestureSettings.FocalPoint?.ToScreenCoordinate();
-        gestures.IncreasePinchToZoomThresholdWhenRotating = view.GestureSettings.IncreasePinchToZoomThresholdWhenRotating;
-        gestures.IncreaseRotateThresholdWhenPinchingToZoom = view.GestureSettings.IncreaseRotateThresholdWhenPinchingToZoom;
-        gestures.PinchScrollEnabled = view.GestureSettings.PinchScrollEnabled;
-        gestures.PinchToZoomDecelerationEnabled = view.GestureSettings.PinchToZoomDecelerationEnabled;
-        gestures.PinchToZoomEnabled = view.GestureSettings.PinchToZoomEnabled;
-        gestures.PitchEnabled = view.GestureSettings.PitchEnabled;
         gestures.QuickZoomEnabled = view.GestureSettings.QuickZoomEnabled;
-        gestures.RotateDecelerationEnabled = view.GestureSettings.RotateDecelerationEnabled;
+        gestures.PitchEnabled = view.GestureSettings.PitchEnabled;
+        gestures.PinchScrollEnabled = view.GestureSettings.PinchScrollEnabled;
         gestures.RotateEnabled = view.GestureSettings.RotateEnabled;
-        gestures.ScrollDecelerationEnabled = view.GestureSettings.ScrollDecelerationEnabled;
         gestures.ScrollEnabled = view.GestureSettings.ScrollEnabled;
         gestures.ScrollMode = view.GestureSettings.ScrollMode.ToNative();
         gestures.SimultaneousRotateAndPinchToZoomEnabled = view.GestureSettings.SimultaneousRotateAndPinchToZoomEnabled;
+
+        // Android only
+        gestures.IncreasePinchToZoomThresholdWhenRotating = view.GestureSettings.IncreasePinchToZoomThresholdWhenRotating;
+        gestures.IncreaseRotateThresholdWhenPinchingToZoom = view.GestureSettings.IncreaseRotateThresholdWhenPinchingToZoom;
+        gestures.PinchToZoomDecelerationEnabled = view.GestureSettings.PinchToZoomDecelerationEnabled;
+        gestures.PinchToZoomEnabled = view.GestureSettings.PinchToZoomEnabled;
+        gestures.RotateDecelerationEnabled = view.GestureSettings.RotateDecelerationEnabled;
+        gestures.ScrollDecelerationEnabled = view.GestureSettings.ScrollDecelerationEnabled;
         gestures.ZoomAnimationAmount = view.GestureSettings.ZoomAnimationAmount;
     }
 

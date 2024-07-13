@@ -20,19 +20,22 @@ public partial class MapboxViewHandler
         if (mapView == null) return;
 
         var gestureOptions = new TMBGestureOptions(
-            panEnabled: view.GestureSettings.PinchScrollEnabled,
-            pinchEnabled: false,
-            rotateEnabled: view.GestureSettings.RotateEnabled,
-            simultaneousRotateAndPinchZoomEnabled: view.GestureSettings.SimultaneousRotateAndPinchToZoomEnabled,
-            pinchZoomEnabled: view.GestureSettings.PinchToZoomEnabled,
-            pinchPanEnabled: false,
-            pitchEnabled: view.GestureSettings.PitchEnabled,
             doubleTapToZoomInEnabled: view.GestureSettings.DoubleTapToZoomInEnabled,
             doubleTouchToZoomOutEnabled: view.GestureSettings.DoubleTouchToZoomOutEnabled,
+            focalPoint: view.GestureSettings.FocalPoint?.ToNSValue(),
             quickZoomEnabled: view.GestureSettings.QuickZoomEnabled,
-            panDecelerationFactor: UIScrollView.DecelerationRateNormal,
+            pitchEnabled: view.GestureSettings.PitchEnabled,
+            pinchPanEnabled: view.GestureSettings.PinchScrollEnabled,
+            rotateEnabled: view.GestureSettings.RotateEnabled,
+            panEnabled: view.GestureSettings.ScrollEnabled,
             panMode: view.GestureSettings.ScrollMode.ToNative(),
-            focalPoint: view.GestureSettings.FocalPoint?.ToNSValue()
+            simultaneousRotateAndPinchZoomEnabled: view.GestureSettings.SimultaneousRotateAndPinchToZoomEnabled,
+
+            // iOS Only
+            panDecelerationFactor: view.GestureSettings.PanDecelerationFactor
+                ?? UIScrollView.DecelerationRateNormal,
+            pinchEnabled: view.GestureSettings.PinchEnabled,
+            pinchZoomEnabled: view.GestureSettings.PinchZoomEnabled
             );
         mapView.Gestures().GestureOptions = gestureOptions;
     }

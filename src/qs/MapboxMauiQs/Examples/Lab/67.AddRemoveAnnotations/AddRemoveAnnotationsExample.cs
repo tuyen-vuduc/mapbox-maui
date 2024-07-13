@@ -121,6 +121,9 @@ public class AddRemoveAnnotationsExample : ContentPage, IExamplePage, IQueryAttr
             case PointAnnotation pointAnnotation:
                 pointAnnotationManager.RemoveAnnotations(pointAnnotation.Id);
                 break;
+            case CircleAnnotation circleAnnotation:
+                circleAnnotationManager.RemoveAnnotations(circleAnnotation.Id);
+                break;
         }
 
         await DisplayAlert("Info", $"Last {annotation.GetType().Name} was removed", "OK");
@@ -143,6 +146,7 @@ public class AddRemoveAnnotationsExample : ContentPage, IExamplePage, IQueryAttr
     private async void RemoveAllAnnotations()
     {
         pointAnnotationManager.RemoveAllAnnotations();
+        circleAnnotationManager.RemoveAllAnnotations();
         await DisplayAlert("Info", $"All annotations were removed", "OK");
         annotations.Clear();
         map.CameraController.EaseTo(new CameraOptions

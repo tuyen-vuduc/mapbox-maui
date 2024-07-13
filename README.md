@@ -117,6 +117,33 @@ NOTE: A handy command to generate a new example
 dotnet cake -- --name SymbolClustering --index 58 --group Annotations --title "Add Cluster Symbol Annotations" --subtitle "Show fire hydrants in Washington DC area in a cluster using a symbol layer."
 ````
 
+# Features
+
+## GestureSettings
+
+|#|Android|iOS|Aligned|
+|----|----|----|----|
+|1|rotateEnabled| rotateEnabled | YES |
+|2|scrollEnabled| panEnabled | NOPE |
+|3|scrollMode| panMode | NOPE |
+|4|simultaneousRotateAndPinchToZoomEnabled| simultaneousRotateAndPinchZoomEnabled | NOPE |
+|5|doubleTouchToZoomOutEnabled| doubleTouchToZoomOutEnabled | YES |
+|6|doubleTapToZoomInEnabled| doubleTapToZoomInEnabled | YES |
+|7|focalPoint|focalPoint| YES |
+|8|pitchEnabled|pitchEnabled| YES |
+|9|quickZoomEnabled|quickZoomEnabled| YES |
+|10|pinchScrollEnabled|pinchScrollEnabled| YES |
+|11|pinchToZoomEnabled| N/A | NOPE, pinchEnabled & pinchZoomEnabled |
+|12|pinchToZoomDecelerationEnabled| N/A | NOPE |
+|13|rotateDecelerationEnabled | N/A | NOPE |
+|14|scrollDecelerationEnabled| N/A | NOPE |
+|15|increaseRotateThresholdWhenPinchingToZoom | N/A | NOPE |
+|16|increasePinchToZoomThresholdWhenRotating| N/A | NOPE |
+|17|zoomAnimationAmount| N/A | NOPE |
+|18| N/A |pinchEnabled| NOPE |
+|19| N/A |pinchZoomEnabled| NOPE |
+|20| N/A |panDecelerationFactor| NOPE |
+
 # NOTES
 
 1) Failed to delete `.gradle` folder

@@ -78,6 +78,7 @@
 		<PackageReference Include="Xamarin.Build.Download" Version="0.11.4" />
 		<PackageReference Include="GeoJSON.Text" Version="1.0.2" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.40" />
+		<PackageReference Update="Microsoft.Maui.Controls.Compatibility" Version="8.0.40" />
 	</ItemGroup>
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
 		<PackageReference Include="Com.Mapbox.Maps.Android" Version="11.5.0" />
@@ -92,20 +93,6 @@
 		<PackageReference Include="MapboxMapsObjC.iOS" Version="11.5.1" />
 		<PackageReference Include="MapboxMaps.iOS" Version="11.5.1" />
 	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Models\Styles\" />
-	  <Folder Include="Models\Styles\Sources\" />
-	  <Folder Include="Models\Expressions\" />
-	  <Folder Include="Models\Styles\Layers\" />
-	  <Folder Include="Models\Annotations\" />
-	  <Folder Include="Platforms\Android\Viewport\" />
-	  <Folder Include="Platforms\iOS\Annotations\" />
-	  <Folder Include="Platforms\Android\Annotations\" />
-	  <Folder Include="Models\Offline\" />
-	  <Folder Include="Platforms\iOS\Offline\" />
-	  <Folder Include="Platforms\Android\Offline\" />
-	  <Folder Include="Models\Query\" />
-	</ItemGroup>
 	<ProjectExtensions>
 	  <MonoDevelop>
 	    <Properties>
@@ -115,14 +102,5 @@
 	    </Properties>
 	  </MonoDevelop>
 	</ProjectExtensions>
-	<ItemGroup>
-	  <Compile Update="Platforms\Android\MapboxViewHandler.Camera.cs">
-	    <ExcludeFromCurrentConfiguration>true</ExcludeFromCurrentConfiguration>
-	  </Compile>
-	</ItemGroup>
-	<ItemGroup>
-	  <PackageReference Update="Microsoft.Maui.Controls.Compatibility" Version="8.0.40" />
-	</ItemGroup>
-
   <Target Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" Name="_GradleDependencyResolverTrigger" DependsOnTargets="_GradleSync" BeforeTargets="_BuildLibraryImportsCache" />
 </Project>

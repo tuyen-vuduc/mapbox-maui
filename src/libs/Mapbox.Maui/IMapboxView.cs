@@ -69,6 +69,7 @@ public interface IMapboxController
 {
     IPosition GetMapPosition(ScreenPosition position);
     CoordinateBounds GetCoordinateBoundsForCamera(CameraOptions cameraOptions);
+    ScreenPosition GetScreenPosition(IPosition position);
 }
 
 public class MapTappedEventArgs : EventArgs

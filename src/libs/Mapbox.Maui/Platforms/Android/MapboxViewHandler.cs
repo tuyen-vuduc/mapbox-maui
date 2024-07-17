@@ -208,13 +208,8 @@ public partial class MapboxViewHandler
         if (mapView?.MapboxMap.Style?.IsStyleLoaded != true) return;
 
         var scaleBarPlugin = ScaleBarUtils.GetScaleBar(mapView);
-        if (view.ScaleBarVisibility == OrnamentVisibility.Hidden)
-        {
-            scaleBarPlugin.Enabled = false;
-            return;
-        }
 
-        scaleBarPlugin.Enabled = true;
+        scaleBarPlugin.Enabled = view.ScaleBarVisibility != OrnamentVisibility.Hidden;
 
     }
 
@@ -239,11 +234,7 @@ public partial class MapboxViewHandler
             Id = Android.Views.View.GenerateViewId(),
         };
         mapboxFragment = new MapboxFragment();
-        mapboxFragment.MapViewReady += HandleMapViewReady;
-        mapboxFragment.StyleLoaded += HandleStyleLoaded;
-        mapboxFragment.MapLoaded += HandleMapLoaded;
-        mapboxFragment.MapClicked += HandleMapClicked;
-        mapboxFragment.MapLongClicked += HandleMapLongClicked;
+        RegisterEvents(mapboxFragment);
 
         var fragmentTransaction = mainActivity.SupportFragmentManager.BeginTransaction();
         fragmentTransaction.Replace(fragmentContainerView.Id, mapboxFragment, $"mapbox-maui-{fragmentContainerView.Id}");
@@ -268,11 +259,7 @@ public partial class MapboxViewHandler
     {
         if (mapboxFragment != null)
         {
-            mapboxFragment.MapViewReady -= HandleMapViewReady;
-            mapboxFragment.StyleLoaded -= HandleStyleLoaded;
-            mapboxFragment.MapLoaded -= HandleMapLoaded;
-            mapboxFragment.MapClicked -= HandleMapClicked;
-            mapboxFragment.MapLongClicked -= HandleMapLongClicked;
+            UnregisterEvents(mapboxFragment);
             mapboxFragment.Dispose();
             mapboxFragment = null;
         }
@@ -286,21 +273,6 @@ public partial class MapboxViewHandler
         }
         base.DisconnectHandler(platformView);
     }
-
-    private void HandleMapViewReady(MapView view)
-        => (VirtualView as MapboxView)?.InvokeMapReady();
-
-    private void HandleMapLoaded(MapView view)
-        => (VirtualView as MapboxView)?.InvokeMapLoaded();
-
-    private void HandleStyleLoaded(MapView view)
-        => (VirtualView as MapboxView)?.InvokeStyleLoaded();
-
-    private void HandleMapClicked(MapTappedPosition point)
-        => (VirtualView as MapboxView)?.InvokeMapTapped(point);
-    
-    private void HandleMapLongClicked(MapTappedPosition point)
-        => (VirtualView as MapboxView)?.InvokeMapLongTapped(point);
 
 }
 

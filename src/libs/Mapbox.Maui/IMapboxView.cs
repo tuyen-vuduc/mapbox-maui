@@ -81,3 +81,39 @@ public class MapTappedEventArgs : EventArgs
         Position = position;
     }
 }
+public class CameraChangedEventArgs : EventArgs
+{
+    public CameraChangedEventArgs(CameraOptions options)
+    {
+        Options = options;
+    }
+
+    public CameraOptions Options { get; }
+}
+public class IndicatorAccuracyRadiusChangedEventArgs : EventArgs
+{
+    public IndicatorAccuracyRadiusChangedEventArgs(double radius)
+    {
+        Radius = radius;
+    }
+
+    public double Radius { get; }
+}
+public class IndicatorBearingChangedEventArgs : EventArgs
+{
+    public IndicatorBearingChangedEventArgs(double bearing)
+    {
+        Bearing = bearing;
+    }
+
+    public double Bearing { get; }
+}
+public class IndicatorPositionChangedEventArgs : EventArgs
+{
+    public IndicatorPositionChangedEventArgs(IPosition position)
+    {
+        Position = position;
+    }
+
+    public IPosition Position { get; }
+}

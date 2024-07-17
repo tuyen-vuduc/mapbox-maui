@@ -312,6 +312,7 @@ public partial class MapboxViewHandler
             mapboxView.QueryManager = null;
             mapboxView.MapboxController = null;
             mapboxView.CameraController = null;
+            mapboxView.Viewport = null;
         }
 
         var mapView = platformView.MapView;
@@ -332,13 +333,15 @@ public partial class MapboxViewHandler
     {
         base.ConnectHandler(platformView);
 
-        if (VirtualView is MapboxView mapboxView)
+        var mapboxView = VirtualView as MapboxView;
+        if (mapboxView is not null)
         {
             mapboxView.InvokeMapReady();
             mapboxView.AnnotationController = this;
             mapboxView.QueryManager = this;
             mapboxView.MapboxController = this;
             mapboxView.CameraController = this;
+            mapboxView.Viewport = this;
         }
 
         var mapView = platformView.MapView;
@@ -346,17 +349,21 @@ public partial class MapboxViewHandler
 
         var mapboxMap = mapView.MapboxMap();
 
-        mapboxMap.OnStyleLoaded(_ =>
+        mapboxMap.OnCameraChanged(data =>
         {
-            (VirtualView as MapboxView)?.InvokeStyleLoaded();
+            mapboxView?.InvokeCameraChanged(data.CameraState.ToX());
         });
         mapboxMap.OnMapLoaded(_ =>
         {
-            (VirtualView as MapboxView)?.InvokeMapLoaded();
+            mapboxView?.InvokeMapLoaded();
         });
         mapboxMap.OnMapLoadingError(_ =>
         {
-            (VirtualView as MapboxView)?.InvokeMapLoadingError();
+            mapboxView?.InvokeMapLoadingError();
+        });
+        mapboxMap.OnStyleLoaded(_ =>
+        {
+            mapboxView?.InvokeStyleLoaded();
         });
 
         mapTapGestureRecognizer = new UITapGestureRecognizer(HandleMapTapped);

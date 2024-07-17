@@ -1,9 +1,10 @@
 ﻿using Android.Animation;
 using Com.Mapbox.Maps.Plugins.Animation;
+using MapboxMaui.Camera;
 
 namespace MapboxMaui;
 
-partial class MapboxViewHandler : IMapCameraController
+partial class MapboxViewHandler : ICameraPlugin
 {
     public void EaseTo(CameraOptions cameraOptions, AnimationOptions animationOptions = null, Action<AnimationState> completion = null)
     {

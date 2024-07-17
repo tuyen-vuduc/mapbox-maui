@@ -1,9 +1,10 @@
 ﻿using MapboxMapsObjC;
+using MapboxMaui.Camera;
 using UIKit;
 
 namespace MapboxMaui;
 
-partial class MapboxViewHandler : IMapCameraController
+partial class MapboxViewHandler : ICameraPlugin
 {
     public void EaseTo(CameraOptions cameraOptions, AnimationOptions animationOptions = default, Action<AnimationState> completion = default)
     {

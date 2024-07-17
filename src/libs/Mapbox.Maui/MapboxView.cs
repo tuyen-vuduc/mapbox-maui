@@ -1,7 +1,9 @@
 ﻿namespace MapboxMaui;
 
 using MapboxMaui.Annotations;
+using MapboxMaui.Camera;
 using MapboxMaui.Styles;
+using MapboxMaui.Viewport;
 
 public partial class MapboxView : View, IMapboxView
 {
@@ -233,5 +235,6 @@ public partial class MapboxView : View, IMapboxView
     public IAnnotationController AnnotationController { get; internal set; }
     public IMapFeatureQueryable QueryManager { get; internal set; }
     public IMapboxController MapboxController { get; internal set; }
-    public IMapCameraController CameraController { get; internal set; }
+    public ICameraPlugin CameraController { get; internal set; }
+    public IViewportPlugin Viewport { get; internal set; }
 }

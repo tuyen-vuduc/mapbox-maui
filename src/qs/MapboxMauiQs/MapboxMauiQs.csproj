@@ -114,6 +114,7 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Examples\Annotations\" />
+	  <Folder Include="Examples\Camera\" />
 	</ItemGroup>
 	<PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
 		<PublishTrimmed>true</PublishTrimmed>

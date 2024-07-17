@@ -4,6 +4,7 @@ using System.Windows.Input;
 using MapboxMaui.Annotations;
 using MapboxMaui.Query;
 using MapboxMaui.Styles;
+using MapboxMaui.Viewport;
 
 public partial interface IMapboxView : IView
 {
@@ -32,6 +33,8 @@ public partial interface IMapboxView : IView
     IAnnotationController AnnotationController { get; }
 
     IMapFeatureQueryable QueryManager { get; }
+
+    IViewportPlugin Viewport { get; }
 }
 
 partial interface IMapboxView
@@ -66,12 +69,6 @@ public interface IMapboxController
 {
     IPosition GetMapPosition(ScreenPosition position);
     CoordinateBounds GetCoordinateBoundsForCamera(CameraOptions cameraOptions);
-}
-
-public interface IMapCameraController
-{
-    void FlyTo(CameraOptions cameraOptions, AnimationOptions animationOptions = default, Action<AnimationState> completion = default);
-    void EaseTo(CameraOptions cameraOptions, AnimationOptions animationOptions = default, Action<AnimationState> completion = default);
 }
 
 public class MapTappedEventArgs : EventArgs

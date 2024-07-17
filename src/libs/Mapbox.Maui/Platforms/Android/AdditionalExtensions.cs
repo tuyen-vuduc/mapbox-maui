@@ -16,6 +16,7 @@ using AndroidX.Fragment.App;
 using Com.Mapbox.Maps.Plugins.Animation;
 using Com.Mapbox.Functions;
 using Com.Mapbox.Maps.Plugins;
+using Android.Content.PM;
 
 static class AdditionalExtensions
 {
@@ -341,6 +342,20 @@ static class AdditionalExtensions
         return mapboxStyle.Value;
     }
 
+    public static CameraOptions ToX(this MapboxMapsCameraOptions cameraOptions)
+        => new()
+        {
+            Anchor = cameraOptions.Anchor?.ToX(),
+            Bearing = cameraOptions.Bearing?.FloatValue(),
+            Center = cameraOptions.Center?.ToMapPosition(),
+            Padding = cameraOptions.Padding?.ToX(),
+            Pitch = cameraOptions.Pitch?.FloatValue(),
+            Zoom = cameraOptions.Zoom?.FloatValue(),
+        };
+
+    public static ScreenPosition ToX(this ScreenCoordinate screenCoordinate)
+        => new(screenCoordinate.GetX(), screenCoordinate.GetY());
+
     public static MapboxMapsCameraOptions ToNative(this CameraOptions cameraOptions)
     {
         var cameraOptionsBuilder = new MapboxMapsCameraOptions.Builder();
@@ -371,23 +386,37 @@ static class AdditionalExtensions
 
         if (cameraOptions.Padding.HasValue)
         {
-            cameraOptionsBuilder.Padding(new EdgeInsets(
-                cameraOptions.Padding.Value.Top,
-                cameraOptions.Padding.Value.Left,
-                cameraOptions.Padding.Value.Bottom,
-                cameraOptions.Padding.Value.Right
-                ));
+            cameraOptionsBuilder.Padding(
+                cameraOptions.Padding.Value.ToNative());
         }
 
         if (cameraOptions.Anchor is not null)
         {
-            cameraOptionsBuilder.Anchor(new ScreenCoordinate(
-                cameraOptions.Anchor.Value.X,
-                cameraOptions.Anchor.Value.Y
-                ));
+            cameraOptionsBuilder.Anchor(
+                cameraOptions.Anchor.Value.ToScreenCoordinate()
+            );
         }
 
         return cameraOptionsBuilder.Build();
     }
+
+    public static EdgeInsets ToNative(this Thickness x)
+        => new(
+        x.Top,
+        x.Left,
+        x.Bottom,
+        x.Right
+    );
+
+    public static Thickness ToX(this EdgeInsets x)
+        => new(
+        x.Top,
+        x.Left,
+        x.Bottom,
+        x.Right
+    );
+
+    public static Java.Lang.Double ToNative(this double x)
+        => new(x);
 }
 

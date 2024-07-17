@@ -98,6 +98,7 @@
 	  <Folder Include="Models\Expressions\" />
 	  <Folder Include="Models\Styles\Layers\" />
 	  <Folder Include="Models\Annotations\" />
+	  <Folder Include="Platforms\Android\Viewport\" />
 	  <Folder Include="Platforms\iOS\Annotations\" />
 	  <Folder Include="Platforms\Android\Annotations\" />
 	  <Folder Include="Models\Offline\" />
@@ -123,9 +124,5 @@
 	  <PackageReference Update="Microsoft.Maui.Controls.Compatibility" Version="8.0.40" />
 	</ItemGroup>
 
-  <Target 
-    Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'"
-    Name="_GradleDependencyResolverTrigger"
-    DependsOnTargets="_GradleSync"
-    BeforeTargets="_BuildLibraryImportsCache" />
+  <Target Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" Name="_GradleDependencyResolverTrigger" DependsOnTargets="_GradleSync" BeforeTargets="_BuildLibraryImportsCache" />
 </Project>

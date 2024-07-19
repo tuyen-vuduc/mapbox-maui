@@ -6,6 +6,5 @@ class GestureSettingsExampleInfo : IExampleInfo
     public string Title => "Gesture Settings";
     public string Subtitle => "Enable and disable default gestures.";
     public string PageRoute => typeof(GestureSettingsExample).FullName;
-    public int GroupIndex => 0;
     public int Index => 66;
 }

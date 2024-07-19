@@ -5,6 +5,5 @@ class SymbolClusteringExampleInfo : IExampleInfo
     public string Title => "Add Cluster Symbol Annotations";
     public string Subtitle => "Show fire hydrants in Washington DC area in a cluster using a symbol layer.";
     public string PageRoute => typeof(SymbolClusteringExample).FullName;
-    public int GroupIndex => 3;
     public int Index => 58;
 }

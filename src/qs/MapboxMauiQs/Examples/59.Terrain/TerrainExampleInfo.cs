@@ -5,6 +5,5 @@ class TerrainExampleInfo : IExampleInfo
     public string Title => "Show 3D terrain";
     public string Subtitle => "Show realistic elevation by enabling terrain.";
     public string PageRoute => typeof(TerrainExample).FullName;
-    public int GroupIndex => 2;
     public int Index => 59;
 }

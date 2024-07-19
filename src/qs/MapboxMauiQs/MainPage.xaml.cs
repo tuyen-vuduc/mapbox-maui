@@ -7,7 +7,7 @@ public partial class MainPage : ContentPage
         InitializeComponent();
 
         var items = examples
-            .OrderBy(x => x.GroupIndex)
+            .OrderBy(x => x.GroupIndex())
             .ThenBy(x => x.Index)
             .GroupBy(x => x.Group)
             .ToList();

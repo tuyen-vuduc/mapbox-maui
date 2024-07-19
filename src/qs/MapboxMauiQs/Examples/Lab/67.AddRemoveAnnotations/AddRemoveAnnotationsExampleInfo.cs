@@ -6,6 +6,5 @@ class AddRemoveAnnotationsExampleInfo : IExampleInfo
     public string Title => "Add/remove annotations";
     public string Subtitle => "Demo of adding/removing annotations.";
     public string PageRoute => typeof(AddRemoveAnnotationsExample).FullName;
-    public int GroupIndex => 0;
     public int Index => 67;
 }

@@ -15,6 +15,17 @@ using CoreGraphics;
 
 public static partial class AdditionalExtensions
 {
+    internal static CameraOptions ToX(this TMBCameraState state)
+    {
+        return new CameraOptions
+        {
+            Bearing = (float?)state.Bearing,
+            Center = state.Center.ToMapPosition(),
+            Padding = state.Padding.ToThickness(),
+            Pitch = (float?)state.Pitch.Value,
+            Zoom = (float?)state.Zoom.Value,
+        };
+    }
     internal static TMBPanMode ToNative(this PanMode panMode)
     {
         return panMode switch

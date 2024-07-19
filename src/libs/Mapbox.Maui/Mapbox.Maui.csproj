@@ -90,7 +90,7 @@
 		<PackageReference Include="Dependencies.Gradle" Version="8.6.0.1" />
 	</ItemGroup>
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
-		<PackageReference Include="MapboxMapsObjC.iOS" Version="11.5.1" />
+		<PackageReference Include="MapboxMapsObjC.iOS" Version="11.5.1.1" />
 		<PackageReference Include="MapboxMaps.iOS" Version="11.5.1" />
 	</ItemGroup>
 	<ProjectExtensions>

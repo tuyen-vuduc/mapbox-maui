@@ -1,4 +1,5 @@
-﻿using X = MapboxMaui.Viewport;
+﻿using MapboxMapsObjC;
+using X = MapboxMaui.Viewport;
 
 namespace MapboxMaui;
 
@@ -10,11 +11,9 @@ partial class MapboxViewHandler : X.IViewportPlugin
 
         if (mapView == null) return default;
 
-        throw new NotImplementedException();
-        //var viewport = mapView.Ma.GetViewport(mapView);
-        //var state = viewport.MakeFollowPuckViewportState(options.ToNative());
-
-        //return state.ToX();
+        var viewport = mapView.Viewport();
+        var state = viewport.MakeFollowPuckViewportStateWithOptions(options.ToNative());
+        return state.ToX();
     }
 
     public X.IOverviewViewportState MakeOverviewViewportState(X.OverviewViewportStateOptions options)
@@ -23,10 +22,8 @@ partial class MapboxViewHandler : X.IViewportPlugin
 
         if (mapView == null) return default;
 
-        throw new NotImplementedException();
-        //var viewport = ViewportUtils.GetViewport(mapView);
-        //var state = viewport.MakeOverviewViewportState(options.ToNative());
-
-        //return state.ToX();
+        var viewport = mapView.Viewport();
+        var state = viewport.MakeOverviewViewportStateWithOptions(options.ToNative());
+        return state.ToX();
     }
 }

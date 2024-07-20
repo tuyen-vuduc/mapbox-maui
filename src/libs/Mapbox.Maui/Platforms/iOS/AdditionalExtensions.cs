@@ -9,13 +9,52 @@ using MapboxMaui.Offline;
 using MapboxMaui.Styles;
 using MapboxCoreMaps;
 using MapboxMapsObjC;
-using Microsoft.Maui.Controls.Compatibility.Platform.iOS;
 using Microsoft.Maui.Platform;
 using CoreGraphics;
+using UIKit;
 
 public static partial class AdditionalExtensions
 {
+    internal static UIEdgeInsets ToNative(this Thickness x)
+    {
+        return new UIEdgeInsets(
+            (nfloat)x.Top, 
+            (nfloat)x.Left, 
+            (nfloat)x.Bottom,
+            (nfloat)x.Right);
+    }
+    internal static NSValue ToNSValue(this Thickness x)
+    {
+        return NSValue.FromUIEdgeInsets(x.ToNative());
+    }
+    internal static Thickness ToX(this UIEdgeInsets x)
+    {
+        return new Thickness(
+            x.Left,
+            x.Top,
+            x.Right,
+            x.Bottom);
+    }
+    internal static Thickness ToThickness(this NSValue x)
+    {
+        return x.UIEdgeInsetsValue.ToX();
+    }
+    internal static ScreenPosition ToScreenPosition(this NSValue x)
+    {
+        return x.CGPointValue.ToPoint();
+    }
     internal static CameraOptions ToX(this TMBCameraState state)
+    {
+        return new CameraOptions
+        {
+            Bearing = (float?)state.Bearing,
+            Center = state.Center.ToMapPosition(),
+            Padding = state.Padding.ToThickness(),
+            Pitch = (float?)state.Pitch.Value,
+            Zoom = (float?)state.Zoom.Value,
+        };
+    }
+    internal static CameraOptions ToX(this TMBCameraOptions state)
     {
         return new CameraOptions
         {

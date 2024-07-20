@@ -252,6 +252,8 @@ public partial class MapboxViewHandler
             mapboxView.QueryManager = this;
             mapboxView.MapboxController = this;
             mapboxView.CameraController = this;
+
+            mapboxView.InvokeMapReady();
         }
     }
 

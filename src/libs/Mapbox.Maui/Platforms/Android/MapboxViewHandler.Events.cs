@@ -12,7 +12,6 @@ public partial class MapboxViewHandler
         mapboxFragment.IndicatorPositionChanged += HandleIndicatorPositionChanged;
         mapboxFragment.MapLoaded += HandleMapLoaded;
         mapboxFragment.MapLoadingError += HandleMapLoadingError;
-        mapboxFragment.MapViewReady += HandleMapViewReady;
         mapboxFragment.MapClicked += HandleMapClicked;
         mapboxFragment.MapLongClicked += HandleMapLongClicked;
         mapboxFragment.StyleLoaded += HandleStyleLoaded;
@@ -26,7 +25,6 @@ public partial class MapboxViewHandler
         mapboxFragment.IndicatorPositionChanged -= HandleIndicatorPositionChanged;
         mapboxFragment.MapLoaded -= HandleMapLoaded;
         mapboxFragment.MapLoadingError -= HandleMapLoadingError;
-        mapboxFragment.MapViewReady -= HandleMapViewReady;
         mapboxFragment.MapClicked -= HandleMapClicked;
         mapboxFragment.MapLongClicked -= HandleMapLongClicked;
         mapboxFragment.StyleLoaded -= HandleStyleLoaded;

@@ -21,7 +21,6 @@ public partial class MapboxFragment : Fragment
     public event Action<MapView> MapLoaded;
     public event Action<MapView> MapLoadingError;
     public event Action<MapTappedPosition> MapLongClicked;
-    public event Action<MapView> MapViewReady;
     public event Action<MapView> StyleLoaded;
 
     public MapView MapView { get; private set; }
@@ -57,7 +56,6 @@ public partial class MapboxFragment : Fragment
     {
         base.OnViewCreated(view, savedInstanceState);
 
-        MapViewReady?.Invoke(MapView);
         cancelables.Add(
             MapView.MapboxMap.SubscribeCameraChanged(this)
         );

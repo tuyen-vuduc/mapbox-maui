@@ -336,12 +336,13 @@ public partial class MapboxViewHandler
         var mapboxView = VirtualView as MapboxView;
         if (mapboxView is not null)
         {
-            mapboxView.InvokeMapReady();
             mapboxView.AnnotationController = this;
             mapboxView.QueryManager = this;
             mapboxView.MapboxController = this;
             mapboxView.CameraController = this;
             mapboxView.Viewport = this;
+
+            mapboxView.InvokeMapReady();
         }
 
         var mapView = platformView.MapView;

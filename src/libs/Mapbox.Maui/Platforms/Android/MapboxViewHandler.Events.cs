@@ -6,6 +6,17 @@ public partial class MapboxViewHandler
 {
     private void RegisterEvents(MapboxFragment mapboxFragment)
     {
+        if (VirtualView is MapboxView mapboxView)
+        {
+            mapboxView.AnnotationController = this;
+            mapboxView.QueryManager = this;
+            mapboxView.MapboxController = this;
+            mapboxView.CameraController = this;
+            mapboxView.Viewport = this;
+
+            mapboxView.InvokeMapReady();
+        }
+
         mapboxFragment.CameraChanged += HandleCameraChanged;
         mapboxFragment.IndicatorAccuracyRadiusChanged += HandleIndicatorAccuracyRadiusChanged;
         mapboxFragment.IndicatorBearingChanged += HandleIndicatorBearingChanged;
@@ -15,10 +26,20 @@ public partial class MapboxViewHandler
         mapboxFragment.MapClicked += HandleMapClicked;
         mapboxFragment.MapLongClicked += HandleMapLongClicked;
         mapboxFragment.StyleLoaded += HandleStyleLoaded;
+        mapboxFragment.ViewportStatusChanged += HandleViewportStatusChanged;
     }
 
     private void UnregisterEvents(MapboxFragment mapboxFragment)
     {
+        if (VirtualView is MapboxView mapboxView)
+        {
+            mapboxView.AnnotationController = null;
+            mapboxView.QueryManager = null;
+            mapboxView.CameraController = null;
+            mapboxView.MapboxController = null;
+            mapboxView.Viewport = null;
+        }
+
         mapboxFragment.CameraChanged -= HandleCameraChanged;
         mapboxFragment.IndicatorAccuracyRadiusChanged -= HandleIndicatorAccuracyRadiusChanged;
         mapboxFragment.IndicatorBearingChanged -= HandleIndicatorBearingChanged;
@@ -28,6 +49,7 @@ public partial class MapboxViewHandler
         mapboxFragment.MapClicked -= HandleMapClicked;
         mapboxFragment.MapLongClicked -= HandleMapLongClicked;
         mapboxFragment.StyleLoaded -= HandleStyleLoaded;
+        mapboxFragment.ViewportStatusChanged -= HandleViewportStatusChanged;
     }
 
     private void HandleCameraChanged(CameraOptions options)
@@ -46,10 +68,10 @@ public partial class MapboxViewHandler
         => (VirtualView as MapboxView)?.InvokeMapReady();
     private void HandleMapLongClicked(MapTappedPosition point)
         => (VirtualView as MapboxView)?.InvokeMapLongTapped(point);
-    private void HandleMapViewReady(MapView view)
-        => (VirtualView as MapboxView)?.InvokeMapReady();
     private void HandleStyleLoaded(MapView view)
         => (VirtualView as MapboxView)?.InvokeStyleLoaded();
+    private void HandleViewportStatusChanged(Viewport.ViewportStatusChangedEventArgs args)
+        => (VirtualView as MapboxView)?.InvokeViewportStatusChanged(args);
 
 
 }

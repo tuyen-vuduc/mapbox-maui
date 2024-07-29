@@ -10,6 +10,8 @@ using Com.Mapbox.Maps.Plugins.Gestures;
 using Com.Mapbox.Geojson;
 using Com.Mapbox.Common;
 using Com.Mapbox.Maps.Plugins.Locationcomponent;
+using MapboxMaui.Viewport;
+using Com.Mapbox.Maps.Plugins.Viewport;
 
 public partial class MapboxFragment : Fragment
 {
@@ -22,6 +24,7 @@ public partial class MapboxFragment : Fragment
     public event Action<MapView> MapLoadingError;
     public event Action<MapTappedPosition> MapLongClicked;
     public event Action<MapView> StyleLoaded;
+    public event Action<ViewportStatusChangedEventArgs> ViewportStatusChanged;
 
     public MapView MapView { get; private set; }
 
@@ -76,6 +79,8 @@ public partial class MapboxFragment : Fragment
 
         GesturesUtils.AddOnMapClickListener(MapView.MapboxMap, this);
         GesturesUtils.AddOnMapLongClickListener(MapView.MapboxMap, this);
+
+        ViewportUtils.GetViewport(MapView).AddStatusObserver(new XViewportStatusObserver(ViewportStatusChanged));
     }
 
     public override void OnStart()

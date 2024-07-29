@@ -3,13 +3,13 @@
 sealed class XCancellable : ICancelable, IDisposable
 {
     private bool disposedValue;
-    private readonly Com.Mapbox.Common.ICancelable platformValue;
+    public Com.Mapbox.Common.ICancelable Cancelable { get; }
 
     public XCancellable(
         Com.Mapbox.Common.ICancelable platformValue
         )
     {
-        this.platformValue = platformValue;
+        this.Cancelable = platformValue;
     }
 
     void Dispose(bool disposing)
@@ -18,7 +18,7 @@ sealed class XCancellable : ICancelable, IDisposable
         {
             if (disposing)
             {
-                platformValue?.Dispose();
+                Cancelable?.Dispose();
             }
 
             disposedValue = true;
@@ -34,6 +34,6 @@ sealed class XCancellable : ICancelable, IDisposable
 
     public void Cancel()
     {
-        platformValue.Cancel();
+        Cancelable.Cancel();
     }
 }

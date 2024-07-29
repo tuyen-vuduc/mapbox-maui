@@ -1,12 +1,12 @@
-﻿using Com.Mapbox.Maps.Plugins.Viewport.State;
+﻿using Com.Mapbox.Maps.Plugins.Viewport.Data;
+using Com.Mapbox.Maps.Plugins.Viewport.State;
 using X = MapboxMaui.Viewport;
 
 namespace MapboxMaui;
 
 sealed class XFollowPuckViewPortState : XViewportState, X.IFollowPuckViewportState, IDisposable
 {
-    private bool disposedValue;
-    private readonly IFollowPuckViewportState platformValue;
+    public readonly IFollowPuckViewportState platformValue;
 
     public XFollowPuckViewPortState(IFollowPuckViewportState platformValue)
         : base(platformValue)

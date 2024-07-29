@@ -6,11 +6,11 @@ namespace MapboxMaui;
 abstract class XViewportState : X.IViewportState, IDisposable
 {
     private bool disposedValue;
-    private readonly ITMBViewportState platformValue;
+    public ITMBViewportState State { get; }
 
     protected XViewportState(ITMBViewportState platformValue)
     {
-        this.platformValue = platformValue;
+        this.State = platformValue;
     }
 
     private void Dispose(bool disposing)
@@ -19,7 +19,7 @@ abstract class XViewportState : X.IViewportState, IDisposable
         {
             if (disposing)
             {
-                platformValue.Dispose();
+                State.Dispose();
             }
 
             disposedValue = true;
@@ -35,13 +35,13 @@ abstract class XViewportState : X.IViewportState, IDisposable
     public ICancelable ObserveDataSource(X.ViewportStateDataObserver observer)
     {
         return new XCancellable(
-            platformValue.ObserveDataSourceWith(
+            State.ObserveDataSourceWith(
                 cameraOptions => observer.Invoke(cameraOptions.ToX())
             )
         );
     }
 
-    public void StartUpdatingCamera() => platformValue.StartUpdatingCamera();
+    public void StartUpdatingCamera() => State.StartUpdatingCamera();
 
-    public void StopUpdatingCamera() => platformValue.StopUpdatingCamera();
+    public void StopUpdatingCamera() => State.StopUpdatingCamera();
 }

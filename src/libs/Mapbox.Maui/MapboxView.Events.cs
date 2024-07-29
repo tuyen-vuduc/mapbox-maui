@@ -4,6 +4,26 @@ using System.Windows.Input;
 
 partial class MapboxView
 {
+    public event EventHandler<Viewport.ViewportStatusChangedEventArgs> ViewportStatusChanged;
+    public static readonly BindableProperty ViewportStatusChangedCommandProperty = BindableProperty.Create(
+        nameof(ViewportStatusChangedCommand),
+        typeof(ICommand),
+        typeof(MapboxView)
+    );
+    public ICommand ViewportStatusChangedCommand
+    {
+        get => (ICommand)GetValue(ViewportStatusChangedCommandProperty);
+        set => SetValue(ViewportStatusChangedCommandProperty, value);
+    }
+    internal void InvokeViewportStatusChanged(Viewport.ViewportStatusChangedEventArgs args)
+    {
+        ViewportStatusChanged?.Invoke(this, args);
+
+        if (CameraChangedCommand?.CanExecute(args) == true)
+        {
+            CameraChangedCommand.Execute(args);
+        }
+    }
     public event EventHandler<CameraChangedEventArgs> CameraChanged;
     public static readonly BindableProperty CameraChangedCommandProperty = BindableProperty.Create(
         nameof(CameraChangedCommand),

@@ -234,7 +234,6 @@ public partial class MapboxViewHandler
             Id = Android.Views.View.GenerateViewId(),
         };
         mapboxFragment = new MapboxFragment();
-        RegisterEvents(mapboxFragment);
 
         var fragmentTransaction = mainActivity.SupportFragmentManager.BeginTransaction();
         fragmentTransaction.Replace(fragmentContainerView.Id, mapboxFragment, $"mapbox-maui-{fragmentContainerView.Id}");
@@ -246,15 +245,7 @@ public partial class MapboxViewHandler
     {
         base.ConnectHandler(platformView);
 
-        if (VirtualView is MapboxView mapboxView)
-        {
-            mapboxView.AnnotationController = this;
-            mapboxView.QueryManager = this;
-            mapboxView.MapboxController = this;
-            mapboxView.CameraController = this;
-
-            mapboxView.InvokeMapReady();
-        }
+        RegisterEvents(mapboxFragment);
     }
 
     protected override void DisconnectHandler(PlatformView platformView)
@@ -266,13 +257,6 @@ public partial class MapboxViewHandler
             mapboxFragment = null;
         }
 
-        if (VirtualView is MapboxView mapboxView)
-        {
-            mapboxView.AnnotationController = null;
-            mapboxView.QueryManager = null;
-            mapboxView.CameraController = null;
-            mapboxView.MapboxController = null;
-        }
         base.DisconnectHandler(platformView);
     }
 

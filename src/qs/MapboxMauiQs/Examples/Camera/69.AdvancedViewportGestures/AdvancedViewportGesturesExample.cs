@@ -8,9 +8,11 @@ public class AdvancedViewportGesturesExample : ContentPage, IExamplePage, IQuery
     private const string NAVIGATION_ROUTE_JSON_NAME = "navigation_route.json";
     private const string GEOJSON_SOURCE_ID = "source_id";
     private const string ROUTE_LINE_LAYER_ID = "route_line_layer_id";
+    private static readonly Color MAPBOX_BLUE = Color.FromRgb(0x1E, 0x8C, 0xAB);
 
     MapboxView map;
     IExampleInfo info;
+    LineString routePoints;
 
     IFollowPuckViewportState followPuckViewportState;
     IOverviewViewportState overviewViewportState;
@@ -33,14 +35,14 @@ public class AdvancedViewportGesturesExample : ContentPage, IExamplePage, IQuery
 
     private async void Map_MapReady(object sender, EventArgs e)
     {
-        var centerLocation = new MapPosition(37.3230, -122.0322); // Cupertino
-        var cameraOptions = new CameraOptions
-        {
-            Center = centerLocation,
-            Zoom = 14,
-        };
+        //var centerLocation = new MapPosition(37.3230, -122.0322); // Cupertino
+        //var cameraOptions = new CameraOptions
+        //{
+        //    Center = centerLocation,
+        //    Zoom = 14,
+        //};
 
-        map.CameraOptions = cameraOptions;
+        //map.CameraOptions = cameraOptions;
         map.MapboxStyle = MapboxStyle.TRAFFIC_DAY;
 
         followPuckViewportState = map.Viewport.MakeFollowPuckViewportState(new FollowPuckViewportStateOptions
@@ -49,13 +51,89 @@ public class AdvancedViewportGesturesExample : ContentPage, IExamplePage, IQuery
             Padding = new Thickness(200, 0, 0, 0),
         });
 
-        var geometry = await LoadGeojson();
+        routePoints = await LoadGeojson();
         overviewViewportState = map.Viewport.MakeOverviewViewportState(new OverviewViewportStateOptions
         {
-            Geometry = geometry,
+            Geometry = routePoints,
             Padding = 100,
         });
 
+        var geojsonSource = new GeoJSONSource(GEOJSON_SOURCE_ID)
+        {
+            Data = routePoints
+        };
+        var lineLayer = new LineLayer(ROUTE_LINE_LAYER_ID)
+        {
+            Source = GEOJSON_SOURCE_ID,
+            LineColor = MAPBOX_BLUE,
+            LineWidth = 10.0,
+            LineCap = MapboxMaui.LineCap.Round,
+            LineJoin = MapboxMaui.LineJoin.Round,
+        };
+        map.Sources = [geojsonSource];
+        map.Layers = [lineLayer];
+
+        map.StyleLoaded += Map_StyleLoaded;
+    }
+
+    private void Map_MapTapped(object sender, MapTappedEventArgs e)
+    {
+        var currentOrNextState = map.Viewport.GetCurrentOrNextState();
+        map.Viewport.TransitionTo(currentOrNextState == followPuckViewportState
+            ? overviewViewportState
+            : followPuckViewportState);
+    }
+
+    private void Map_StyleLoaded(object sender, EventArgs e)
+    {
+        map.ViewportStatusChanged += Map_ViewportStatusChanged;
+        map.MapTapped += Map_MapTapped;
+        map.Viewport.TransitionTo(overviewViewportState);
+    }
+
+    private void Map_ViewportStatusChanged(object sender, ViewportStatusChangedEventArgs e)
+    {
+        if (e.FromStatus.State == followPuckViewportState)
+        {
+            ClearAdvancedGesturesForFollowPuckViewportState();
+        }
+        if (e.ToStatus.State == followPuckViewportState)
+        {
+            SetupAdvancedGesturesForFollowPuckViewportState();
+        }
+    }
+
+    private void SetupAdvancedGesturesForFollowPuckViewportState()
+    {
+        //map.Viewport.Options = new ViewportOptions
+        //{
+
+        //};
+        //map.LocationIndicatorLocationChanged += HandleLocationIndicatorLocationChanged;
+        map.GestureSettings = map.GestureSettings with
+        {
+            ScrollEnabled = false,
+        };
+        //map.GestureScaled += HandleGestureScaled;
+        //map.GestureRotated += HandleGestureScaled;
+        //map.GestureShoved += HandleGestureShoved;
+    }
+
+    private void ClearAdvancedGesturesForFollowPuckViewportState()
+    {
+        //map.Viewport.Options = new ViewportOptions
+        //{
+
+        //};
+        //map.LocationIndicatorLocationChanged -= HandleLocationIndicatorLocationChanged;
+        map.GestureSettings = map.GestureSettings with
+        {
+            FocalPoint = null,
+            ScrollEnabled = true,
+        };
+        //map.GestureScaled -= HandleGestureScaled;
+        //map.GestureRotated -= HandleGestureScaled;
+        //map.GestureShoved -= HandleGestureShoved;
     }
 
     private void Map_MapLoaded(object sender, EventArgs e)

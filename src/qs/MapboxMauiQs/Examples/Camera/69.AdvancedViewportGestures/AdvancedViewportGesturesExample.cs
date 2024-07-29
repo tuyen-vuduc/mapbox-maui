@@ -105,10 +105,10 @@ public class AdvancedViewportGesturesExample : ContentPage, IExamplePage, IQuery
 
     private void SetupAdvancedGesturesForFollowPuckViewportState()
     {
-        //map.Viewport.Options = new ViewportOptions
-        //{
-
-        //};
+        map.Viewport.Options = new ViewportOptions
+        {
+            TransitionsToIdleUponUserInteraction = false,
+        };
         //map.LocationIndicatorLocationChanged += HandleLocationIndicatorLocationChanged;
         map.GestureSettings = map.GestureSettings with
         {
@@ -121,10 +121,10 @@ public class AdvancedViewportGesturesExample : ContentPage, IExamplePage, IQuery
 
     private void ClearAdvancedGesturesForFollowPuckViewportState()
     {
-        //map.Viewport.Options = new ViewportOptions
-        //{
-
-        //};
+        map.Viewport.Options = new ViewportOptions
+        {
+            TransitionsToIdleUponUserInteraction = true,
+        };
         //map.LocationIndicatorLocationChanged -= HandleLocationIndicatorLocationChanged;
         map.GestureSettings = map.GestureSettings with
         {

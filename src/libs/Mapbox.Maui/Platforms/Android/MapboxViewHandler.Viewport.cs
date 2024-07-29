@@ -5,11 +5,35 @@ namespace MapboxMaui;
 
 partial class MapboxViewHandler : X.IViewportPlugin
 {
+    public X.ViewportOptions Options
+    {
+        get
+        {
+            var mapView = mapboxFragment?.MapView;
+
+            if (mapView == null) return default;
+
+            var viewport = ViewportUtils.GetViewport(mapView);
+
+            return viewport.Options.ToX();
+        }
+        set
+        {
+            var mapView = mapboxFragment?.MapView;
+
+            if (mapView == null) return;
+
+            var viewport = ViewportUtils.GetViewport(mapView);
+
+            viewport.Options = value.ToNative();
+        }
+    }
+
     public X.IViewportState GetCurrentOrNextState()
     {
         var mapView = mapboxFragment?.MapView;
 
-        if (mapView == null) return null;
+        if (mapView == null) return default;
 
         var viewport = ViewportUtils.GetViewport(mapView);
 

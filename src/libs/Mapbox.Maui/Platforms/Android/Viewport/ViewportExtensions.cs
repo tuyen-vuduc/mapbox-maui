@@ -8,6 +8,17 @@ namespace MapboxMaui;
 
 public static class ViewportExtensions
 {
+    public static X.ViewportOptions ToX(this ViewportOptions options)
+        => new()
+        {
+            TransitionsToIdleUponUserInteraction = options.TransitionsToIdleUponUserInteraction,
+        };
+    public static ViewportOptions ToNative(this X.ViewportOptions options)
+        => new ViewportOptions.Builder()
+            .TransitionsToIdleUponUserInteraction(
+                options.TransitionsToIdleUponUserInteraction)
+            .Build();
+
     public static X.ViewportStatusChangeReason ToX(this ViewportStatusChangeReason status)
     {
         if (status == ViewportStatusChangeReason.IdleRequested)

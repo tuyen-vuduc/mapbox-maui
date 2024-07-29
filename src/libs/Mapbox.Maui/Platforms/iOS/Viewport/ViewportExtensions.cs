@@ -5,6 +5,14 @@ namespace MapboxMaui;
 
 public static class ViewportExtensions
 {
+    public static X.ViewportOptions ToX(this TMBViewportOptions options)
+        => new()
+        {
+            TransitionsToIdleUponUserInteraction = options.TransitionsToIdleUponUserInteraction,
+        };
+    public static TMBViewportOptions ToNative(this X.ViewportOptions options)
+        => new(options.TransitionsToIdleUponUserInteraction);
+
     public static X.ViewportStatusChangeReason ToX(this TMBViewportStatusChangeReason status)
     {
         if (status == TMBViewportStatusChangeReason.IdleRequested)

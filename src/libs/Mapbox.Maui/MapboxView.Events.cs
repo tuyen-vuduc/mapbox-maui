@@ -4,6 +4,68 @@ using System.Windows.Input;
 
 partial class MapboxView
 {
+    public event EventHandler<Gestures.RotatingEventArgs> Rotating;
+    public static readonly BindableProperty RotatingCommandProperty = BindableProperty.Create(
+        nameof(RotatingCommand),
+        typeof(ICommand),
+        typeof(MapboxView)
+    );
+    public ICommand RotatingCommand
+    {
+        get => (ICommand)GetValue(RotatingCommandProperty);
+        set => SetValue(RotatingCommandProperty, value);
+    }
+    internal void InvokeRotating(Gestures.RotatingEventArgs args)
+    {
+        Rotating?.Invoke(this, args);
+
+        if (RotatingCommand?.CanExecute(args) == true)
+        {
+            RotatingCommand.Execute(args);
+        }
+    }
+    
+    public event EventHandler<Gestures.RotatingBeganEventArgs> RotatingBegan;
+    public static readonly BindableProperty RotatingBeganCommandProperty = BindableProperty.Create(
+        nameof(RotatingBeganCommand),
+        typeof(ICommand),
+        typeof(MapboxView)
+    );
+    public ICommand RotatingBeganCommand
+    {
+        get => (ICommand)GetValue(RotatingBeganCommandProperty);
+        set => SetValue(RotatingBeganCommandProperty, value);
+    }
+    internal void InvokeRotatingBegan(Gestures.RotatingBeganEventArgs args)
+    {
+        RotatingBegan?.Invoke(this, args);
+
+        if (RotatingBeganCommand?.CanExecute(args) == true)
+        {
+            RotatingBeganCommand.Execute(args);
+        }
+    }
+
+    public event EventHandler<Gestures.RotatingEndedEventArgs> RotatingEnded;
+    public static readonly BindableProperty RotatingEndedCommandProperty = BindableProperty.Create(
+        nameof(RotatingEndedCommand),
+        typeof(ICommand),
+        typeof(MapboxView)
+    );
+    public ICommand RotatingEndedCommand
+    {
+        get => (ICommand)GetValue(RotatingEndedCommandProperty);
+        set => SetValue(RotatingEndedCommandProperty, value);
+    }
+    internal void InvokeRotatingEnded(Gestures.RotatingEndedEventArgs args)
+    {
+        RotatingEnded?.Invoke(this, args);
+
+        if (RotatingEndedCommand?.CanExecute(args) == true)
+        {
+            RotatingEndedCommand.Execute(args);
+        }
+    }
     public event EventHandler<Viewport.ViewportStatusChangedEventArgs> ViewportStatusChanged;
     public static readonly BindableProperty ViewportStatusChangedCommandProperty = BindableProperty.Create(
         nameof(ViewportStatusChangedCommand),
@@ -19,9 +81,9 @@ partial class MapboxView
     {
         ViewportStatusChanged?.Invoke(this, args);
 
-        if (CameraChangedCommand?.CanExecute(args) == true)
+        if (ViewportStatusChangedCommand?.CanExecute(args) == true)
         {
-            CameraChangedCommand.Execute(args);
+            ViewportStatusChangedCommand.Execute(args);
         }
     }
     public event EventHandler<CameraChangedEventArgs> CameraChanged;

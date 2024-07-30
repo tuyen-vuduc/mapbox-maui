@@ -1,4 +1,5 @@
-﻿using MapboxMapsObjC;
+﻿using Foundation;
+using MapboxMapsObjC;
 using UIKit;
 
 namespace MapboxMaui;
@@ -9,7 +10,6 @@ partial class MapboxViewHandler
     private UITapGestureRecognizer mapTapGestureRecognizer;
     private UILongPressGestureRecognizer mapLongPressGestureRecognizer;
     private XViewportStatusObserver viewportStatusObserver;
-
 
     void RegisterEvents(PlatformView platformView)
     {
@@ -57,6 +57,8 @@ partial class MapboxViewHandler
         mapView.Viewport().AddStatusObserver(
             viewportStatusObserver
         );
+
+        mapView.Gestures().WeakDelegate = new XTMBGestureManagerDelegate(mapboxView);
     }
 
     void UnRegisterEvents(PlatformView platformView)
@@ -93,6 +95,9 @@ partial class MapboxViewHandler
             viewportStatusObserver.Dispose();
             viewportStatusObserver = null;
         }
+
+        mapView.Gestures().WeakDelegate?.Dispose();
+        mapView.Gestures().WeakDelegate = null;
     }
 
     private void HandleMapLongPress(UILongPressGestureRecognizer longPressGestureRecognizer)
@@ -128,5 +133,44 @@ partial class MapboxViewHandler
         );
 
         return coords.ToMapTappedPosition(screenPosition);
+    }
+}
+
+
+sealed class XTMBGestureManagerDelegate
+    : NSObject
+    , ITMBGestureManagerDelegate
+{
+    private readonly MapboxView mapboxView;
+
+    public XTMBGestureManagerDelegate(
+        MapboxView mapboxView
+        )
+    {
+        this.mapboxView = mapboxView;
+    }
+
+    public void GestureManagerWithDidBegin(TMBGestureType gestureType)
+    {
+        switch(gestureType)
+        {
+            case TMBGestureType.Rotation:
+                mapboxView?.InvokeRotatingBegan(new Gestures.RotatingBeganEventArgs());
+                break;
+        }
+    }
+
+    public void GestureManagerWithDidEnd(TMBGestureType gestureType, bool willAnimate)
+    {
+        switch (gestureType)
+        {
+            case TMBGestureType.Rotation:
+                mapboxView?.InvokeRotatingEnded(new Gestures.RotatingEndedEventArgs());
+                break;
+        }
+    }
+
+    public void GestureManagerWithDidEndAnimatingFor(TMBGestureType gestureType)
+    {
     }
 }

@@ -70,6 +70,9 @@
 	  <CreatePackage>false</CreatePackage>
 	</PropertyGroup>
 	<ItemGroup>
+	  <None Remove="Models\Gestures\" />
+	</ItemGroup>
+	<ItemGroup>
 		<None Include="../../../assets/tv-mapbox.png" Pack="True" PackagePath="tv-mapbox.png" />
 		<None Include="../../../LICENSE" Pack="True" PackagePath="" />
 		<None Include="../../../README.md" Pack="True" PackagePath="README.md" />
@@ -92,6 +95,9 @@
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
 		<PackageReference Include="MapboxMapsObjC.iOS" Version="11.5.1.1" />
 		<PackageReference Include="MapboxMaps.iOS" Version="11.5.1" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Models\Gestures\" />
 	</ItemGroup>
 	<ProjectExtensions>
 	  <MonoDevelop>

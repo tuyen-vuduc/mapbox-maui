@@ -50,6 +50,19 @@ partial interface IMapboxView
 
     event EventHandler<MapTappedEventArgs> MapTapped;
     ICommand Command { get; }
+
+    event EventHandler<CameraChangedEventArgs> CameraChanged;
+    ICommand CameraChangedCommand { get; }
+
+    event EventHandler<Viewport.ViewportStatusChangedEventArgs> ViewportStatusChanged;
+    ICommand ViewportStatusChangedCommand { get; }
+
+    event EventHandler<Gestures.RotatingBeganEventArgs> RotatingBegan;
+    ICommand RotatingBeganCommand { get; }
+    event EventHandler<Gestures.RotatingEndedEventArgs> RotatingEnded;
+    ICommand RotatingEndedCommand { get; }
+    event EventHandler<Gestures.RotatingEventArgs> Rotating;
+    ICommand RotatingCommand { get; }
 }
 
 public interface IAnnotationController

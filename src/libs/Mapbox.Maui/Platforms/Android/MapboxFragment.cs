@@ -12,6 +12,8 @@ using Com.Mapbox.Common;
 using Com.Mapbox.Maps.Plugins.Locationcomponent;
 using MapboxMaui.Viewport;
 using Com.Mapbox.Maps.Plugins.Viewport;
+using Com.Mapbox.Android.Gestures;
+using MapboxMaui.Gestures;
 
 public partial class MapboxFragment : Fragment
 {
@@ -25,6 +27,9 @@ public partial class MapboxFragment : Fragment
     public event Action<MapTappedPosition> MapLongClicked;
     public event Action<MapView> StyleLoaded;
     public event Action<ViewportStatusChangedEventArgs> ViewportStatusChanged;
+    public event Action<RotatingEventArgs> Rotating;
+    public event Action<RotatingBeganEventArgs> RotatingBegan;
+    public event Action<RotatingEndedEventArgs> RotatingEnded;
 
     public MapView MapView { get; private set; }
 
@@ -79,6 +84,7 @@ public partial class MapboxFragment : Fragment
 
         GesturesUtils.AddOnMapClickListener(MapView.MapboxMap, this);
         GesturesUtils.AddOnMapLongClickListener(MapView.MapboxMap, this);
+        GesturesUtils.AddOnRotateListener(MapView.MapboxMap, this);
 
         ViewportUtils.GetViewport(MapView).AddStatusObserver(new XViewportStatusObserver(ViewportStatusChanged));
     }
@@ -121,6 +127,7 @@ public partial class MapboxFragment : Fragment
 
             GesturesUtils.RemoveOnMapClickListener(MapView.MapboxMap, this);
             GesturesUtils.RemoveOnMapLongClickListener(MapView.MapboxMap, this);
+            GesturesUtils.RemoveOnRotateListener(MapView.MapboxMap, this);
 
             var locationUtils = LocationComponentUtils.GetLocationComponent(MapView);
             locationUtils.RemoveOnIndicatorAccuracyRadiusChangedListener(this);
@@ -132,6 +139,24 @@ public partial class MapboxFragment : Fragment
     }
 
     private IList<Com.Mapbox.Common.ICancelable> cancelables = new List<Com.Mapbox.Common.ICancelable>();
+}
+
+partial class MapboxFragment : IOnRotateListener
+{
+    public void OnRotate(RotateGestureDetector detector)
+    {
+        Rotating?.Invoke(new RotatingEventArgs());
+    }
+
+    public void OnRotateBegin(RotateGestureDetector detector)
+    {
+        RotatingBegan?.Invoke(new RotatingBeganEventArgs());
+    }
+
+    public void OnRotateEnd(RotateGestureDetector detector)
+    {
+        RotatingEnded?.Invoke(new RotatingEndedEventArgs());
+    }
 }
 
 partial class MapboxFragment

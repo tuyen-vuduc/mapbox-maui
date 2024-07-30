@@ -1,4 +1,5 @@
 ﻿using Com.Mapbox.Maps;
+using MapboxMaui.Gestures;
 
 namespace MapboxMaui;
 
@@ -27,6 +28,9 @@ public partial class MapboxViewHandler
         mapboxFragment.MapLongClicked += HandleMapLongClicked;
         mapboxFragment.StyleLoaded += HandleStyleLoaded;
         mapboxFragment.ViewportStatusChanged += HandleViewportStatusChanged;
+        mapboxFragment.Rotating -= HandleRotating;
+        mapboxFragment.RotatingBegan -= HandleRotatingBegan;
+        mapboxFragment.RotatingEnded -= HandleRotatingEnded;
     }
 
     private void UnregisterEvents(MapboxFragment mapboxFragment)
@@ -50,6 +54,9 @@ public partial class MapboxViewHandler
         mapboxFragment.MapLongClicked -= HandleMapLongClicked;
         mapboxFragment.StyleLoaded -= HandleStyleLoaded;
         mapboxFragment.ViewportStatusChanged -= HandleViewportStatusChanged;
+        mapboxFragment.Rotating -= HandleRotating;
+        mapboxFragment.RotatingBegan -= HandleRotatingBegan;
+        mapboxFragment.RotatingEnded -= HandleRotatingEnded;
     }
 
     private void HandleCameraChanged(CameraOptions options)
@@ -72,6 +79,10 @@ public partial class MapboxViewHandler
         => (VirtualView as MapboxView)?.InvokeStyleLoaded();
     private void HandleViewportStatusChanged(Viewport.ViewportStatusChangedEventArgs args)
         => (VirtualView as MapboxView)?.InvokeViewportStatusChanged(args);
-
-
+    private void HandleRotatingBegan(RotatingBeganEventArgs args)
+        => (VirtualView as MapboxView)?.InvokeRotatingBegan(args);
+    private void HandleRotating(RotatingEventArgs args)
+        => (VirtualView as MapboxView)?.InvokeRotating(args);
+    private void HandleRotatingEnded(RotatingEndedEventArgs args)
+        => (VirtualView as MapboxView)?.InvokeRotatingEnded(args);
 }

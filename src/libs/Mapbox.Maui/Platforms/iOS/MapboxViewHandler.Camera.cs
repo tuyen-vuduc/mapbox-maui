@@ -6,6 +6,18 @@ namespace MapboxMaui;
 
 partial class MapboxViewHandler : ICameraPlugin
 {
+    public CameraOptions CameraState
+    {
+        get
+        {
+            var mapView = PlatformView.MapView;
+
+            if (mapView == null) return default;
+
+            return mapView.MapboxMap().CameraState.ToX();
+        }
+    }
+
     public void EaseTo(CameraOptions cameraOptions, AnimationOptions animationOptions = default, Action<AnimationState> completion = default)
     {
         var mapView = PlatformView.MapView;

@@ -352,7 +352,15 @@ static class AdditionalExtensions
             Pitch = cameraOptions.Pitch?.FloatValue(),
             Zoom = cameraOptions.Zoom?.FloatValue(),
         };
-
+    public static CameraOptions ToX(this CameraState cameraOptions)
+        => new()
+        {
+            Bearing = (float?)cameraOptions.Bearing,
+            Center = cameraOptions.Center?.ToMapPosition(),
+            Padding = cameraOptions.Padding?.ToX(),
+            Pitch = (float?)cameraOptions.Pitch,
+            Zoom = (float?)cameraOptions.Zoom,
+        };
     public static ScreenPosition ToX(this ScreenCoordinate screenCoordinate)
         => new(screenCoordinate.GetX(), screenCoordinate.GetY());
 

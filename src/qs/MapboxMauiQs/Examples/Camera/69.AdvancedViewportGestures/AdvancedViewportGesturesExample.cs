@@ -1,5 +1,4 @@
-using System.Text.Json.Nodes;
-using Android.Gestures;
+using MapboxMaui.Gestures;
 using MapboxMaui.Viewport;
 
 namespace MapboxMauiQs;
@@ -121,11 +120,11 @@ public class AdvancedViewportGesturesExample : ContentPage, IExamplePage, IQuery
         //map.GestureShoved += HandleGestureShoved;
     }
 
-    private void HandleRotatingBegan(object sender, Gestures.RotatingBeganEventArgs e)
+    private void HandleRotatingBegan(object sender, RotatingBeganEventArgs e)
     {
         followPuckViewportState.Options.Bearing = null;
     }
-    private void HandleRotatingEnded(object sender, Gestures.RotatingEndedEventArgs e)
+    private void HandleRotatingEnded(object sender, RotatingEndedEventArgs e)
     {
         followPuckViewportState.Options.Bearing = map.CameraController.CameraState.Bearing;
     }

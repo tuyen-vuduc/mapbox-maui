@@ -42,9 +42,14 @@ public class CameraAnimationsExample : ContentPage, IExamplePage, IQueryAttribut
         map.MapReady += Map_MapReady;
         map.StyleLoaded += Map_StyleLoaded;
         map.MapLoaded += Map_MapLoaded;
+        map.CameraChanged += Map_CameraChanged;
 
         Content = grid;
 	}
+
+    private void Map_CameraChanged(object sender, CameraChangedEventArgs e)
+    {
+    }
 
     private void HandleCameraFlyTo(object sender, EventArgs e)
     {

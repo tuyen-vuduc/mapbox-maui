@@ -164,11 +164,13 @@ partial class MapboxFragment
 {
     void ICameraChangedCallback.Run(CameraChanged p0)
     {
+        var center = p0.CameraState.Center.ToMapPosition();
+        var padding = p0.CameraState.Padding.ToX();
         var cameraOptions = new CameraOptions
         {
-            Center = p0.CameraState.Center.ToMapPosition(),
+            Center = center,
             Bearing = (float)p0.CameraState.Bearing,
-            Padding = (float)p0.CameraState.Padding,
+            Padding = padding,
             Pitch = (float)p0.CameraState.Pitch,
             Zoom = (float)p0.CameraState.Zoom,
         };

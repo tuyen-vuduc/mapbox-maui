@@ -1,9 +1,10 @@
-﻿using MapboxMapsObjC;
+﻿using System.Diagnostics.CodeAnalysis;
+using MapboxMapsObjC;
 using X = MapboxMaui.Viewport;
 
 namespace MapboxMaui;
 
-abstract class XViewportState : X.IViewportState, IDisposable
+abstract class XViewportState : X.IViewportState, IDisposable, IEqualityComparer<XViewportState>
 {
     private bool disposedValue;
     public ITMBViewportState State { get; }
@@ -44,4 +45,12 @@ abstract class XViewportState : X.IViewportState, IDisposable
     public void StartUpdatingCamera() => State.StartUpdatingCamera();
 
     public void StopUpdatingCamera() => State.StopUpdatingCamera();
+
+    public bool Equals(XViewportState x, XViewportState y)
+    {
+        return x.State.Handle == y.State.Handle;
+    }
+
+    public int GetHashCode([DisallowNull] XViewportState obj)
+        => obj.State.GetHashCode();
 }

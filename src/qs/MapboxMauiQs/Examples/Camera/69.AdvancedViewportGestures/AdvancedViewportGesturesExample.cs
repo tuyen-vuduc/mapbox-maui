@@ -24,7 +24,8 @@ public class AdvancedViewportGesturesExample : ContentPage, IExamplePage, IQuery
 
         map.MapReady += Map_MapReady;
         map.MapLoaded += Map_MapLoaded;
-	}
+        map.StyleLoaded += Map_StyleLoaded;
+    }
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
@@ -72,8 +73,6 @@ public class AdvancedViewportGesturesExample : ContentPage, IExamplePage, IQuery
         };
         map.Sources = [geojsonSource];
         map.Layers = [lineLayer];
-
-        map.StyleLoaded += Map_StyleLoaded;
     }
 
     private void Map_MapTapped(object sender, MapTappedEventArgs e)
@@ -109,7 +108,7 @@ public class AdvancedViewportGesturesExample : ContentPage, IExamplePage, IQuery
         {
             TransitionsToIdleUponUserInteraction = false,
         };
-        //map.LocationIndicatorLocationChanged += HandleLocationIndicatorLocationChanged;
+        map.IndicatorPositionChanged -= HandleIndicatorPositionChanged;
         map.GestureSettings = map.GestureSettings with
         {
             ScrollEnabled = false,
@@ -118,6 +117,15 @@ public class AdvancedViewportGesturesExample : ContentPage, IExamplePage, IQuery
         map.RotatingBegan += HandleRotatingBegan;
         map.RotatingEnded += HandleRotatingEnded;
         //map.GestureShoved += HandleGestureShoved;
+    }
+
+    private void HandleIndicatorPositionChanged(object sender, IndicatorPositionChangedEventArgs e)
+    {
+        var screenPosition = map.MapboxController.GetScreenPosition(e.Position);
+        map.GestureSettings = map.GestureSettings with
+        {
+            FocalPoint = screenPosition,
+        };
     }
 
     private void HandleRotatingBegan(object sender, RotatingBeganEventArgs e)
@@ -135,14 +143,15 @@ public class AdvancedViewportGesturesExample : ContentPage, IExamplePage, IQuery
         {
             TransitionsToIdleUponUserInteraction = true,
         };
-        //map.LocationIndicatorLocationChanged -= HandleLocationIndicatorLocationChanged;
+        map.IndicatorPositionChanged -= HandleIndicatorPositionChanged;
         map.GestureSettings = map.GestureSettings with
         {
             FocalPoint = null,
             ScrollEnabled = true,
         };
         //map.GestureScaled -= HandleGestureScaled;
-        //map.GestureRotated -= HandleGestureScaled;
+        map.RotatingBegan -= HandleRotatingBegan;
+        map.RotatingEnded -= HandleRotatingEnded;
         //map.GestureShoved -= HandleGestureShoved;
     }
 

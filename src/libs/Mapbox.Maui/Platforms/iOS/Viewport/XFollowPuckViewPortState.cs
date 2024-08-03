@@ -5,7 +5,6 @@ namespace MapboxMaui;
 
 sealed class XFollowPuckViewPortState : XViewportState, X.IFollowPuckViewportState, IDisposable
 {
-    private bool disposedValue;
     private readonly TMBFollowPuckViewportState platformValue;
 
     public XFollowPuckViewPortState(TMBFollowPuckViewportState platformValue)

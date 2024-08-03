@@ -1,4 +1,5 @@
 ﻿using Foundation;
+using MapboxCommon;
 using MapboxMapsObjC;
 using UIKit;
 
@@ -59,6 +60,30 @@ partial class MapboxViewHandler
         );
 
         mapView.Gestures().WeakDelegate = new XTMBGestureManagerDelegate(mapboxView);
+
+        mapView.Location().OnLocationChangeWithHandler(HandleLocationChanged);
+        mapView.Location().OnHeadingChangeWithHandler(HandleHeadingChanged);
+    }
+
+    private void HandleHeadingChanged(TMBHeading heading)
+    {
+        var mapboxView = VirtualView as MapboxView;
+        if (mapboxView is null) return;
+
+        mapboxView.InvokeIndicatorAccuracyRadiusChanged(heading.Accuracy);
+    }
+
+    private void HandleLocationChanged(NSArray<MBXLocation> array)
+    {
+        var mapboxView = VirtualView as MapboxView;
+        if (mapboxView is null) return;
+
+        var mbxLocation = array[(int)array.Count - 1];
+        var mapPosition = new MapPosition(
+            mbxLocation.Latitude,
+            mbxLocation.Longitude,
+            mbxLocation.Altitude?.DoubleValue);
+        mapboxView.InvokeIndicatorPositionChanged(mapPosition);
     }
 
     void UnRegisterEvents(PlatformView platformView)

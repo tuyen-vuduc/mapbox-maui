@@ -293,9 +293,15 @@ public partial class MapboxViewHandler
 
         mapView.MapboxMap().LoadStyleWithUri(styleUri, null, (error) =>
         {
-            if (error == null) return;
+            if (error is not null)
+            {
+                System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
+                return;
+            }
 
-            System.Diagnostics.Debug.WriteLine(error.LocalizedDescription);
+            if (handler.VirtualView is not MapboxView mapboxView) return;
+
+            mapboxView.InvokeStyleLoaded();
         });
     }
 

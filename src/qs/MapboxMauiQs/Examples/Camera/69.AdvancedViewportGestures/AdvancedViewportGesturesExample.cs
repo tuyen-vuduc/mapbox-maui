@@ -24,7 +24,6 @@ public class AdvancedViewportGesturesExample : ContentPage, IExamplePage, IQuery
 
         map.MapReady += Map_MapReady;
         map.MapLoaded += Map_MapLoaded;
-        map.StyleLoaded += Map_StyleLoaded;
     }
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
@@ -44,8 +43,6 @@ public class AdvancedViewportGesturesExample : ContentPage, IExamplePage, IQuery
         //};
 
         //map.CameraOptions = cameraOptions;
-        map.MapboxStyle = MapboxStyle.TRAFFIC_DAY;
-
         followPuckViewportState = map.Viewport.MakeFollowPuckViewportState(new FollowPuckViewportStateOptions
         {
             Bearing = 0,
@@ -73,6 +70,10 @@ public class AdvancedViewportGesturesExample : ContentPage, IExamplePage, IQuery
         };
         map.Sources = [geojsonSource];
         map.Layers = [lineLayer];
+
+        map.StyleLoaded += Map_StyleLoaded;
+        map.MapboxStyle = MapboxStyle.TRAFFIC_DAY;
+
     }
 
     private void Map_MapTapped(object sender, MapTappedEventArgs e)

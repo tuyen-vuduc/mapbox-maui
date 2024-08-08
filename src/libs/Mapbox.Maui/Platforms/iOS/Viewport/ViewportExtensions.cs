@@ -1,4 +1,5 @@
 ﻿using MapboxMapsObjC;
+using ObjCRuntime;
 using X = MapboxMaui.Viewport;
 
 namespace MapboxMaui;
@@ -112,12 +113,16 @@ public static class ViewportExtensions
     }
 
     public static X.IViewportState ToX(this ITMBViewportState state)
-        => state switch
+    {
+        try
         {
-            TMBFollowPuckViewportState followPuckViewportState => followPuckViewportState.ToX(),
-            TMBOverviewViewportState overviewViewportState => overviewViewportState.ToX(),
-            _ => throw new NotSupportedException("Invalid ViewportState"),
-        };
+            return Runtime.GetNSObject<TMBOverviewViewportState>(state.Handle).ToX();
+        }
+        catch
+        {
+            return Runtime.GetNSObject<TMBFollowPuckViewportState>(state.Handle).ToX();
+        }
+    }
     public static X.IFollowPuckViewportState ToX(this TMBFollowPuckViewportState state)
         => new XFollowPuckViewPortState(state);
     public static X.IOverviewViewportState ToX(this TMBOverviewViewportState state)

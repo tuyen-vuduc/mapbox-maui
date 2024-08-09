@@ -11,9 +11,12 @@ partial class MapboxViewHandler
     private UITapGestureRecognizer mapTapGestureRecognizer;
     private UILongPressGestureRecognizer mapLongPressGestureRecognizer;
     private XViewportStatusObserver viewportStatusObserver;
+    private HashSet<TMBCancelable> cancelables;
 
     void RegisterEvents(PlatformView platformView)
     {
+        cancelables ??= new HashSet<TMBCancelable>();
+
         var mapboxView = VirtualView as MapboxView;
         if (mapboxView is not null)
         {
@@ -31,22 +34,24 @@ partial class MapboxViewHandler
 
         var mapboxMap = mapView.MapboxMap();
 
-        mapboxMap.OnCameraChanged(data =>
-        {
-            mapboxView?.InvokeCameraChanged(data.CameraState.ToX());
-        });
-        mapboxMap.OnMapLoaded(_ =>
-        {
-            mapboxView?.InvokeMapLoaded();
-        });
-        mapboxMap.OnMapLoadingError(_ =>
-        {
-            mapboxView?.InvokeMapLoadingError();
-        });
-        mapboxMap.OnStyleLoaded(_ =>
-        {
-            mapboxView?.InvokeStyleLoaded();
-        });
+        cancelables.Add(
+            mapboxMap.OnCameraChanged(data =>
+            {
+                mapboxView?.InvokeCameraChanged(data.CameraState.ToX());
+            }),
+            mapboxMap.OnMapLoaded(_ =>
+            {
+                mapboxView?.InvokeMapLoaded();
+            }),
+            mapboxMap.OnMapLoadingError(_ =>
+            {
+                mapboxView?.InvokeMapLoadingError();
+            }),
+            mapboxMap.OnStyleLoaded(_ =>
+            {
+                mapboxView?.InvokeStyleLoaded();
+            })
+        );
 
         mapTapGestureRecognizer = new UITapGestureRecognizer(HandleMapTapped);
         mapView.AddGestureRecognizer(mapTapGestureRecognizer);
@@ -61,8 +66,10 @@ partial class MapboxViewHandler
 
         mapView.Gestures().WeakDelegate = new XTMBGestureManagerDelegate(mapboxView);
 
-        mapView.Location().OnLocationChangeWithHandler(HandleLocationChanged);
-        mapView.Location().OnHeadingChangeWithHandler(HandleHeadingChanged);
+        cancelables.Add(
+            mapView.Location().OnLocationChangeWithHandler(HandleLocationChanged),
+            mapView.Location().OnHeadingChangeWithHandler(HandleHeadingChanged)
+        );
     }
 
     private void HandleHeadingChanged(TMBHeading heading)
@@ -96,6 +103,12 @@ partial class MapboxViewHandler
             mapboxView.CameraController = null;
             mapboxView.Viewport = null;
         }
+
+        foreach (var cancelable in cancelables)
+        {
+            cancelable?.Dispose();
+        }
+        cancelables.Clear();
 
         var mapView = platformView.MapView;
         if (mapView == null) return;

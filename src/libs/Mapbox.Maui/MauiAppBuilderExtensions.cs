@@ -11,6 +11,14 @@ using System.Globalization;
 
 public static class MauiAppBuilderExtensions
 {
+    public static void Add<T>(this HashSet<T> set, params T[] items)
+    {
+        foreach (var item in items)
+        {
+            set.Add(item);
+        }
+    }
+
     public static MauiAppBuilder UseMapbox(
         this MauiAppBuilder builder,
         string accessToken = default)

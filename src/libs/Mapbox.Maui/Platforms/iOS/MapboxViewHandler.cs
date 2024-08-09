@@ -307,7 +307,7 @@ public partial class MapboxViewHandler
 
     protected override PlatformView CreatePlatformView()
         => new PlatformView(ACCESS_TOKEN);
-
+    
     protected override void DisconnectHandler(PlatformView platformView)
     {
         UnRegisterEvents(platformView);

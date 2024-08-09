@@ -35,45 +35,6 @@ public class AdvancedViewportGesturesExample : ContentPage, IExamplePage, IQuery
 
     private async void Map_MapReady(object sender, EventArgs e)
     {
-        //var centerLocation = new MapPosition(37.3230, -122.0322); // Cupertino
-        //var cameraOptions = new CameraOptions
-        //{
-        //    Center = centerLocation,
-        //    Zoom = 14,
-        //};
-
-        //map.CameraOptions = cameraOptions;
-        followPuckViewportState = map.Viewport.MakeFollowPuckViewportState(new FollowPuckViewportStateOptions
-        {
-            Bearing = 0,
-            Padding = new Thickness(200, 0, 0, 0),
-        });
-
-        routePoints = await LoadGeojson();
-        overviewViewportState = map.Viewport.MakeOverviewViewportState(new OverviewViewportStateOptions
-        {
-            Geometry = routePoints,
-            Padding = 100,
-        });
-
-        var geojsonSource = new GeoJSONSource(GEOJSON_SOURCE_ID)
-        {
-            Data = routePoints
-        };
-        var lineLayer = new LineLayer(ROUTE_LINE_LAYER_ID)
-        {
-            Source = GEOJSON_SOURCE_ID,
-            LineColor = MAPBOX_BLUE,
-            LineWidth = 10.0,
-            LineCap = MapboxMaui.LineCap.Round,
-            LineJoin = MapboxMaui.LineJoin.Round,
-        };
-        map.Sources = [geojsonSource];
-        map.Layers = [lineLayer];
-
-        map.StyleLoaded += Map_StyleLoaded;
-        map.MapboxStyle = MapboxStyle.TRAFFIC_DAY;
-
     }
 
     private void Map_MapTapped(object sender, MapTappedEventArgs e)
@@ -156,9 +117,48 @@ public class AdvancedViewportGesturesExample : ContentPage, IExamplePage, IQuery
         //map.GestureShoved -= HandleGestureShoved;
     }
 
-    private void Map_MapLoaded(object sender, EventArgs e)
+    private async void Map_MapLoaded(object sender, EventArgs e)
     {
         // Setup Styles, Annotations, etc here
+
+        //var centerLocation = new MapPosition(37.3230, -122.0322); // Cupertino
+        //var cameraOptions = new CameraOptions
+        //{
+        //    Center = centerLocation,
+        //    Zoom = 14,
+        //};
+
+        //map.CameraOptions = cameraOptions;
+        followPuckViewportState = map.Viewport.MakeFollowPuckViewportState(new FollowPuckViewportStateOptions
+        {
+            Bearing = 0,
+            Padding = new Thickness(200, 0, 0, 0),
+        });
+
+        routePoints = await LoadGeojson();
+        overviewViewportState = map.Viewport.MakeOverviewViewportState(new OverviewViewportStateOptions
+        {
+            Geometry = routePoints,
+            Padding = 100,
+        });
+
+        var geojsonSource = new GeoJSONSource(GEOJSON_SOURCE_ID)
+        {
+            Data = routePoints
+        };
+        var lineLayer = new LineLayer(ROUTE_LINE_LAYER_ID)
+        {
+            Source = GEOJSON_SOURCE_ID,
+            LineColor = MAPBOX_BLUE,
+            LineWidth = 10.0,
+            LineCap = MapboxMaui.LineCap.Round,
+            LineJoin = MapboxMaui.LineJoin.Round,
+        };
+        map.Sources = [geojsonSource];
+        map.Layers = [lineLayer];
+
+        map.StyleLoaded += Map_StyleLoaded;
+        map.MapboxStyle = MapboxStyle.TRAFFIC_DAY;
     }
 
     async static Task<LineString> LoadGeojson()

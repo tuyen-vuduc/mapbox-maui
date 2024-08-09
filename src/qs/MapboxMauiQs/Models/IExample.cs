@@ -2,7 +2,6 @@
 
 public interface IExampleInfo
 {
-    int GroupIndex { get; }
     string Group { get; }
     int Index { get; }
     string Title { get; }

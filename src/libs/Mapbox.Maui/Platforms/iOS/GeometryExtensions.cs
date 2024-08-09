@@ -93,6 +93,14 @@ public static class GeometryExtensions
         );
     }
 
+    internal static CLLocationCoordinate2D ToCoords(this IPosition xobj)
+    {
+        return new CLLocationCoordinate2D(
+            xobj.Latitude,
+            xobj.Longitude
+        );
+    }
+
     public static IPosition ToMapPosition(this CLLocationCoordinate2D point)
     {
         return new MapPosition(

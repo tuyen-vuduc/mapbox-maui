@@ -1,10 +1,23 @@
 ﻿using Android.Animation;
 using Com.Mapbox.Maps.Plugins.Animation;
+using MapboxMaui.Camera;
 
 namespace MapboxMaui;
 
-partial class MapboxViewHandler : IMapCameraController
+partial class MapboxViewHandler : ICameraPlugin
 {
+    public CameraOptions CameraState
+    {
+        get
+        {
+            var mapView = mapboxFragment?.MapView;
+
+            if (mapView == null) return default;
+
+            return mapView.MapboxMap.CameraState.ToX();
+        }
+    }
+
     public void EaseTo(CameraOptions cameraOptions, AnimationOptions animationOptions = null, Action<AnimationState> completion = null)
     {
         var mapView = mapboxFragment?.MapView;

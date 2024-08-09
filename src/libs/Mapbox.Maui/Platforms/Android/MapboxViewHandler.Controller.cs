@@ -28,5 +28,15 @@ partial class MapboxViewHandler : IMapboxController
 
 		var coords = mapView.MapboxMap.CoordinateForPixel(position.ToScreenCoordinate());
 		return coords.ToMapPosition();
-	}
+    }
+
+    public ScreenPosition GetScreenPosition(IPosition position)
+    {
+        var mapView = mapboxFragment?.MapView;
+
+        if (mapView == null) return default;
+
+        var coords = mapView.MapboxMap.PixelForCoordinate(position.ToGeoPoint());
+        return coords.ToX();
+    }
 }

@@ -12,3 +12,4 @@ global using MapboxMaui.Annotations;
 global using iOSPage = Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific.Page;
 global using ScreenPosition = Microsoft.Maui.Graphics.Point;
 global using MapPosition = GeoJSON.Text.Geometry.Position;
+global using GPoint = GeoJSON.Text.Geometry.Point;

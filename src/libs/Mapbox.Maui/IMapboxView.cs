@@ -4,6 +4,7 @@ using System.Windows.Input;
 using MapboxMaui.Annotations;
 using MapboxMaui.Query;
 using MapboxMaui.Styles;
+using MapboxMaui.Viewport;
 
 public partial interface IMapboxView : IView
 {
@@ -32,6 +33,8 @@ public partial interface IMapboxView : IView
     IAnnotationController AnnotationController { get; }
 
     IMapFeatureQueryable QueryManager { get; }
+
+    IViewportPlugin Viewport { get; }
 }
 
 partial interface IMapboxView
@@ -47,6 +50,19 @@ partial interface IMapboxView
 
     event EventHandler<MapTappedEventArgs> MapTapped;
     ICommand Command { get; }
+
+    event EventHandler<CameraChangedEventArgs> CameraChanged;
+    ICommand CameraChangedCommand { get; }
+
+    event EventHandler<Viewport.ViewportStatusChangedEventArgs> ViewportStatusChanged;
+    ICommand ViewportStatusChangedCommand { get; }
+
+    event EventHandler<Gestures.RotatingBeganEventArgs> RotatingBegan;
+    ICommand RotatingBeganCommand { get; }
+    event EventHandler<Gestures.RotatingEndedEventArgs> RotatingEnded;
+    ICommand RotatingEndedCommand { get; }
+    event EventHandler<Gestures.RotatingEventArgs> Rotating;
+    ICommand RotatingCommand { get; }
 }
 
 public interface IAnnotationController
@@ -66,12 +82,7 @@ public interface IMapboxController
 {
     IPosition GetMapPosition(ScreenPosition position);
     CoordinateBounds GetCoordinateBoundsForCamera(CameraOptions cameraOptions);
-}
-
-public interface IMapCameraController
-{
-    void FlyTo(CameraOptions cameraOptions, AnimationOptions animationOptions = default, Action<AnimationState> completion = default);
-    void EaseTo(CameraOptions cameraOptions, AnimationOptions animationOptions = default, Action<AnimationState> completion = default);
+    ScreenPosition GetScreenPosition(IPosition position);
 }
 
 public class MapTappedEventArgs : EventArgs
@@ -82,4 +93,40 @@ public class MapTappedEventArgs : EventArgs
     {
         Position = position;
     }
+}
+public class CameraChangedEventArgs : EventArgs
+{
+    public CameraChangedEventArgs(CameraOptions options)
+    {
+        Options = options;
+    }
+
+    public CameraOptions Options { get; }
+}
+public class IndicatorAccuracyRadiusChangedEventArgs : EventArgs
+{
+    public IndicatorAccuracyRadiusChangedEventArgs(double radius)
+    {
+        Radius = radius;
+    }
+
+    public double Radius { get; }
+}
+public class IndicatorBearingChangedEventArgs : EventArgs
+{
+    public IndicatorBearingChangedEventArgs(double bearing)
+    {
+        Bearing = bearing;
+    }
+
+    public double Bearing { get; }
+}
+public class IndicatorPositionChangedEventArgs : EventArgs
+{
+    public IndicatorPositionChangedEventArgs(IPosition position)
+    {
+        Position = position;
+    }
+
+    public IPosition Position { get; }
 }

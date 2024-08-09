@@ -3,7 +3,6 @@
 var target = Argument("target", "example");
 var name = Argument("name", "Awesome");
 var index = Argument("index", 0);
-var gindex = Argument("gindex", 0);
 var group = Argument("group", "None");
 var title = Argument("title", "Awesome");
 var subtitle = Argument("subtitle", "Awesome");
@@ -37,7 +36,6 @@ class {name}ExampleInfo : IExampleInfo
     public string Title => ""{title ?? "No title"}"";
     public string Subtitle => ""{subtitle ?? "No subtitle"}"";
     public string PageRoute => typeof({name}Example).FullName;
-    public int GroupIndex => {gindex};
     public int Index => {index};
 }}");
 

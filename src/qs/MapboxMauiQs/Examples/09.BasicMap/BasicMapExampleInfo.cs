@@ -10,7 +10,5 @@ public class BasicMapExampleInfo : IExampleInfo
 
     public string PageRoute => typeof(BasicMapExample).FullName;
 
-    public int GroupIndex => 1;
-
     public int Index => 9;
 }

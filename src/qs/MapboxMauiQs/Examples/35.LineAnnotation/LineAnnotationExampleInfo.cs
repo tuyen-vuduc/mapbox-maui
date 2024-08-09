@@ -6,6 +6,5 @@ class LineAnnotationExampleInfo : IExampleInfo
     public string Title => "Add Polylines Annotations";
     public string Subtitle => "Show polyline annotations on a map.";
     public string PageRoute => typeof(LineAnnotationExample).FullName;
-    public int GroupIndex => 3;
     public int Index => 35;
 }

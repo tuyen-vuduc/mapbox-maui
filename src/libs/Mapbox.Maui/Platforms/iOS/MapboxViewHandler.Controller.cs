@@ -1,4 +1,5 @@
 ﻿using MapboxMapsObjC;
+using Microsoft.Maui.Platform;
 
 namespace MapboxMaui;
 
@@ -30,5 +31,15 @@ partial class MapboxViewHandler : IMapboxController
             );
 
         return coords.ToMapPosition();
+    }
+
+    public ScreenPosition GetScreenPosition(IPosition position)
+    {
+        var mapView = PlatformView.MapView;
+
+        if (mapView == null) return default;
+
+        var coords = mapView.MapboxMap().PointFor(position.ToCoords());
+        return coords.ToPoint();
     }
 }

@@ -61,7 +61,7 @@
 		<RepositoryUrl>https://github.com/tuyen-vuduc/mapbox-maui</RepositoryUrl>
 		<PackageProjectUrl>https://mapbox.tuyen-vuduc.tech</PackageProjectUrl>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-		<PackageVersion>11.5.0-alpha01</PackageVersion>
+		<PackageVersion>11.5.1-alpha01</PackageVersion>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<PackageIcon>tv-mapbox.png</PackageIcon>
@@ -69,6 +69,9 @@
 	<PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
 	  <CreatePackage>false</CreatePackage>
 	</PropertyGroup>
+	<ItemGroup>
+	  <None Remove="Models\Gestures\" />
+	</ItemGroup>
 	<ItemGroup>
 		<None Include="../../../assets/tv-mapbox.png" Pack="True" PackagePath="tv-mapbox.png" />
 		<None Include="../../../LICENSE" Pack="True" PackagePath="" />
@@ -78,32 +81,24 @@
 		<PackageReference Include="Xamarin.Build.Download" Version="0.11.4" />
 		<PackageReference Include="GeoJSON.Text" Version="1.0.2" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.40" />
+		<PackageReference Update="Microsoft.Maui.Controls.Compatibility" Version="8.0.40" />
 	</ItemGroup>
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
-		<PackageReference Include="Com.Mapbox.Maps.Android" Version="11.5.0" />
+		<PackageReference Include="Com.Mapbox.Maps.Android" Version="11.5.1" />
 		<PackageReference Include="Xamarin.AndroidX.AppCompat" Version="1.6.1.10" />
     	<PackageReference Include="Xamarin.AndroidX.Fragment " Version="1.7.0.2" />
 		<PackageReference Include="Xamarin.AndroidX.Fragment.Ktx" Version="1.7.0.2" />
-		<PackageReference Include="Xamarin.Kotlin.StdLib" Version="1.9.23.3" PrivateAssets="none" />
-		<PackageReference Include="Xamarin.Kotlin.StdLib.Common" Version="1.9.23.3" PrivateAssets="none" />
+		<PackageReference Include="Xamarin.Kotlin.StdLib" Version="2.0.0.1" PrivateAssets="none" />
+		<PackageReference Include="Xamarin.Kotlin.StdLib.Common" Version="2.0.0.1" PrivateAssets="none" />
 		<PackageReference Include="Dependencies.Gradle" Version="8.6.0.1" />
+		<PackageReference Include="Xamarin.AndroidX.Annotation" Version="1.8.0.1" />
 	</ItemGroup>
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
-		<PackageReference Include="MapboxMapsObjC.iOS" Version="11.5.1" />
-		<PackageReference Include="MapboxMaps.iOS" Version="11.5.1" />
+		<PackageReference Include="MapboxMapsObjC.iOS" Version="11.5.2.2" />
+		<PackageReference Include="MapboxMaps.iOS" Version="11.5.2" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="Models\Styles\" />
-	  <Folder Include="Models\Styles\Sources\" />
-	  <Folder Include="Models\Expressions\" />
-	  <Folder Include="Models\Styles\Layers\" />
-	  <Folder Include="Models\Annotations\" />
-	  <Folder Include="Platforms\iOS\Annotations\" />
-	  <Folder Include="Platforms\Android\Annotations\" />
-	  <Folder Include="Models\Offline\" />
-	  <Folder Include="Platforms\iOS\Offline\" />
-	  <Folder Include="Platforms\Android\Offline\" />
-	  <Folder Include="Models\Query\" />
+	  <Folder Include="Models\Gestures\" />
 	</ItemGroup>
 	<ProjectExtensions>
 	  <MonoDevelop>
@@ -114,18 +109,5 @@
 	    </Properties>
 	  </MonoDevelop>
 	</ProjectExtensions>
-	<ItemGroup>
-	  <Compile Update="Platforms\Android\MapboxViewHandler.Camera.cs">
-	    <ExcludeFromCurrentConfiguration>true</ExcludeFromCurrentConfiguration>
-	  </Compile>
-	</ItemGroup>
-	<ItemGroup>
-	  <PackageReference Update="Microsoft.Maui.Controls.Compatibility" Version="8.0.40" />
-	</ItemGroup>
-
-  <Target 
-    Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'"
-    Name="_GradleDependencyResolverTrigger"
-    DependsOnTargets="_GradleSync"
-    BeforeTargets="_BuildLibraryImportsCache" />
+  <Target Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" Name="_GradleDependencyResolverTrigger" DependsOnTargets="_GradleSync" BeforeTargets="_BuildLibraryImportsCache" />
 </Project>

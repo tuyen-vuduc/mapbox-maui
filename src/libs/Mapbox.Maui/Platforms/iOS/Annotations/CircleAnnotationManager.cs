@@ -45,26 +45,7 @@ public partial class CircleAnnotationManager
         set => nativeManager.CircleTranslateAnchor = value?.ToPlatform();
     }
 
-    public override void AddAnnotations(params CircleAnnotation[] xitems)
-    {
-        var items = xitems
-            .Select(x => x.ToPlatformValue())
-            .ToArray();
-
-        nativeManager.AddAnnotations(items);
-    }
-
-    public override void RemoveAllAnnotations()
-    {
-        nativeManager.RemoveAllAnnotations();
-    }
-
-    public override void RemoveAnnotations(params string[] annotationIDs)
-    {
-        for (int i = 0; i < annotationIDs.Length; i++)
-        {
-            nativeManager.RemoveAnnotationById(annotationIDs[i]);
-        }
-    }
+    protected override ITMBAnnotation ToPlatformAnnotationOption(CircleAnnotation annotation)
+        => annotation.ToPlatformValue();
 }
 

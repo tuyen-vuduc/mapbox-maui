@@ -39,6 +39,18 @@ public abstract partial class AnnotationManager<TAnnotationManager, TAnnotation>
             annotations[i].Id = item.Id.ToString();
         }
     }
+
+    public void UpdateAnnotations(params TAnnotation[] annotations)
+    {
+        if (annotations.Length == 0) return;
+
+        var xannotations = annotations
+            .Select(ToPlatformAnnotationOption)
+            .ToList();
+
+        NativeManager.Update(xannotations);
+    }
+
     public void RemoveAllAnnotations()
         => NativeManager.DeleteAll();
     public void RemoveAnnotations(params string[] annotationIDs)

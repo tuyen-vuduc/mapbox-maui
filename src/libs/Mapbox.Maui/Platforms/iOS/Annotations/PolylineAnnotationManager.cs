@@ -55,25 +55,6 @@ public partial class PolylineAnnotationManager
         set => nativeManager.LineTrimOffset = value?.ToPlatform();
     }
 
-    public override void AddAnnotations(params PolylineAnnotation[] xitems)
-    {
-        var items = xitems
-            .Select(x => x.ToPlatformValue())
-            .ToArray();
-
-        nativeManager.AddAnnotations(items);
-    }
-
-    public override void RemoveAllAnnotations()
-    {
-        nativeManager.RemoveAllAnnotations();
-    }
-
-    public override void RemoveAnnotations(params string[] annotationIDs)
-    {
-        for (int i = 0; i < annotationIDs.Length; i++)
-        {
-            nativeManager.RemoveAnnotationById(annotationIDs[i]);
-        }
-    }
+    protected override ITMBAnnotation ToPlatformAnnotationOption(PolylineAnnotation annotation)
+        => annotation.ToPlatformValue();
 }

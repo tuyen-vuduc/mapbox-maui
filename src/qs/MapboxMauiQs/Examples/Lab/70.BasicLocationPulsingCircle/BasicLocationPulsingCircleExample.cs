@@ -1,3 +1,4 @@
+
 namespace MapboxMauiQs;
 
 public class BasicLocationPulsingCircleExample : ContentPage, IExamplePage, IQueryAttributable
@@ -10,8 +11,9 @@ public class BasicLocationPulsingCircleExample : ContentPage, IExamplePage, IQue
         iOSPage.SetUseSafeArea(this, false);
 		Content = map = new MapboxView();
 
-        map.MapReady += Map_MapReady;
+        map.MapReady += Map_MapReadyAsync;
         map.MapLoaded += Map_MapLoaded;
+        map.IndicatorPositionChanged += Map_IndicatorPositionChanged;
 	}
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
@@ -21,21 +23,39 @@ public class BasicLocationPulsingCircleExample : ContentPage, IExamplePage, IQue
         Title = info?.Title;
     }
 
-    private void Map_MapReady(object sender, EventArgs e)
+    private async void Map_MapReadyAsync(object sender, EventArgs e)
     {
-        var centerLocation = new MapPosition(21.0278, 105.8342);
-        var cameraOptions = new CameraOptions
-        {
-            Center = centerLocation,
-            Zoom = 14,
-        };
+        map.LocationComponent.Enabled = true;
+        map.LocationComponent.PulsingEnabled = true;
 
-        map.CameraOptions = cameraOptions;
-        map.MapboxStyle = MapboxStyle.MAPBOX_STREETS;
+        var permissionStatus = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+        if (permissionStatus == PermissionStatus.Unknown)
+        {
+            permissionStatus = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+        }
+
+        if (permissionStatus != PermissionStatus.Granted) {
+            await DisplayAlert("Warning", "Please grant location permission to use this functionality", "Try again");
+            return;
+        }
+
+        map.MapboxStyle = MapboxStyle.STANDARD;
     }
 
     private void Map_MapLoaded(object sender, EventArgs e)
     {
         // Setup Styles, Annotations, etc here
+    }
+
+    private void Map_IndicatorPositionChanged(object sender, IndicatorPositionChangedEventArgs e)
+    {
+        map.CameraController.FlyTo(
+            new CameraOptions { Center = e.Position },
+            new AnimationOptions(Duration: 1000)
+        );
+        map.GestureSettings = map.GestureSettings with
+        {
+            FocalPoint = map.MapboxController.GetScreenPosition(e.Position),
+        };
     }
 }

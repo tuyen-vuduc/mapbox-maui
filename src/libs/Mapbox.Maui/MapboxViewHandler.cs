@@ -14,7 +14,7 @@ public partial class MapboxViewHandler : ViewHandler<IMapboxView, PlatformView>
 {
     internal static string ACCESS_TOKEN;
 
-    public static IPropertyMapper<IMapboxView, MapboxViewHandler> PropertyMapper
+    public static IPropertyMapper<IMapboxView, MapboxViewHandler> Mapper
         = new PropertyMapper<IMapboxView, MapboxViewHandler>(ViewHandler.ViewMapper)
         {
             [nameof(MapboxView.CameraOptions)] = HandleCameraOptionsChanged,
@@ -28,8 +28,12 @@ public partial class MapboxViewHandler : ViewHandler<IMapboxView, PlatformView>
             [nameof(MapboxView.Terrain)] = HandleTerrainChanged,
             [nameof(MapboxView.Light)] = HandleLightChanged
         };
+    public static CommandMapper<IMapboxView, MapboxViewHandler> CommandMapper
+        = new (ViewHandler.ViewCommandMapper)
+        {
+        };
 
-    public MapboxViewHandler() : base(PropertyMapper)
+    public MapboxViewHandler() : base(Mapper, CommandMapper)
     {
         
     }

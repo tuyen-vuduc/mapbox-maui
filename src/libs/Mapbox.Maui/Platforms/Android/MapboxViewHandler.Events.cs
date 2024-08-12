@@ -1,6 +1,5 @@
 ﻿using Com.Mapbox.Maps;
 using MapboxMaui.Gestures;
-using Microsoft.Maui.Platform;
 
 namespace MapboxMaui;
 
@@ -15,6 +14,7 @@ public partial class MapboxViewHandler
             mapboxView.MapboxController = this;
             mapboxView.CameraController = this;
             mapboxView.Viewport = this;
+            mapboxView.LocationComponent = this;
         }
 
         mapboxFragment.MapReady += HandleMapReady;
@@ -42,6 +42,7 @@ public partial class MapboxViewHandler
             mapboxView.CameraController = null;
             mapboxView.MapboxController = null;
             mapboxView.Viewport = null;
+            mapboxView.LocationComponent = null;
         }
 
         mapboxFragment.MapReady -= HandleMapReady;

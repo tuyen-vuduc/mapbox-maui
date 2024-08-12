@@ -2,6 +2,7 @@
 
 using System.Windows.Input;
 using MapboxMaui.Annotations;
+using MapboxMaui.Locations;
 using MapboxMaui.Query;
 using MapboxMaui.Styles;
 using MapboxMaui.Viewport;
@@ -35,6 +36,8 @@ public partial interface IMapboxView : IView
     IMapFeatureQueryable QueryManager { get; }
 
     IViewportPlugin Viewport { get; }
+
+    ILocationComponentPlugin LocationComponent { get; }
 }
 
 partial interface IMapboxView

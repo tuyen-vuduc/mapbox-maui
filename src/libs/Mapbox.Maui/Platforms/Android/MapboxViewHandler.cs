@@ -18,7 +18,7 @@ public partial class MapboxViewHandler
     private static void HandleGestureSettingsChanged(MapboxViewHandler handler, IMapboxView view)
     {
         var mapView = handler.GetMapView();
-        if (mapView == null) return;
+        if (mapView is null) return;
 
         var gestures = mapView.GetGestures();
 
@@ -46,7 +46,7 @@ public partial class MapboxViewHandler
     private static void HandleLightChanged(MapboxViewHandler handler, IMapboxView view)
     {
         var mapView = handler.GetMapView();
-        if (mapView == null) return;
+        if (mapView is null) return;
 
         if (view.Light == null) return;
 
@@ -58,7 +58,7 @@ public partial class MapboxViewHandler
     private static void HandleLayersChanged(MapboxViewHandler handler, IMapboxView view)
     {
         var mapView = handler.GetMapView();
-        if (mapView == null) return;
+        if (mapView is null) return;
 
         if (view.Layers == null) return;
 
@@ -83,7 +83,7 @@ public partial class MapboxViewHandler
     private static void HandleImagesChanged(MapboxViewHandler handler, IMapboxView view)
     {
         var mapView = handler.GetMapView();
-        if (mapView == null) return;
+        if (mapView is null) return;
 
         if (view.Images == null) return;
 
@@ -110,7 +110,7 @@ public partial class MapboxViewHandler
     private static void HandleTerrainChanged(MapboxViewHandler handler, IMapboxView view)
     {
         var mapView = handler.GetMapView();
-        if (mapView == null) return;
+        if (mapView is null) return;
 
         if (view.Terrain == null) return;
 
@@ -121,7 +121,7 @@ public partial class MapboxViewHandler
     private static void HandleSourcesChanged(MapboxViewHandler handler, IMapboxView view)
     {
         var mapView = handler.GetMapView();
-        if (mapView == null) return;
+        if (mapView is null) return;
 
         if (view.Sources == null) return;
         var style = mapView.MapboxMap.Style;
@@ -183,9 +183,12 @@ public partial class MapboxViewHandler
 
     private static void HandleCameraOptionsChanged(MapboxViewHandler handler, IMapboxView view)
     {
+        var mapView = handler.GetMapView();
+        if (mapView is null) return;
+
         var cameraOptions = view.CameraOptions.ToNative();
 
-        handler.GetMapView()?.MapboxMap.SetCamera(cameraOptions);
+        mapView.MapboxMap.SetCamera(cameraOptions);
     }
 
     private static void HandleDebugOptionsChanged(MapboxViewHandler handler, IMapboxView view)
@@ -193,7 +196,7 @@ public partial class MapboxViewHandler
         if (view.DebugOptions == null) return;
 
         var mapView = handler.GetMapView();
-        if (mapView == null) return;
+        if (mapView is null) return;
 
         var debugOptions = mapView.MapboxMap.Debug;
         handler.GetMapView().MapboxMap.SetDebug(debugOptions, false);
@@ -205,7 +208,9 @@ public partial class MapboxViewHandler
     private static void HandleScaleBarVisibilityChanged(MapboxViewHandler handler, IMapboxView view)
     {
         var mapView = handler.GetMapView();
-        if (mapView?.MapboxMap.Style?.IsStyleLoaded != true) return;
+        if (mapView is null) return;
+
+        if (mapView.MapboxMap.Style?.IsStyleLoaded != true) return;
 
         var scaleBarPlugin = ScaleBarUtils.GetScaleBar(mapView);
 

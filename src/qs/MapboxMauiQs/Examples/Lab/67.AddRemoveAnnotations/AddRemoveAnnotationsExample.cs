@@ -173,12 +173,11 @@ public class AddRemoveAnnotationsExample : ContentPage, IExamplePage, IQueryAttr
         };
 
         map.CameraOptions = cameraOptions;
+        map.MapboxStyle = MapboxStyle.MAPBOX_STREETS;
     }
 
     private void Map_MapLoaded(object sender, EventArgs e)
     {
-        map.MapboxStyle = MapboxStyle.MAPBOX_STREETS;
-
         // Setup Styles, Annotations, etc here
         map.Images = [
             new ResolvedImage(markerIconId, "red_marker"),

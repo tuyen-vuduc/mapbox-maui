@@ -145,10 +145,10 @@ public class AddRemoveAnnotationsExample : ContentPage, IExamplePage, IQueryAttr
     }
     private async void RemoveAllAnnotations()
     {
-        pointAnnotationManager.RemoveAllAnnotations();
-        circleAnnotationManager.RemoveAllAnnotations();
+        pointAnnotationManager?.RemoveAllAnnotations();
+        circleAnnotationManager?.RemoveAllAnnotations();
         await DisplayAlert("Info", $"All annotations were removed", "OK");
-        annotations.Clear();
+        annotations?.Clear();
         map.CameraController.EaseTo(new CameraOptions
         {
             Center = defaultCenterPosition,

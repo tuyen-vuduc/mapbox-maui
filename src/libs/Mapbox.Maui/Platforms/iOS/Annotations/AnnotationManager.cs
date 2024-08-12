@@ -41,7 +41,35 @@ public abstract partial class AnnotationManager<TAnnotationManager, TAnnotation>
         );
     }
 
-    public abstract void AddAnnotations(params TAnnotation[] annotations);
-    public abstract void RemoveAllAnnotations();
-    public abstract void RemoveAnnotations(params string[] annotationIDs);
+    public void AddAnnotations(params TAnnotation[] xitems)
+    {
+        if (xitems.Length == 0) return; 
+
+        var items = xitems
+            .Select(ToPlatformAnnotationOption)
+            .ToArray();
+
+        NativeManager.AddAnnotations(items);
+    }
+    public void UpdateAnnotations(params TAnnotation[] xitems)
+    {
+        if (xitems.Length == 0) return;
+
+        var items = xitems
+            .Select(ToPlatformAnnotationOption)
+            .ToArray();
+
+        NativeManager.UpdateAnnotations(items);
+    }
+    public void RemoveAllAnnotations()
+        => NativeManager.RemoveAllAnnotations();
+    public void RemoveAnnotations(params string[] annotationIDs)
+    {
+        for (int i = 0; i < annotationIDs.Length; i++)
+        {
+            NativeManager.RemoveAnnotationById(annotationIDs[i]);
+        }
+    }
+
+    protected abstract ITMBAnnotation ToPlatformAnnotationOption(TAnnotation annotation);
 }

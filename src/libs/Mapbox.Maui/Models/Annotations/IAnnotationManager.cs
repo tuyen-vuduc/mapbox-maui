@@ -14,6 +14,8 @@ public interface IAnnotationManager<TAnnotation> where TAnnotation : IAnnotation
 
     void AddAnnotations(params TAnnotation[] annotations);
 
+    void UpdateAnnotations(params TAnnotation[] annotations);
+
     void RemoveAnnotations(params string[] annotationIDs);
 
     void RemoveAllAnnotations();

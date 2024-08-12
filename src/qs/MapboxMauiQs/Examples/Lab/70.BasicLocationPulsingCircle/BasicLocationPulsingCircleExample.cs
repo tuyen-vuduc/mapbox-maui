@@ -11,10 +11,24 @@ public class BasicLocationPulsingCircleExample : ContentPage, IExamplePage, IQue
         iOSPage.SetUseSafeArea(this, false);
 		Content = map = new MapboxView();
 
+        var toggleMapStyleToolbarItem = new ToolbarItem
+        {
+            Text = "Toggle Map Style",
+            Command = new Command(ToggleMapboxStyle),
+        };
+        ToolbarItems.Add(toggleMapStyleToolbarItem);
+
         map.MapReady += Map_MapReadyAsync;
         map.MapLoaded += Map_MapLoaded;
         map.IndicatorPositionChanged += Map_IndicatorPositionChanged;
 	}
+
+    private void ToggleMapboxStyle(object obj)
+    {
+        map.MapboxStyle = map.MapboxStyle == MapboxStyle.LIGHT
+            ? MapboxStyle.DARK
+            : MapboxStyle.LIGHT;
+    }
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {

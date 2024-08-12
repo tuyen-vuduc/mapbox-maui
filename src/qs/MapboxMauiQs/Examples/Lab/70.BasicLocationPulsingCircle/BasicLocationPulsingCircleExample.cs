@@ -1,4 +1,6 @@
 
+using Microsoft.Maui.ApplicationModel;
+
 namespace MapboxMauiQs;
 
 public class BasicLocationPulsingCircleExample : ContentPage, IExamplePage, IQueryAttributable
@@ -15,13 +17,57 @@ public class BasicLocationPulsingCircleExample : ContentPage, IExamplePage, IQue
         {
             Text = "Toggle Map Style",
             Command = new Command(ToggleMapboxStyle),
+            Order = ToolbarItemOrder.Secondary,
         };
         ToolbarItems.Add(toggleMapStyleToolbarItem);
+
+        var toggleComponentToolbarItem = new ToolbarItem
+        {
+            Text = "Toggle Component",
+            Command = new Command(ToggleComponent),
+            Order = ToolbarItemOrder.Secondary,
+        };
+        ToolbarItems.Add(toggleComponentToolbarItem);
+
+        var togglePulsingToolbarItem = new ToolbarItem
+        {
+            Text = "Toggle Pulsing",
+            Command = new Command(TogglePulsing),
+            Order = ToolbarItemOrder.Secondary,
+        };
+        ToolbarItems.Add(togglePulsingToolbarItem);
+
+        var pulsingRingToolbarItem = new ToolbarItem
+        {
+            Text = "Pulsing follow accuracy Ring",
+            Command = new Command(ShowPulsingAccuracyRing),
+            Order = ToolbarItemOrder.Secondary,
+        };
+        ToolbarItems.Add(pulsingRingToolbarItem);
 
         map.MapReady += Map_MapReadyAsync;
         map.MapLoaded += Map_MapLoaded;
         map.IndicatorPositionChanged += Map_IndicatorPositionChanged;
 	}
+
+    private void ShowPulsingAccuracyRing(object obj)
+    {
+        map.LocationComponent.Enabled = true;
+        map.LocationComponent.PulsingEnabled = true;
+        map.LocationComponent.ShowAccuracyRing = true;
+        map.LocationComponent.PulsingMaxRadius = -1;
+    }
+
+    private void TogglePulsing(object obj)
+    {
+        map.LocationComponent.PulsingMaxRadius = (float)(10 * DeviceDisplay.Current.MainDisplayInfo.Density);
+        map.LocationComponent.PulsingEnabled = !map.LocationComponent.PulsingEnabled;
+    }
+
+    private void ToggleComponent(object obj)
+    {
+        map.LocationComponent.Enabled = !map.LocationComponent.Enabled;
+    }
 
     private void ToggleMapboxStyle(object obj)
     {

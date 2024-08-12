@@ -1,5 +1,6 @@
 ﻿using Com.Mapbox.Maps;
 using MapboxMaui.Gestures;
+using Microsoft.Maui.Platform;
 
 namespace MapboxMaui;
 
@@ -14,10 +15,9 @@ public partial class MapboxViewHandler
             mapboxView.MapboxController = this;
             mapboxView.CameraController = this;
             mapboxView.Viewport = this;
-
-            mapboxView.InvokeMapReady();
         }
 
+        mapboxFragment.MapReady += HandleMapReady;
         mapboxFragment.CameraChanged += HandleCameraChanged;
         mapboxFragment.IndicatorAccuracyRadiusChanged += HandleIndicatorAccuracyRadiusChanged;
         mapboxFragment.IndicatorBearingChanged += HandleIndicatorBearingChanged;
@@ -44,6 +44,7 @@ public partial class MapboxViewHandler
             mapboxView.Viewport = null;
         }
 
+        mapboxFragment.MapReady -= HandleMapReady;
         mapboxFragment.CameraChanged -= HandleCameraChanged;
         mapboxFragment.IndicatorAccuracyRadiusChanged -= HandleIndicatorAccuracyRadiusChanged;
         mapboxFragment.IndicatorBearingChanged -= HandleIndicatorBearingChanged;
@@ -59,6 +60,8 @@ public partial class MapboxViewHandler
         mapboxFragment.RotatingEnded -= HandleRotatingEnded;
     }
 
+    private void HandleMapReady(MapView view)
+        => (VirtualView as MapboxView)?.InvokeMapReady();
     private void HandleCameraChanged(CameraOptions options)
         => (VirtualView as MapboxView)?.InvokeCameraChanged(options);
     private void HandleIndicatorAccuracyRadiusChanged(double obj)

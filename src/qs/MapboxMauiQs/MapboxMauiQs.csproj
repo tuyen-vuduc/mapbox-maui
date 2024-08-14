@@ -106,7 +106,7 @@
 		</Compile>
 	</ItemGroup>
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
-		<PackageReference Include="MapboxMapsObjC.iOS" Version="11.5.2.5" />
+		<PackageReference Include="MapboxMapsObjC.iOS" Version="11.5.2.6" />
 		<PackageReference Include="MapboxMaps.iOS" Version="11.5.2" />
 
 		<Compile Include="..\..\libs\Mapbox.Maui\Platforms\iOS\**\**\*.cs">

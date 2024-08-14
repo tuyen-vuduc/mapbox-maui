@@ -87,14 +87,14 @@ public interface IMapboxController
     CoordinateBounds GetCoordinateBoundsForCamera(CameraOptions cameraOptions);
     ScreenPosition GetScreenPosition(IPosition position);
     CameraOptions? CameraForCoordinates(
-        IEnumerable<MapPosition> coordinates,
+        IEnumerable<IPosition> coordinates,
         CameraOptions? cameraOptions = default,
         Thickness? coordinatesPadding = default,
         double? maxZoom = default,
         ScreenPosition? offset = default
     );
     void CameraForCoordinates(
-        IEnumerable<MapPosition> coordinates,
+        IEnumerable<IPosition> coordinates,
         Action<CameraOptions?> completion,
         CameraOptions? cameraOptions = default,
         Thickness? coordinatesPadding = default,

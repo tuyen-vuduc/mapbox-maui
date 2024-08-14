@@ -59,7 +59,7 @@ partial class MapboxViewHandler : IMapboxController
     *  Also empty [CameraOptions] are returned in case of an internal error.
     */
     public CameraOptions? CameraForCoordinates(
-        IEnumerable<MapPosition> coordinates,
+        IEnumerable<IPosition> coordinates,
         CameraOptions? cameraOptions = null,
         Thickness? coordinatesPadding = null,
         double? maxZoom = null,
@@ -71,7 +71,7 @@ partial class MapboxViewHandler : IMapboxController
 
         var result = mapView.MapboxMap.CameraForCoordinates(
             coordinates?.Select(x => x.ToGeoPoint()).ToList(),
-            cameraOptions?.ToNative(),
+            (cameraOptions?? new()).ToNative(),
             coordinatesPadding?.ToNative(),
             maxZoom?.ToNative(),
             offset?.ToScreenCoordinate()
@@ -91,7 +91,7 @@ partial class MapboxViewHandler : IMapboxController
     * @param completion Callback returning the [CameraOptions] object representing the provided parameters. Those [CameraOptions] always take into account actual MapView size and may return empty ([CameraOptions.isEmpty]) options only if an internal error has occurred.
     */
     public void CameraForCoordinates(
-        IEnumerable<MapPosition> coordinates,
+        IEnumerable<IPosition> coordinates,
         Action<CameraOptions?> completion,
         CameraOptions? cameraOptions = null,
         Thickness? coordinatesPadding = null,
@@ -108,7 +108,7 @@ partial class MapboxViewHandler : IMapboxController
 
         mapView.MapboxMap.CameraForCoordinates(
             coordinates?.Select(x => x.ToGeoPoint()).ToList(),
-            cameraOptions?.ToNative(),
+            (cameraOptions??new()).ToNative(),
             coordinatesPadding?.ToNative(),
             maxZoom?.ToNative(),
             offset?.ToScreenCoordinate(),

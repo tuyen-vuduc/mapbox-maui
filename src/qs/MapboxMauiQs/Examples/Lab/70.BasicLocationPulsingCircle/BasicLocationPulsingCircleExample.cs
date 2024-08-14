@@ -1,3 +1,5 @@
+using MapboxMaui;
+
 namespace MapboxMauiQs;
 
 public class BasicLocationPulsingCircleExample : ContentPage, IExamplePage, IQueryAttributable
@@ -33,7 +35,8 @@ public class BasicLocationPulsingCircleExample : ContentPage, IExamplePage, IQue
                 ? "Hide user location" : "Show user location",
             map.LocationComponent.PulsingEnabled
                 ? "Hide pulsing" : "Show pulsing",
-            "Show accuracy ring"
+            "Show accuracy ring",
+            "Change map style"
         );
 
         switch (action) { 
@@ -47,6 +50,9 @@ public class BasicLocationPulsingCircleExample : ContentPage, IExamplePage, IQue
                 break;
             case "Show accuracy ring":
                 ShowPulsingAccuracyRing(action);
+                break;
+            case "Change map style":
+                ToggleMapboxStyle(action);
                 break;
         }
     }
@@ -118,5 +124,17 @@ public class BasicLocationPulsingCircleExample : ContentPage, IExamplePage, IQue
         {
             FocalPoint = map.MapboxController.GetScreenPosition(e.Position),
         };
+
+        // var bounds = map.MapboxController.GetCoordinateBoundsForCamera(map.CameraController.CameraState);
+        // IEnumerable<IPosition> coords = new IPosition[] {
+        //         bounds.Southwest.ToPoint().Coordinates,
+        //         bounds.Northeast.ToPoint().Coordinates
+        //     };
+        // map.MapboxController.CameraForCoordinates(
+        //     coords
+        //     , completion: (x) =>
+        //     {
+
+        //     });
     }
 }

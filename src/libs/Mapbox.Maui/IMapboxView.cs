@@ -86,6 +86,21 @@ public interface IMapboxController
     IPosition GetMapPosition(ScreenPosition position);
     CoordinateBounds GetCoordinateBoundsForCamera(CameraOptions cameraOptions);
     ScreenPosition GetScreenPosition(IPosition position);
+    CameraOptions? CameraForCoordinates(
+        IEnumerable<MapPosition> coordinates,
+        CameraOptions? cameraOptions = default,
+        Thickness? coordinatesPadding = default,
+        double? maxZoom = default,
+        ScreenPosition? offset = default
+    );
+    void CameraForCoordinates(
+        IEnumerable<MapPosition> coordinates,
+        Action<CameraOptions?> completion,
+        CameraOptions? cameraOptions = default,
+        Thickness? coordinatesPadding = default,
+        double? maxZoom = default,
+        ScreenPosition? offset = default
+    );
 }
 
 public class MapTappedEventArgs : EventArgs

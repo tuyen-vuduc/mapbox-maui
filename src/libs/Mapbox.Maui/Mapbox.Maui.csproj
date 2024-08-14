@@ -100,7 +100,7 @@
 		<PackageReference Include="Xamarin.AndroidX.Annotation" Version="1.8.0.1" />
 	</ItemGroup>
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
-		<PackageReference Include="MapboxMapsObjC.iOS" Version="11.5.2.3" />
+		<PackageReference Include="MapboxMapsObjC.iOS" Version="11.5.2.5" />
 		<PackageReference Include="MapboxMaps.iOS" Version="11.5.2" />
 	</ItemGroup>
 	<ItemGroup>

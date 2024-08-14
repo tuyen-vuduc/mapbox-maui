@@ -23,15 +23,15 @@ partial class MapboxViewHandler : ILocationComponentPlugin
         get => Plugin.Options.PuckType is not null;
         set
         {
+            var options = Plugin.Options;
             if (!value)
             {
-                Plugin.Options.PuckType = null;
-                return;
+                options.PuckType = null;
             }
-
-            var options = Plugin.Options;
-            options.PuckType = TMBPuck2DConfiguration.MakeDefaultWithShowBearing(false);
-
+            else
+            {
+                options.PuckType = TMBPuck2DConfiguration.MakeDefaultWithShowBearing(false);
+            }
             Plugin.Options = options;
         }
     }
@@ -47,7 +47,6 @@ partial class MapboxViewHandler : ILocationComponentPlugin
                 var puck2D = Runtime.GetNSObject<TMBPuck2DConfiguration>(
                     Plugin.Options.PuckType.Handle
                 );
-
 
                 return puck2D.Pulsing != null;
             }
@@ -117,16 +116,14 @@ partial class MapboxViewHandler : ILocationComponentPlugin
 
             try
             {
+                var options = Plugin.Options;
                 var puck2D = Runtime.GetNSObject<TMBPuck2DConfiguration>(
-                    Plugin.Options.PuckType.Handle
+                    options.PuckType.Handle
                 );
-
-                if (puck2D.Pulsing is null)
-                {
-                    return;
-                }
-
                 puck2D.ShowsAccuracyRing = value;
+
+                options.PuckType = puck2D;
+                Plugin.Options = options;
             }
             catch
             {
@@ -164,8 +161,9 @@ partial class MapboxViewHandler : ILocationComponentPlugin
 
             try
             {
+                var options = Plugin.Options;
                 var puck2D = Runtime.GetNSObject<TMBPuck2DConfiguration>(
-                    Plugin.Options.PuckType.Handle
+                    options.PuckType.Handle
                 );
 
                 if (puck2D.Pulsing is null)
@@ -173,7 +171,11 @@ partial class MapboxViewHandler : ILocationComponentPlugin
                     return;
                 }
 
-                puck2D.Pulsing.Radius = TMBPuck2DConfigurationPulsingRadius.FromConstant(value);
+                puck2D.Pulsing.Radius = value <= 0
+                    ? TMBPuck2DConfigurationPulsingRadius.Accuracy
+                    : TMBPuck2DConfigurationPulsingRadius.FromConstant(value);
+                options.PuckType = puck2D;
+                Plugin.Options = options;
             }
             catch
             {

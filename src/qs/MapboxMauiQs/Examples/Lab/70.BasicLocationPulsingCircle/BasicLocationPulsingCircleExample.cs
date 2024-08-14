@@ -1,6 +1,3 @@
-
-using Microsoft.Maui.ApplicationModel;
-
 namespace MapboxMauiQs;
 
 public class BasicLocationPulsingCircleExample : ContentPage, IExamplePage, IQueryAttributable
@@ -13,42 +10,46 @@ public class BasicLocationPulsingCircleExample : ContentPage, IExamplePage, IQue
         iOSPage.SetUseSafeArea(this, false);
 		Content = map = new MapboxView();
 
-        var toggleMapStyleToolbarItem = new ToolbarItem
+        Title = "X";
+        var openSettingsItem = new ToolbarItem
         {
-            Text = "Toggle Map Style",
-            Command = new Command(ToggleMapboxStyle),
+            IconImageSource = "ic_settings",
+            Text = "Actions",
+            Command = new Command(OpenSettings),
             Order = ToolbarItemOrder.Secondary,
         };
-        ToolbarItems.Add(toggleMapStyleToolbarItem);
-
-        var toggleComponentToolbarItem = new ToolbarItem
-        {
-            Text = "Toggle Component",
-            Command = new Command(ToggleComponent),
-            Order = ToolbarItemOrder.Secondary,
-        };
-        ToolbarItems.Add(toggleComponentToolbarItem);
-
-        var togglePulsingToolbarItem = new ToolbarItem
-        {
-            Text = "Toggle Pulsing",
-            Command = new Command(TogglePulsing),
-            Order = ToolbarItemOrder.Secondary,
-        };
-        ToolbarItems.Add(togglePulsingToolbarItem);
-
-        var pulsingRingToolbarItem = new ToolbarItem
-        {
-            Text = "Pulsing follow accuracy Ring",
-            Command = new Command(ShowPulsingAccuracyRing),
-            Order = ToolbarItemOrder.Secondary,
-        };
-        ToolbarItems.Add(pulsingRingToolbarItem);
+        ToolbarItems.Add(openSettingsItem);
 
         map.MapReady += Map_MapReadyAsync;
         map.MapLoaded += Map_MapLoaded;
         map.IndicatorPositionChanged += Map_IndicatorPositionChanged;
 	}
+
+    private async void OpenSettings(object obj)
+    {
+        var action = await DisplayActionSheet(
+            "Action", "Cancel", null,
+            map.LocationComponent.Enabled
+                ? "Hide user location" : "Show user location",
+            map.LocationComponent.PulsingEnabled
+                ? "Hide pulsing" : "Show pulsing",
+            "Show accuracy ring"
+        );
+
+        switch (action) { 
+            case "Hide user location":
+            case "Show user location":
+                ToggleComponent(action);
+                break;
+            case "Hide pulsing":
+            case "Show pulsing":
+                TogglePulsing(action);
+                break;
+            case "Show accuracy ring":
+                ShowPulsingAccuracyRing(action);
+                break;
+        }
+    }
 
     private void ShowPulsingAccuracyRing(object obj)
     {

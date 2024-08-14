@@ -14,10 +14,10 @@ public partial class MapboxViewHandler
             mapboxView.MapboxController = this;
             mapboxView.CameraController = this;
             mapboxView.Viewport = this;
-
-            mapboxView.InvokeMapReady();
+            mapboxView.LocationComponent = this;
         }
 
+        mapboxFragment.MapReady += HandleMapReady;
         mapboxFragment.CameraChanged += HandleCameraChanged;
         mapboxFragment.IndicatorAccuracyRadiusChanged += HandleIndicatorAccuracyRadiusChanged;
         mapboxFragment.IndicatorBearingChanged += HandleIndicatorBearingChanged;
@@ -42,8 +42,10 @@ public partial class MapboxViewHandler
             mapboxView.CameraController = null;
             mapboxView.MapboxController = null;
             mapboxView.Viewport = null;
+            mapboxView.LocationComponent = null;
         }
 
+        mapboxFragment.MapReady -= HandleMapReady;
         mapboxFragment.CameraChanged -= HandleCameraChanged;
         mapboxFragment.IndicatorAccuracyRadiusChanged -= HandleIndicatorAccuracyRadiusChanged;
         mapboxFragment.IndicatorBearingChanged -= HandleIndicatorBearingChanged;
@@ -59,6 +61,8 @@ public partial class MapboxViewHandler
         mapboxFragment.RotatingEnded -= HandleRotatingEnded;
     }
 
+    private void HandleMapReady(MapView view)
+        => (VirtualView as MapboxView)?.InvokeMapReady();
     private void HandleCameraChanged(CameraOptions options)
         => (VirtualView as MapboxView)?.InvokeCameraChanged(options);
     private void HandleIndicatorAccuracyRadiusChanged(double obj)

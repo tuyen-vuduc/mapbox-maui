@@ -25,6 +25,7 @@ public partial class MapboxFragment : Fragment
     public event Action<MapView> MapLoaded;
     public event Action<MapView> MapLoadingError;
     public event Action<MapTappedPosition> MapLongClicked;
+    public event Action<MapView> MapReady;
     public event Action<MapView> StyleLoaded;
     public event Action<ViewportStatusChangedEventArgs> ViewportStatusChanged;
     public event Action<RotatingEventArgs> Rotating;
@@ -57,7 +58,10 @@ public partial class MapboxFragment : Fragment
             MapboxOptions.AccessToken = MapboxViewHandler.ACCESS_TOKEN;
         }
 
-        return MapView = new MapView(Context);
+        MapView = new MapView(Context);
+
+        MapReady?.Invoke(MapView);
+        return MapView;
     }
 
     public override void OnViewCreated(View view, Bundle savedInstanceState)

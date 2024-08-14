@@ -61,7 +61,7 @@
 		<RepositoryUrl>https://github.com/tuyen-vuduc/mapbox-maui</RepositoryUrl>
 		<PackageProjectUrl>https://mapbox.tuyen-vuduc.tech</PackageProjectUrl>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-		<PackageVersion>11.5.1-alpha02</PackageVersion>
+		<PackageVersion>11.5.1-alpha03</PackageVersion>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<PackageIcon>tv-mapbox.png</PackageIcon>
@@ -70,12 +70,18 @@
 	  <CreatePackage>false</CreatePackage>
 	</PropertyGroup>
 	<ItemGroup>
+	  <Compile Remove="Platforms\Android\MapboxViewHandler.Location.cs" />
+	  <Compile Remove="Platforms\iOS\MapboxViewHandler.Location.cs" />
+	</ItemGroup>
+	<ItemGroup>
 	  <None Remove="Models\Gestures\" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Include="../../../assets/tv-mapbox.png" Pack="True" PackagePath="tv-mapbox.png" />
 		<None Include="../../../LICENSE" Pack="True" PackagePath="" />
 		<None Include="../../../README.md" Pack="True" PackagePath="README.md" />
+		<None Include="Platforms\Android\MapboxViewHandler.Location.cs" />
+		<None Include="Platforms\iOS\MapboxViewHandler.Location.cs" />
 
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 		<PackageReference Include="Xamarin.Build.Download" Version="0.11.4" />
@@ -94,7 +100,7 @@
 		<PackageReference Include="Xamarin.AndroidX.Annotation" Version="1.8.0.1" />
 	</ItemGroup>
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
-		<PackageReference Include="MapboxMapsObjC.iOS" Version="11.5.2.3" />
+		<PackageReference Include="MapboxMapsObjC.iOS" Version="11.5.2.6" />
 		<PackageReference Include="MapboxMaps.iOS" Version="11.5.2" />
 	</ItemGroup>
 	<ItemGroup>

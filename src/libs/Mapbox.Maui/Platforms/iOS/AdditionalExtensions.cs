@@ -369,5 +369,10 @@ public static partial class AdditionalExtensions
     {
         return NSValue.FromCGPoint(screenPosition.ToNative());
     }
+
+    internal static NSNumber ToNSNumber(this double value)
+    {
+        return NSNumber.FromDouble(value);
+    }
 }
 

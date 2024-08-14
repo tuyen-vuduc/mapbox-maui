@@ -30,5 +30,7 @@
 	<string>Assets.xcassets/appicon.appiconset</string>
 	<key>MBXAccessToken.x</key>
 	<string>YOUR_MAPBOX_ACCESS_TOKEN</string>
+  <key>NSLocationWhenInUseUsageDescription</key>
+  <string>The app needs location to demo features like pulsing.</string>
 </dict>
 </plist>

@@ -1,4 +1,6 @@
 ﻿using Android.Animation;
+using Android.App;
+using Com.Mapbox.Functions;
 using Com.Mapbox.Maps.Plugins.Animation;
 using MapboxMaui.Camera;
 
@@ -12,7 +14,7 @@ partial class MapboxViewHandler : ICameraPlugin
         {
             var mapView = mapboxFragment?.MapView;
 
-            if (mapView == null) return default;
+            if (mapView is null) return default;
 
             return mapView.MapboxMap.CameraState.ToX();
         }
@@ -22,7 +24,7 @@ partial class MapboxViewHandler : ICameraPlugin
     {
         var mapView = mapboxFragment?.MapView;
 
-        if (mapView == null) return;
+        if (mapView is null) return;
 
         var xcameraOptions = cameraOptions.ToNative();
         var xanimationOptions = animationOptions?.ToNative();
@@ -41,7 +43,7 @@ partial class MapboxViewHandler : ICameraPlugin
     {
         var mapView = mapboxFragment?.MapView;
 
-        if (mapView == null) return;
+        if (mapView is null) return;
 
         var xcameraOptions = cameraOptions.ToNative();
         var xanimationOptions = animationOptions?.ToNative();

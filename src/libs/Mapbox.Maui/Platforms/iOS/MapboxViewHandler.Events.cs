@@ -25,6 +25,7 @@ partial class MapboxViewHandler
             mapboxView.MapboxController = this;
             mapboxView.CameraController = this;
             mapboxView.Viewport = this;
+            mapboxView.LocationComponent = this;
 
             mapboxView.InvokeMapReady();
         }
@@ -72,27 +73,6 @@ partial class MapboxViewHandler
         );
     }
 
-    private void HandleHeadingChanged(TMBHeading heading)
-    {
-        var mapboxView = VirtualView as MapboxView;
-        if (mapboxView is null) return;
-
-        mapboxView.InvokeIndicatorAccuracyRadiusChanged(heading.Accuracy);
-    }
-
-    private void HandleLocationChanged(NSArray<MBXLocation> array)
-    {
-        var mapboxView = VirtualView as MapboxView;
-        if (mapboxView is null) return;
-
-        var mbxLocation = array[(int)array.Count - 1];
-        var mapPosition = new MapPosition(
-            mbxLocation.Latitude,
-            mbxLocation.Longitude,
-            mbxLocation.Altitude?.DoubleValue);
-        mapboxView.InvokeIndicatorPositionChanged(mapPosition);
-    }
-
     void UnRegisterEvents(PlatformView platformView)
     {
         if (VirtualView is MapboxView mapboxView)
@@ -102,6 +82,7 @@ partial class MapboxViewHandler
             mapboxView.MapboxController = null;
             mapboxView.CameraController = null;
             mapboxView.Viewport = null;
+            mapboxView.LocationComponent = null;
         }
 
         foreach (var cancelable in cancelables)
@@ -136,6 +117,27 @@ partial class MapboxViewHandler
 
         mapView.Gestures().WeakDelegate?.Dispose();
         mapView.Gestures().WeakDelegate = null;
+    }
+
+    private void HandleHeadingChanged(TMBHeading heading)
+    {
+        var mapboxView = VirtualView as MapboxView;
+        if (mapboxView is null) return;
+
+        mapboxView.InvokeIndicatorAccuracyRadiusChanged(heading.Accuracy);
+    }
+
+    private void HandleLocationChanged(NSArray<MBXLocation> array)
+    {
+        var mapboxView = VirtualView as MapboxView;
+        if (mapboxView is null) return;
+
+        var mbxLocation = array[(int)array.Count - 1];
+        var mapPosition = new MapPosition(
+            mbxLocation.Latitude,
+            mbxLocation.Longitude,
+            mbxLocation.Altitude?.DoubleValue);
+        mapboxView.InvokeIndicatorPositionChanged(mapPosition);
     }
 
     private void HandleMapLongPress(UILongPressGestureRecognizer longPressGestureRecognizer)

@@ -2,6 +2,7 @@
 
 using MapboxMaui.Annotations;
 using MapboxMaui.Camera;
+using MapboxMaui.Locations;
 using MapboxMaui.Styles;
 using MapboxMaui.Viewport;
 
@@ -237,4 +238,5 @@ public partial class MapboxView : View, IMapboxView
     public IMapboxController MapboxController { get; internal set; }
     public ICameraPlugin CameraController { get; internal set; }
     public IViewportPlugin Viewport { get; internal set; }
+    public ILocationComponentPlugin LocationComponent { get; internal set; }
 }

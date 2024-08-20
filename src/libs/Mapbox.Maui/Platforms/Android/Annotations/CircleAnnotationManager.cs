@@ -1,5 +1,6 @@
 ﻿namespace MapboxMaui.Annotations;
 
+using Android.Graphics;
 using Com.Mapbox.Maps.Plugins.Annotations;
 using System.Collections;
 using PlatformCircleAnnotationManager = Com.Mapbox.Maps.Plugins.Annotations.Generated.CircleAnnotationManager;
@@ -61,5 +62,7 @@ public partial class CircleAnnotationManager
         }
         return itemsToDelete;
     }
+    protected override Annotation ToPlatformAnnotation(CircleAnnotation annotation)
+        => (Annotation)annotation.ToPlatformValue().Build(annotation.Id, nativeManager);
 }
 

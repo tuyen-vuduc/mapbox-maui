@@ -175,5 +175,7 @@ public partial class PointAnnotationManager
         }
         return itemsToDelete;
     }
+    protected override Annotation ToPlatformAnnotation(PointAnnotation annotation)
+        => (Annotation)annotation.ToPlatformValue().Build(annotation.Id, nativeManager);
 }
 

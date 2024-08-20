@@ -45,7 +45,7 @@ public abstract partial class AnnotationManager<TAnnotationManager, TAnnotation>
         if (annotations.Length == 0) return;
 
         var xannotations = annotations
-            .Select(ToPlatformAnnotationOption)
+            .Select(ToPlatformAnnotation)
             .ToList();
 
         NativeManager.Update(xannotations);
@@ -60,5 +60,6 @@ public abstract partial class AnnotationManager<TAnnotationManager, TAnnotation>
     }
 
     protected abstract IAnnotationOptions ToPlatformAnnotationOption(TAnnotation annotation);
+    protected abstract Annotation ToPlatformAnnotation(TAnnotation annotation);
     protected abstract IList GetNativeAnnotations(params string[] annotationIDs);
 }

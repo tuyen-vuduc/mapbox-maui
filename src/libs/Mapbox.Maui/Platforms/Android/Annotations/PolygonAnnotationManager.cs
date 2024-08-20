@@ -56,4 +56,6 @@ partial class PolygonAnnotationManager
         }
         return itemsToDelete;
     }
+    protected override Annotation ToPlatformAnnotation(PolygonAnnotation annotation)
+        => (Annotation)annotation.ToPlatformValue().Build(annotation.Id, nativeManager);
 }

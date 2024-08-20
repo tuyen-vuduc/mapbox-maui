@@ -72,4 +72,6 @@ partial class PolylineAnnotationManager
         }
         return itemsToDelete;
     }
+    protected override Annotation ToPlatformAnnotation(PolylineAnnotation annotation)
+        => (Annotation)annotation.ToPlatformValue().Build(annotation.Id, nativeManager);
 }

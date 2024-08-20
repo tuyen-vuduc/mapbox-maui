@@ -20,9 +20,12 @@ public abstract class Annotation<T>
 {
     public string Id { get; set; }
 
-    public IGeometryObject Geometry { get; }
+    public IGeometryObject Geometry { get; private set; }
 
-    public T GeometryValue => (T)Geometry;
+    public T GeometryValue {
+        get => (T)Geometry;
+        set => Geometry = value;
+    }
 
     public IReadOnlyDictionary<string, object> UserInfo { get; set; }
 

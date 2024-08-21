@@ -26,7 +26,7 @@ public class PolygonAnnotation : Annotation<Polygon>
     /// The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
     public double? FillOpacity
     {
-        get => GetProperty<double>("fill-opacity", default);
+        get => GetProperty<double>("fill-opacity", 1);
         set => SetProperty("fill-opacity", value);
     }
 

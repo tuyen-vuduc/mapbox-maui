@@ -92,7 +92,7 @@ public class PolylineAnnotation : Annotation<LineString>
     {
         get
         {
-            return GetProperty<double?>("line-opacity", default);
+            return GetProperty<double?>("line-opacity", 1);
         }
         set
         {

@@ -289,7 +289,7 @@ public class PointAnnotation : Annotation<Point>
     {
         get
         {
-            return GetProperty<double?>("icon-opacity", default);
+            return GetProperty<double?>("icon-opacity", 1);
         }
         set
         {
@@ -354,7 +354,7 @@ public class PointAnnotation : Annotation<Point>
     {
         get
         {
-            return GetProperty<double?>("text-opacity", default);
+            return GetProperty<double?>("text-opacity", 1);
         }
         set
         {

@@ -53,7 +53,7 @@ public class CircleAnnotation : Annotation<Point>
     {
         get
         {
-            return GetProperty<double?>("circle-opacity", default);
+            return GetProperty<double?>("circle-opacity", 1);
         }
         set
         {
@@ -92,7 +92,7 @@ public class CircleAnnotation : Annotation<Point>
     {
         get
         {
-            return GetProperty<double?>("circle-stroke-opacity", default);
+            return GetProperty<double?>("circle-stroke-opacity", 1);
         }
         set
         {

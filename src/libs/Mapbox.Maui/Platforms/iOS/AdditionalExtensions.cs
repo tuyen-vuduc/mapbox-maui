@@ -198,6 +198,10 @@ public static partial class AdditionalExtensions
             float value => NSNumber.FromDouble(value),
             double value => NSNumber.FromDouble(value),
             string value => new NSString(value),
+            TileCacheBudgetSize value => NSNumber.FromDouble(
+                value.Tiles
+                ?? value.Megabytes
+                ?? 0),
             Color value => new NSString(value.ToRgbaString()),
             INamedString value => new NSString(value.Value),
             IPropertyValue value => value.Value is DslExpression expression1

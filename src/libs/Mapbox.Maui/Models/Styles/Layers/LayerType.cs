@@ -27,6 +27,9 @@ public readonly struct LayerType : INamedString
     /// Raster map textures such as satellite imagery.
     public static readonly LayerType Raster = new ("raster");
 
+    /// Layer repsenting particles on the map.
+    public static readonly LayerType RasterParticle = new ("raster-particle");
+
     /// Client-side hillshading visualization based on DEM data.
     /// Currently, the implementation only supports Mapbox Terrain RGB and Mapzen Terrarium tiles.
     public static readonly LayerType Hillshade = new ("hillshade");

@@ -23,6 +23,7 @@ public class MapboxLayer : BaseKVContainer
         public const string filter = "filter";
         public const string source = "source";
         public const string sourceLayer = "source-layer";
+        public const string slot = "slot";
         public const string minZoom = "minzoom";
         public const string maxZoom = "maxzoom";
         public const string layout = "layout";
@@ -89,6 +90,13 @@ public class MapboxLayer : BaseKVContainer
     {
         get => GetProperty<string>(MapboxLayerKey.sourceLayer, default);
         set => SetProperty(MapboxLayerKey.sourceLayer, value);
+    }
+
+    // /// The slot this layer is assigned to. If specified, and a slot with that name exists, it will be placed at that position in the layer order.
+    public string Slot
+    {
+        get => GetProperty<string>(MapboxLayerKey.slot, default);
+        set => SetProperty(MapboxLayerKey.slot, value);
     }
 
     public double? MinZoom

@@ -2,11 +2,12 @@ namespace MapboxMaui.Styles;
 
 public partial class RasterLayer : MapboxLayer
 {
-    public RasterLayer(string id)
+    public RasterLayer(string id, string source)
         : base(id)
     {
         Type = LayerType.Raster;
         Visibility = new PropertyValue<Visibility>(MapboxMaui.Visibility.Visible);
+        Source = source;
     }
 
     // /// Displayed band of raster array source layer. Defaults to the first band if not set.

@@ -61,7 +61,7 @@
 		<RepositoryUrl>https://github.com/tuyen-vuduc/mapbox-maui</RepositoryUrl>
 		<PackageProjectUrl>https://mapbox.tuyen-vuduc.tech</PackageProjectUrl>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-		<PackageVersion>11.5.1-alpha06</PackageVersion>
+		<PackageVersion>11.5.1-alpha07</PackageVersion>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<PackageIcon>tv-mapbox.png</PackageIcon>

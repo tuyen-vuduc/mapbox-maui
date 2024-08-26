@@ -10,9 +10,9 @@ public class RasterTileSourceExample : ContentPage, IExamplePage, IQueryAttribut
     readonly Button toggleTitleRequestButton;
 
     public RasterTileSourceExample()
-	{
+    {
         iOSPage.SetUseSafeArea(this, false);
-		Content = new Grid
+        Content = new Grid
         {
             Children =
             {
@@ -29,13 +29,23 @@ public class RasterTileSourceExample : ContentPage, IExamplePage, IQueryAttribut
 
         map.MapReady += Map_MapReady;
         map.MapLoaded += Map_MapLoaded;
-	}
+    }
 
     private void ToggleTileRequestDelay(object obj)
     {
         isTileRequestDelayEnabled = !isTileRequestDelayEnabled;
 
-        //[map.MapboxController];
+        map.MapboxController.SetSourcePropertyFor(
+            sourceId,
+            "tile-requests-delay",
+            isTileRequestDelayEnabled ? 5000 : 0,
+            (error) =>
+            {
+                if (error is not null)
+                {
+                    System.Diagnostics.Debug.WriteLine($"ERR {nameof(ToggleTileRequestDelay)}: ${error}");
+                }
+            });
 
         toggleTitleRequestButton.Text = isTileRequestDelayEnabled
             ? @"Disable tile request delay"

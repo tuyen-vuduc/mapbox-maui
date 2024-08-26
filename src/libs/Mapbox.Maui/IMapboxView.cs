@@ -101,6 +101,7 @@ public interface IMapboxController
         double? maxZoom = default,
         ScreenPosition? offset = default
     );
+    void SetSourcePropertyFor<T>(string sourceId, string propertyName, T value, Action<Exception> completion = default);
 }
 
 public class MapTappedEventArgs : EventArgs

@@ -31,151 +31,152 @@ const swift2CsTypeMapping = {
 
 // swiftProperties2CsInterfaceProperties()
 
-// generateLayerProperties('LineLayerKey');
+// generateLayerProperties('RasterLayerKey');
+generateSourceProperties('RasterSourceKey')
 
 var commonTypeToConversionNameMapping = {
     'bool': 'boolean',
 };
 // generateSourcePropertiesObjc('Vector');
 
-// generateLayerPropertiesObjc
+// generateLayerPropertiesObjc('');
 
-function generateLayerPropertiesObjc(layerName) {
-    var topLines = `// This file is generated.
-import Foundation
-import MapboxMaps
+// function generateLayerPropertiesObjc(layerName) {
+//     var topLines = `// This file is generated.
+// import Foundation
+// import MapboxMaps
 
-@objc open class TMB${layerName}Layer: TMBLayer {
-    private var _self: ${layerName}Layer {
-        get {
-            return rawValue as! ${layerName}Layer
-        }
-        set {
-            rawValue = newValue
-        }
-    }
+// @objc open class TMB${layerName}Layer: TMBLayer {
+//     private var _self: ${layerName}Layer {
+//         get {
+//             return rawValue as! ${layerName}Layer
+//         }
+//         set {
+//             rawValue = newValue
+//         }
+//     }
     
-    @objc public init(id: String = UUID().uuidString) {
-        super.init(${layerName}Layer(id: id))
+//     @objc public init(id: String = UUID().uuidString) {
+//         super.init(${layerName}Layer(id: id))
         
-        self.visibility = TMBValue(constant: TMBVisibility.visible)
-    }
+//         self.visibility = TMBValue(constant: TMBVisibility.visible)
+//     }
 
-    `
+//     `
 
-    var transformed = lines.map(item => {
-        let isPropertyLine = /^\s+public/.test(item);
-        if (!isPropertyLine) {
-            return item;
-        }
+//     var transformed = lines.map(item => {
+//         let isPropertyLine = /^\s+public/.test(item);
+//         if (!isPropertyLine) {
+//             return item;
+//         }
             
-        var matches = /(\w+): Value<(\[?\w+\]?)>/.exec(item);
+//         var matches = /(\w+): Value<(\[?\w+\]?)>/.exec(item);
         
-        if (!matches) {
-            matches = /(\w+): (\[?\w+\]?)/.exec(item);
-        }
+//         if (!matches) {
+//             matches = /(\w+): (\[?\w+\]?)/.exec(item);
+//         }
 
-        var propName = matches[1];        
-        var propType = matches[2];
-        var conversionName = propType.substring(0,1).toLowerCase() + propType.substring(1);
-        if (commonTypeToConversionNameMapping[conversionName]) {
-            conversionName = commonTypeToConversionNameMapping[conversionName];
-        } else if (/^\[/.test(propType)) {
-            conversionName = 'arrayOf' + propType.replace(/\[|\]/img, '');
-        }
+//         var propName = matches[1];        
+//         var propType = matches[2];
+//         var conversionName = propType.substring(0,1).toLowerCase() + propType.substring(1);
+//         if (commonTypeToConversionNameMapping[conversionName]) {
+//             conversionName = commonTypeToConversionNameMapping[conversionName];
+//         } else if (/^\[/.test(propType)) {
+//             conversionName = 'arrayOf' + propType.replace(/\[|\]/img, '');
+//         }
 
-        if (propType == 'StyleTransition') {
-            return `    @objc public var ${propName} : TMBStyleTransition? {
-                get {
-                    return _self.${propName}?.objcValue()
-                }
-                set {
-                    _self.${propName} = newValue?.rawValue
-                }
-            }`;
-        }
+//         if (propType == 'StyleTransition') {
+//             return `    @objc public var ${propName} : TMBStyleTransition? {
+//                 get {
+//                     return _self.${propName}?.objcValue()
+//                 }
+//                 set {
+//                     _self.${propName} = newValue?.rawValue
+//                 }
+//             }`;
+//         }
         
-        return `    @objc public var ${propName} : TMBValue? {
-        get {
-            return TMBValue.fromSwiftValue(_self.${propName})
-        }
-        set {
-            _self.${propName} = newValue?.${conversionName}()
-        }
-    }`;
-    });
+//         return `    @objc public var ${propName} : TMBValue? {
+//         get {
+//             return TMBValue.fromSwiftValue(_self.${propName})
+//         }
+//         set {
+//             _self.${propName} = newValue?.${conversionName}()
+//         }
+//     }`;
+//     });
     
-    fs.writeFileSync('output.txt', topLines + transformed.join('\n') + '\n}');
-}
+//     fs.writeFileSync('output.txt', topLines + transformed.join('\n') + '\n}');
+// }
 
-function generateSourcePropertiesObjc(srcName) {
-    var nsnumberTypes = {
-        'Bool': 'boolValue',
-        'Double': 'doubleValue',
-    }
-    var nsnumberConversions = {
-        'Bool': 'asNumber()',
-        'Int': 'asNumber()',
-        'Double': 'NSNumber',
-    }
-    var nsvalueTypes = {
+// function generateSourcePropertiesObjc(srcName) {
+//     var nsnumberTypes = {
+//         'Bool': 'boolValue',
+//         'Double': 'doubleValue',
+//     }
+//     var nsnumberConversions = {
+//         'Bool': 'asNumber()',
+//         'Int': 'asNumber()',
+//         'Double': 'NSNumber',
+//     }
+//     var nsvalueTypes = {
 
-    }
-    var topLines = `// This file is generated.
-import Foundation
-import MapboxMaps
+//     }
+//     var topLines = `// This file is generated.
+// import Foundation
+// import MapboxMaps
 
-@objc open class TMB${srcName}Source: TMBSource {
-    private var _self: ${srcName}Source {
-        get {
-            return rawValue as! ${srcName}Source
-        }
-        set {
-            rawValue = newValue
-        }
-    }
+// @objc open class TMB${srcName}Source: TMBSource {
+//     private var _self: ${srcName}Source {
+//         get {
+//             return rawValue as! ${srcName}Source
+//         }
+//         set {
+//             rawValue = newValue
+//         }
+//     }
     
-    @objc public init() {
-        super.init(${srcName}Source())
-    }
+//     @objc public init() {
+//         super.init(${srcName}Source())
+//     }
 
-    `;
+//     `;
 
-    var transformed = lines.map(item => {
-        let isPropertyLine = /^\s+public/.test(item);
-        if (!isPropertyLine) {
-            return item;
-        }
+//     var transformed = lines.map(item => {
+//         let isPropertyLine = /^\s+public/.test(item);
+//         if (!isPropertyLine) {
+//             return item;
+//         }
             
-        var matches = /(\w+): ([\[]{0,2}\w+[\]]{0,2})(\??)/.exec(item);
+//         var matches = /(\w+): ([\[]{0,2}\w+[\]]{0,2})(\??)/.exec(item);
 
-        var propName = matches[1];        
-        var propType = matches[2];
-        let nullable = matches[3];
-        var conversionName = propType.trim('?')
-        if (nsnumberTypes[conversionName]) {
-            return `    @objc public var ${propName} : NSNumber${nullable} {
-        get {
-            return _self.${propName}${nullable}.${nsnumberConversions[propType]}
-        }
-        set {
-            _self.${propName} = newValue${nullable}.${nsnumberTypes[conversionName]}
-        }
-    }`;
-        }
+//         var propName = matches[1];        
+//         var propType = matches[2];
+//         let nullable = matches[3];
+//         var conversionName = propType.trim('?')
+//         if (nsnumberTypes[conversionName]) {
+//             return `    @objc public var ${propName} : NSNumber${nullable} {
+//         get {
+//             return _self.${propName}${nullable}.${nsnumberConversions[propType]}
+//         }
+//         set {
+//             _self.${propName} = newValue${nullable}.${nsnumberTypes[conversionName]}
+//         }
+//     }`;
+//         }
 
-        return `    @objc public var ${propName} : ${conversionName}? {
-        get {
-            return _self.${propName}
-        }
-        set {
-            _self.${propName} = newValue
-        }
-    }`;
-    });
+//         return `    @objc public var ${propName} : ${conversionName}? {
+//         get {
+//             return _self.${propName}
+//         }
+//         set {
+//             _self.${propName} = newValue
+//         }
+//     }`;
+//     });
     
-    fs.writeFileSync('output.txt', topLines + transformed.join('\n') + '\n}');
-}
+//     fs.writeFileSync('output.txt', topLines + transformed.join('\n') + '\n}');
+// }
 
 
 function generateAndroidNamedString() {

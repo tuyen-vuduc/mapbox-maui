@@ -188,6 +188,10 @@ static class AdditionalExtensions
             float value => new PlatformValue(value),
             double value => new PlatformValue(value),
             string value => new PlatformValue(value),
+            TileCacheBudgetSize value => new PlatformValue(
+                value.Tiles
+                ?? value.Megabytes
+                ?? 0),
             Color value => rgba
                 ? new PlatformValue(value.ToRgbaString())
                 : new PlatformValue(value.ToInt()),

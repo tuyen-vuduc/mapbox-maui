@@ -30,6 +30,7 @@ partial class DslExpression
     public static DslExpression Coalesce(params object[] arguments) => new(ExpressionOperator.Coalesce, arguments);
     public static DslExpression Collator(params object[] arguments) => new(ExpressionOperator.Collator, arguments);
     public static DslExpression Concat(params object[] arguments) => new(ExpressionOperator.Concat, arguments);
+    public static DslExpression Config(params object[] arguments) => new(ExpressionOperator.Config, arguments);
     public static DslExpression Cos(params object[] arguments) => new(ExpressionOperator.Cos, arguments);
     public static DslExpression Distance(params object[] arguments) => new(ExpressionOperator.Distance, arguments);
     public static DslExpression DistanceFromCenter(params object[] arguments) => new(ExpressionOperator.DistanceFromCenter, arguments);
@@ -42,6 +43,8 @@ partial class DslExpression
     public static DslExpression Get(params object[] arguments) => new(ExpressionOperator.Get, arguments);
     public static DslExpression Has(params object[] arguments) => new(ExpressionOperator.Has, arguments);
     public static DslExpression HeatmapDensity(params object[] arguments) => new(ExpressionOperator.HeatmapDensity, arguments);
+    public static DslExpression Hsl(params object[] arguments) => new(ExpressionOperator.Hsl, arguments);
+    public static DslExpression Hsla(params object[] arguments) => new(ExpressionOperator.Hsla, arguments);
     public static DslExpression Id(params object[] arguments) => new(ExpressionOperator.Id, arguments);
     public static DslExpression Image(params object[] arguments) => new(ExpressionOperator.Image, arguments);
     public static DslExpression InExpression(params object[] arguments) => new(ExpressionOperator.InExpression, arguments);
@@ -58,6 +61,7 @@ partial class DslExpression
     public static DslExpression Log2(params object[] arguments) => new(ExpressionOperator.Log2, arguments);
     public static DslExpression Match(params object[] arguments) => new(ExpressionOperator.Match, arguments);
     public static DslExpression Max(params object[] arguments) => new(ExpressionOperator.Max, arguments);
+    public static DslExpression MeasureLight(params object[] arguments) => new(ExpressionOperator.MeasureLight, arguments);
     public static DslExpression Min(params object[] arguments) => new(ExpressionOperator.Min, arguments);
     public static DslExpression Number(params object[] arguments) => new(ExpressionOperator.Number, arguments);
     public static DslExpression NumberFormat(params object[] arguments) => new(ExpressionOperator.NumberFormat, arguments);
@@ -65,6 +69,9 @@ partial class DslExpression
     public static DslExpression Pi(params object[] arguments) => new(ExpressionOperator.Pi, arguments);
     public static DslExpression Pitch(params object[] arguments) => new(ExpressionOperator.Pitch, arguments);
     public static DslExpression Properties(params object[] arguments) => new(ExpressionOperator.Properties, arguments);
+    public static DslExpression Random(params object[] arguments) => new(ExpressionOperator.Random, arguments);
+    public static DslExpression RasterParticleSpeed(params object[] arguments) => new(ExpressionOperator.RasterParticleSpeed, arguments);
+    public static DslExpression RasterValue(params object[] arguments) => new(ExpressionOperator.RasterValue, arguments);
     public static DslExpression ResolvedLocale(params object[] arguments) => new(ExpressionOperator.ResolvedLocale, arguments);
     public static DslExpression Rgb(params object[] arguments) => new(ExpressionOperator.Rgb, arguments);
     public static DslExpression Rgba(params object[] arguments) => new(ExpressionOperator.Rgba, arguments);

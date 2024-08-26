@@ -18,8 +18,8 @@ function generateFactories() {
     var input = path.join(info.mapboxRepo, info.input, info.name);
     var content = fs.readFileSync(input, 'utf8');
     var factories = content.split('\n')
-        .filter(x => /^case (\w+)/.test(x.trim()))
-        .map(x => /^case (\w+)/.exec(x.trim())[1])
+        .filter(x => /^public static let (\w+)/.test(x.trim()))
+        .map(x => /^public static let (\w+)/.exec(x.trim())[1])
         .map(x => helper.pascalCase(x))
         .map(x => nameMapping[x] ?? x)
         .map(x => `    public static DslExpression ${x}(params object[] arguments) => new(ExpressionOperator.${x}, arguments);`);

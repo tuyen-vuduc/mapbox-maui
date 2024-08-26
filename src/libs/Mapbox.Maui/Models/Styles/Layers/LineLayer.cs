@@ -369,7 +369,7 @@ public class LineLayer : MapboxLayer
         );
     }
 
-    static class LayoutCodingKeys
+    public static class LayoutCodingKeys
     {
         public const string lineCap = "line-cap";
         public const string lineJoin = "line-join";
@@ -379,7 +379,7 @@ public class LineLayer : MapboxLayer
         public const string visibility = "visibility";
     }
 
-    static class LineLayerKey
+    public static class LineLayerKey
     {
         public const string lineBlur = "line-blur";
         public const string lineBlurTransition = "line-blur-transition";

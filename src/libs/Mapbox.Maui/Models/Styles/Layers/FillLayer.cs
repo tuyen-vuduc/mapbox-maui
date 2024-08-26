@@ -188,13 +188,13 @@ public class FillLayer : MapboxLayer
         );
     }
 
-    static class LayoutCodingKeys
+    public static class LayoutCodingKeys
     {
         public const string fillSortKey = "fill-sort-key";
         public const string visibility = "visibility";
     }
 
-    static class FillLayerKey
+    public static class FillLayerKey
     {
         public const string fillAntialias = "fill-antialias";
         public const string fillColor = "fill-color";

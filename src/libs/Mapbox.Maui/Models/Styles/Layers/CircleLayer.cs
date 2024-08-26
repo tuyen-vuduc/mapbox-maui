@@ -309,12 +309,12 @@ public class CircleLayer : MapboxLayer
     }
 
 
-    private static class CircleLayerLayoutKey
+    public static class CircleLayerLayoutKey
     {
         public const string circleSortKey = "circle-sort-key";
     }
 
-    private static class CircleLayerKey
+    public static class CircleLayerKey
     {
         public const string circleBlur = "circle-blur";
         public const string circleBlurTransition = "circle-blur-transition";

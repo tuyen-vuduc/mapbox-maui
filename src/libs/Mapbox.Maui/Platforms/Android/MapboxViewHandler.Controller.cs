@@ -116,19 +116,28 @@ partial class MapboxViewHandler : IMapboxController
             completion?.Invoke(null);
         }));
     }
-}
 
-internal class XExpectedAction : Java.Lang.Object, Expected.IAction
-{
-    private readonly Action<Java.Lang.Object> action;
-
-    public XExpectedAction(Action<Java.Lang.Object> action)
+    public void SetLayerPropertyFor<T>(
+        string layerId, string propertyName,
+        T value, Action<Exception> completion = null)
     {
-        this.action = action;
-    }
+        var mapView = mapboxFragment?.MapView;
 
-    public void Run(Java.Lang.Object p0)
-    {
-        action?.Invoke(p0);
+        if (mapView is null)
+        {
+            completion?.Invoke(null);
+            return;
+        }
+
+        var result = mapView.MapboxMap.SetStyleLayerProperty(layerId, propertyName, value.Wrap());
+
+        result.OnError(new XExpectedAction(error =>
+        {
+            completion?.Invoke(new Exception("An error occurred when setting layer property"));
+        }));
+        result.OnValue(new XExpectedAction(result =>
+        {
+            completion?.Invoke(null);
+        }));
     }
 }

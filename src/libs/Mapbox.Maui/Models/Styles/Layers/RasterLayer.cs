@@ -348,7 +348,7 @@ public partial class RasterLayer : MapboxLayer
         );
     }
 
-    static class RasterLayerKey
+    public static class RasterLayerKey
     {
         public const string rasterArrayBand = "raster-array-band";
         public const string rasterBrightnessMax = "raster-brightness-max";

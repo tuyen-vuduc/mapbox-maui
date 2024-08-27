@@ -1,13 +1,18 @@
 namespace MapboxMaui;
-#if IOS
-using MapboxMapsObjC;
-#endif
 
-/// Enum of Source Types
+
+/// Struct of supported Source Types
 /// Docs : https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/
 public readonly struct SourceType : INamedString
 {
-    /// A vector tile source.
+    public string Value { get; }
+
+    private SourceType(string value) => Value = value;
+    public override string ToString() =>  Value;    
+
+    public static implicit operator string(SourceType value) => value.Value;
+    public static implicit operator SourceType(string value) => new (value);
+
     public static readonly SourceType Vector = new ("vector");
 
     /// A raster tile source.
@@ -22,33 +27,18 @@ public readonly struct SourceType : INamedString
     /// An image source.
     public static readonly SourceType Image = new ("image");
 
-    /// A model source
+    /// A model source.
     public static readonly SourceType Model = new ("model");
 
+    /// A raster array tile source.
+    // @_spi(Experimental)
+    public static readonly SourceType RasterArray = new ("raster-array");
 
-    public string Value { get; }
+    /// A custom geometry source.
+    public static readonly SourceType CustomGeometry = new ("custom-geometry");
 
-    private SourceType(string value) => Value = value;
-    public override string ToString() =>  Value;    
+    /// A custom raster source.
+    // @_spi(Experimental)
+    public static readonly SourceType CustomRaster = new ("custom-raster");
 
-    public static implicit operator string(SourceType value) => value.Value;
-    public static implicit operator SourceType(string value) => new (value);
 }
-public static partial class SourceTypeExtensions {}
-#if IOS    
-partial class SourceTypeExtensions
-{
-    public static MapboxMapsObjC.TMBSourceType ToPlatform(this SourceType value)
-    {
-        return new(value.Value);
-    }
-
-    public static SourceType ToPlatform(this MapboxMapsObjC.TMBSourceType value)
-    {
-        return value.RawValue;
-    }
-}
-#endif
-
-
-    /// The associated Swift struct type

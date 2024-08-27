@@ -61,8 +61,7 @@ public class IconSizeChangeExample : ContentPage, IExamplePage, IQueryAttributab
         map.Images = new[] { image };
 
         // Create a symbol layer for markers
-        var markerLayer = new SymbolLayer(id: Constants.markerLayerId);
-        markerLayer.Source = Constants.markerSourceId;
+        var markerLayer = new SymbolLayer(id: Constants.markerLayerId, Constants.markerSourceId);
         markerLayer.IconImage = image;
         markerLayer.IconAllowOverlap = true;
         // Adding an offset so that the bottom of the blue icon gets fixed to the coordinate, rather than the
@@ -79,8 +78,7 @@ public class IconSizeChangeExample : ContentPage, IExamplePage, IQueryAttributab
         map.Sources = new[] { markerSource, selectedMarkerSource };
 
         // Create a symbol layer for the selected marker
-        var selectedMarkerLayer = new SymbolLayer(id: Constants.selectedMarkerLayerId);
-        selectedMarkerLayer.Source = Constants.selectedMarkerSourceId;
+        var selectedMarkerLayer = new SymbolLayer(id: Constants.selectedMarkerLayerId, Constants.selectedMarkerSourceId);
         selectedMarkerLayer.IconImage = image;
         selectedMarkerLayer.IconAllowOverlap = true;
         // Adding an offset so that the bottom of the blue icon gets fixed to the coordinate, rather than the
@@ -120,7 +118,7 @@ public class IconSizeChangeExample : ContentPage, IExamplePage, IQueryAttributab
 
     private void UpdateMarker(bool selected)
     {
-        var symbolLayer = new SymbolLayer(Constants.selectedMarkerLayerId)
+        var symbolLayer = new SymbolLayer(Constants.selectedMarkerLayerId, Constants.selectedMarkerSourceId)
         {
             IconSize = selected ? 2 : 1
         };

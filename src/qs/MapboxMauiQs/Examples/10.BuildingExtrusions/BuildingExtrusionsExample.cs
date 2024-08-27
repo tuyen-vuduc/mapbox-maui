@@ -78,9 +78,8 @@ public class BuildingExtrusionsExample : ContentPage, IExamplePage, IQueryAttrib
 
     private void Map_StyleLoaded(object sender, EventArgs e)
     {
-        var layer = new FillExtrusionLayer("3d-buildings")
+        var layer = new FillExtrusionLayer("3d-buildings", "composite")
         {
-            Source = "composite",
             MinZoom = 15,
             SourceLayer = "building",
             FillExtrusionColor = new PropertyValue<Color>(

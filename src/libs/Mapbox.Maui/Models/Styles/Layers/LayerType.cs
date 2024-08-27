@@ -1,12 +1,17 @@
 namespace MapboxMaui;
-#if IOS
-using MapboxMapsObjC;
-#endif
 
-/// Layer rendering types
+
+/// Struct of supported Layer rendering types
 public readonly struct LayerType : INamedString
 {
-    /// A filled polygon with an optional stroked border.
+    public string Value { get; }
+
+    private LayerType(string value) => Value = value;
+    public override string ToString() =>  Value;    
+
+    public static implicit operator string(LayerType value) => value.Value;
+    public static implicit operator LayerType(string value) => new (value);
+
     public static readonly LayerType Fill = new ("fill");
 
     /// A stroked line.
@@ -43,31 +48,17 @@ public readonly struct LayerType : INamedString
     /// Layer representing the sky
     public static readonly LayerType Sky = new ("sky");
 
-    public string Value { get; }
+    /// Layer representing a place for other layers.
+    public static readonly LayerType Slot = new ("slot");
 
-    private LayerType(string value) => Value = value;
-    public override string ToString() =>  Value;    
+    /// Layer used for a 3D model
+    // @_documentation(visibility: public)
+    // @_spi(Experimental)
+    public static readonly LayerType Model = new ("model");
 
-    public static implicit operator string(LayerType value) => value.Value;
-    public static implicit operator LayerType(string value) => new (value);
+    /// Layer with custom rendering implementation (``CustomLayerHost``)
+    ///
+    /// - SeeAlso: ``CustomLayer``
+    public static readonly LayerType Custom = new ("custom");
+
 }
-public static partial class LayerTypeExtensions {}
-#if IOS    
-partial class LayerTypeExtensions
-{
-    public static MapboxMapsObjC.TMBLayerType ToPlatform(this LayerType value)
-    {
-        return new (value.Value);
-    }
-
-    public static LayerType ToPlatform(this MapboxMapsObjC.TMBLayerType value)
-    {
-        return value.RawValue;
-    }
-}
-#endif
-
-
-
-
-    /// The associated Swift struct type

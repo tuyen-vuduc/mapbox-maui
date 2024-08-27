@@ -97,9 +97,8 @@ public class AddMarkersSymbolExample : ContentPage, IExamplePage, IQueryAttribut
             Constants.RED_ICON_ID
         );
 
-        var layer = new SymbolLayer(id: Constants.LAYER_ID)
+        var layer = new SymbolLayer(id: Constants.LAYER_ID, Constants.SOURCE_ID)
         {
-            Source = Constants.SOURCE_ID,
             IconImage = (PropertyValue<ResolvedImage>)imageExpression,
             IconAnchor = IconAnchor.Bottom,
             IconAllowOverlap = false,

@@ -77,9 +77,8 @@ public class SymbolClusteringExample : ContentPage, IExamplePage, IQueryAttribut
     static CircleLayer CreateClusteredLayer(string sourceId)
     {
         // Create a symbol layer to represent the clustered points.
-        var clusteredLayer = new CircleLayer("clustered-circle-layer")
+        var clusteredLayer = new CircleLayer("clustered-circle-layer", sourceId)
         {
-            Source = sourceId,
             // Filter out unclustered features by checking for `point_count`. This
             // is added to clusters when the cluster is created. If your source
             // data includes a `point_count` property, consider checking
@@ -105,9 +104,8 @@ public class SymbolClusteringExample : ContentPage, IExamplePage, IQueryAttribut
     static SymbolLayer CreateUnclusteredLayer(string sourceId, ResolvedImage image)
     {
         // Create a symbol layer to represent the points that aren't clustered.
-        var unclusteredLayer = new SymbolLayer("unclustered-point-layer")
+        var unclusteredLayer = new SymbolLayer("unclustered-point-layer", sourceId)
         {
-            Source = sourceId,
             // Filter out clusters by checking for `point_count`.
             Filter = DslExpression.Not(
                 DslExpression.Has("point_count")),
@@ -128,9 +126,8 @@ public class SymbolClusteringExample : ContentPage, IExamplePage, IQueryAttribut
 
     static SymbolLayer CreateNumberLayer(string sourceId)
     {
-        var numberLayer = new SymbolLayer("cluster-count-layer")
+        var numberLayer = new SymbolLayer("cluster-count-layer", sourceId)
         {
-            Source = sourceId,
             // check whether the point feature is clustered
             Filter = DslExpression.Has("point_count"),
 

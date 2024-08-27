@@ -31,9 +31,8 @@ public class AddOneMarkerSymbolExample : ContentPage, IExamplePage, IQueryAttrib
 
         map.Sources = new[] { source };
 
-        var layer = new SymbolLayer(@"LAYER_ID")
+        var layer = new SymbolLayer(@"LAYER_ID", sourceId)
         {
-            Source = sourceId,
             IconImage = new PropertyValue<ResolvedImage>(image)
         };
 

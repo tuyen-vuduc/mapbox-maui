@@ -146,9 +146,8 @@ public class AdvancedViewportGesturesExample : ContentPage, IExamplePage, IQuery
         {
             Data = routePoints
         };
-        var lineLayer = new LineLayer(ROUTE_LINE_LAYER_ID)
+        var lineLayer = new LineLayer(ROUTE_LINE_LAYER_ID, GEOJSON_SOURCE_ID)
         {
-            Source = GEOJSON_SOURCE_ID,
             LineColor = MAPBOX_BLUE,
             LineWidth = 10.0,
             LineCap = MapboxMaui.LineCap.Round,

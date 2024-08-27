@@ -29,8 +29,7 @@ async function generateEnum(repoInfo, enumInfo) {
     var csName = '';
     var javaName = '';
     var cases = {};
-    var caseFound = false;
-    var skipped = false;   
+    var skipped = false;
     var scopedName = '';
     var lines = content.split('\n')
         .map(line => {
@@ -39,23 +38,13 @@ async function generateEnum(repoInfo, enumInfo) {
                 return '__NA__';
             }
 
-            if (/^\/\//.test(line.trim())
-                || !(line.trim())) {
-                return line;
-            }
-
-            if (line.trim().startsWith('@available')) {
-                return '    // ' + line.trim();
-            }
-
             if (/^import/.test(line)) {
                 return "__NA__";
             }
 
-            if (/^public enum/.test(line.trim()) || /^enum/.test(line.trim())) {
-                skipped = false;
-                caseFound = false
-                let matches = /enum (\w+)/.exec(line.trim())
+            if (/^public struct/.test(line.trim())) {
+                skipped = true;
+                let matches = /struct (\w+)/.exec(line.trim())
                 objcName = matches[1];
                 csName = scopedName + objcName;
                 javaName = javaNameNamping[objcName] ?? objcName;
@@ -66,17 +55,25 @@ async function generateEnum(repoInfo, enumInfo) {
                 scopedName = '';
 
                 return `public readonly struct ${csName} : INamedString
-{`
+{
+    public string Value { get; }
+
+    private ${csName}(string value) => Value = value;
+    public override string ToString() =>  Value;    
+
+    public static implicit operator string(${csName} value) => value.Value;
+    public static implicit operator ${csName}(string value) => new (value);
+`
             }
 
-            if (skipped) {
-                return '__NA__';
+            if (/public init/.test(line)
+                 || /rawValue/.test(line)) {
+                skipped = true;
             }
 
-            if (/^case/.test(line.trim())) {
-                caseFound = true;       
-
-                let matches = /case (\w+)(?:\s*=\s*)?("[^"]+")?/.exec(line.trim())
+            if (/^public static let/.test(line.trim())) {
+                skipped = false;
+                let matches = /public static let (\w+).+("[^"]+")/.exec(line.trim())
                 let caseKey = helper.pascalCase(matches[1]);
                 let caseValue = matches[2] ?? `"${matches[1]}"`;
                 cases[caseKey] = caseValue;
@@ -85,31 +82,12 @@ async function generateEnum(repoInfo, enumInfo) {
                 return `    public static readonly ${csName} ${staticFieldName} = new (${caseValue});`;
             }
 
-            if (caseFound) {
-                skipped = true;
-                caseFound = false;          
-                var iosMapping = generateIOSMapping(csName, objcName, cases);
-                var androidMapping = !!enumInfo.javaMappingSkipped
-                    ? ''
-                    : generateAndroidMapping(csName, javaName, cases, enumInfo);
-            
-                cases = [];
-                scopedName = '';
+            if (skipped) {
+                return '__NA__';
+            }
 
-                return [
-                    `
-    public string Value { get; }
-
-    private ${csName}(string value) => Value = value;
-    public override string ToString() =>  Value;    
-
-    public static implicit operator string(${csName} value) => value.Value;
-    public static implicit operator ${csName}(string value) => new (value);
-}
-public static partial class ${csName}Extensions {}`, 
-                    iosMapping, 
-                    androidMapping,
-                ].join('\n');
+            if (/^@/.test(line.trim())) {
+                return line.replace('@', '// @')
             }
 
             return line;
@@ -119,12 +97,10 @@ public static partial class ${csName}Extensions {}`,
         path.join(output, enumInfo.name.replace('.swift', '.cs')), 
         [
             `namespace MapboxMaui;
-#if IOS
-using MapboxMapsObjC;
-#endif`
+`
         ]
         .concat(lines)
-        .join('\n'));
+        .join('\n') + '\n}');
 }
 
 function generateIOSMapping(csName, objcName, cases) {

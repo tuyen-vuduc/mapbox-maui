@@ -61,13 +61,12 @@ public class MultipleGeometriesExample : ContentPage, IExamplePage, IQueryAttrib
         // Create a circle layer associated with the GeoJSON data source,
         // filter it so that only the point data is shown,
         // and apply basic styling to it.
-        var circleLayer = new CircleLayer(id: "circle-layer")
+        var circleLayer = new CircleLayer(id: "circle-layer", Constants.geoJSONDataSourceIdentifier)
         {
             Filter = DslExpression.Eq(
                 "$type",
                 "Point"
             ),
-            Source = Constants.geoJSONDataSourceIdentifier,
             CircleColor = Colors.Red,
             CircleRadius = 6.0,
             CircleStrokeWidth = 2.0,
@@ -80,13 +79,12 @@ public class MultipleGeometriesExample : ContentPage, IExamplePage, IQueryAttrib
     private static LineLayer AddLineStringLayer()
     {
         // Create and style a LineLayer that uses the Line String Feature's coordinates in the GeoJSON data
-        var lineLayer = new LineLayer(id: "line-layer")
+        var lineLayer = new LineLayer(id: "line-layer", Constants.geoJSONDataSourceIdentifier)
         {
             Filter = DslExpression.Eq(
                 "$type",
                 "LineString"
             ),
-            Source = Constants.geoJSONDataSourceIdentifier,
             LineColor = Colors.Red,
             LineWidth = 2
         };
@@ -96,13 +94,12 @@ public class MultipleGeometriesExample : ContentPage, IExamplePage, IQueryAttrib
 
     private static FillLayer AddPolygonLayer()
     {
-        var polygonLayer = new FillLayer(id: "fill-layer")
+        var polygonLayer = new FillLayer(id: "fill-layer", Constants.geoJSONDataSourceIdentifier)
         {
             Filter = DslExpression.Eq(
                 "$type",
                 "Polygon"
             ),
-            Source = Constants.geoJSONDataSourceIdentifier,
             FillColor = Color.FromRgb(68, 105, 247),
             FillOpacity = 0.3
         };

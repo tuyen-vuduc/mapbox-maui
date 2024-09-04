@@ -35,7 +35,7 @@ public class AnimatedMarkerExample : ContentPage, IExamplePage, IQueryAttributab
     {
         // Create a GeoJSON data source.
         var feature = new Feature(
-            new GeoJSON.Text.Geometry.Point(point.MapPosition)
+            new GPoint(point.MapPosition)
         );
         var source = new GeoJSONSource(Constants.sourceId)
         {
@@ -66,7 +66,7 @@ public class AnimatedMarkerExample : ContentPage, IExamplePage, IQueryAttributab
 
         // Create a GeoJSON data source.
         var feature = new Feature(
-            new GeoJSON.Text.Geometry.Point(currentPosition)
+            new GPoint(currentPosition)
         );
         var source = new GeoJSONSource(Constants.sourceId)
         {
@@ -78,8 +78,7 @@ public class AnimatedMarkerExample : ContentPage, IExamplePage, IQueryAttributab
         map.Sources = new[] { source };
 
         // Create a symbol layer
-        var symbolLayer = new SymbolLayer(id: "layer-id");
-        symbolLayer.Source = Constants.sourceId;
+        var symbolLayer = new SymbolLayer(id: "layer-id", Constants.sourceId);
         symbolLayer.IconImage = image;
         symbolLayer.IconIgnorePlacement = true;
         symbolLayer.IconAllowOverlap = true;

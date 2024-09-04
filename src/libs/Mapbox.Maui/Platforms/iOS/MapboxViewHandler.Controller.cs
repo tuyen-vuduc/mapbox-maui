@@ -123,4 +123,30 @@ partial class MapboxViewHandler : IMapboxController
                 completion?.Invoke(exception);
             });
     }
+
+
+    public void SetLayerPropertyFor<T>(
+        string layerId, string propertyName,
+        T value, Action<Exception> completion = null)
+    {
+        var mapView = PlatformView.MapView;
+
+        if (mapView == null)
+        {
+            completion?.Invoke(null);
+            return;
+        }
+
+        mapView.MapboxMap().SetLayerPropertyFor(
+            layerId,
+            propertyName,
+            value.Wrap(),
+            (error) =>
+            {
+                var exception = error is not null
+                    ? new NSErrorException(error)
+                    : null;
+                completion?.Invoke(exception);
+            });
+    }
 }

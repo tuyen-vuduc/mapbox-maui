@@ -102,6 +102,7 @@ public interface IMapboxController
         ScreenPosition? offset = default
     );
     void SetSourcePropertyFor<T>(string sourceId, string propertyName, T value, Action<Exception> completion = default);
+    void SetLayerPropertyFor<T>(string layerId, string propertyName, T value, Action<Exception> completion = default);
 }
 
 public class MapTappedEventArgs : EventArgs

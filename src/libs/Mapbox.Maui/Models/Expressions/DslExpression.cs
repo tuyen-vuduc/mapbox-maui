@@ -5,14 +5,14 @@ namespace MapboxMaui.Expressions;
 [DebuggerDisplay("{GetString()}")]
 public partial class DslExpression : List<object>
 {
-    public ExpressionOperator Operator { get; }
+    public DslOperator Operator { get; }
 
-    public DslExpression(ExpressionOperator @operator)
+    public DslExpression(DslOperator @operator)
     {
         Operator = @operator;
     }
 
-    public DslExpression(ExpressionOperator @operator, params object[] arguments)
+    public DslExpression(DslOperator @operator, params object[] arguments)
         : base(arguments)
     {
         Operator = @operator;

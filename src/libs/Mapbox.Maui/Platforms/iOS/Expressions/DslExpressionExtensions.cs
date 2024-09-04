@@ -4,7 +4,7 @@ using Foundation;
 using MapboxMaui.Expressions;
 using MapboxMapsObjC;
 
-public static class ExpressionExtensions
+public static class DslExpressionExtensions
 {
     internal static TMBExpression ToPlatformValue(
         this DslExpression xvalue

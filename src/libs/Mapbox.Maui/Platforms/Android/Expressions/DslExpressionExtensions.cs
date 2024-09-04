@@ -5,7 +5,7 @@ using System.Collections;
 using Com.Mapbox.Maps.Extension.Style.Expressions.Generated;
 using MapboxMaui.Expressions;
 
-public static class ExpressionExtensions
+public static class DslExpressionExtensions
 {
     internal static Expression ToPlatformValue(
         this DslExpression xvalue

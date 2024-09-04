@@ -94,10 +94,10 @@ public static class GeometryExtensions
         return Com.Mapbox.Geojson.Point.FromLngLat(xvalue.Y, xvalue.X);
     }
 
-    internal static Com.Mapbox.Maps.ScreenCoordinate ToScreenCoordinate(this Point xvalue)
-    {
-        return new Com.Mapbox.Maps.ScreenCoordinate(xvalue.Y, xvalue.X);
-    }
+    internal static Com.Mapbox.Maps.ScreenCoordinate ToScreenCoordinate(this ScreenPosition xvalue)
+        => new Com.Mapbox.Maps.ScreenCoordinate(
+            xvalue.X.PointToPixel(),
+            xvalue.Y.PointToPixel());
 
     internal static GeoJSON.Text.Feature.Feature ToX(this Com.Mapbox.Geojson.Feature src)
         => new GeoJSON.Text.Feature.Feature(

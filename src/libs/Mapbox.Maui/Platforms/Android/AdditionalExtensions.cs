@@ -16,7 +16,6 @@ using AndroidX.Fragment.App;
 using Com.Mapbox.Maps.Plugins.Animation;
 using Com.Mapbox.Functions;
 using Com.Mapbox.Maps.Plugins;
-using Android.Content.PM;
 
 static class AdditionalExtensions
 {
@@ -60,7 +59,15 @@ static class AdditionalExtensions
         
         return pixel / Metrics.Density;
     }
-    
+
+    internal static double PointToPixel(this double point)
+    {
+        Metrics ??= Resources.System?.DisplayMetrics;
+        if (Metrics == null) return 0;
+
+        return point * Metrics.Density;
+    }
+
     internal static Java.Lang.Boolean ToPlatform(this bool xvalue)
     {
         return new Java.Lang.Boolean(xvalue);
@@ -366,7 +373,9 @@ static class AdditionalExtensions
             Zoom = (float?)cameraOptions.Zoom,
         };
     public static ScreenPosition ToX(this ScreenCoordinate screenCoordinate)
-        => new(screenCoordinate.GetX(), screenCoordinate.GetY());
+        => new(
+            screenCoordinate.GetX().PixelToPoint(),
+            screenCoordinate.GetY().PixelToPoint());
 
     public static MapboxMapsCameraOptions ToNative(this CameraOptions cameraOptions)
     {

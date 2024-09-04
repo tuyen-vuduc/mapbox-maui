@@ -14,12 +14,15 @@ partial class MapboxViewHandler : IMapFeatureQueryable
             Array.Empty<XQueriedFeature>() as IEnumerable<XQueriedFeature>
         );
 
+        var x = point.X.PointToPixel();
+        var y = point.Y.PointToPixel();
+
         var tcs = new TaskCompletionSource<IEnumerable<XQueriedFeature>>();
         _ = mapView.MapboxMap.QueryRenderedFeatures(
             new RenderedQueryGeometry(
                 new ScreenBox(
-                    new ScreenCoordinate(point.X - 25.0, point.Y - 25.0),
-                    new ScreenCoordinate(point.X + 25.0, point.Y + 25.0)
+                    new ScreenCoordinate(x - 25.0, y - 25.0),
+                    new ScreenCoordinate(x + 25.0, y + 25.0)
                 )
             ),
             options.ToPlatform(),

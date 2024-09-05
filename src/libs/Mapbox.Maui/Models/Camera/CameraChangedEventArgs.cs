@@ -1,4 +1,4 @@
-﻿namespace MapboxMaui;
+﻿namespace MapboxMaui.Camera;
 
 public class CameraChangedEventArgs : EventArgs
 {

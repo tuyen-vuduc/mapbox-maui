@@ -1,6 +1,5 @@
-﻿namespace MapboxMaui;
+﻿namespace MapboxMaui.Annotations;
 
-using MapboxMaui.Annotations;
 using MapboxMaui.Styles;
 
 public interface IAnnotationController

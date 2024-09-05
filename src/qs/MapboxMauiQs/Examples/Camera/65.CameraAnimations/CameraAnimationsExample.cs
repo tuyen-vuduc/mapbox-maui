@@ -1,3 +1,5 @@
+using static Microsoft.Maui.ApplicationModel.Permissions;
+
 namespace MapboxMauiQs;
 
 public class CameraAnimationsExample : ContentPage, IExamplePage, IQueryAttributable
@@ -47,7 +49,7 @@ public class CameraAnimationsExample : ContentPage, IExamplePage, IQueryAttribut
         Content = grid;
 	}
 
-    private void Map_CameraChanged(object sender, CameraChangedEventArgs e)
+    private void Map_CameraChanged(object sender, MapboxMaui.Camera.CameraChangedEventArgs e)
     {
     }
 

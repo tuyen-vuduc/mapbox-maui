@@ -54,7 +54,7 @@ partial interface IMapboxView
     event EventHandler<MapTappedEventArgs> MapTapped;
     ICommand Command { get; }
 
-    event EventHandler<CameraChangedEventArgs> CameraChanged;
+    event EventHandler<Camera.CameraChangedEventArgs> CameraChanged;
     ICommand CameraChangedCommand { get; }
 
     event EventHandler<Viewport.ViewportStatusChangedEventArgs> ViewportStatusChanged;

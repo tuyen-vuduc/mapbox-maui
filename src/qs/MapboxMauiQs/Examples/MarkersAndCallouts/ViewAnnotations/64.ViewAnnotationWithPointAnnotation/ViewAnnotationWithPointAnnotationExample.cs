@@ -1,3 +1,5 @@
+using MapboxMaui.ViewAnnotations;
+
 namespace MapboxMauiQs;
 
 public class ViewAnnotationWithPointAnnotationExample : ContentPage, IExamplePage, IQueryAttributable
@@ -18,6 +20,8 @@ public class ViewAnnotationWithPointAnnotationExample : ContentPage, IExamplePag
     {
         iOSPage.SetUseSafeArea(this, false);
         Content = map = new MapboxView();
+
+        map.DefaultViewAnnotationTemplate = new DataTemplate(typeof(SimpleViewAnnodationView));
 
         map.MapReady += Map_MapReady;
         map.MapLoaded += Map_MapLoaded;
@@ -85,7 +89,7 @@ public class ViewAnnotationWithPointAnnotationExample : ContentPage, IExamplePag
             Title = $"Lat={value.Latitude}, Lng={value.Longitude}",
         };
 
-        map.ViewAnnotations = new[] { options };
+        map.ViewAnnotationController.AddViewAnnotation(options);
     }
 
     private void AddPointAnnotationAt(IPosition value)
@@ -100,4 +104,13 @@ public class ViewAnnotationWithPointAnnotationExample : ContentPage, IExamplePag
 
         pointAnnotationManager.AddAnnotations(pointAnnotation);
     }
+
+    class SimpleViewAnnodationView : Label
+    {
+        public SimpleViewAnnodationView()
+        {
+            Text = "Simple";
+        }
+    }
+
 }

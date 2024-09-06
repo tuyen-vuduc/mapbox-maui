@@ -15,6 +15,7 @@ public partial class MapboxViewHandler
             mapboxView.CameraController = this;
             mapboxView.Viewport = this;
             mapboxView.LocationComponent = this;
+            mapboxView.ViewAnnotationController = this;
         }
 
         mapboxFragment.MapReady += HandleMapReady;
@@ -43,6 +44,7 @@ public partial class MapboxViewHandler
             mapboxView.MapboxController = null;
             mapboxView.Viewport = null;
             mapboxView.LocationComponent = null;
+            mapboxView.ViewAnnotationController = null;
         }
 
         mapboxFragment.MapReady -= HandleMapReady;

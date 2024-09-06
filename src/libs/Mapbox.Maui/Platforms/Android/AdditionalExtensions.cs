@@ -68,21 +68,17 @@ static class AdditionalExtensions
         return point * Metrics.Density;
     }
 
-    internal static Java.Lang.Boolean ToPlatform(this bool xvalue)
-    {
-        return new Java.Lang.Boolean(xvalue);
-    }
+    internal static Java.Lang.Boolean ToPlatform(this bool xvalue) => new(xvalue);
 
-    internal static Java.Lang.Double ToPlatform(this double xvalue)
-    {
-        return new Java.Lang.Double(xvalue);
-    }
+    internal static Java.Lang.Double ToPlatform(this double xvalue) => new(xvalue);
+
+    internal static Java.Lang.Float ToPlatform(this float xvalue) => new(xvalue);
 
     internal static double[] GetValue(this IList<Java.Lang.Double> xvalue, bool defaultToEmpty = false)
     {
         if (xvalue == null && defaultToEmpty)
         {
-            return Array.Empty<double>();
+            return [];
         }
 
         return xvalue?
@@ -93,7 +89,7 @@ static class AdditionalExtensions
     internal static IList<Java.Lang.Double> ToPlatform(this IEnumerable<double> xvalue)
     {
         return xvalue?
-            .Select(x => new Java.Lang.Double(x))
+            .Select(static x => new Java.Lang.Double(x))
             .ToList();
     }
 

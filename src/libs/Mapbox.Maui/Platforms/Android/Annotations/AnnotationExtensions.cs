@@ -40,7 +40,7 @@ public static class AnnotationExtensions
             TextOpacity = annotation.TextOpacity?.AsDouble(),
         }
             .WithDraggable(annotation.IsDraggable)
-            .WithPoint((Com.Mapbox.Geojson.Point)annotation.GeometryValue.ToNative());
+            .WithPoint((Com.Mapbox.Geojson.Point)annotation.GeometryValue.ToPlatform());
 
         return result;
     }
@@ -59,7 +59,7 @@ public static class AnnotationExtensions
             CircleStrokeWidth = annotation.CircleStrokeWidth?.AsDouble(),
         }
             .WithDraggable(annotation.IsDraggable)
-            .WithPoint((Com.Mapbox.Geojson.Point)annotation.GeometryValue.ToNative());
+            .WithPoint((Com.Mapbox.Geojson.Point)annotation.GeometryValue.ToPlatform());
 
         return result;
     }

@@ -39,7 +39,7 @@ public static class GeometryExtensions
             );
     }
 
-    internal static Com.Mapbox.Geojson.IGeometry ToNative(this GeoJSON.Text.Geometry.IGeometryObject xvalue)
+    internal static Com.Mapbox.Geojson.IGeometry ToPlatform(this GeoJSON.Text.Geometry.IGeometryObject xvalue)
     {
         return xvalue switch
         {

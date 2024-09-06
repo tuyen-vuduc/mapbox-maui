@@ -96,6 +96,17 @@
 	<ItemGroup>
 	  <Folder Include="Models\Gestures\" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Compile Update="Platforms\iOS\TemplateHelpers.cs">
+	    <ExcludeFromCurrentConfiguration>false</ExcludeFromCurrentConfiguration>
+	  </Compile>
+	  <Compile Update="Platforms\iOS\ViewAnnotations\MapboxViewHandler.ViewAnnotations.cs">
+	    <ExcludeFromCurrentConfiguration>false</ExcludeFromCurrentConfiguration>
+	  </Compile>
+	  <Compile Update="Platforms\iOS\ViewAnnotations\ViewAnnotationOptionsExtensions.cs">
+	    <ExcludeFromCurrentConfiguration>false</ExcludeFromCurrentConfiguration>
+	  </Compile>
+	</ItemGroup>
 	<ProjectExtensions>
 	  <MonoDevelop>
 	    <Properties>

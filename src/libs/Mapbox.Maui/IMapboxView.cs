@@ -5,6 +5,7 @@ using MapboxMaui.Annotations;
 using MapboxMaui.Locations;
 using MapboxMaui.Query;
 using MapboxMaui.Styles;
+using MapboxMaui.ViewAnnotations;
 using MapboxMaui.Viewport;
 
 public partial interface IMapboxView : IView
@@ -25,11 +26,11 @@ public partial interface IMapboxView : IView
 
     IEnumerable<ResolvedImage> Images { get; set; }
 
-    IEnumerable<ViewAnnotationOptions> ViewAnnotations { get; set; }
-
     Terrain Terrain { get; set; }
 
     Light Light { get; set; }
+
+    DataTemplate DefaultViewAnnotationTemplate { get; set; }
     IViewAnnotationController ViewAnnotationController { get; }
 
     IAnnotationController AnnotationController { get; }

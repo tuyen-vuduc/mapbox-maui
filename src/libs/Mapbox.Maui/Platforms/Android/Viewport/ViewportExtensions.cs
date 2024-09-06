@@ -91,7 +91,7 @@ public static class ViewportExtensions
         var builder = new OverviewViewportStateOptions.Builder()
             .AnimationDurationMs(options.AnimationDurationMs)
             .Bearing(options.Bearing.ToNative())
-            .Geometry(options.Geometry.ToNative())
+            .Geometry(options.Geometry.ToPlatform())
             .GeometryPadding(options.GeometryPadding.ToNative())
             .MaxZoom(options.MaxZoom?.ToNative())
             .Offset(options.Offset?.ToScreenCoordinate())

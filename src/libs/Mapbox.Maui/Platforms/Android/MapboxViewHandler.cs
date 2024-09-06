@@ -165,7 +165,7 @@ public partial class MapboxViewHandler
         var xdata = data switch
         {
             Styles.RawGeoJSONObject raw => GeoJSONSourceData.ValueOf(raw.Data),
-            GeoJSON.Text.Geometry.IGeometryObject geometry => GeoJSONSourceData.ValueOf(geometry.ToNative()),
+            GeoJSON.Text.Geometry.IGeometryObject geometry => GeoJSONSourceData.ValueOf(geometry.ToPlatform()),
             _ => null,
         };
 

@@ -1,4 +1,4 @@
-﻿namespace MapboxMaui.Annotations;
+﻿namespace MapboxMaui.ViewAnnotations;
 
 public record ViewAnnotationOptions
 {
@@ -7,10 +7,10 @@ public record ViewAnnotationOptions
     public GeoJSON.Text.Geometry.IGeometryObject Geometry { get; set; }
 
     /// View annotation width in pixels.
-    public float? Width { get; set; }
+    public double? Width { get; set; }
 
     /// View annotation height in pixels.
-    public float? Height { get; set; }
+    public double? Height { get; set; }
 
     /// Optional style symbol id connected to given view annotation.
     ///
@@ -24,6 +24,9 @@ public record ViewAnnotationOptions
     /// If allowOverlap is null, default value `false` will be applied.
     /// Note: When the value is true, the ordering of the views are determined by the order of their addition.
     public bool? AllowOverlap { get; set; }
+
+    public bool? AllowOverlapWithPuck { get; set; }
+    public bool? AllowZElevate { get; set; }
 
     /// Specifies if this view annotation is visible or not.
     ///
@@ -49,6 +52,8 @@ public record ViewAnnotationOptions
     /// Specifies if this view annotation is selected meaning it should be placed on top of others.
     /// If selected in null, default value `false` will be applied.
     public bool? Selected { get; set; }
+
+    public bool? IgnoreCameraPadding { get; set; }
 
     public string Title { get; set; }
 

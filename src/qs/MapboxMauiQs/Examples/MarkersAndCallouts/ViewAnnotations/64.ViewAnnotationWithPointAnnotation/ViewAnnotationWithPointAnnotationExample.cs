@@ -80,8 +80,8 @@ public class ViewAnnotationWithPointAnnotationExample : ContentPage, IExamplePag
         var options = new ViewAnnotationOptions
         {
             Geometry = new GeoJSON.Text.Geometry.Point(value),
-            Width = 128,
-            Height = 64,
+            Width = 144,
+            Height = 96,
             AssociatedFeatureId = Constants.markerId,
             AllowOverlap = false,
             Anchor = ViewAnnotationAnchor.Bottom,
@@ -105,11 +105,65 @@ public class ViewAnnotationWithPointAnnotationExample : ContentPage, IExamplePag
         pointAnnotationManager.AddAnnotations(pointAnnotation);
     }
 
-    class SimpleViewAnnodationView : Label
+    class SimpleViewAnnodationView : Grid
     {
         public SimpleViewAnnodationView()
         {
-            Text = "Simple";
+            RowDefinitions.Add(new RowDefinition
+            {
+                Height = 16,
+            });
+            RowDefinitions.Add(new RowDefinition
+            {
+                Height = 48,
+            });
+            RowDefinitions.Add(new RowDefinition
+            {
+                Height = 32,
+            });
+            BackgroundColor = Colors.Purple;
+
+            var label = new Label
+            {
+                TextColor = Colors.White,
+                FontSize = 10,
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center,
+                Padding = new Thickness(24, 0),
+            };
+
+            label.SetBinding(Label.TextProperty, new Binding(nameof(ViewAnnotationOptions.Title)));
+
+            var btnClose = new Label()
+            {
+                Text = "X",
+                TextColor = Colors.Red,
+                FontSize = 12, 
+                Padding = new Thickness(2),
+                Margin = 4,
+                VerticalOptions = LayoutOptions.Start,
+                HorizontalOptions = LayoutOptions.End,
+            };
+            var btnSelect = new Label()
+            {
+                Text = "Select",
+                FontSize = 12,
+                TextColor = Colors.White,
+                BackgroundColor = Colors.BlueViolet,
+                Padding = new Thickness(12, 4),
+                Margin = 6,
+                VerticalOptions = LayoutOptions.Center,
+                HorizontalOptions = LayoutOptions.Center,
+            };
+
+            Add(label);
+            Add(btnClose);
+            Add(btnSelect);
+
+            Grid.SetRow(btnClose, 0);
+            Grid.SetRowSpan(btnClose, 2);
+            Grid.SetRow(label, 1);
+            Grid.SetRow(btnSelect, 2);
         }
     }
 

@@ -19,13 +19,22 @@ partial class MapboxViewHandler : IViewAnnotationController
         }
 
         var xview = (View)dataTemplate.CreateContent();
-        xview.BindingContext = VirtualView is View xxview
-            ? xxview.BindingContext
-            : options;
+        xview.Parent = VirtualView as Element;
+        xview.BindingContext = options;
+        xview.HeightRequest = options.Height ?? xview.HeightRequest;
+        xview.WidthRequest = options.Width ?? xview.WidthRequest;
 
-        var platformHandler = TemplateHelpers.GetHandler(xview, VirtualView.Handler.MauiContext);
+        var platformHandler = TemplateHelpers.GetHandler(
+            xview,
+            VirtualView.Handler.MauiContext);
+        platformHandler.PlatformView.LayoutParameters = new Android.Views.ViewGroup.LayoutParams(
+            (int) options.Width.Value.PointToPixel(),
+            (int)options.Height.Value.PointToPixel()
+        );
 
-        mapView.ViewAnnotationManager.AddViewAnnotation(platformHandler.PlatformView, options.ToPlatform());
+        mapView.ViewAnnotationManager.AddViewAnnotation(
+            platformHandler.PlatformView,
+            options.ToPlatform());
     }
 
     public void RemoveAllViewAnnotations()

@@ -20,13 +20,20 @@ partial class MapboxViewHandler : IViewAnnotationController
         }
 
         var xview = (View)dataTemplate.CreateContent();
-        xview.BindingContext = VirtualView is View xxview
-            ? xxview.BindingContext
-            : options;
+        xview.Parent = VirtualView as Element;
+        xview.BindingContext = options;
+        xview.HeightRequest = options.Height ?? xview.HeightRequest;
+        xview.WidthRequest = options.Width ?? xview.WidthRequest;
 
-        var platformHandler = TemplateHelpers.GetHandler(xview, VirtualView.Handler.MauiContext);
+        var platformHandler = TemplateHelpers.GetHandler(
+            xview,
+            VirtualView.Handler.MauiContext);
 
-        mapView.ViewAnnotations().AddWithAnnotation(options.ToPlatform(platformHandler.PlatformView));
+        mapView
+            .ViewAnnotations()
+            .AddWithAnnotation(
+                options.ToPlatform(platformHandler.PlatformView)
+            );
     }
 
     public void RemoveAllViewAnnotations()

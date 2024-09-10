@@ -18,8 +18,10 @@ public partial class BasicMapExample : ContentPage, IExamplePage, IQueryAttribut
         map.MapboxStyle = MapboxStyle.STANDARD;
         map.CameraOptions = new CameraOptions
         {
-            Center = new MapPosition(21.028511, 105.804817),
-            Zoom = 9,
+            Center = new MapPosition(41.879, -87.635),
+            Zoom = 16,
+            Bearing = 12,
+            Pitch = 60,
         };
     }
 

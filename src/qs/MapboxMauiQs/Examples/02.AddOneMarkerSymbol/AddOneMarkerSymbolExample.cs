@@ -33,7 +33,9 @@ public class AddOneMarkerSymbolExample : ContentPage, IExamplePage, IQueryAttrib
 
         var layer = new SymbolLayer(@"LAYER_ID", sourceId)
         {
-            IconImage = new PropertyValue<ResolvedImage>(image)
+            IconImage = new PropertyValue<ResolvedImage>(image),
+            IconAnchor = IconAnchor.Bottom,
+            IconOffset = new PropertyValue<double[]>(new double [] { 0.0, 12.0 }),
         };
 
         map.Layers = new[] { layer };
@@ -50,7 +52,7 @@ public class AddOneMarkerSymbolExample : ContentPage, IExamplePage, IQueryAttrib
 
         map.CameraOptions = cameraOptions;
 
-        map.MapboxStyle = MapboxStyle.MAPBOX_STREETS;
+        map.MapboxStyle = MapboxStyle.STANDARD;
     }
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)

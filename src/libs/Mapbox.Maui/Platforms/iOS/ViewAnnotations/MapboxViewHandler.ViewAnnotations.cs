@@ -1,33 +1,31 @@
 ﻿
 using MapboxMapsObjC;
 using MapboxMaui.ViewAnnotations;
+using Microsoft.Maui.Platform;
 
 namespace MapboxMaui;
 
 partial class MapboxViewHandler : IViewAnnotationController
 {
-    public void AddViewAnnotation(ViewAnnotationOptions options, DataTemplate dataTemplate = null)
+    public void AddViewAnnotation(ViewAnnotationOptions options, Microsoft.Maui.Controls.ContentView contentView = default)
     {
         var mapView = PlatformView.MapView;
 
         if (mapView == null) return;
 
-        dataTemplate = dataTemplate ?? VirtualView.DefaultViewAnnotationTemplate;
+        contentView = contentView ?? VirtualView.AnnotationView;
 
-        if (dataTemplate == null)
+        if (contentView == null)
         {
             throw new InvalidOperationException("DataTemplate must be provided eiher via this method parameter or via DefaultViewAnnotationTemplate");
         }
 
-        var xview = (View)dataTemplate.CreateContent();
-        xview.Parent = VirtualView as Element;
-        xview.BindingContext = options;
-        xview.HeightRequest = options.Height ?? xview.HeightRequest;
-        xview.WidthRequest = options.Width ?? xview.WidthRequest;
+        contentView.Parent = VirtualView as Element;
+        contentView.BindingContext = options;
 
-        var platformHandler = TemplateHelpers.GetHandler(
-            xview,
-            VirtualView.Handler.MauiContext);
+        var platformHandler = contentView.ToHandler(
+            VirtualView.Handler.MauiContext
+        );
 
         mapView
             .ViewAnnotations()

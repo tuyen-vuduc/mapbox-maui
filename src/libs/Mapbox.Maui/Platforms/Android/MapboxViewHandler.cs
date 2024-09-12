@@ -9,6 +9,8 @@ using Android.Graphics;
 using GeoJSON.Text;
 using Com.Mapbox.Maps.Plugins.Gestures;
 using Com.Mapbox.Maps.Plugins.Gestures.Generated;
+using Microsoft.Maui;
+using AndroidX.Fragment.App;
 
 namespace MapboxMaui;
 public partial class MapboxViewHandler
@@ -240,7 +242,8 @@ public partial class MapboxViewHandler
         };
         mapboxFragment = new MapboxFragment();
 
-        var fragmentTransaction = mainActivity.SupportFragmentManager.BeginTransaction();
+        var fragmentManager = MauiContext.Services.GetService<FragmentManager>();
+        var fragmentTransaction = fragmentManager.BeginTransaction();
         fragmentTransaction.Replace(fragmentContainerView.Id, mapboxFragment, $"mapbox-maui-{fragmentContainerView.Id}");
         fragmentTransaction.CommitAllowingStateLoss();
         return fragmentContainerView;

@@ -1,39 +1,41 @@
 ﻿
+using Android.Content;
+using Android.Views;
 using MapboxMaui.ViewAnnotations;
+using Microsoft.Maui.Platform;
 
 namespace MapboxMaui;
 
 partial class MapboxViewHandler : IViewAnnotationController
 {
-    public void AddViewAnnotation(ViewAnnotationOptions options, DataTemplate dataTemplate = null)
+    public void AddViewAnnotation(ViewAnnotationOptions options, ContentView contentView = default)
     {
         var mapView = mapboxFragment?.MapView;
 
         if (mapView == null) return;
 
-        dataTemplate = dataTemplate ?? VirtualView.DefaultViewAnnotationTemplate;
+        contentView = contentView ?? VirtualView.AnnotationView;
 
-        if (dataTemplate == null)
+        if (contentView == null)
         {
             throw new InvalidOperationException("DataTemplate must be provided eiher via this method parameter or via DefaultViewAnnotationTemplate");
         }
 
-        var xview = (View)dataTemplate.CreateContent();
-        xview.Parent = VirtualView as Element;
-        xview.BindingContext = options;
-        xview.HeightRequest = options.Height ?? xview.HeightRequest;
-        xview.WidthRequest = options.Width ?? xview.WidthRequest;
+        contentView.Parent = VirtualView as Element;
+        contentView.BindingContext = options;
 
-        var platformHandler = TemplateHelpers.GetHandler(
-            xview,
-            VirtualView.Handler.MauiContext);
-        platformHandler.PlatformView.LayoutParameters = new Android.Views.ViewGroup.LayoutParams(
-            (int) options.Width.Value.PointToPixel(),
-            (int)options.Height.Value.PointToPixel()
-        );
+        var handler = contentView.ToHandler(MauiContext);
+
+        var viewGroup = new ContentViewGroup(Context)
+        {
+            LayoutParameters = new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.WrapContent,
+                ViewGroup.LayoutParams.WrapContent),
+            CrossPlatformLayout = handler.VirtualView as ICrossPlatformLayout,
+        };
 
         mapView.ViewAnnotationManager.AddViewAnnotation(
-            platformHandler.PlatformView,
+            viewGroup,
             options.ToPlatform());
     }
 
@@ -44,5 +46,27 @@ partial class MapboxViewHandler : IViewAnnotationController
         if (mapView == null) return;
 
         mapView.ViewAnnotationManager.RemoveAllViewAnnotations();
+    }
+
+    class ViewAnnotationView : ViewGroup
+    {
+        public ViewAnnotationView(Context context)
+            : base(context)
+        {
+            
+        }
+
+        protected override void OnLayout(bool changed, int l, int t, int r, int b)
+        {
+            if (ChildCount == 0) return;
+
+            var view = this.GetChildAt(0);
+            view.Layout(l, t, r, b);
+        }
+
+        protected override void OnMeasure(int widthMeasureSpec, int heightMeasureSpec)
+        {
+            base.OnMeasure(widthMeasureSpec, heightMeasureSpec);
+        }
     }
 }

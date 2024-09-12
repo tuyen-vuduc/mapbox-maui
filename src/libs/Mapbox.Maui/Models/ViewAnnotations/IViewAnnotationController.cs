@@ -2,6 +2,6 @@
 
 public interface IViewAnnotationController
 {
-    public void AddViewAnnotation(ViewAnnotationOptions options, DataTemplate dataTemplate = default);
+    public void AddViewAnnotation(ViewAnnotationOptions options, ContentView contentView = default);
     public void RemoveAllViewAnnotations();
 }

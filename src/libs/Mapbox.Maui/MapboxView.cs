@@ -223,7 +223,7 @@ public partial class MapboxView : View, IMapboxView
         set => SetValue(MapboxStyleProperty, value);
     }
 
-    public DataTemplate DefaultViewAnnotationTemplate { get; set; }
+    public ContentView AnnotationView { get; set; }
     public IViewAnnotationController ViewAnnotationController { get; internal set; }
     public IAnnotationController AnnotationController { get; internal set; }
     public IMapFeatureQueryable QueryManager { get; internal set; }

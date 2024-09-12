@@ -30,7 +30,7 @@ public partial interface IMapboxView : IView
 
     Light Light { get; set; }
 
-    DataTemplate DefaultViewAnnotationTemplate { get; set; }
+    ContentView AnnotationView { get; set; }
     IViewAnnotationController ViewAnnotationController { get; }
 
     IAnnotationController AnnotationController { get; }

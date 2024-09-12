@@ -21,7 +21,7 @@ public class ViewAnnotationWithPointAnnotationExample : ContentPage, IExamplePag
         iOSPage.SetUseSafeArea(this, false);
         Content = map = new MapboxView();
 
-        map.DefaultViewAnnotationTemplate = new DataTemplate(typeof(SimpleViewAnnodationView));
+        map.AnnotationView = new SimpleViewAnnodationView();
 
         map.MapReady += Map_MapReady;
         map.MapLoaded += Map_MapLoaded;
@@ -105,23 +105,20 @@ public class ViewAnnotationWithPointAnnotationExample : ContentPage, IExamplePag
         pointAnnotationManager.AddAnnotations(pointAnnotation);
     }
 
-    class SimpleViewAnnodationView : Grid
+    class SimpleViewAnnodationView : ContentView
     {
         public SimpleViewAnnodationView()
         {
-            RowDefinitions.Add(new RowDefinition
+            var grid = new Grid()
             {
-                Height = 16,
-            });
-            RowDefinitions.Add(new RowDefinition
-            {
-                Height = 48,
-            });
-            RowDefinitions.Add(new RowDefinition
-            {
-                Height = 32,
-            });
-            BackgroundColor = Colors.Purple;
+                RowDefinitions =
+                {
+                    new() { Height = 16 },
+                    new() { Height = 48 },
+                    new() { Height = 32 },
+                },
+                BackgroundColor = Colors.Purple,
+            };
 
             var label = new Label
             {
@@ -156,14 +153,16 @@ public class ViewAnnotationWithPointAnnotationExample : ContentPage, IExamplePag
                 HorizontalOptions = LayoutOptions.Center,
             };
 
-            Add(label);
-            Add(btnClose);
-            Add(btnSelect);
+            grid.Add(label, row: 1);
+            grid.Add(btnClose, row: 0);
+            grid.Add(btnSelect, row: 2);
 
-            Grid.SetRow(btnClose, 0);
             Grid.SetRowSpan(btnClose, 2);
-            Grid.SetRow(label, 1);
-            Grid.SetRow(btnSelect, 2);
+
+            Content = grid;
+
+            HeightRequest = 144;
+            WidthRequest = 168;
         }
     }
 

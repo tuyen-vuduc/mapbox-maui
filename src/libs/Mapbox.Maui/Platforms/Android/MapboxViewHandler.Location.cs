@@ -7,7 +7,7 @@ public partial class MapboxViewHandler : Locations.ILocationComponentPlugin
 {
     private ILocationComponentPlugin GetPlugin()
     {
-        var mapView = PlatformView.GetMapView();
+        var mapView = this.GetMapView();
         if (mapView is null) return null;
 
         return LocationComponentUtils.GetLocationComponent(mapView);

@@ -59,14 +59,14 @@ public partial class MapboxFragment : Fragment
         }
 
         MapView = new MapView(Context);
-
-        MapReady?.Invoke(MapView);
         return MapView;
     }
 
     public override void OnViewCreated(View view, Bundle savedInstanceState)
     {
         base.OnViewCreated(view, savedInstanceState);
+
+        MapReady?.Invoke(MapView);
 
         cancelables.Add(
             MapView.MapboxMap.SubscribeCameraChanged(this)

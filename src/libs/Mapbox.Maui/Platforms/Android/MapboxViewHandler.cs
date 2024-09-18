@@ -212,8 +212,6 @@ public partial class MapboxViewHandler
         var mapView = handler.GetMapView();
         if (mapView is null) return;
 
-        if (mapView.MapboxMap.Style?.IsStyleLoaded != true) return;
-
         var scaleBarPlugin = ScaleBarUtils.GetScaleBar(mapView);
 
         scaleBarPlugin.Enabled = view.ScaleBarVisibility != OrnamentVisibility.Hidden;

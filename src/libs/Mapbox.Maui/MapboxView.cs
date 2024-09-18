@@ -101,7 +101,7 @@ public partial class MapboxView : View, IMapboxView
        nameof(ScaleBarVisibility),
        typeof(OrnamentVisibility),
        typeof(MapboxView),
-       OrnamentVisibility.Hidden
+       OrnamentVisibility.Visible
     );
     public OrnamentVisibility ScaleBarVisibility
     {

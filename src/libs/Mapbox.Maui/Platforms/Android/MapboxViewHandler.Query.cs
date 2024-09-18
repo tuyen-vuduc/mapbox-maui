@@ -9,7 +9,7 @@ partial class MapboxViewHandler : IMapFeatureQueryable
 {
     public Task<IEnumerable<XQueriedFeature>> QueryRenderedFeaturesWith(ScreenPosition point, XRenderedQueryOptions options)
     {
-        var mapView = PlatformView.GetMapView();
+        var mapView = this.GetMapView();
         if (mapView == null) return Task.FromResult(
             Array.Empty<XQueriedFeature>() as IEnumerable<XQueriedFeature>
         );

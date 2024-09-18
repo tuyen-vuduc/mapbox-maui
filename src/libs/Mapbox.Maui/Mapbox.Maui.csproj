@@ -61,7 +61,7 @@
 		<RepositoryUrl>https://github.com/tuyen-vuduc/mapbox-maui</RepositoryUrl>
 		<PackageProjectUrl>https://mapbox.tuyen-vuduc.tech</PackageProjectUrl>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-		<PackageVersion>11.6.0-alpha01</PackageVersion>
+		<PackageVersion>11.6.0-alpha02</PackageVersion>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<PackageIcon>tv-mapbox.png</PackageIcon>
@@ -95,6 +95,17 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Models\Gestures\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Compile Update="Platforms\iOS\TemplateHelpers.cs">
+	    <ExcludeFromCurrentConfiguration>false</ExcludeFromCurrentConfiguration>
+	  </Compile>
+	  <Compile Update="Platforms\iOS\ViewAnnotations\MapboxViewHandler.ViewAnnotations.cs">
+	    <ExcludeFromCurrentConfiguration>false</ExcludeFromCurrentConfiguration>
+	  </Compile>
+	  <Compile Update="Platforms\iOS\ViewAnnotations\ViewAnnotationOptionsExtensions.cs">
+	    <ExcludeFromCurrentConfiguration>false</ExcludeFromCurrentConfiguration>
+	  </Compile>
 	</ItemGroup>
 	<ProjectExtensions>
 	  <MonoDevelop>

@@ -86,7 +86,7 @@ partial class MapboxView
             ViewportStatusChangedCommand.Execute(args);
         }
     }
-    public event EventHandler<CameraChangedEventArgs> CameraChanged;
+    public event EventHandler<Camera.CameraChangedEventArgs> CameraChanged;
     public static readonly BindableProperty CameraChangedCommandProperty = BindableProperty.Create(
         nameof(CameraChangedCommand),
         typeof(ICommand),
@@ -99,7 +99,7 @@ partial class MapboxView
     }
     internal void InvokeCameraChanged(CameraOptions options)
     {
-        CameraChanged?.Invoke(this, new CameraChangedEventArgs(options));
+        CameraChanged?.Invoke(this, new Camera.CameraChangedEventArgs(options));
 
         if (CameraChangedCommand?.CanExecute(options) == true)
         {

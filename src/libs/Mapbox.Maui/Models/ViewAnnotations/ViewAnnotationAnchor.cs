@@ -1,4 +1,4 @@
-﻿namespace MapboxMaui.Annotations;
+﻿namespace MapboxMaui.ViewAnnotations;
 
 public enum ViewAnnotationAnchor : long
 {

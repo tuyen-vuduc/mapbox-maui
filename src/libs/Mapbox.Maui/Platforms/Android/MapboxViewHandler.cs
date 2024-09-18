@@ -9,6 +9,8 @@ using Android.Graphics;
 using GeoJSON.Text;
 using Com.Mapbox.Maps.Plugins.Gestures;
 using Com.Mapbox.Maps.Plugins.Gestures.Generated;
+using Microsoft.Maui;
+using AndroidX.Fragment.App;
 
 namespace MapboxMaui;
 public partial class MapboxViewHandler
@@ -165,7 +167,7 @@ public partial class MapboxViewHandler
         var xdata = data switch
         {
             Styles.RawGeoJSONObject raw => GeoJSONSourceData.ValueOf(raw.Data),
-            GeoJSON.Text.Geometry.IGeometryObject geometry => GeoJSONSourceData.ValueOf(geometry.ToNative()),
+            GeoJSON.Text.Geometry.IGeometryObject geometry => GeoJSONSourceData.ValueOf(geometry.ToPlatform()),
             _ => null,
         };
 
@@ -210,8 +212,6 @@ public partial class MapboxViewHandler
         var mapView = handler.GetMapView();
         if (mapView is null) return;
 
-        if (mapView.MapboxMap.Style?.IsStyleLoaded != true) return;
-
         var scaleBarPlugin = ScaleBarUtils.GetScaleBar(mapView);
 
         scaleBarPlugin.Enabled = view.ScaleBarVisibility != OrnamentVisibility.Hidden;
@@ -240,7 +240,8 @@ public partial class MapboxViewHandler
         };
         mapboxFragment = new MapboxFragment();
 
-        var fragmentTransaction = mainActivity.SupportFragmentManager.BeginTransaction();
+        var fragmentManager = MauiContext.Services.GetService<FragmentManager>();
+        var fragmentTransaction = fragmentManager.BeginTransaction();
         fragmentTransaction.Replace(fragmentContainerView.Id, mapboxFragment, $"mapbox-maui-{fragmentContainerView.Id}");
         fragmentTransaction.CommitAllowingStateLoss();
         return fragmentContainerView;

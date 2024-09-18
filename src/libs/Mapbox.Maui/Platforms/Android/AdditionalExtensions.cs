@@ -16,6 +16,7 @@ using AndroidX.Fragment.App;
 using Com.Mapbox.Maps.Plugins.Animation;
 using Com.Mapbox.Functions;
 using Com.Mapbox.Maps.Plugins;
+using System.ComponentModel;
 
 static class AdditionalExtensions
 {
@@ -313,13 +314,10 @@ static class AdditionalExtensions
     }
 
     internal static MapView GetMapView(this MapboxViewHandler handler)
-        => handler.PlatformView.GetMapView();
-
-    internal static MapView GetMapView(this FragmentContainerView container)
     {
-        var mainActivity = (MauiAppCompatActivity)container.Context.GetActivity();
-        var tag = $"mapbox-maui-{container.Id}";
-        var fragnent = mainActivity.SupportFragmentManager.FindFragmentByTag(tag);
+        var fragmentManager = handler.MauiContext.Services.GetService<FragmentManager>();
+        var tag = $"mapbox-maui-{handler.PlatformView.Id}";
+        var fragnent = fragmentManager.FindFragmentByTag(tag);
         return (fragnent as MapboxFragment)?.MapView;
     }
 

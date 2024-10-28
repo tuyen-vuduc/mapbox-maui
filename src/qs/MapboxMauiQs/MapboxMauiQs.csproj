@@ -93,21 +93,21 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
-		<PackageReference Include="Com.Mapbox.Maps.Android" Version="11.6.0" />
+		<PackageReference Include="Com.Mapbox.Maps.Android" Version="11.7.1" />
 		<PackageReference Include="Xamarin.AndroidX.AppCompat" Version="1.6.1.10" />
     	<PackageReference Include="Xamarin.AndroidX.Fragment " Version="1.7.0.2" />
 		<PackageReference Include="Xamarin.AndroidX.Fragment.Ktx" Version="1.7.0.2" />
-		<PackageReference Include="Xamarin.Kotlin.StdLib" Version="2.0.0.2" PrivateAssets="none" />
+		<PackageReference Include="Xamarin.Kotlin.StdLib" Version="2.0.10.1" PrivateAssets="none" />
 		<PackageReference Include="Xamarin.Kotlin.StdLib.Common" Version="2.0.0.1" PrivateAssets="none" />
-		<PackageReference Include="Xamarin.AndroidX.Annotation" Version="1.8.1.1" />
+		<PackageReference Include="Xamarin.AndroidX.Annotation" Version="1.8.2.1" />
 
 		<Compile Include="..\..\libs\Mapbox.Maui\Platforms\Android\**\**\*.cs">
 			<Link>Platforms\Android\Shared\%(RecursiveDir)%(Filename)%(Extension)</Link>
 		</Compile>
 	</ItemGroup>
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
-		<PackageReference Include="MapboxMapsObjC.iOS" Version="11.6.0" />
-		<PackageReference Include="MapboxMaps.iOS" Version="11.6.0" />
+		<PackageReference Include="MapboxMapsObjC.iOS" Version="11.7.1" />
+		<PackageReference Include="MapboxMaps.iOS" Version="11.7.1" />
 
 		<Compile Include="..\..\libs\Mapbox.Maui\Platforms\iOS\**\**\*.cs">
 			<Link>Platforms\iOS\Shared\%(RecursiveDir)%(Filename)%(Extension)</Link>

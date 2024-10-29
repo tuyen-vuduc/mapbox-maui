@@ -306,7 +306,10 @@ public partial class MapboxViewHandler
     }
 
     protected override PlatformView CreatePlatformView()
-        => new PlatformView(ACCESS_TOKEN);
+        => new PlatformView(
+            ACCESS_TOKEN,
+            VirtualView.CameraOptions,
+            VirtualView.MapboxStyle);
     
     protected override void DisconnectHandler(PlatformView platformView)
     {

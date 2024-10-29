@@ -8,7 +8,17 @@ public class GestureSettingsExample : ContentPage, IExamplePage, IQueryAttributa
     public GestureSettingsExample()
     {
         iOSPage.SetUseSafeArea(this, false);
-        Content = map = new MapboxView();
+
+        var centerLocation = new MapPosition(21.028511, 105.804817);
+        var cameraOptions = new CameraOptions
+        {
+            Center = centerLocation,
+            Zoom = 14,
+        };
+        Content = map = new MapboxView()
+        {
+            CameraOptions = cameraOptions,
+        };
 
         var toolbarItem = new ToolbarItem()
         {
@@ -16,6 +26,8 @@ public class GestureSettingsExample : ContentPage, IExamplePage, IQueryAttributa
             Command = new Command(ShowPopup)
         };
         ToolbarItems.Add(toolbarItem);
+
+
 
         map.MapReady += Map_MapReady;
         map.MapLoaded += Map_MapLoaded;
@@ -45,14 +57,6 @@ public class GestureSettingsExample : ContentPage, IExamplePage, IQueryAttributa
 
     private void Map_MapReady(object sender, EventArgs e)
     {
-        var centerLocation = new MapPosition(21.028511, 105.804817);
-        var cameraOptions = new CameraOptions
-        {
-            Center = centerLocation,
-            Zoom = 14,
-        };
-
-        map.CameraOptions = cameraOptions;
     }
 
     private void Map_MapLoaded(object sender, EventArgs e)

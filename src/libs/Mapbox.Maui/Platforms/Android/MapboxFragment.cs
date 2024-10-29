@@ -59,6 +59,23 @@ public partial class MapboxFragment : Fragment
         }
 
         MapView = new MapView(Context);
+
+        var cameraOptionsParcelable = Arguments?
+            .GetParcelable(nameof(IMapboxView.CameraOptions))
+            as CameraOptionsParcelable;
+        if (cameraOptionsParcelable is not null)
+        {
+            var cameraOptions = cameraOptionsParcelable.CameraOptions.ToNative();
+            MapView.MapboxMap.SetCamera(cameraOptions);
+        }
+        
+        var styleUri = Arguments?
+            .GetString(nameof(IMapboxView.MapboxStyle));
+        if (!string.IsNullOrWhiteSpace(styleUri))
+        {
+            MapView.MapboxMap.LoadStyle(styleUri);
+        }
+
         return MapView;
     }
 

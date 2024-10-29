@@ -11,6 +11,7 @@ using Com.Mapbox.Maps.Plugins.Gestures;
 using Com.Mapbox.Maps.Plugins.Gestures.Generated;
 using Microsoft.Maui;
 using AndroidX.Fragment.App;
+using Android.OS;
 
 namespace MapboxMaui;
 public partial class MapboxViewHandler
@@ -239,10 +240,18 @@ public partial class MapboxViewHandler
             Id = Android.Views.View.GenerateViewId(),
         };
         mapboxFragment = new MapboxFragment();
+        var args = new Bundle();
+        args.PutParcelable(
+            nameof(CameraOptions),
+            new CameraOptionsParcelable(VirtualView.CameraOptions));
+        mapboxFragment.Arguments = args;
 
         var fragmentManager = MauiContext.Services.GetService<FragmentManager>();
         var fragmentTransaction = fragmentManager.BeginTransaction();
-        fragmentTransaction.Replace(fragmentContainerView.Id, mapboxFragment, $"mapbox-maui-{fragmentContainerView.Id}");
+        fragmentTransaction.Replace(
+            fragmentContainerView.Id,
+            mapboxFragment,
+            $"mapbox-maui-{fragmentContainerView.Id}");
         fragmentTransaction.CommitAllowingStateLoss();
         return fragmentContainerView;
     }

@@ -1,6 +1,6 @@
 ﻿namespace MapboxMaui;
 
-public record struct CameraOptions
+public partial record struct CameraOptions
 {
     public IPosition Center { get; set; }
     public Thickness? Padding { get; set; }
@@ -9,4 +9,3 @@ public record struct CameraOptions
     public float? Bearing { get; set; }
     public float? Pitch { get; set; }
 }
-

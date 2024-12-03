@@ -9,7 +9,10 @@ public class MapViewContainer : UIView
 {
     public MapView MapView { get; private set; }
 
-    public MapViewContainer(string accessToken)
+    public MapViewContainer(
+        string accessToken,
+        CameraOptions? cameraOptions,
+        MapboxStyle mapboxStyle)
         : base()
     {
         if (!string.IsNullOrWhiteSpace(accessToken)) 
@@ -18,8 +21,10 @@ public class MapViewContainer : UIView
         }
 
         var mapboxOptions = new MBMMapOptions(null, null, null, null, null, null, 1, null);
+        var xcameraOptions = cameraOptions?.ToNative();
+        var styleUri = mapboxStyle.ToNative();
         var options = MapInitOptionsFactory
-            .CreateWithMapOptions(mapboxOptions, null, null, null, 0);
+            .CreateWithMapOptions(mapboxOptions, xcameraOptions, styleUri, null, 0);
 
         var mapView = MapViewFactory.CreateWithFrame(
             CoreGraphics.CGRect.FromLTRB(0, 0, 320, 675),

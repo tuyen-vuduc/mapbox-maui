@@ -60,13 +60,30 @@ public partial class MapboxFragment : Fragment
 
         MapView = new MapView(Context);
 
-        MapReady?.Invoke(MapView);
+        var cameraOptionsParcelable = Arguments?
+            .GetParcelable(nameof(IMapboxView.CameraOptions))
+            as CameraOptionsParcelable;
+        if (cameraOptionsParcelable is not null)
+        {
+            var cameraOptions = cameraOptionsParcelable.CameraOptions.ToNative();
+            MapView.MapboxMap.SetCamera(cameraOptions);
+        }
+        
+        var styleUri = Arguments?
+            .GetString(nameof(IMapboxView.MapboxStyle));
+        if (!string.IsNullOrWhiteSpace(styleUri))
+        {
+            MapView.MapboxMap.LoadStyle(styleUri);
+        }
+
         return MapView;
     }
 
     public override void OnViewCreated(View view, Bundle savedInstanceState)
     {
         base.OnViewCreated(view, savedInstanceState);
+
+        MapReady?.Invoke(MapView);
 
         cancelables.Add(
             MapView.MapboxMap.SubscribeCameraChanged(this)

@@ -16,6 +16,7 @@ using AndroidX.Fragment.App;
 using Com.Mapbox.Maps.Plugins.Animation;
 using Com.Mapbox.Functions;
 using Com.Mapbox.Maps.Plugins;
+using System.ComponentModel;
 
 static class AdditionalExtensions
 {
@@ -68,21 +69,17 @@ static class AdditionalExtensions
         return point * Metrics.Density;
     }
 
-    internal static Java.Lang.Boolean ToPlatform(this bool xvalue)
-    {
-        return new Java.Lang.Boolean(xvalue);
-    }
+    internal static Java.Lang.Boolean ToPlatform(this bool xvalue) => new(xvalue);
 
-    internal static Java.Lang.Double ToPlatform(this double xvalue)
-    {
-        return new Java.Lang.Double(xvalue);
-    }
+    internal static Java.Lang.Double ToPlatform(this double xvalue) => new(xvalue);
+
+    internal static Java.Lang.Float ToPlatform(this float xvalue) => new(xvalue);
 
     internal static double[] GetValue(this IList<Java.Lang.Double> xvalue, bool defaultToEmpty = false)
     {
         if (xvalue == null && defaultToEmpty)
         {
-            return Array.Empty<double>();
+            return [];
         }
 
         return xvalue?
@@ -93,7 +90,7 @@ static class AdditionalExtensions
     internal static IList<Java.Lang.Double> ToPlatform(this IEnumerable<double> xvalue)
     {
         return xvalue?
-            .Select(x => new Java.Lang.Double(x))
+            .Select(static x => new Java.Lang.Double(x))
             .ToList();
     }
 
@@ -317,13 +314,10 @@ static class AdditionalExtensions
     }
 
     internal static MapView GetMapView(this MapboxViewHandler handler)
-        => handler.PlatformView.GetMapView();
-
-    internal static MapView GetMapView(this FragmentContainerView container)
     {
-        var mainActivity = (MauiAppCompatActivity)container.Context.GetActivity();
-        var tag = $"mapbox-maui-{container.Id}";
-        var fragnent = mainActivity.SupportFragmentManager.FindFragmentByTag(tag);
+        var fragmentManager = handler.MauiContext.Services.GetService<FragmentManager>();
+        var tag = $"mapbox-maui-{handler.PlatformView.Id}";
+        var fragnent = fragmentManager.FindFragmentByTag(tag);
         return (fragnent as MapboxFragment)?.MapView;
     }
 

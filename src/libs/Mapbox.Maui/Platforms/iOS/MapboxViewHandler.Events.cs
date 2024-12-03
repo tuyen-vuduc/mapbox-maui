@@ -26,6 +26,7 @@ partial class MapboxViewHandler
             mapboxView.CameraController = this;
             mapboxView.Viewport = this;
             mapboxView.LocationComponent = this;
+            mapboxView.ViewAnnotationController = this;
 
             mapboxView.InvokeMapReady();
         }
@@ -83,6 +84,7 @@ partial class MapboxViewHandler
             mapboxView.CameraController = null;
             mapboxView.Viewport = null;
             mapboxView.LocationComponent = null;
+            mapboxView.ViewAnnotationController = null;
         }
 
         foreach (var cancelable in cancelables)

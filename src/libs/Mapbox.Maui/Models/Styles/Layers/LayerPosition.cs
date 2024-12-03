@@ -13,7 +13,7 @@ public struct LayerPosition
 
     public static LayerPosition Unknown() => new LayerPosition(null, LayerPositionEnum.Unknown);
     public static LayerPosition Above(string layerId) => new LayerPosition(layerId, LayerPositionEnum.Above);
-    public static LayerPosition Below(string layerId) => new LayerPosition(layerId, LayerPositionEnum.Above);
+    public static LayerPosition Below(string layerId) => new LayerPosition(layerId, LayerPositionEnum.Below);
     public static LayerPosition At(uint index) => new LayerPosition(index, LayerPositionEnum.At);
 }
 

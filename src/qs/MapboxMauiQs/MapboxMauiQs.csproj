@@ -1,143 +1,172 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Condition="EXISTS('MapboxMauiQs.props')" Project="MapboxMauiQs.props" />
-	<Import Condition="EXISTS('MapboxMauiQs.targets')" Project="MapboxMauiQs.targets" />
-	<PropertyGroup>
-		<TargetFrameworks>net8.0-android;net8.0-ios</TargetFrameworks>
-		<OutputType>Exe</OutputType>
-		<RootNamespace>MapboxMauiQs</RootNamespace>
-		<UseMaui>true</UseMaui>
-		<SingleProject>true</SingleProject>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<IsPackable>false</IsPackable>
-		
-		<!-- Display name -->
-		<ApplicationTitle>tv.MapbX</ApplicationTitle>
+  <Import Condition="EXISTS('MapboxMauiQs.props')"
+          Project="MapboxMauiQs.props" />
+  <Import Condition="EXISTS('MapboxMauiQs.targets')"
+          Project="MapboxMauiQs.targets" />
+  <PropertyGroup>
+    <TargetFrameworks>net8.0-android;net8.0-ios</TargetFrameworks>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>MapboxMauiQs</RootNamespace>
+    <UseMaui>true</UseMaui>
+    <SingleProject>true</SingleProject>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
 
-		<!-- App Identifier -->
-		<ApplicationId>dev.tuyentv.quickstart.dotnet.maui.mapbox</ApplicationId>
-		<ApplicationIdGuid>cecaadf0-85bf-4ffd-9326-6c5c11457a29</ApplicationIdGuid>
+    <!-- Display name -->
+    <ApplicationTitle>tv.MapbX</ApplicationTitle>
 
-		<!-- Versions -->
-		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
-		<ApplicationVersion>1</ApplicationVersion>
+    <!-- App Identifier -->
+    <ApplicationId>dev.tuyentv.quickstart.dotnet.maui.mapbox</ApplicationId>
+    <ApplicationIdGuid>cecaadf0-85bf-4ffd-9326-6c5c11457a29</ApplicationIdGuid>
 
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">27.0</SupportedOSPlatformVersion>
-		<AssemblyName>$(MSBuildProjectName)</AssemblyName>
-	</PropertyGroup>
+    <!-- Versions -->
+    <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+    <ApplicationVersion>1</ApplicationVersion>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
-		<CreatePackage>false</CreatePackage>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
-	  <CreatePackage>false</CreatePackage>
-	</PropertyGroup>
-	<ItemGroup>
-		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">27.0</SupportedOSPlatformVersion>
+    <AssemblyName>$(MSBuildProjectName)</AssemblyName>
+  </PropertyGroup>
 
-		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
+    <CreatePackage>false</CreatePackage>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
+    <CreatePackage>false</CreatePackage>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- App Icon -->
+    <MauiIcon Include="Resources\AppIcon\appicon.svg"
+              ForegroundFile="Resources\AppIcon\appiconfg.svg"
+              Color="#512BD4" />
 
-		<!-- Images -->
-		<MauiImage Include="Resources\Images\*" />
-		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
+    <!-- Splash Screen -->
+    <MauiSplashScreen Include="Resources\Splash\splash.svg"
+                      Color="#512BD4"
+                      BaseSize="128,128" />
 
-		<!-- Custom Fonts -->
-		<MauiFont Include="Resources\Fonts\*" />
+    <!-- Images -->
+    <MauiImage Include="Resources\Images\*" />
+    <MauiImage Update="Resources\Images\dotnet_bot.svg"
+               BaseSize="168,208" />
 
-		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
-		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
-	</ItemGroup>
-	
-	<ItemGroup>
-		<Compile Include="..\..\libs\Mapbox.Maui\*.cs" Exclude="..\..\libs\Mapbox.Maui\usings.cs">
-		  <Link>Shared\%(Filename)%(Extension)</Link>
-		</Compile>
+    <!-- Custom Fonts -->
+    <MauiFont Include="Resources\Fonts\*" />
+
+    <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+    <MauiAsset Include="Resources\Raw\**"
+               LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\libs\Mapbox.Maui\*.cs"
+             Exclude="..\..\libs\Mapbox.Maui\usings.cs">
+      <Link>Shared\%(Filename)%(Extension)</Link>
+    </Compile>
     <Compile Include="..\..\libs\Mapbox.Maui\usings.cs">
       <Link>usings.cs</Link>
     </Compile>
     <Compile Include="..\..\libs\Mapbox.Maui\Models\**\**\*.cs">
       <Link>Shared\%(RecursiveDir)%(Filename)%(Extension)</Link>
     </Compile>
-		<Compile Remove="..\..\libs\Mapbox.Maui\Platforms\**\**\*.cs" />
-	</ItemGroup>
+    <Compile Remove="..\..\libs\Mapbox.Maui\Platforms\**\**\*.cs" />
+  </ItemGroup>
 
-	<!-- Android -->
-	<ItemGroup Condition="$(TargetFramework.StartsWith('net8.0-android')) != true">
-		<Compile Remove="**\**\*.Android.cs" />
-		<None Include="**\**\*.Android.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
-	</ItemGroup>
+  <!-- Android -->
+  <ItemGroup Condition="$(TargetFramework.StartsWith('net8.0-android')) != true">
+    <Compile Remove="**\**\*.Android.cs" />
+    <None Include="**\**\*.Android.cs"
+          Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+  </ItemGroup>
 
-	<!-- Both iOS and Mac Catalyst -->
-	<ItemGroup Condition="$(TargetFramework.StartsWith('net8.0-ios')) != true AND $(TargetFramework.StartsWith('net8.0-maccatalyst')) != true">
-		<Compile Remove="**\**\*.MaciOS.cs" />
-		<None Include="**\**\*.MaciOS.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
-	</ItemGroup>
+  <!-- Both iOS and Mac Catalyst -->
+  <ItemGroup Condition="$(TargetFramework.StartsWith('net8.0-ios')) != true AND $(TargetFramework.StartsWith('net8.0-maccatalyst')) != true">
+    <Compile Remove="**\**\*.MaciOS.cs" />
+    <None Include="**\**\*.MaciOS.cs"
+          Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+  </ItemGroup>
 
-	<!-- iOS -->
-	<ItemGroup Condition="$(TargetFramework.StartsWith('net8.0-ios')) != true">
-		<Compile Remove="**\**\*.iOS.cs" />
-	</ItemGroup>
-	<ItemGroup>
-	  <None Remove="Resources\Images\ic_car_top.svg" />
-	  <None Remove="Resources\Images\ic_clear.png" />
-	  <None Remove="Resources\Images\ic_taxi_top.png" />
-	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Update="Microsoft.Maui.Controls.Compatibility" Version="8.0.40" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.40" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
-		<PackageReference Include="Xamarin.Build.Download" Version="0.11.4" />
-    	<PackageReference Include="GeoJSON.Text" Version="1.0.2" />
-	</ItemGroup>
+  <!-- iOS -->
+  <ItemGroup Condition="$(TargetFramework.StartsWith('net8.0-ios')) != true">
+    <Compile Remove="**\**\*.iOS.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Resources\Images\ic_car_top.svg" />
+    <None Remove="Resources\Images\ic_clear.png" />
+    <None Remove="Resources\Images\ic_taxi_top.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Maui.Controls"
+                      Version="8.0.100" />
+    <PackageReference Update="Microsoft.Maui.Controls.Compatibility"
+                      Version="8.0.100" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug"
+                      Version="9.0.0" />
+    <PackageReference Include="Xamarin.Build.Download"
+                      Version="0.11.4" />
+    <PackageReference Include="GeoJSON.Text"
+                      Version="1.1.0" />
+  </ItemGroup>
 
-	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
-		<PackageReference Include="Com.Mapbox.Maps.Android" Version="11.7.1" />
-		<PackageReference Include="Xamarin.AndroidX.AppCompat" Version="1.6.1.10" />
-    	<PackageReference Include="Xamarin.AndroidX.Fragment " Version="1.7.0.2" />
-		<PackageReference Include="Xamarin.AndroidX.Fragment.Ktx" Version="1.7.0.2" />
-		<PackageReference Include="Xamarin.Kotlin.StdLib" Version="2.0.10.1" PrivateAssets="none" />
-		<PackageReference Include="Xamarin.Kotlin.StdLib.Common" Version="2.0.0.1" PrivateAssets="none" />
-		<PackageReference Include="Xamarin.AndroidX.Annotation" Version="1.8.2.1" />
+  <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
+    <PackageReference Include="Com.Mapbox.Maps.Android"
+                      Version="11.8.0" />
+    <PackageReference Include="Xamarin.AndroidX.AppCompat"
+                      Version="1.7.0.4" />
+    <PackageReference Include="Xamarin.AndroidX.Fragment "
+                      Version="1.8.5.1" />
+    <PackageReference Include="Xamarin.AndroidX.Fragment.Ktx"
+                      Version="1.8.5.1" />
+    <PackageReference Include="Xamarin.Kotlin.StdLib"
+                      Version="2.0.21.1"
+                      PrivateAssets="none" />
+    <PackageReference Include="Xamarin.Kotlin.StdLib.Common"
+                      Version="2.0.21.1"
+                      PrivateAssets="none" />
+    <PackageReference Include="Xamarin.AndroidX.Annotation"
+                      Version="1.9.1.1" />
 
-		<Compile Include="..\..\libs\Mapbox.Maui\Platforms\Android\**\**\*.cs">
-			<Link>Platforms\Android\Shared\%(RecursiveDir)%(Filename)%(Extension)</Link>
-		</Compile>
-	</ItemGroup>
-	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
-		<PackageReference Include="MapboxMapsObjC.iOS" Version="11.7.1" />
-		<PackageReference Include="MapboxMaps.iOS" Version="11.7.1" />
+    <Compile Include="..\..\libs\Mapbox.Maui\Platforms\Android\**\**\*.cs">
+      <Link>Platforms\Android\Shared\%(RecursiveDir)%(Filename)%(Extension)</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
+    <PackageReference Include="MapboxMapsObjC.iOS"
+                      Version="11.8.0" />
+    <PackageReference Include="MapboxMaps.iOS"
+                      Version="11.8.0" />
 
-		<Compile Include="..\..\libs\Mapbox.Maui\Platforms\iOS\**\**\*.cs">
-			<Link>Platforms\iOS\Shared\%(RecursiveDir)%(Filename)%(Extension)</Link>
-		</Compile>
-	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Examples\Annotations\" />
-	</ItemGroup>
-	<PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
-		<PublishTrimmed>true</PublishTrimmed>
-		<CodesignKey>Apple Development: Created via API (X3MP9CYJPQ)</CodesignKey>
-		<CodesignProvision>VS: WildCard Development</CodesignProvision>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
-	  <CodesignKey>Apple Development: Created via API (X3MP9CYJPQ)</CodesignKey>
-	  <CodesignProvision>VS: WildCard Development</CodesignProvision>
-	</PropertyGroup>
-	<Target Name="DisplayMessages" BeforeTargets="PrepareForILLink">
-		<Message Text="Project File Name = $(Configuration)|$(TargetFramework)|$(Platform)" />
-	</Target>
-	<!-- <PropertyGroup Condition="$(TargetFramework.Contains('-ios'))">
+    <Compile Include="..\..\libs\Mapbox.Maui\Platforms\iOS\**\**\*.cs">
+      <Link>Platforms\iOS\Shared\%(RecursiveDir)%(Filename)%(Extension)</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Examples\Annotations\" />
+  </ItemGroup>
+  <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
+    <PublishTrimmed>true</PublishTrimmed>
+    <CodesignKey>Apple Development: Created via API (X3MP9CYJPQ)</CodesignKey>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
+    <CodesignKey>Apple Development: Created via API (X3MP9CYJPQ)</CodesignKey>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
+  </PropertyGroup>
+  <Target Name="DisplayMessages"
+          BeforeTargets="PrepareForILLink">
+    <Message Text="Project File Name = $(Configuration)|$(TargetFramework)|$(Platform)" />
+  </Target>
+  <!-- <PropertyGroup Condition="$(TargetFramework.Contains('-ios'))">
         <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
     </PropertyGroup> -->
-	<ProjectExtensions>
-	  <MonoDevelop>
-	    <Properties>
-	      <Policies>
-	        <DotNetNamingPolicy DirectoryNamespaceAssociation="None" ResourceNamePolicy="FileFormatDefault" />
-	      </Policies>
-	    </Properties>
-	  </MonoDevelop>
-	</ProjectExtensions>
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties>
+        <Policies>
+          <DotNetNamingPolicy DirectoryNamespaceAssociation="None"
+                              ResourceNamePolicy="FileFormatDefault" />
+        </Policies>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
 </Project>

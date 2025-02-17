@@ -16,7 +16,7 @@ partial class MapboxViewHandler : IMapboxController
 		var xbounds = mapView.MapboxMap().CoordinateBoundsForCameraBounds(xcameraOptions);
 
 		return new CoordinateBounds(
-			xbounds.Southeast.ToMapPosition(),
+			xbounds.Southwest.ToMapPosition(),
 			xbounds.Northeast.ToMapPosition(),
 			xbounds.InfiniteBounds
 			);

@@ -5,6 +5,15 @@
     xmlns:mb="clr-namespace:MapboxMaui"
     x:Class="MapboxMauiQs.BasicMapExample"
     Title="BasicMapExample">
-    <mb:MapboxView
-        x:Name="map"/>
+    <Grid>
+        <mb:MapboxView
+            x:Name="map" />
+
+        <Button
+            Clicked="Button_Clicked"
+            Text="Next Page"
+            VerticalOptions="End"
+            HorizontalOptions="End"
+            Margin="16"/>
+    </Grid>
 </ContentPage>

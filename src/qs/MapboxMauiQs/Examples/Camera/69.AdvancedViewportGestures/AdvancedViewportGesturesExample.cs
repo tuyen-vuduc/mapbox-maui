@@ -20,7 +20,16 @@ public class AdvancedViewportGesturesExample : ContentPage, IExamplePage, IQuery
     public AdvancedViewportGesturesExample()
 	{
         iOSPage.SetUseSafeArea(this, false);
-		Content = map = new MapboxView();
+
+        var centerLocation = new MapPosition(21.0245, 105.8412); // Hanoi
+        Content = map = new MapboxView()
+        {
+            CameraOptions = new()
+            {
+                Center = centerLocation,
+                Zoom = 14,
+            }
+        };
 
         map.MapReady += Map_MapReady;
         map.MapLoaded += Map_MapLoaded;

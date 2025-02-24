@@ -305,7 +305,9 @@ public static partial class AdditionalExtensions
 
     public static string ToNative(this MapboxStyle mapboxStyle)
     {
-        return mapboxStyle.Value;
+        return string.IsNullOrWhiteSpace(mapboxStyle.Value)
+            ? null
+            : mapboxStyle.Value;
     }
 
     public static MBMMapDebugOptions ToNative(this DebugOption option)

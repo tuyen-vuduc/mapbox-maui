@@ -59,7 +59,7 @@ public partial class OfflineManager: Java.Lang.Object
                 ? new Java.Lang.Integer(xoptions.AvarageBytesPerSecond.Value)
                 : null)
             .Descriptors(tilesetDescriptors)
-            .Geometry(xoptions.Geometry?.ToNative())
+            .Geometry(xoptions.Geometry?.ToPlatform())
             .Metadata(xoptions.Metadata?.Wrap())
             .NetworkRestriction(xoptions.NetworkRestriction.ToNative())
             .StartLocation(xoptions.StartLocation?.ToNative())

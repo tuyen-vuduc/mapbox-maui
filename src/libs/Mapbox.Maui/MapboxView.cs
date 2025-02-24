@@ -4,6 +4,7 @@ using MapboxMaui.Annotations;
 using MapboxMaui.Camera;
 using MapboxMaui.Locations;
 using MapboxMaui.Styles;
+using MapboxMaui.ViewAnnotations;
 using MapboxMaui.Viewport;
 
 public partial class MapboxView : View, IMapboxView
@@ -17,17 +18,6 @@ public partial class MapboxView : View, IMapboxView
     {
         get => (GestureSettings)GetValue(GestureSettingsProperty);
         set => SetValue(GestureSettingsProperty, value);
-    }
-
-    public static readonly BindableProperty ViewAnnotationsProperty = BindableProperty.Create(
-       nameof(ViewAnnotations),
-       typeof(IEnumerable<ViewAnnotationOptions>),
-       typeof(MapboxView)
-    );
-    public IEnumerable<ViewAnnotationOptions> ViewAnnotations
-    {
-        get => (IEnumerable<ViewAnnotationOptions>)GetValue(ViewAnnotationsProperty);
-        set => SetValue(ViewAnnotationsProperty, value);
     }
 
     public static readonly BindableProperty AnnotationsProperty = BindableProperty.Create(
@@ -111,7 +101,7 @@ public partial class MapboxView : View, IMapboxView
        nameof(ScaleBarVisibility),
        typeof(OrnamentVisibility),
        typeof(MapboxView),
-       OrnamentVisibility.Hidden
+       OrnamentVisibility.Visible
     );
     public OrnamentVisibility ScaleBarVisibility
     {
@@ -233,6 +223,8 @@ public partial class MapboxView : View, IMapboxView
         set => SetValue(MapboxStyleProperty, value);
     }
 
+    public ContentView AnnotationView { get; set; }
+    public IViewAnnotationController ViewAnnotationController { get; internal set; }
     public IAnnotationController AnnotationController { get; internal set; }
     public IMapFeatureQueryable QueryManager { get; internal set; }
     public IMapboxController MapboxController { get; internal set; }

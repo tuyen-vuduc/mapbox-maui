@@ -194,6 +194,7 @@ public static partial class AdditionalExtensions
         {
             bool value => NSNumber.FromBoolean(value),
             int value => NSNumber.FromLong(value),
+            uint value => NSNumber.FromUInt32(value),
             long value => NSNumber.FromLong((nint)value),
             float value => NSNumber.FromDouble(value),
             double value => NSNumber.FromDouble(value),

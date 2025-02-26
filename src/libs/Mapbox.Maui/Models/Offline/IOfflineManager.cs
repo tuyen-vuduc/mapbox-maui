@@ -1,6 +1,4 @@
-﻿using GeoJSON.Text;
-using GeoJSON.Text.Geometry;
-using Point = Microsoft.Maui.Graphics.Point;
+﻿using Point = Microsoft.Maui.Graphics.Point;
 
 namespace MapboxMaui.Offline;
 
@@ -40,6 +38,32 @@ public partial class OfflineManager : IOfflineManager
     }
 
     partial void InitializePlatformManager();
+
+#if __ANDROID__
+#elif __IOS__
+#else
+    public bool IsMapboxStackConnected { get; set; }
+
+    public void DownloadStyle(
+        string styleUri,
+        StylePackLoadOptions options,
+        Action<StylePackLoadProgress> progressHandler,
+        Action<StylePack, Exception> completionHandler
+    )
+    {
+        throw new NotImplementedException();
+    }
+
+    public void DownloadTile(
+        string tileId,
+        TileRegionLoadOptions options,
+        Action<TileRegionLoadProgress> progressHandler,
+        Action<TileRegion, Exception> completionHandler
+    )
+    {
+        throw new NotImplementedException();
+    }
+#endif
 }
 
 public record TilesetDescriptorOptions (

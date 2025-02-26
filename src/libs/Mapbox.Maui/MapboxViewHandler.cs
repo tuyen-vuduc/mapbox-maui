@@ -2,7 +2,7 @@
 
 using Microsoft.Maui.Handlers;
 
-#if IOS 
+#if __IOS__ 
 using PlatformView = MapboxMaui.MapViewContainer;
 #elif __ANDROID__
 using PlatformView = AndroidX.Fragment.App.FragmentContainerView;
@@ -37,4 +37,62 @@ public partial class MapboxViewHandler : ViewHandler<IMapboxView, PlatformView>
     {
         
     }
+
+#if __ANDROID__
+#elif __IOS__
+#else
+    protected override  PlatformView CreatePlatformView()
+    {
+        return new PlatformView();
+    }
+    private static void HandleGestureSettingsChanged(MapboxViewHandler handler, IMapboxView view)
+    {
+        throw new NotImplementedException();
+    }
+
+    private static void HandleLightChanged(MapboxViewHandler handler, IMapboxView view)
+    {
+        throw new NotImplementedException();
+    }
+
+    private static void HandleImagesChanged(MapboxViewHandler handler, IMapboxView view)
+    {
+        throw new NotImplementedException();
+    }
+
+    private static void HandleLayersChanged(MapboxViewHandler handler, IMapboxView view)
+    {
+        throw new NotImplementedException();
+    }
+
+    private static void HandleTerrainChanged(MapboxViewHandler handler, IMapboxView view)
+    {
+        throw new NotImplementedException();
+    }
+
+    private static void HandleSourcesChanged(MapboxViewHandler handler, IMapboxView view)
+    {
+        throw new NotImplementedException();
+    }
+
+    private static void HandleCameraOptionsChanged(MapboxViewHandler handler, IMapboxView view)
+    {
+        throw new NotImplementedException();
+    }
+
+    private static void HandleDebugOptionsChanged(MapboxViewHandler handler, IMapboxView view)
+    {
+        throw new NotImplementedException();
+    }
+
+    private static void HandleScaleBarVisibilityChanged(MapboxViewHandler handler, IMapboxView view)
+    {
+        throw new NotImplementedException();
+    }
+
+    private static void HandleMapboxStyleChanged(MapboxViewHandler handler, IMapboxView view)
+    {
+        throw new NotImplementedException();
+    }
+#endif
 }

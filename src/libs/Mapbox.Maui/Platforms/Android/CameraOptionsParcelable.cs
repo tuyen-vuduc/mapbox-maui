@@ -14,6 +14,7 @@ internal class CameraOptionsParcelable : Java.Lang.Object, IParcelable
 
     public void WriteToParcel(Parcel dest, [GeneratedEnum] ParcelableWriteFlags flags)
     {
+        if (CameraOptions.Center == null) return;
         dest.WriteFloat(CameraOptions.Zoom ?? 0);
         dest.WriteDouble(CameraOptions.Center.Latitude);
         dest.WriteDouble(CameraOptions.Center.Longitude);

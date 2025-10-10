@@ -315,7 +315,11 @@ static class AdditionalExtensions
 
     internal static MapView GetMapView(this MapboxViewHandler handler)
     {
-        var fragmentManager = handler.MauiContext.Services.GetService<FragmentManager>();
+        var mainActivity = (MauiAppCompatActivity)handler.Context.GetActivity();
+        var fragmentManager = mainActivity.SupportFragmentManager;
+        
+        //Commented to avoid an issue with classic MAUI navigation, when we open page B and come back to page A with a mapbox
+        // var fragmentManager = handler.MauiContext.Services.GetService<FragmentManager>();
         var tag = $"mapbox-maui-{handler.PlatformView.Id}";
         var fragnent = fragmentManager.FindFragmentByTag(tag);
         return (fragnent as MapboxFragment)?.MapView;

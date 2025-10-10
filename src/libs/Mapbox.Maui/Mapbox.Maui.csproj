@@ -66,7 +66,7 @@
     <RepositoryUrl>https://github.com/tuyen-vuduc/mapbox-maui</RepositoryUrl>
     <PackageProjectUrl>https://mapbox.tuyen-vuduc.tech</PackageProjectUrl>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageVersion>11.8.0-alpha03</PackageVersion>
+    <PackageVersion>11.15.2-ndk27</PackageVersion>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageIcon>tv-mapbox.png</PackageIcon>
@@ -95,26 +95,6 @@
     <PackageReference Update="Microsoft.Maui.Controls.Compatibility"
                       Version="8.0.100" />
   </ItemGroup>
-  <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
-    <PackageReference Include="Com.Mapbox.Maps.Android"
-                      Version="11.8.0" />
-    <PackageReference Include="Xamarin.AndroidX.AppCompat"
-                      Version="1.7.0.4" />
-    <PackageReference Include="Xamarin.AndroidX.Fragment"
-                      Version="1.8.5.1" />
-    <PackageReference Include="Xamarin.AndroidX.Fragment.Ktx"
-                      Version="1.8.5.1" />
-    <PackageReference Include="Xamarin.Kotlin.StdLib"
-                      Version="2.0.21.1"
-                      PrivateAssets="none" />
-    <PackageReference Include="Xamarin.Kotlin.StdLib.Common"
-                      Version="2.0.21.1"
-                      PrivateAssets="none" />
-    <PackageReference Include="Dependencies.Gradle"
-                      Version="8.6.0.1" />
-    <PackageReference Include="Xamarin.AndroidX.Annotation"
-                      Version="1.9.1.1" />
-  </ItemGroup>
   <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
     <PackageReference Include="MapboxMapsObjC.iOS"
                       Version="11.8.0" />
@@ -138,6 +118,9 @@
   <ItemGroup>
     <PackageReference Update="Xamarin.AndroidX.Fragment"
                       Version="1.8.5.1" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-android'">
+    <PackageReference Include="Com.Mapbox.Maps.AndroidNdk27" Version="11.15.2" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

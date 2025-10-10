@@ -246,12 +246,11 @@ public partial class MapboxViewHandler
             new CameraOptionsParcelable(VirtualView.CameraOptions));
         mapboxFragment.Arguments = args;
 
-        var fragmentManager = MauiContext.Services.GetService<FragmentManager>();
-        var fragmentTransaction = fragmentManager.BeginTransaction();
-        fragmentTransaction.Replace(
-            fragmentContainerView.Id,
-            mapboxFragment,
-            $"mapbox-maui-{fragmentContainerView.Id}");
+        //Commented to avoid an issue with classic MAUI navigation, when we open page B and come back to page A with a mapbox
+        // var fragmentTransaction = MauiContext.Services.GetService<FragmentManager>().BeginTransaction();
+        var fragmentTransaction = mainActivity.SupportFragmentManager.BeginTransaction();
+        
+        fragmentTransaction.Replace(fragmentContainerView.Id, mapboxFragment, $"mapbox-maui-{fragmentContainerView.Id}");
         fragmentTransaction.CommitAllowingStateLoss();
         return fragmentContainerView;
     }

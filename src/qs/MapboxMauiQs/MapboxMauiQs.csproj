@@ -4,7 +4,7 @@
   <Import Condition="EXISTS('MapboxMauiQs.targets')"
           Project="MapboxMauiQs.targets" />
   <PropertyGroup>
-    <TargetFrameworks>net8.0-ios;net8.0-android;</TargetFrameworks>
+    <TargetFrameworks>net8.0-android;net8.0-ios;</TargetFrameworks>
     <OutputType>Exe</OutputType>
     <RootNamespace>MapboxMauiQs</RootNamespace>
     <UseMaui>true</UseMaui>

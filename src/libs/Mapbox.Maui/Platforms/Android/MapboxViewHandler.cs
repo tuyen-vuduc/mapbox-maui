@@ -267,12 +267,41 @@ public partial class MapboxViewHandler
         if (mapboxFragment != null)
         {
             UnregisterEvents(mapboxFragment);
-            mapboxFragment.Dispose();
+
+            // Removing the fragment is what drives Fragment.OnDestroy -> MapView.OnDestroy, the only
+            // native release path. The managed peer is disposed only when the removal ran synchronously,
+            // so a queued removal can still dispatch OnDestroy on a live peer.
+            if (RemoveFragment(mapboxFragment))
+            {
+                mapboxFragment.Dispose();
+            }
+
             mapboxFragment = null;
         }
 
         base.DisconnectHandler(platformView);
     }
 
+    private bool RemoveFragment(MapboxFragment fragment)
+    {
+        if (Context?.GetActivity() is not MauiAppCompatActivity activity) return false;
+        if (activity.IsFinishing || activity.IsDestroyed) return false;
+
+        var fragmentManager = activity.SupportFragmentManager;
+
+        try
+        {
+            fragmentManager.BeginTransaction().Remove(fragment).CommitNowAllowingStateLoss();
+
+            return true;
+        }
+        catch (Java.Lang.IllegalStateException)
+        {
+            // CommitNow throws while the FragmentManager is already executing transactions; queue instead.
+            fragmentManager.BeginTransaction().Remove(fragment).CommitAllowingStateLoss();
+
+            return false;
+        }
+    }
 }
 
